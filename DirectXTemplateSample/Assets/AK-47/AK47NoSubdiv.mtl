@@ -10,5 +10,5 @@ d 1.000000
 illum 2
 map_Kd textures/AK_Base_color.png
 map_Ns textures/AK_Roughness.png
-map_refl textures/AK_Metallic.png
+map_Pm textures/AK_Metallic.png
 map_Bump -bm 1.000000 textures/AK_Normal_OpenGL.png
