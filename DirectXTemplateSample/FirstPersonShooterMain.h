@@ -6,13 +6,13 @@
 #include "Content\SampleFpsTextRenderer.h"
 
 // Renders Direct2D and 3D content on the screen.
-namespace DirectXTemplateSample
+namespace FirstPersonShooter
 {
-	class DirectXTemplateSampleMain : public DX::IDeviceNotify
+	class FirstPersonShooterMain : public DX::IDeviceNotify
 	{
 	public:
-		DirectXTemplateSampleMain(const std::shared_ptr<DX::DeviceResources>& deviceResources);
-		~DirectXTemplateSampleMain();
+		FirstPersonShooterMain(const std::shared_ptr<DX::DeviceResources>& deviceResources);
+		~FirstPersonShooterMain();
 		void CreateWindowSizeDependentResources();
 		void Update();
 		bool Render();

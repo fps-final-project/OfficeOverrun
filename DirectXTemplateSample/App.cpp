@@ -3,7 +3,7 @@
 
 #include <ppltasks.h>
 
-using namespace DirectXTemplateSample;
+using namespace FirstPersonShooter;
 
 using namespace concurrency;
 using namespace Windows::ApplicationModel;
@@ -85,7 +85,7 @@ void App::Load(Platform::String^ entryPoint)
 {
 	if (m_main == nullptr)
 	{
-		m_main = std::unique_ptr<DirectXTemplateSampleMain>(new DirectXTemplateSampleMain(m_deviceResources));
+		m_main = std::unique_ptr<FirstPersonShooterMain>(new FirstPersonShooterMain(m_deviceResources));
 	}
 }
 

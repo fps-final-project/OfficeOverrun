@@ -3,7 +3,7 @@
 #include "MeshFactory.h"
 
 Mesh MeshFactory::createMesh(
-	const std::vector<DirectXTemplateSample::VertexData>& verticies,
+	const std::vector<FirstPersonShooter::VertexData>& verticies,
 	const std::vector<unsigned short>& indicies,
 	const std::vector<std::shared_ptr<Texture>>& textures,
 	std::shared_ptr<DX::DeviceResources> deviceResources)
@@ -18,7 +18,7 @@ Mesh MeshFactory::createMesh(
 	vertexBufferData.pSysMem = verticies.data();
 	vertexBufferData.SysMemPitch = 0;
 	vertexBufferData.SysMemSlicePitch = 0;
-	CD3D11_BUFFER_DESC vertexBufferDesc(verticies.size() * sizeof(DirectXTemplateSample::VertexData), D3D11_BIND_VERTEX_BUFFER);
+	CD3D11_BUFFER_DESC vertexBufferDesc(verticies.size() * sizeof(FirstPersonShooter::VertexData), D3D11_BIND_VERTEX_BUFFER);
 	DX::ThrowIfFailed(
 		deviceResources->GetD3DDevice()->CreateBuffer(
 			&vertexBufferDesc,

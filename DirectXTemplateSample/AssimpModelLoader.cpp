@@ -47,13 +47,13 @@ void AssimpModelLoader::processNode(AssimpModel& outModel, aiNode* node, const a
 
 Mesh AssimpModelLoader::processMesh(aiMesh* m_mesh, const aiScene* scene)
 {
-    std::vector<DirectXTemplateSample::VertexData> vertexData;
+    std::vector<FirstPersonShooter::VertexData> vertexData;
     std::vector<unsigned short> indicies;
     std::vector<std::shared_ptr<Texture>> textures;
 
     for (unsigned int i = 0; i < m_mesh->mNumVertices; i++)
     {
-        DirectXTemplateSample::VertexData vertex;
+        FirstPersonShooter::VertexData vertex;
 
         // process vertex positions, normals and m_texture coordinates
         vertex.pos.x = m_mesh->mVertices[i].x;

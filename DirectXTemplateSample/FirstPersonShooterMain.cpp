@@ -1,14 +1,14 @@
 ﻿#include "pch.h"
-#include "DirectXTemplateSampleMain.h"
+#include "FirstPersonShooterMain.h"
 #include "Common\DirectXHelper.h"
 
-using namespace DirectXTemplateSample;
+using namespace FirstPersonShooter;
 using namespace Windows::Foundation;
 using namespace Windows::System::Threading;
 using namespace Concurrency;
 
 // Loads and initializes application assets when the application is loaded.
-DirectXTemplateSampleMain::DirectXTemplateSampleMain(const std::shared_ptr<DX::DeviceResources>& deviceResources) :
+FirstPersonShooterMain::FirstPersonShooterMain(const std::shared_ptr<DX::DeviceResources>& deviceResources) :
 	m_deviceResources(deviceResources)
 {
 	// Register to be notified if the Device is lost or recreated
@@ -27,21 +27,21 @@ DirectXTemplateSampleMain::DirectXTemplateSampleMain(const std::shared_ptr<DX::D
 	*/
 }
 
-DirectXTemplateSampleMain::~DirectXTemplateSampleMain()
+FirstPersonShooterMain::~FirstPersonShooterMain()
 {
 	// Deregister device notification
 	m_deviceResources->RegisterDeviceNotify(nullptr);
 }
 
 // Updates application state when the window size changes (e.g. device orientation change)
-void DirectXTemplateSampleMain::CreateWindowSizeDependentResources() 
+void FirstPersonShooterMain::CreateWindowSizeDependentResources() 
 {
 	// TODO: Replace this with the size-dependent initialization of your app's content.
 	m_sceneRenderer->CreateWindowSizeDependentResources();
 }
 
 // Updates the application state once per frame.
-void DirectXTemplateSampleMain::Update() 
+void FirstPersonShooterMain::Update() 
 {
 	// Update scene objects.
 	m_timer.Tick([&]()
@@ -54,7 +54,7 @@ void DirectXTemplateSampleMain::Update()
 
 // Renders the current frame according to the current application state.
 // Returns true if the frame was rendered and is ready to be displayed.
-bool DirectXTemplateSampleMain::Render() 
+bool FirstPersonShooterMain::Render() 
 {
 	// Don't try to render anything before the first Update.
 	if (m_timer.GetFrameCount() == 0)
@@ -85,14 +85,14 @@ bool DirectXTemplateSampleMain::Render()
 }
 
 // Notifies renderers that device resources need to be released.
-void DirectXTemplateSampleMain::OnDeviceLost()
+void FirstPersonShooterMain::OnDeviceLost()
 {
 	m_sceneRenderer->ReleaseDeviceDependentResources();
 	m_fpsTextRenderer->ReleaseDeviceDependentResources();
 }
 
 // Notifies renderers that device resources may now be recreated.
-void DirectXTemplateSampleMain::OnDeviceRestored()
+void FirstPersonShooterMain::OnDeviceRestored()
 {
 	m_sceneRenderer->CreateDeviceDependentResources();
 	m_fpsTextRenderer->CreateDeviceDependentResources();

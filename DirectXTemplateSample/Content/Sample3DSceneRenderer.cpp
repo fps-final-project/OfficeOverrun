@@ -8,7 +8,7 @@
 #include "TextureFactory.h"
 #include "AssimpModelLoader.h"
 
-using namespace DirectXTemplateSample;
+using namespace FirstPersonShooter;
 
 using namespace DirectX;
 using namespace Windows::Foundation;
@@ -135,7 +135,7 @@ void Sample3DSceneRenderer::Render()
 	this->Render(*m_assimpModel);
 }
 
-void DirectXTemplateSample::Sample3DSceneRenderer::Render(const Mesh& m)
+void FirstPersonShooter::Sample3DSceneRenderer::Render(const Mesh& m)
 {
 	auto context = m_deviceResources->GetD3DDeviceContext();
 
@@ -229,7 +229,7 @@ void DirectXTemplateSample::Sample3DSceneRenderer::Render(const Mesh& m)
 
 }
 
-void DirectXTemplateSample::Sample3DSceneRenderer::Render(const AssimpModel& m)
+void FirstPersonShooter::Sample3DSceneRenderer::Render(const AssimpModel& m)
 {
 	for (const auto& m_mesh : m.meshes)
 	{	
@@ -364,10 +364,8 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 
 		this->m_mesh = MeshFactory::createMesh(cubeVertices, cubeIndices, std::vector<std::shared_ptr<Texture>>(), m_deviceResources);
 		this->m_texture = TextureFactory::CreateTextureFromFile(L"Assets\\AK-47\\textures\\AK_Base_color.png", m_deviceResources);
-		//this->m_assimpModel = std::unique_ptr<AssimpModel>(new AssimpModel("Assets\\AK-47\\AK47NoSubdiv.obj", m_deviceResources));
-		//this->m_assimpModel = std::unique_ptr<AssimpModel>(new AssimpModel("Assets\\cube\\inverted.obj", m_deviceResources));
+		this->m_assimpModel = std::make_unique<AssimpModel>(AssimpModelLoader::createModelFromFile("Assets\\AK-47\\AK47NoSubdiv.obj", m_deviceResources));
 		//this->m_assimpModel = std::unique_ptr<AssimpModel>(new AssimpModel("Assets\\cube\\cube.obj", m_deviceResources));
-		this->m_assimpModel = std::make_unique<AssimpModel>(AssimpModelLoader::createModelFromFile("Assets\\AK-47\\inverted.obj", m_deviceResources));
 	});
 
 	auto createSamplerTask = createCubeTask.then([this]() {

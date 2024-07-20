@@ -3,7 +3,7 @@
 
 #include "Common/DirectXHelper.h"
 
-using namespace DirectXTemplateSample;
+using namespace FirstPersonShooter;
 using namespace Microsoft::WRL;
 
 // Initializes D2D resources used for text rendering.
