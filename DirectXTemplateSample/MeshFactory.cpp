@@ -1,6 +1,6 @@
 #include "pch.h"
-#include "MeshFactory.h"
 #include "Common/DirectXHelper.h"
+#include "MeshFactory.h"
 
 Mesh MeshFactory::createMesh(
 	const std::vector<DirectXTemplateSample::VertexData>& verticies,
@@ -8,10 +8,10 @@ Mesh MeshFactory::createMesh(
 	const std::vector<std::shared_ptr<Texture>>& textures,
 	std::shared_ptr<DX::DeviceResources> deviceResources)
 {
-	Mesh mesh;
+	Mesh m_mesh;
 	for (const auto& t : textures)
 	{
-		mesh.textures.push_back(Texture(*t));
+		m_mesh.textures.push_back(Texture(*t));
 	}
 
 	D3D11_SUBRESOURCE_DATA vertexBufferData = { 0 };
@@ -23,16 +23,11 @@ Mesh MeshFactory::createMesh(
 		deviceResources->GetD3DDevice()->CreateBuffer(
 			&vertexBufferDesc,
 			&vertexBufferData,
-			&mesh.vertexBuffer
+			&m_mesh.vertexBuffer
 		)
 	);
 
-	// Load mesh indices. Each trio of indices represents
-	// a triangle to be rendered on the screen.
-	// For example: 0,2,1 means that the vertices with indexes
-	// 0, 2 and 1 from the vertex buffer compose the 
-	// first triangle of this mesh.
-	mesh.indexCount = indicies.size();
+	m_mesh.indexCount = indicies.size();
 
 	D3D11_SUBRESOURCE_DATA indexBufferData = { 0 };
 	indexBufferData.pSysMem = indicies.data();
@@ -43,9 +38,9 @@ Mesh MeshFactory::createMesh(
 		deviceResources->GetD3DDevice()->CreateBuffer(
 			&indexBufferDesc,
 			&indexBufferData,
-			&mesh.indexBuffer
+			&m_mesh.indexBuffer
 		)
 	);
 
-	return mesh;
+	return m_mesh;
 }

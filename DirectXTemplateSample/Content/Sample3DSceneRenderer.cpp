@@ -6,6 +6,7 @@
 #include <vector>
 #include "MeshFactory.h"
 #include "TextureFactory.h"
+#include "AssimpModelLoader.h"
 
 using namespace DirectXTemplateSample;
 
@@ -22,12 +23,6 @@ Sample3DSceneRenderer::Sample3DSceneRenderer(const std::shared_ptr<DX::DeviceRes
 {
 	CreateDeviceDependentResources();
 	CreateWindowSizeDependentResources();
-	this->texture = TextureFactory::CreateTextureFromFile(L"Assets\\AK-47\\textures\\AK_Base_color.png", m_deviceResources);
-	//this->assimpModel = std::unique_ptr<AssimpModel>(new AssimpModel("Assets\\AK-47\\AK47NoSubdiv.obj", m_deviceResources));
-	//this->assimpModel = std::unique_ptr<AssimpModel>(new AssimpModel("Assets\\cube\\inverted.obj", m_deviceResources));
-	//this->assimpModel = std::unique_ptr<AssimpModel>(new AssimpModel("Assets\\cube\\cube.obj", m_deviceResources));
-	this->assimpModel = std::unique_ptr<AssimpModel>(new AssimpModel("Assets\\AK-47\\inverted.obj", m_deviceResources));
-	//this->SetClockwiseCulling();
 }
 
 // Initializes view parameters when the window size changes.
@@ -63,7 +58,7 @@ void Sample3DSceneRenderer::CreateWindowSizeDependentResources()
 	XMMATRIX orientationMatrix = XMLoadFloat4x4(&orientation);
 
 	XMStoreFloat4x4(
-		&m_VSconstantBufferData.projection,
+		&m_VSConstantBufferData.projection,
 		XMMatrixTranspose(perspectiveMatrix * orientationMatrix)
 		);
 
@@ -72,9 +67,9 @@ void Sample3DSceneRenderer::CreateWindowSizeDependentResources()
 	static const XMVECTORF32 at = { 0.0f, -0.1f, 0.0f, 0.0f };
 	static const XMVECTORF32 up = { 0.0f, 1.0f, 0.0f, 0.0f };
 
-	XMStoreFloat4x4(&m_VSconstantBufferData.view, XMMatrixTranspose(XMMatrixLookAtRH(eye, at, up)));
-	XMStoreFloat3(&m_PSconstantBufferData.camera_pos, eye);
-	XMStoreFloat3(&m_PSconstantBufferData.light_pos, XMVECTORF32{0, 0.7f, 1.5f, 0});
+	XMStoreFloat4x4(&m_VSConstantBufferData.view, XMMatrixTranspose(XMMatrixLookAtRH(eye, at, up)));
+	XMStoreFloat3(&m_PSConstantBufferData.camera_pos, eye);
+	XMStoreFloat3(&m_PSConstantBufferData.light_pos, XMVECTORF32{0, 0.7f, 1.5f, 0});
 
 
 }
@@ -100,9 +95,9 @@ void Sample3DSceneRenderer::Rotate(float radians)
 	auto modelMatrix = XMMatrixScaling(0.2, 0.2, 0.2) * XMMatrixRotationY(radians);
 
 
-	XMStoreFloat4x4(&m_VSconstantBufferData.model, XMMatrixTranspose(modelMatrix));
+	XMStoreFloat4x4(&m_VSConstantBufferData.model, XMMatrixTranspose(modelMatrix));
 	auto det = XMMatrixDeterminant(modelMatrix);
-	XMStoreFloat4x4(&m_VSconstantBufferData.inv_model, XMMatrixTranspose(XMMatrixInverse(&det, modelMatrix)));
+	XMStoreFloat4x4(&m_VSConstantBufferData.inv_model, XMMatrixTranspose(XMMatrixInverse(&det, modelMatrix)));
 }
 
 void Sample3DSceneRenderer::StartTracking()
@@ -137,116 +132,31 @@ void Sample3DSceneRenderer::Render()
 		return;
 	}
 
-	this->Render(*assimpModel);
-
-	//auto context = m_deviceResources->GetD3DDeviceContext();
-
-	//// Prepare the constant buffer to send it to the graphics device.
-	//context->UpdateSubresource1(
-	//	m_VSconstantBuffer.Get(),
-	//	0,
-	//	NULL,
-	//	&m_VSconstantBufferData,
-	//	0,
-	//	0,
-	//	0
-	//	);
-
-	//// Each vertex is one instance of the VertexData struct.
-	//UINT stride = sizeof(VertexData);
-	//UINT offset = 0;
-	//context->IASetVertexBuffers(
-	//	0,
-	//	1,
-	//	mesh.vertexBuffer.GetAddressOf(),
-	//	&stride,
-	//	&offset
-	//	);
-
-	//context->IASetIndexBuffer(
-	//	mesh.indexBuffer.Get(),
-	//	DXGI_FORMAT_R16_UINT, // Each index is one 16-bit unsigned integer (short).
-	//	0
-	//	);
-
-	//context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-	//context->IASetInputLayout(m_inputLayout.Get());
-
-	//// Attach our vertex shader.
-	//context->VSSetShader(
-	//	m_vertexShader.Get(),
-	//	nullptr,
-	//	0
-	//	);
-
-	//// Send the constant buffer to the graphics device.
-	//context->VSSetConstantBuffers1(
-	//	0,
-	//	1,
-	//	m_VSconstantBuffer.GetAddressOf(),
-	//	nullptr,
-	//	nullptr
-	//	);
-
-	//// Attach our pixel shader.
-	//context->PSSetShader(
-	//	m_pixelShader.Get(),
-	//	nullptr,
-	//	0
-	//	);
-
-	//context->PSSetSamplers(
-	//	0,
-	//	1,
-	//	m_samplerState.GetAddressOf());
-
-	//context->PSSetShaderResources(0, 1, assimpModel->meshes[0].textures[0].shaderResourceView.GetAddressOf());
-
-	//
-	//// Draw the objects.
-	//context->DrawIndexed(
-	//	mesh.indexCount,
-	//	0,
-	//	0
-	//	);
+	this->Render(*m_assimpModel);
 }
 
 void DirectXTemplateSample::Sample3DSceneRenderer::Render(const Mesh& m)
 {
 	auto context = m_deviceResources->GetD3DDeviceContext();
-	unsigned int diffuseNr = 1;
-	unsigned int specularNr = 1;
-	unsigned int normalNr = 1;
+
+	// We only handle diffuse textures for now (actual color textures)
 	context->PSSetShaderResources(0, 1, m.textures[0].shaderResourceView.GetAddressOf());
-	//for (unsigned int i = 0; i < m.textures.size(); i++)
-	//{
-	//	std::string number;
-	//	std::string name = m.textures[i].get()->type;
-	//	if (name == "texture_diffuse")
-	//		number = std::to_string(diffuseNr++);
-	//	else if (name == "texture_specular")
-	//		number = std::to_string(specularNr++);
 
-	//}
-
-	// draw mesh
-	// Prepare the constant buffer to send it to the graphics device.
 	context->UpdateSubresource1(
-		m_VSconstantBuffer.Get(),
+		m_VSConstantBuffer.Get(),
 		0,
 		NULL,
-		&m_VSconstantBufferData,
+		&m_VSConstantBufferData,
 		0,
 		0,
 		0
 	);
 
 	context->UpdateSubresource1(
-		m_PSconstantBuffer.Get(),
+		m_PSConstantBuffer.Get(),
 		0,
 		NULL,
-		&m_PSconstantBufferData,
+		&m_PSConstantBufferData,
 		0,
 		0,
 		0
@@ -280,23 +190,6 @@ void DirectXTemplateSample::Sample3DSceneRenderer::Render(const Mesh& m)
 		0
 	);
 
-	// Send the constant buffer to the graphics device.
-	context->VSSetConstantBuffers1(
-		0,
-		1,
-		m_VSconstantBuffer.GetAddressOf(),
-		nullptr,
-		nullptr
-	);
-
-	context->PSSetConstantBuffers1(
-		1,
-		1,
-		m_PSconstantBuffer.GetAddressOf(),
-		nullptr,
-		nullptr
-	);
-
 	// Attach our pixel shader.
 	context->PSSetShader(
 		m_pixelShader.Get(),
@@ -304,6 +197,24 @@ void DirectXTemplateSample::Sample3DSceneRenderer::Render(const Mesh& m)
 		0
 	);
 
+	// Send the constant buffer to the graphics device.
+	context->VSSetConstantBuffers1(
+		0,
+		1,
+		m_VSConstantBuffer.GetAddressOf(),
+		nullptr,
+		nullptr
+	);
+
+	context->PSSetConstantBuffers1(
+		1,
+		1,
+		m_PSConstantBuffer.GetAddressOf(),
+		nullptr,
+		nullptr
+	);
+
+	// set texture sampler
 	context->PSSetSamplers(
 		0,
 		1,
@@ -320,9 +231,9 @@ void DirectXTemplateSample::Sample3DSceneRenderer::Render(const Mesh& m)
 
 void DirectXTemplateSample::Sample3DSceneRenderer::Render(const AssimpModel& m)
 {
-	for (const auto& mesh : m.meshes)
+	for (const auto& m_mesh : m.meshes)
 	{	
-		this->Render(mesh);
+		this->Render(m_mesh);
 	}
 }
 
@@ -377,7 +288,7 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 			m_deviceResources->GetD3DDevice()->CreateBuffer(
 				&constantBufferDesc,
 				nullptr,
-				&m_VSconstantBuffer
+				&m_VSConstantBuffer
 				)
 			);
 
@@ -387,12 +298,12 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 			m_deviceResources->GetD3DDevice()->CreateBuffer(
 				&PSconstantBufferDesc,
 				nullptr,
-				&m_PSconstantBuffer
+				&m_PSConstantBuffer
 			)
 		);
 	});
 
-	// Once both shaders are loaded, create the mesh.
+	// Once both shaders are loaded, create the m_mesh.
 	auto createCubeTask = (createPSTask && createVSTask).then([this] () {
 
 		static std::vector<VertexData> cubeVertices = 
@@ -451,9 +362,12 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 		};
 
 
-		this->mesh = MeshFactory::createMesh(cubeVertices, cubeIndices, std::vector<std::shared_ptr<Texture>>(), m_deviceResources);
-		//this->texture = TextureFactory::CreateTextureFromFile(L"C:/Users/milos/Desktop/smile.jpg", m_deviceResources);
-			
+		this->m_mesh = MeshFactory::createMesh(cubeVertices, cubeIndices, std::vector<std::shared_ptr<Texture>>(), m_deviceResources);
+		this->m_texture = TextureFactory::CreateTextureFromFile(L"Assets\\AK-47\\textures\\AK_Base_color.png", m_deviceResources);
+		//this->m_assimpModel = std::unique_ptr<AssimpModel>(new AssimpModel("Assets\\AK-47\\AK47NoSubdiv.obj", m_deviceResources));
+		//this->m_assimpModel = std::unique_ptr<AssimpModel>(new AssimpModel("Assets\\cube\\inverted.obj", m_deviceResources));
+		//this->m_assimpModel = std::unique_ptr<AssimpModel>(new AssimpModel("Assets\\cube\\cube.obj", m_deviceResources));
+		this->m_assimpModel = std::make_unique<AssimpModel>(AssimpModelLoader::createModelFromFile("Assets\\AK-47\\inverted.obj", m_deviceResources));
 	});
 
 	auto createSamplerTask = createCubeTask.then([this]() {
@@ -490,8 +404,8 @@ void Sample3DSceneRenderer::ReleaseDeviceDependentResources()
 	m_vertexShader.Reset();
 	m_inputLayout.Reset();
 	m_pixelShader.Reset();
-	m_VSconstantBuffer.Reset();
-	m_PSconstantBuffer.Reset();
+	m_VSConstantBuffer.Reset();
+	m_PSConstantBuffer.Reset();
 }
 
 

@@ -1,10 +1,11 @@
 #pragma once
 
-#include "Mesh.h"
 #include <vector>
 #include "Common\DeviceResources.h"
 #include <Content/ShaderStructures.h>
 #include "Texture.h"
+#include "Mesh.h"
+
 
 class MeshFactory {
 public:

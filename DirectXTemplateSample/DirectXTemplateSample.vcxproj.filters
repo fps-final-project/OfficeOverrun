@@ -91,7 +91,7 @@
     <ClCompile Include="TextureFactory.cpp">
       <Filter>Content\Texture</Filter>
     </ClCompile>
-    <ClCompile Include="AssimpModel.cpp">
+    <ClCompile Include="AssimpModelLoader.cpp">
       <Filter>Content\Model</Filter>
     </ClCompile>
   </ItemGroup>
@@ -112,6 +112,9 @@
       <Filter>Content\Texture</Filter>
     </ClInclude>
     <ClInclude Include="AssimpModel.h">
+      <Filter>Content\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="AssimpModelLoader.h">
       <Filter>Content\Model</Filter>
     </ClInclude>
   </ItemGroup>

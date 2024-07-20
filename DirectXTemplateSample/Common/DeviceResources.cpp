@@ -385,7 +385,7 @@ void DX::DeviceResources::CreateWindowSizeDependentResources()
 		DXGI_FORMAT_D24_UNORM_S8_UINT, 
 		lround(m_d3dRenderTargetSize.Width),
 		lround(m_d3dRenderTargetSize.Height),
-		1, // This depth stencil view has only one texture.
+		1, // This depth stencil view has only one m_texture.
 		1, // Use a single mipmap level.
 		D3D11_BIND_DEPTH_STENCIL
 		);

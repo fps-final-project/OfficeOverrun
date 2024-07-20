@@ -227,6 +227,7 @@
     <Link>
       <AdditionalDependencies>assimp-vc143-mtd.lib;d2d1.lib; d3d11.lib; dxgi.lib; windowscodecs.lib; dwrite.lib; %(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)Vendor\assimp\lib\x64;%(AdditionalLibraryDirectories);$(VCInstallDir)\lib\store\amd64;$(VCInstallDir)\lib\amd64</AdditionalLibraryDirectories>
+      <AdditionalOptions>/VERBOSE %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ClCompile>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
@@ -272,6 +273,7 @@
   <ItemGroup>
     <ClInclude Include="App.h" />
     <ClInclude Include="AssimpModel.h" />
+    <ClInclude Include="AssimpModelLoader.h" />
     <ClInclude Include="Common\DeviceResources.h" />
     <ClInclude Include="DirectXTemplateSampleMain.h" />
     <ClInclude Include="Common\DirectXHelper.h" />
@@ -287,7 +289,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
-    <ClCompile Include="AssimpModel.cpp" />
+    <ClCompile Include="AssimpModelLoader.cpp" />
     <ClCompile Include="Common\DeviceResources.cpp" />
     <ClCompile Include="DirectXTemplateSampleMain.cpp" />
     <ClCompile Include="Content\SampleFpsTextRenderer.cpp" />

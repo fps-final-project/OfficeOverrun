@@ -7,9 +7,9 @@
 
 Texture TextureFactory::CreateTextureFromFile(const wchar_t* filename, std::shared_ptr<DX::DeviceResources> deviceResources)
 {
-	Texture texture;
+	Texture m_texture;
 	auto device = deviceResources->GetD3DDevice();
-	auto result = DirectX::CreateWICTextureFromFile(device, filename, &texture.textureHandle, &texture.shaderResourceView);
+	auto result = DirectX::CreateWICTextureFromFile(device, filename, &m_texture.textureHandle, &m_texture.shaderResourceView);
 	DX::ThrowIfFailed(result);
-	return texture;
+	return m_texture;
 }
