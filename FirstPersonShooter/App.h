@@ -2,9 +2,9 @@
 
 #include "pch.h"
 #include "Common\DeviceResources.h"
-#include "DirectXTemplateSampleMain.h"
+#include "FirstPersonShooterMain.h"
 
-namespace DirectXTemplateSample
+namespace FirstPersonShooter
 {
 	// Main entry point for our app. Connects the app with the Windows shell and handles application lifecycle events.
 	ref class App sealed : public Windows::ApplicationModel::Core::IFrameworkView
@@ -37,7 +37,7 @@ namespace DirectXTemplateSample
 
 	private:
 		std::shared_ptr<DX::DeviceResources> m_deviceResources;
-		std::unique_ptr<DirectXTemplateSampleMain> m_main;
+		std::unique_ptr<FirstPersonShooterMain> m_main;
 		bool m_windowClosed;
 		bool m_windowVisible;
 	};

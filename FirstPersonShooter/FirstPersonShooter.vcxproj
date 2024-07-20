@@ -46,6 +46,7 @@
     <WindowsTargetPlatformMinVersion>10.0.17763.0</WindowsTargetPlatformMinVersion>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
     <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+    <ProjectName>FirstPersonShooter</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -238,6 +239,10 @@
       <AdditionalIncludeDirectories>$(SolutionDir)Vendor\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Link>
@@ -275,7 +280,7 @@
     <ClInclude Include="AssimpModel.h" />
     <ClInclude Include="AssimpModelLoader.h" />
     <ClInclude Include="Common\DeviceResources.h" />
-    <ClInclude Include="DirectXTemplateSampleMain.h" />
+    <ClInclude Include="FirstPersonShooterMain.h" />
     <ClInclude Include="Common\DirectXHelper.h" />
     <ClInclude Include="Common\StepTimer.h" />
     <ClInclude Include="Content\Sample3DSceneRenderer.h" />
@@ -291,7 +296,7 @@
     <ClCompile Include="App.cpp" />
     <ClCompile Include="AssimpModelLoader.cpp" />
     <ClCompile Include="Common\DeviceResources.cpp" />
-    <ClCompile Include="DirectXTemplateSampleMain.cpp" />
+    <ClCompile Include="FirstPersonShooterMain.cpp" />
     <ClCompile Include="Content\SampleFpsTextRenderer.cpp" />
     <ClCompile Include="Content\Sample3DSceneRenderer.cpp" />
     <ClCompile Include="MeshFactory.cpp" />
@@ -327,7 +332,6 @@
     <None Include="Assets\cube\cube.mtl">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
     </None>
-    <None Include="DirectXTemplateSample_TemporaryKey.pfx" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -338,19 +342,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\cube\cube.obj">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-      <FileType>Document</FileType>
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Assets\AK-47\inverted.obj">
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
-      <FileType>Document</FileType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Assets\cube\inverted.obj">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
       <FileType>Document</FileType>
     </None>
@@ -367,5 +358,8 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\directxtk_uwp.2024.6.5.1\build\native\directxtk_uwp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\directxtk_uwp.2024.6.5.1\build\native\directxtk_uwp.targets'))" />
+  </Target>
+  <Target Name="AfterBuild">
+    <Copy SourceFiles="$(SolutionDir)Vendor\assimp\lib\x64\assimp-vc143-mtd.dll" DestinationFolder="$(TargetDir)\AppX" SkipUnchangedFiles="false" />
   </Target>
 </Project>

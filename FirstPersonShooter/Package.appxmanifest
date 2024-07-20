@@ -14,7 +14,7 @@
   <mp:PhoneIdentity PhoneProductId="190de01f-3134-4f59-8fbb-3a29e73fe051" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
-    <DisplayName>DirectXTemplateSample</DisplayName>
+    <DisplayName>FirstPersonShooter</DisplayName>
     <PublisherDisplayName>milos</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
@@ -30,12 +30,12 @@
   <Applications>
     <Application Id="App"
       Executable="$targetnametoken$.exe"
-      EntryPoint="DirectXTemplateSample.App">
+      EntryPoint="FirstPersonShooter.App">
       <uap:VisualElements
-        DisplayName="DirectXTemplateSample"
+        DisplayName="FirstPersonShooter"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="DirectXTemplateSample"
+        Description="FirstPersonShooter"
         BackgroundColor="transparent">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />

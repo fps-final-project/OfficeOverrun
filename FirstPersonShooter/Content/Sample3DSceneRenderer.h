@@ -7,7 +7,7 @@
 #include "Mesh.h"
 #include "Texture.h"
 
-namespace DirectXTemplateSample
+namespace FirstPersonShooter
 {
 	// This sample renderer instantiates a basic rendering pipeline.
 	class Sample3DSceneRenderer
