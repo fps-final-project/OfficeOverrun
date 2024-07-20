@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>37c04009-f5e8-495b-9e49-6f6fa444e88f</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>d5318baa-46a1-495a-b3e7-2a040b905318</UniqueIdentifier>
+      <Extensions>bmp;fbx;gif;jpg;jpeg;tga;tiff;tif;png</Extensions>
+    </Filter>
+    <Filter Include="Content">
+      <UniqueIdentifier>26a3a00d-2dd0-4e7f-887f-279a615a634c</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="Common\DirectXHelper.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\StepTimer.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\DeviceResources.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClCompile Include="Common\DeviceResources.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClInclude Include="Content\Sample3DSceneRenderer.h">
+      <Filter>Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Content\SampleFpsTextRenderer.h">
+      <Filter>Content</Filter>
+    </ClInclude>
+    <ClInclude Include="Content\ShaderStructures.h">
+      <Filter>Content</Filter>
+    </ClInclude>
+    <ClCompile Include="Content\Sample3DSceneRenderer.cpp">
+      <Filter>Content</Filter>
+    </ClCompile>
+    <ClCompile Include="Content\SampleFpsTextRenderer.cpp">
+      <Filter>Content</Filter>
+    </ClCompile>
+    <FxCompile Include="Content\SamplePixelShader.hlsl">
+      <Filter>Content</Filter>
+    </FxCompile>
+    <FxCompile Include="Content\SampleVertexShader.hlsl">
+      <Filter>Content</Filter>
+    </FxCompile>
+    <Image Include="Assets\LockScreenLogo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SplashScreen.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Square150x150Logo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Square44x44Logo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Wide310x150Logo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Filter Include="Content\Mesh">
+      <UniqueIdentifier>{d1c951c0-9649-4246-87a3-ad071b9c8914}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\Model">
+      <UniqueIdentifier>{c9a8355d-d86f-4f93-b81b-6c3c0c293eee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\Texture">
+      <UniqueIdentifier>{32632a9d-63ea-4bb1-8b4b-20dc8c08cf6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\AK-47">
+      <UniqueIdentifier>{510d271b-ff9b-422a-9f49-b253f553adc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\AK-47\textures">
+      <UniqueIdentifier>{660e3e6e-6146-4da7-afce-7897361028aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\cube">
+      <UniqueIdentifier>{1d14699e-0ca2-4b6b-831b-2d71b7fe137d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="App.cpp" />
+    <ClCompile Include="DirectXTemplateSampleMain.cpp" />
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="MeshFactory.cpp">
+      <Filter>Content\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureFactory.cpp">
+      <Filter>Content\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="AssimpModel.cpp">
+      <Filter>Content\Model</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="App.h" />
+    <ClInclude Include="DirectXTemplateSampleMain.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="Mesh.h">
+      <Filter>Content\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshFactory.h">
+      <Filter>Content\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Content\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureFactory.h">
+      <Filter>Content\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="AssimpModel.h">
+      <Filter>Content\Model</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\smile.jpg">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\AK-47\textures\AK_Base_color.png">
+      <Filter>Assets\AK-47\textures</Filter>
+    </Image>
+    <Image Include="Assets\AK-47\textures\AK_Metallic.png">
+      <Filter>Assets\AK-47\textures</Filter>
+    </Image>
+    <Image Include="Assets\AK-47\textures\AK_Mixed_AO.png">
+      <Filter>Assets\AK-47\textures</Filter>
+    </Image>
+    <Image Include="Assets\AK-47\textures\AK_Normal_OpenGL.png">
+      <Filter>Assets\AK-47\textures</Filter>
+    </Image>
+    <Image Include="Assets\AK-47\textures\AK_Roughness.png">
+      <Filter>Assets\AK-47\textures</Filter>
+    </Image>
+    <Image Include="Assets\cube\smile.jpg">
+      <Filter>Assets\cube</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="DirectXTemplateSample_TemporaryKey.pfx" />
+    <None Include="Assets\AK-47\AK47NoSubdiv.mtl">
+      <Filter>Assets\AK-47</Filter>
+    </None>
+    <None Include="Assets\AK-47\AK47NoSubdiv.obj">
+      <Filter>Assets\AK-47</Filter>
+    </None>
+    <None Include="Assets\cube\cube.obj">
+      <Filter>Assets\cube</Filter>
+    </None>
+    <None Include="Assets\cube\cube.mtl">
+      <Filter>Assets\cube</Filter>
+    </None>
+    <None Include="Assets\AK-47\inverted.obj">
+      <Filter>Assets\AK-47</Filter>
+    </None>
+    <None Include="Assets\cube\inverted.obj">
+      <Filter>Assets\cube</Filter>
+    </None>
+  </ItemGroup>
+</Project>
