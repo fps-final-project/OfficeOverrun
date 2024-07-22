@@ -6,6 +6,7 @@
 #include "AssimpModel.h"
 #include "Mesh.h"
 #include "Texture.h"
+#include "MeshFactory.h"
 
 namespace FirstPersonShooter
 {

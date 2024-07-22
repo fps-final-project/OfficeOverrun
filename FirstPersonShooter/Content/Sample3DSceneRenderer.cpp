@@ -4,7 +4,6 @@
 #include "..\Common\DirectXHelper.h"
 
 #include <vector>
-#include "MeshFactory.h"
 #include "TextureFactory.h"
 #include "AssimpModelLoader.h"
 
@@ -362,7 +361,7 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 		};
 
 
-		this->m_mesh = MeshFactory::createMesh(cubeVertices, cubeIndices, std::vector<std::shared_ptr<Texture>>(), m_deviceResources);
+		this->m_mesh = MeshFactory<FirstPersonShooter::VertexData>::createMesh(cubeVertices, cubeIndices, std::vector<std::shared_ptr<Texture>>(), m_deviceResources);
 		this->m_texture = TextureFactory::CreateTextureFromFile(L"Assets\\AK-47\\textures\\AK_Base_color.png", m_deviceResources);
 		this->m_assimpModel = std::make_unique<AssimpModel>(AssimpModelLoader::createModelFromFile("Assets\\AK-47\\AK47NoSubdiv.obj", m_deviceResources));
 		//this->m_assimpModel = std::unique_ptr<AssimpModel>(new AssimpModel("Assets\\cube\\cube.obj", m_deviceResources));
