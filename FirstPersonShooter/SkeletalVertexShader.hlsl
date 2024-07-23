@@ -1,4 +1,4 @@
-const int MAX_BONES = 100;
+#pragma target vs_5_0
 const int MAX_BONE_INFLUENCE = 4;
 
 cbuffer ModelViewProjectionConstantBuffer : register(b0)
@@ -7,7 +7,9 @@ cbuffer ModelViewProjectionConstantBuffer : register(b0)
 	matrix inv_model;
 	matrix view;
 	matrix projection;
-	matrix finalBonesMatricies[10];
+
+	static const int MAX_BONES = 55;
+	matrix finalBonesMatricies[MAX_BONES];
 };
 
 struct VertexShaderInput
@@ -47,7 +49,8 @@ PixelShaderInput main(VertexShaderInput input)
 
 
     PixelShaderInput output;
-	float4 pos = total_position;
+	//float4 pos = total_position;
+	float4 pos = float4(input.pos, 1.0f);
 
 	pos = mul(pos, model);
 	pos = mul(pos, view);

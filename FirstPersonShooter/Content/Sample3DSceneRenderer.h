@@ -7,6 +7,10 @@
 #include "Mesh.h"
 #include "Texture.h"
 #include "MeshFactory.h"
+#include "Animation.h"
+#include "Animator.h"
+
+#include <chrono>
 
 namespace FirstPersonShooter
 {
@@ -37,7 +41,10 @@ namespace FirstPersonShooter
 		std::shared_ptr<DX::DeviceResources> m_deviceResources;
 
 		Mesh m_mesh;
-		std::unique_ptr<AssimpModel> m_assimpModel;
+		std::shared_ptr<AnimatedAssimpModel> m_assimpModel;
+		std::unique_ptr<Animation> m_animation;
+		std::unique_ptr<Animator> m_animator;
+
 		Texture m_texture;
 
 		// Direct3D resources for cube geometry.
@@ -48,10 +55,11 @@ namespace FirstPersonShooter
 		Microsoft::WRL::ComPtr<ID3D11SamplerState>	m_samplerState;
 
 		// System resources for cube geometry.
-		ModelViewProjectionConstantBuffer	m_VSConstantBufferData;
+		AnimationConstantBuffer	m_VSConstantBufferData;
 		LightingConstantBuffer m_PSConstantBufferData;
 
 		uint32	m_indexCount;
+		std::chrono::time_point<std::chrono::high_resolution_clock> lastFrame;
 
 		// Variables used with the rendering loop.
 		bool	m_loadingComplete;

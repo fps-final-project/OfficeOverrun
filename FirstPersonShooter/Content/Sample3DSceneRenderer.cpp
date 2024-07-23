@@ -18,7 +18,8 @@ Sample3DSceneRenderer::Sample3DSceneRenderer(const std::shared_ptr<DX::DeviceRes
 	m_degreesPerSecond(45),
 	m_indexCount(0),
 	m_tracking(false),
-	m_deviceResources(deviceResources)
+	m_deviceResources(deviceResources),
+	lastFrame(std::chrono::high_resolution_clock::now())
 {
 	CreateDeviceDependentResources();
 	CreateWindowSizeDependentResources();
@@ -90,13 +91,33 @@ void Sample3DSceneRenderer::Update(DX::StepTimer const& timer)
 // Rotate the 3D cube model a set amount of radians.
 void Sample3DSceneRenderer::Rotate(float radians)
 {
+	if (!m_loadingComplete)
+		return;
+
+	auto now = std::chrono::high_resolution_clock::now();
+	double deltaTime = (now - lastFrame).count() / 1000000000;
+	lastFrame = now;
+
+	m_animator->updateAnimation(deltaTime);
+
+
+
+
 	// Prepare to pass the updated model matrix to the shader
-	auto modelMatrix = XMMatrixScaling(0.2, 0.2, 0.2) * XMMatrixRotationY(radians);
+	auto modelMatrix = XMMatrixScaling(0.8, 0.8, 0.8) * XMMatrixRotationY(radians);
 
 
 	XMStoreFloat4x4(&m_VSConstantBufferData.model, XMMatrixTranspose(modelMatrix));
 	auto det = XMMatrixDeterminant(modelMatrix);
 	XMStoreFloat4x4(&m_VSConstantBufferData.inv_model, XMMatrixTranspose(XMMatrixInverse(&det, modelMatrix)));
+
+	auto transforms = m_animator->m_FinalBoneMatrices;
+	//assert(transforms.size() < 55);
+	for (int i = 0; i < transforms.size(); i++)
+	{
+		auto loaded = DirectX::XMLoadFloat4x4(&transforms[i]);
+		XMStoreFloat4x4(&m_VSConstantBufferData.transforms[i], XMMatrixTranspose(loaded));
+	}
 }
 
 void Sample3DSceneRenderer::StartTracking()
@@ -239,8 +260,8 @@ void FirstPersonShooter::Sample3DSceneRenderer::Render(const AssimpModel& m)
 void Sample3DSceneRenderer::CreateDeviceDependentResources()
 {
 	// Load shaders asynchronously.
-	auto loadVSTask = DX::ReadDataAsync(L"SampleVertexShader.cso");
-	auto loadPSTask = DX::ReadDataAsync(L"SamplePixelShader.cso");
+	auto loadVSTask = DX::ReadDataAsync(L"SkeletalVertexShader.cso");
+	auto loadPSTask = DX::ReadDataAsync(L"SkeletalPixelShader.cso");
 
 	// After the vertex shader file is loaded, create the shader and input layout.
 	auto createVSTask = loadVSTask.then([this](const std::vector<byte>& fileData) {
@@ -257,7 +278,9 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 		{
 			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 			{ "UV", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 3 * sizeof(float), D3D11_INPUT_PER_VERTEX_DATA, 0},
-			{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 5 * sizeof(float), D3D11_INPUT_PER_VERTEX_DATA, 0 }
+			{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 5 * sizeof(float), D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "BONE_IDS", 0, DXGI_FORMAT_R32G32B32A32_SINT, 0, 8 * sizeof(int), D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "WEIGHTS", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12 * sizeof(float), D3D11_INPUT_PER_VERTEX_DATA, 0 }
 		};
 
 		DX::ThrowIfFailed(
@@ -282,7 +305,7 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 				)
 			);
 
-		CD3D11_BUFFER_DESC constantBufferDesc(sizeof(ModelViewProjectionConstantBuffer) , D3D11_BIND_CONSTANT_BUFFER);
+		CD3D11_BUFFER_DESC constantBufferDesc(sizeof(AnimationConstantBuffer) , D3D11_BIND_CONSTANT_BUFFER);
 		DX::ThrowIfFailed(
 			m_deviceResources->GetD3DDevice()->CreateBuffer(
 				&constantBufferDesc,
@@ -363,7 +386,9 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 
 		this->m_mesh = MeshFactory<FirstPersonShooter::VertexData>::createMesh(cubeVertices, cubeIndices, std::vector<std::shared_ptr<Texture>>(), m_deviceResources);
 		this->m_texture = TextureFactory::CreateTextureFromFile(L"Assets\\AK-47\\textures\\AK_Base_color.png", m_deviceResources);
-		this->m_assimpModel = std::make_unique<AssimpModel>(AssimpModelLoader::createModelFromFile("Assets\\AK-47\\AK47NoSubdiv.obj", m_deviceResources));
+		this->m_assimpModel = std::make_shared<AnimatedAssimpModel>(AssimpModelLoader::createAnimatedModelFromFile("Assets\\vampire\\dancing_vampire.dae", m_deviceResources));
+		this->m_animation = std::make_unique<Animation>(Animation("Assets\\vampire\\dancing_vampire.dae", m_assimpModel));
+		this->m_animator = std::make_unique<Animator>(Animator(m_animation.get()));
 		//this->m_assimpModel = std::unique_ptr<AssimpModel>(new AssimpModel("Assets\\cube\\cube.obj", m_deviceResources));
 	});
 

@@ -273,6 +273,10 @@
     <Image Include="Assets\Square44x44Logo.scale-200.png" />
     <Image Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Image Include="Assets\StoreLogo.png" />
+    <Image Include="Assets\vampire\textures\Vampire_diffuse.png" />
+    <Image Include="Assets\vampire\textures\Vampire_emission.png" />
+    <Image Include="Assets\vampire\textures\Vampire_normal.png" />
+    <Image Include="Assets\vampire\textures\Vampire_specular.png" />
     <Image Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
   <ItemGroup>
@@ -356,6 +360,13 @@
   <ItemGroup>
     <None Include="Assets\cube\cube.obj">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\vampire\dancing_vampire.dae">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+      <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)%(Filename).dae</ContentOutput>
       <FileType>Document</FileType>
     </None>
   </ItemGroup>

@@ -120,7 +120,10 @@ AnimatedAssimpModel AssimpModelLoader::createAnimatedModel(const std::string& pa
 	}
 
 	this->m_directory = path.substr(0, path.find_last_of('\\'));
-	processNode(model, scene->mRootNode, scene);
+	processAnimatedNode(model, scene->mRootNode, scene);
+
+	model.m_BoneInfoMap = m_BoneInfoMap;
+	model.m_boneCounter = m_BoneInfoMap.size();
 
 	return model;
 }

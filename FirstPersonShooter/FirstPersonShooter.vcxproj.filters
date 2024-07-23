@@ -83,6 +83,12 @@
     <Filter Include="Content\Shaders\Skeletal">
       <UniqueIdentifier>{8746d375-b1b7-41ea-a582-d5c5c8a5ede0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\vampire">
+      <UniqueIdentifier>{f3ea4c9f-a564-4fb2-b78b-72e405a55606}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\vampire\textures">
+      <UniqueIdentifier>{b388464f-f7be-40df-9612-e20e4b53ed23}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -155,6 +161,18 @@
     <Image Include="Assets\cube\smile.jpg">
       <Filter>Assets\cube</Filter>
     </Image>
+    <Image Include="Assets\vampire\textures\Vampire_diffuse.png">
+      <Filter>Assets\vampire\textures</Filter>
+    </Image>
+    <Image Include="Assets\vampire\textures\Vampire_emission.png">
+      <Filter>Assets\vampire\textures</Filter>
+    </Image>
+    <Image Include="Assets\vampire\textures\Vampire_normal.png">
+      <Filter>Assets\vampire\textures</Filter>
+    </Image>
+    <Image Include="Assets\vampire\textures\Vampire_specular.png">
+      <Filter>Assets\vampire\textures</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -172,6 +190,9 @@
     </None>
     <None Include="Assets\cube\cube.obj">
       <Filter>Assets\cube</Filter>
+    </None>
+    <None Include="Assets\vampire\dancing_vampire.dae">
+      <Filter>Assets\vampire</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
