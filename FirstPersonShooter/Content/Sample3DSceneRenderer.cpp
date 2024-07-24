@@ -23,6 +23,8 @@ Sample3DSceneRenderer::Sample3DSceneRenderer(const std::shared_ptr<DX::DeviceRes
 {
 	CreateDeviceDependentResources();
 	CreateWindowSizeDependentResources();
+
+	this->SetClockwiseCulling();
 }
 
 // Initializes view parameters when the window size changes.
@@ -63,8 +65,8 @@ void Sample3DSceneRenderer::CreateWindowSizeDependentResources()
 		);
 
 	// Eye is at (0,0.7,1.5), looking at point (0,-0.1,0) with the up-vector along the y-axis.
-	static const XMVECTORF32 eye = { 0.0f, 0.7f, 1.5f, 0.0f };
-	static const XMVECTORF32 at = { 0.0f, -0.1f, 0.0f, 0.0f };
+	static const XMVECTORF32 eye = { 0.0f, 0.0f, -5.0f, 0.0f };
+	static const XMVECTORF32 at = { 0.0f, 0.0f, 1.0f, 0.0f };
 	static const XMVECTORF32 up = { 0.0f, 1.0f, 0.0f, 0.0f };
 
 	XMStoreFloat4x4(&m_VSConstantBufferData.view, XMMatrixTranspose(XMMatrixLookAtRH(eye, at, up)));
@@ -81,30 +83,43 @@ void Sample3DSceneRenderer::Update(DX::StepTimer const& timer)
 	{
 		// Convert degrees to radians, then convert seconds to rotation angle
 		float radiansPerSecond = XMConvertToRadians(m_degreesPerSecond);
-		double totalRotation = timer.GetTotalSeconds() * radiansPerSecond;
+		double totalSeconds = timer.GetTotalSeconds();
+		double totalRotation = totalSeconds * radiansPerSecond;
 		float radians = static_cast<float>(fmod(totalRotation, XM_2PI));
 
-		Rotate(radians);
+
+
+		Rotate(radians, totalSeconds);
 	}
 }
 
 // Rotate the 3D cube model a set amount of radians.
-void Sample3DSceneRenderer::Rotate(float radians)
+void Sample3DSceneRenderer::Rotate(float radians, double totalSeconds)
 {
 	if (!m_loadingComplete)
 		return;
 
 	auto now = std::chrono::high_resolution_clock::now();
-	double deltaTime = (now - lastFrame).count() / 1000000000;
+	double deltaTime = (now - lastFrame).count() / 1e9;
 	lastFrame = now;
 
 	m_animator->updateAnimation(deltaTime);
 
 
 
+	XMVECTORF32 eye = { 0.0f, 0.0f, -5.0f, 0.0f };
+	//static const XMVECTORF32 at = { sin(radians), 0.0f, cos(radians), 0.0f};
+	XMVECTORF32 at = { sin(radians), 0.0f, cos(radians) - 10.f, 0.0f};
+
+	XMVECTORF32 up = { 0.0f, 1.0f, 0.0f, 0.0f };
+
+	//XMStoreFloat4x4(&m_VSConstantBufferData.view, XMMatrixTranspose(XMMatrixLookAtRH(eye, at, up)));
+
 
 	// Prepare to pass the updated model matrix to the shader
-	auto modelMatrix = XMMatrixScaling(0.8, 0.8, 0.8) * XMMatrixRotationY(radians);
+	//auto modelMatrix = XMMatrixScaling(0.01, 0.01, 0.01) * XMMatrixRotationY(radians);
+	//auto modelMatrix = XMMatrixScaling(0.8, 0.8, 0.8);
+	auto modelMatrix = XMMatrixScaling(0.8, 0.8, 0.8) * XMMatrixRotationY(3.1415);
 
 
 	XMStoreFloat4x4(&m_VSConstantBufferData.model, XMMatrixTranspose(modelMatrix));
@@ -113,10 +128,11 @@ void Sample3DSceneRenderer::Rotate(float radians)
 
 	auto transforms = m_animator->m_FinalBoneMatrices;
 	//assert(transforms.size() < 55);
-	for (int i = 0; i < transforms.size(); i++)
+	for (int i = 0; i < 55; i++)
 	{
 		auto loaded = DirectX::XMLoadFloat4x4(&transforms[i]);
 		XMStoreFloat4x4(&m_VSConstantBufferData.transforms[i], XMMatrixTranspose(loaded));
+		//XMStoreFloat4x4(&m_VSConstantBufferData.transforms[i], DirectX::XMMatrixIdentity());
 	}
 }
 
@@ -132,7 +148,7 @@ void Sample3DSceneRenderer::TrackingUpdate(float positionX)
 	{
 		float radians = XM_2PI * 2.0f * positionX / m_deviceResources->GetOutputSize().Width;
 		//Rotate(radians);
-		Rotate(0);
+		Rotate(radians, 0.f);
 		
 	}
 }
@@ -183,7 +199,7 @@ void FirstPersonShooter::Sample3DSceneRenderer::Render(const Mesh& m)
 	);
 
 	// Each vertex is one instance of the VertexData struct.
-	UINT stride = sizeof(VertexData);
+	UINT stride = sizeof(AnimatedVertexData);
 	UINT offset = 0;
 	context->IASetVertexBuffers(
 		0,

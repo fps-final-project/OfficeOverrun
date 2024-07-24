@@ -42,8 +42,8 @@ void Bone::update(float animationTime)
     DirectX::XMMATRIX rotation = interpolateRotation(animationTime);
     DirectX::XMMATRIX scale = interpolateScaling(animationTime);
 
-    auto result = DirectX::XMMatrixMultiply(translation, rotation);
-    result = DirectX::XMMatrixMultiply(result, scale);
+    auto result = DirectX::XMMatrixMultiply(scale, rotation);
+    result = DirectX::XMMatrixMultiply(result, translation);
 
     DirectX::XMStoreFloat4x4(&m_localTransform, result);
 }

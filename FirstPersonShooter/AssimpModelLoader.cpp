@@ -277,5 +277,10 @@ DirectX::XMFLOAT4X4 AssimpModelLoader::aiToDirectXMatrix(aiMatrix4x4 matrix)
 {
 	DirectX::XMFLOAT4X4 ret;
 	memcpy(&ret, &matrix, 64);
+	auto t = DirectX::XMLoadFloat4x4(&ret);
+	t = DirectX::XMMatrixTranspose(t);
+	DirectX::XMStoreFloat4x4(&ret, t);
+
+
 	return ret;
 }

@@ -16,7 +16,10 @@ struct KeyRotation
 	float timestamp;
 	KeyRotation(aiQuaternion quaternion, float timestamp)
 	{
-		memcpy(&orientation, &quaternion, 16);
+		orientation.x = quaternion.x;
+		orientation.y = quaternion.y;
+		orientation.z = quaternion.z;
+		orientation.w = quaternion.w;
 		this->timestamp = timestamp;
 	}
 };

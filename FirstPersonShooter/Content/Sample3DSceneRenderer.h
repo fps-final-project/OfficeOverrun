@@ -34,7 +34,7 @@ namespace FirstPersonShooter
 		void SetClockwiseCulling();
 
 	private:
-		void Rotate(float radians);
+		void Rotate(float radians, double totalSeconds);
 
 	private:
 		// Cached pointer to device resources.

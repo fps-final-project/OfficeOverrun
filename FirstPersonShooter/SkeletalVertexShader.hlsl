@@ -1,4 +1,3 @@
-#pragma target vs_5_0
 const int MAX_BONE_INFLUENCE = 4;
 
 cbuffer ModelViewProjectionConstantBuffer : register(b0)
@@ -32,10 +31,11 @@ struct PixelShaderInput
 PixelShaderInput main(VertexShaderInput input)
 {
 	float4 total_position = float4(0.f, 0.f, 0.f, 0.f);
-    for (int i = 0; i < MAX_BONE_INFLUENCE; i++)
+    for (int i = 0; i < 4; i++)
     {
 		if(input.boneIds[i] == -1)
             continue;
+
 		if(input.boneIds[i] >= MAX_BONES)
         {
             total_position = float4(input.pos, 1.0f);
@@ -49,8 +49,8 @@ PixelShaderInput main(VertexShaderInput input)
 
 
     PixelShaderInput output;
-	//float4 pos = total_position;
-	float4 pos = float4(input.pos, 1.0f);
+	float4 pos = total_position;
+	//float4 pos = float4(input.pos, 1.0f);
 
 	pos = mul(pos, model);
 	pos = mul(pos, view);
