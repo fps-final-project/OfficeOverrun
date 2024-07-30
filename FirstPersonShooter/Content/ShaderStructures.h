@@ -16,7 +16,7 @@ namespace FirstPersonShooter
 	struct AnimationConstantBuffer : public ModelViewProjectionConstantBuffer
 	{
 		static const int MAX_BONES = 55;
-		DirectX::XMFLOAT4X4 transforms[MAX_BONES];
+		DirectX::XMFLOAT4X4 pose[MAX_BONES];
 	};
 
 	__declspec(align(16))

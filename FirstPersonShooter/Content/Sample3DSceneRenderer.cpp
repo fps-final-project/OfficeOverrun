@@ -103,7 +103,7 @@ void Sample3DSceneRenderer::Rotate(float radians, double totalSeconds)
 	double deltaTime = (now - lastFrame).count() / 1e9;
 	lastFrame = now;
 
-	m_animator->updateAnimation(deltaTime);
+	m_animator->updateAnimation(m_assimpModel->m_rootJoint, m_assimpModel->m_BoneInfoMap, deltaTime);
 
 
 
@@ -126,13 +126,12 @@ void Sample3DSceneRenderer::Rotate(float radians, double totalSeconds)
 	auto det = XMMatrixDeterminant(modelMatrix);
 	XMStoreFloat4x4(&m_VSConstantBufferData.inv_model, XMMatrixTranspose(XMMatrixInverse(&det, modelMatrix)));
 
-	auto transforms = m_animator->m_FinalBoneMatrices;
-	//assert(transforms.size() < 55);
+	auto pose = m_animator->m_FinalBoneMatrices;
 	for (int i = 0; i < 55; i++)
 	{
-		auto loaded = DirectX::XMLoadFloat4x4(&transforms[i]);
-		XMStoreFloat4x4(&m_VSConstantBufferData.transforms[i], XMMatrixTranspose(loaded));
-		//XMStoreFloat4x4(&m_VSConstantBufferData.transforms[i], DirectX::XMMatrixIdentity());
+		auto loaded = DirectX::XMLoadFloat4x4(&pose[i]);
+		XMStoreFloat4x4(&m_VSConstantBufferData.pose[i], XMMatrixTranspose(loaded));
+		//XMStoreFloat4x4(&m_VSConstantBufferData.pose[i], DirectX::XMMatrixIdentity());
 	}
 }
 
@@ -403,8 +402,7 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 		this->m_mesh = MeshFactory<FirstPersonShooter::VertexData>::createMesh(cubeVertices, cubeIndices, std::vector<std::shared_ptr<Texture>>(), m_deviceResources);
 		this->m_texture = TextureFactory::CreateTextureFromFile(L"Assets\\AK-47\\textures\\AK_Base_color.png", m_deviceResources);
 		this->m_assimpModel = std::make_shared<AnimatedAssimpModel>(AssimpModelLoader::createAnimatedModelFromFile("Assets\\vampire\\dancing_vampire.dae", m_deviceResources));
-		this->m_animation = std::make_unique<Animation>(Animation("Assets\\vampire\\dancing_vampire.dae", m_assimpModel));
-		this->m_animator = std::make_unique<Animator>(Animator(m_animation.get()));
+		this->m_animator = std::make_unique<Animator>(&m_assimpModel->m_animations[0]);
 		//this->m_assimpModel = std::unique_ptr<AssimpModel>(new AssimpModel("Assets\\cube\\cube.obj", m_deviceResources));
 	});
 

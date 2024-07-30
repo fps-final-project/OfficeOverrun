@@ -7,7 +7,6 @@
 #include "Mesh.h"
 #include "Texture.h"
 #include "MeshFactory.h"
-#include "Animation.h"
 #include "Animator.h"
 
 #include <chrono>

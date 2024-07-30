@@ -8,39 +8,96 @@
 #include "TextureFactory.h"
 
 
+#pragma region AssimpModel 
+
 AssimpModel AssimpModelLoader::createModelFromFile(const std::string& path, std::shared_ptr<DX::DeviceResources> deviceResources)
 {
 	AssimpModelLoader loader(deviceResources);
 	return loader.createModel(path);
 }
 
+AssimpModel AssimpModelLoader::createModel(const std::string& path)
+{
+	AssimpModel model;
+
+	Assimp::Importer importer;
+	const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
+	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
+	{
+		std::cout << "Error::Assimp::" << importer.GetErrorString() << "\n";
+		return model;
+	}
+
+	this->m_directory = path.substr(0, path.find_last_of('\\'));
+	processNode(model, scene->mRootNode, scene);
+
+	return model;
+}
+
+void AssimpModelLoader::processNode(AssimpModel& outModel, aiNode* node, const aiScene* scene)
+{
+	for (unsigned int i = 0; i < node->mNumMeshes; i++)
+	{
+		aiMesh* m_mesh = scene->mMeshes[node->mMeshes[i]];
+		outModel.meshes.push_back(processMesh(m_mesh, scene));
+	}
+	for (unsigned int i = 0; i < node->mNumChildren; i++)
+	{
+		processNode(outModel, node->mChildren[i], scene);
+	}
+}
+
+Mesh AssimpModelLoader::processMesh(aiMesh* m_mesh, const aiScene* scene)
+{
+	std::vector<FirstPersonShooter::VertexData> vertexData;
+	std::vector<unsigned short> indicies;
+	std::vector<std::shared_ptr<Texture>> textures;
+
+	for (unsigned int i = 0; i < m_mesh->mNumVertices; i++)
+	{
+		FirstPersonShooter::VertexData vertex;
+
+		this->setBasicVertexData(vertex, m_mesh, i);
+
+		vertexData.push_back(vertex);
+	}
+	// process indices
+	for (unsigned int i = 0; i < m_mesh->mNumFaces; i++)
+	{
+		aiFace face = m_mesh->mFaces[i];
+		for (unsigned int j = 0; j < face.mNumIndices; j++)
+			indicies.push_back(face.mIndices[j]);
+	}
+
+	// process material
+	const std::vector<std::pair<std::string, aiTextureType>> textureTypes = {
+		{"texture_diffuse", aiTextureType_DIFFUSE},
+		{"texture_specular", aiTextureType_SPECULAR},
+		{"texture_roughness", aiTextureType_SHININESS},
+	};
+
+	if (m_mesh->mMaterialIndex >= 0)
+	{
+		aiMaterial* material = scene->mMaterials[m_mesh->mMaterialIndex];
+		for (const auto& textureType : textureTypes)
+		{
+			std::vector<std::shared_ptr<Texture>> textureMaps = loadMaterialTextures(material,
+				textureType.second, textureType.first);
+			textures.insert(textures.end(), textureMaps.begin(), textureMaps.end());
+		}
+	}
+
+	return MeshFactory<FirstPersonShooter::VertexData>::createMesh(vertexData, indicies, textures, m_deviceResources);
+}
+
+#pragma endregion
+
+#pragma region AnimatedAssimpModel
+
 AnimatedAssimpModel AssimpModelLoader::createAnimatedModelFromFile(const std::string& path, std::shared_ptr<DX::DeviceResources> deviceResources)
 {
 	AssimpModelLoader loader(deviceResources);
 	return loader.createAnimatedModel(path);
-}
-
-void AssimpModelLoader::setBasicVertexData(FirstPersonShooter::VertexData& vertex, aiMesh* m_mesh, int idx)
-{
-	// process vertex positions, normals and m_texture coordinates
-	vertex.pos.x = m_mesh->mVertices[idx].x;
-	vertex.pos.y = m_mesh->mVertices[idx].y;
-	vertex.pos.z = m_mesh->mVertices[idx].z;
-
-	if (m_mesh->mTextureCoords[0])
-	{
-		vertex.texture_pos.x = m_mesh->mTextureCoords[0][idx].x;
-		vertex.texture_pos.y = m_mesh->mTextureCoords[0][idx].y;
-	}
-	else
-	{
-		vertex.texture_pos.x = 0.f;
-		vertex.texture_pos.y = 0.f;
-	}
-
-	vertex.normal.x = m_mesh->mNormals[idx].x;
-	vertex.normal.y = m_mesh->mNormals[idx].y;
-	vertex.normal.z = m_mesh->mNormals[idx].z;
 }
 
 void AssimpModelLoader::ExtractBoneWeightForVerticies(
@@ -89,22 +146,68 @@ void AssimpModelLoader::ExtractBoneWeightForVerticies(
 	}
 }
 
-AssimpModel AssimpModelLoader::createModel(const std::string& path)
+void AssimpModelLoader::createAnimations(AnimatedAssimpModel& outModel, const aiScene* scene)
 {
-	AssimpModel model;
-
-	Assimp::Importer importer;
-	const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
-	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
+	for (int i = 0; i < scene->mNumAnimations; i++)
 	{
-		std::cout << "Error::Assimp::" << importer.GetErrorString() << "\n";
-		return model;
+		Animation animation;
+
+		auto aiAnimation = scene->mAnimations[i];
+		int nJoints = aiAnimation->mNumChannels;
+		int nKeyframes = aiAnimation->mChannels[0]->mNumPositionKeys;
+
+		assert(nJoints > 0 && nKeyframes > 0);
+
+		animation.m_TicksPerSecond = aiAnimation->mTicksPerSecond;
+		animation.m_Duration = aiAnimation->mDuration;
+
+		animation.frames.resize(nKeyframes);
+
+		for (int indexJoint = 0; indexJoint < nJoints; indexJoint++)
+		{
+			auto channel = aiAnimation->mChannels[indexJoint];
+
+			for (int indexFrame = 0; indexFrame < nKeyframes; indexFrame++)
+			{
+				//if (animation.frames[indexFrame].pose.find(channel->mNodeName.data) != animation.frames[indexFrame].pose.end())
+				//	animation.frames[indexFrame].pose[channel->mNodeName.data] = JointTransform();
+
+				if (outModel.m_BoneInfoMap.find(channel->mNodeName.data) == outModel.m_BoneInfoMap.end())
+				{
+					outModel.m_BoneInfoMap[channel->mNodeName.data].id = m_boneCounter;
+					m_boneCounter++;
+				}
+
+				animation.frames[indexFrame].timestamp = channel->mPositionKeys[indexFrame].mTime;
+
+				animation.frames[indexFrame].pose[channel->mNodeName.data].position = AssimpModelLoader::aiToDirectFloat3(
+					channel->mPositionKeys[indexFrame].mValue);
+
+				animation.frames[indexFrame].pose[channel->mNodeName.data].orientation = AssimpModelLoader::aiToDirectFloat4(
+					channel->mRotationKeys[indexFrame].mValue);
+
+				animation.frames[indexFrame].pose[channel->mNodeName.data].scale = AssimpModelLoader::aiToDirectFloat3(
+					channel->mScalingKeys[indexFrame].mValue);
+			}
+		}
+
+		outModel.m_animations.push_back(animation);
 	}
+}
 
-	this->m_directory = path.substr(0, path.find_last_of('\\'));
-	processNode(model, scene->mRootNode, scene);
+void AssimpModelLoader::loadJointHierarchy(Joint& joint, aiNode* src)
+{
+	assert(src);
 
-	return model;
+	joint.name = src->mName.data;
+	joint.transformation = AssimpModelLoader::aiToDirectXMatrix(src->mTransformation);
+
+	for (int i = 0; i < src->mNumChildren; i++)
+	{
+		Joint data;
+		this->loadJointHierarchy(data, src->mChildren[i]);
+		joint.children.push_back(data);
+	}
 }
 
 AnimatedAssimpModel AssimpModelLoader::createAnimatedModel(const std::string& path)
@@ -125,20 +228,10 @@ AnimatedAssimpModel AssimpModelLoader::createAnimatedModel(const std::string& pa
 	model.m_BoneInfoMap = m_BoneInfoMap;
 	model.m_boneCounter = m_BoneInfoMap.size();
 
-	return model;
-}
+	this->createAnimations(model, scene);
+	this->loadJointHierarchy(model.m_rootJoint, scene->mRootNode);
 
-void AssimpModelLoader::processNode(AssimpModel& outModel, aiNode* node, const aiScene* scene)
-{
-	for (unsigned int i = 0; i < node->mNumMeshes; i++)
-	{
-		aiMesh* m_mesh = scene->mMeshes[node->mMeshes[i]];
-		outModel.meshes.push_back(processMesh(m_mesh, scene));
-	}
-	for (unsigned int i = 0; i < node->mNumChildren; i++)
-	{
-		processNode(outModel, node->mChildren[i], scene);
-	}
+	return model;
 }
 
 void AssimpModelLoader::processAnimatedNode(AnimatedAssimpModel& outModel, aiNode* node, const aiScene* scene)
@@ -152,49 +245,6 @@ void AssimpModelLoader::processAnimatedNode(AnimatedAssimpModel& outModel, aiNod
 	{
 		processAnimatedNode(outModel, node->mChildren[i], scene);
 	}
-}
-
-Mesh AssimpModelLoader::processMesh(aiMesh* m_mesh, const aiScene* scene)
-{
-	std::vector<FirstPersonShooter::VertexData> vertexData;
-	std::vector<unsigned short> indicies;
-	std::vector<std::shared_ptr<Texture>> textures;
-
-	for (unsigned int i = 0; i < m_mesh->mNumVertices; i++)
-	{
-		FirstPersonShooter::VertexData vertex;
-
-		this->setBasicVertexData(vertex, m_mesh, i);
-
-		vertexData.push_back(vertex);
-	}
-	// process indices
-	for (unsigned int i = 0; i < m_mesh->mNumFaces; i++)
-	{
-		aiFace face = m_mesh->mFaces[i];
-		for (unsigned int j = 0; j < face.mNumIndices; j++)
-			indicies.push_back(face.mIndices[j]);
-	}
-
-	// process material
-	const std::vector<std::pair<std::string, aiTextureType>> textureTypes = {
-		{"texture_diffuse", aiTextureType_DIFFUSE},
-		{"texture_specular", aiTextureType_SPECULAR},
-		{"texture_roughness", aiTextureType_SHININESS},
-	};
-
-	if (m_mesh->mMaterialIndex >= 0)
-	{
-		aiMaterial* material = scene->mMaterials[m_mesh->mMaterialIndex];
-		for (const auto& textureType : textureTypes)
-		{
-			std::vector<std::shared_ptr<Texture>> textureMaps = loadMaterialTextures(material,
-				textureType.second, textureType.first);
-			textures.insert(textures.end(), textureMaps.begin(), textureMaps.end());
-		}
-	}
-
-	return MeshFactory<FirstPersonShooter::VertexData>::createMesh(vertexData, indicies, textures, m_deviceResources);
 }
 
 Mesh AssimpModelLoader::processAnimatedMesh(aiMesh* m_mesh, const aiScene* scene)
@@ -242,6 +292,33 @@ Mesh AssimpModelLoader::processAnimatedMesh(aiMesh* m_mesh, const aiScene* scene
 	return MeshFactory<FirstPersonShooter::AnimatedVertexData>::createMesh(vertexData, indicies, textures, m_deviceResources);
 }
 
+#pragma endregion
+
+#pragma region Common
+
+void AssimpModelLoader::setBasicVertexData(FirstPersonShooter::VertexData& vertex, aiMesh* m_mesh, int idx)
+{
+	// process vertex positions, normals and m_texture coordinates
+	vertex.pos.x = m_mesh->mVertices[idx].x;
+	vertex.pos.y = m_mesh->mVertices[idx].y;
+	vertex.pos.z = m_mesh->mVertices[idx].z;
+
+	if (m_mesh->mTextureCoords[0])
+	{
+		vertex.texture_pos.x = m_mesh->mTextureCoords[0][idx].x;
+		vertex.texture_pos.y = m_mesh->mTextureCoords[0][idx].y;
+	}
+	else
+	{
+		vertex.texture_pos.x = 0.f;
+		vertex.texture_pos.y = 0.f;
+	}
+
+	vertex.normal.x = m_mesh->mNormals[idx].x;
+	vertex.normal.y = m_mesh->mNormals[idx].y;
+	vertex.normal.z = m_mesh->mNormals[idx].z;
+}
+
 std::vector<std::shared_ptr<Texture>> AssimpModelLoader::loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName)
 {
 	std::vector<std::shared_ptr<Texture>> textures;
@@ -284,3 +361,15 @@ DirectX::XMFLOAT4X4 AssimpModelLoader::aiToDirectXMatrix(aiMatrix4x4 matrix)
 
 	return ret;
 }
+
+DirectX::XMFLOAT3 AssimpModelLoader::aiToDirectFloat3(aiVector3D v)
+{
+	return DirectX::XMFLOAT3(v.x, v.y, v.z);
+}
+
+DirectX::XMFLOAT4 AssimpModelLoader::aiToDirectFloat4(aiQuaternion q)
+{
+	return DirectX::XMFLOAT4(q.x, q.y, q.z, q.w);
+}
+
+#pragma endregion
