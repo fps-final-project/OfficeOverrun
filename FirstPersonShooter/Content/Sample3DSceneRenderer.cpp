@@ -401,7 +401,8 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 
 		this->m_mesh = MeshFactory<FirstPersonShooter::VertexData>::createMesh(cubeVertices, cubeIndices, std::vector<std::shared_ptr<Texture>>(), m_deviceResources);
 		this->m_texture = TextureFactory::CreateTextureFromFile(L"Assets\\AK-47\\textures\\AK_Base_color.png", m_deviceResources);
-		this->m_assimpModel = std::make_shared<AnimatedAssimpModel>(AssimpModelLoader::createAnimatedModelFromFile("Assets\\vampire\\dancing_vampire.dae", m_deviceResources));
+		//this->m_assimpModel = std::make_shared<AnimatedAssimpModel>(AssimpModelLoader::createAnimatedModelFromFile("Assets\\vampire\\dancing_vampire.dae", m_deviceResources));
+		this->m_assimpModel = std::make_shared<AnimatedAssimpModel>(AssimpModelLoader::createAnimatedModelFromFile("Assets\\myarms\\myarms.dae", m_deviceResources));
 		this->m_animator = std::make_unique<Animator>(&m_assimpModel->m_animations[0]);
 		//this->m_assimpModel = std::unique_ptr<AssimpModel>(new AssimpModel("Assets\\cube\\cube.obj", m_deviceResources));
 	});

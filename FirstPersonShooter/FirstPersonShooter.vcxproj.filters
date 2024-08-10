@@ -89,6 +89,12 @@
     <Filter Include="Assets\vampire\textures">
       <UniqueIdentifier>{b388464f-f7be-40df-9612-e20e4b53ed23}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\zombie">
+      <UniqueIdentifier>{6cbc4767-dd95-49aa-885b-8d5d0be72833}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\myarms">
+      <UniqueIdentifier>{0465f5a2-e041-4cb6-b906-94ea0f2552ea}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -169,6 +175,12 @@
     <Image Include="Assets\vampire\textures\Vampire_specular.png">
       <Filter>Assets\vampire\textures</Filter>
     </Image>
+    <Image Include="Assets\zombie\Body text\diffuse.png">
+      <Filter>Assets\zombie</Filter>
+    </Image>
+    <Image Include="Assets\myarms\Texture.png">
+      <Filter>Assets\myarms</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -189,6 +201,12 @@
     </None>
     <None Include="Assets\vampire\dancing_vampire.dae">
       <Filter>Assets\vampire</Filter>
+    </None>
+    <None Include="Assets\zombie\Zombie_DAE.dae">
+      <Filter>Assets\zombie</Filter>
+    </None>
+    <None Include="Assets\myarms\myarms.dae">
+      <Filter>Assets\myarms</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

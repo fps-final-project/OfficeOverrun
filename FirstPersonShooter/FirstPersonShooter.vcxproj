@@ -267,6 +267,7 @@
     <Image Include="Assets\AK-47\textures\AK_Roughness.png" />
     <Image Include="Assets\cube\smile.jpg" />
     <Image Include="Assets\LockScreenLogo.scale-200.png" />
+    <Image Include="Assets\myarms\Texture.png" />
     <Image Include="Assets\smile.jpg" />
     <Image Include="Assets\SplashScreen.scale-200.png" />
     <Image Include="Assets\Square150x150Logo.scale-200.png" />
@@ -278,6 +279,7 @@
     <Image Include="Assets\vampire\textures\Vampire_normal.png" />
     <Image Include="Assets\vampire\textures\Vampire_specular.png" />
     <Image Include="Assets\Wide310x150Logo.scale-200.png" />
+    <Image Include="Assets\zombie\Body text\diffuse.png" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimatedAssimpModel.h" />
@@ -363,6 +365,18 @@
     <None Include="Assets\vampire\dancing_vampire.dae">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
       <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)%(Filename).dae</ContentOutput>
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\zombie\Zombie_DAE.dae">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\myarms\myarms.dae">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
       <FileType>Document</FileType>
     </None>
   </ItemGroup>
