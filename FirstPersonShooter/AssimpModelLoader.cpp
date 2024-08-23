@@ -153,6 +153,9 @@ void AssimpModelLoader::createAnimations(AnimatedAssimpModel& outModel, const ai
 		Animation animation;
 
 		auto aiAnimation = scene->mAnimations[i];
+
+		animation.name = std::string(aiAnimation->mName.C_Str());
+
 		int nJoints = aiAnimation->mNumChannels;
 		int nKeyframes = aiAnimation->mChannels[0]->mNumPositionKeys;
 
@@ -191,7 +194,7 @@ void AssimpModelLoader::createAnimations(AnimatedAssimpModel& outModel, const ai
 			}
 		}
 
-		outModel.m_animations.push_back(animation);
+		outModel.m_animations.insert(std::make_pair(aiAnimation->mName.C_Str(), animation));
 	}
 }
 
@@ -349,6 +352,15 @@ std::vector<std::shared_ptr<Texture>> AssimpModelLoader::loadMaterialTextures(ai
 	}
 	return textures;
 }
+
+void AssimpModelLoader::appendTextureToMesh(const std::string& path, Mesh& m, std::shared_ptr<DX::DeviceResources> deviceResources)
+{
+	auto texture = TextureFactory::CreateTextureFromFile(std::wstring(path.begin(), path.end()).c_str(), deviceResources);
+	texture.path = path;
+	texture.type = "diffuse";
+	m.textures.push_back(texture);
+}
+
 
 DirectX::XMFLOAT4X4 AssimpModelLoader::aiToDirectXMatrix(aiMatrix4x4 matrix)
 {

@@ -36,5 +36,6 @@ float4 main(PixelShaderInput input) : SV_TARGET
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
     float3 specular = (specularStrength * spec * lightColor);
 
- return float4(ambient + diffuse + specular, 0.f) * my_texture.Sample(my_sampler, input.texture_pos);
+    //return float4(ambient + diffuse + specular, 0.f) * my_texture.Sample(my_sampler, input.texture_pos);
+    return 0.5 * my_texture.Sample(my_sampler, input.texture_pos);
 }

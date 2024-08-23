@@ -95,6 +95,9 @@
     <Filter Include="Assets\myarms">
       <UniqueIdentifier>{0465f5a2-e041-4cb6-b906-94ea0f2552ea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\simplest">
+      <UniqueIdentifier>{b8d50479-1371-4fe1-a314-b719d2c69427}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -181,6 +184,9 @@
     <Image Include="Assets\myarms\Texture.png">
       <Filter>Assets\myarms</Filter>
     </Image>
+    <Image Include="Assets\simplest\Texture.png">
+      <Filter>Assets\simplest</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -205,7 +211,25 @@
     <None Include="Assets\zombie\Zombie_DAE.dae">
       <Filter>Assets\zombie</Filter>
     </None>
+    <None Include="Assets\myarms\myarms.fbx">
+      <Filter>Assets\myarms</Filter>
+    </None>
+    <None Include="Assets\simplest\simplest_anim.dae">
+      <Filter>Assets\simplest</Filter>
+    </None>
     <None Include="Assets\myarms\myarms.dae">
+      <Filter>Assets\myarms</Filter>
+    </None>
+    <None Include="Assets\myarms\mygun.dae">
+      <Filter>Assets\myarms</Filter>
+    </None>
+    <None Include="Assets\myarms\myarms2.dae">
+      <Filter>Assets\myarms</Filter>
+    </None>
+    <None Include="Assets\myarms\myarms.glb">
+      <Filter>Assets\myarms</Filter>
+    </None>
+    <None Include="Assets\myarms\mygun.glb">
       <Filter>Assets\myarms</Filter>
     </None>
   </ItemGroup>

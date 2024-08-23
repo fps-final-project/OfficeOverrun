@@ -32,7 +32,7 @@ void Sample3DSceneRenderer::CreateWindowSizeDependentResources()
 {
 	Size outputSize = m_deviceResources->GetOutputSize();
 	float aspectRatio = outputSize.Width / outputSize.Height;
-	float fovAngleY = 70.0f * XM_PI / 180.0f;
+	float fovAngleY = 95.0f * XM_PI / 180.0f;
 
 	// This is a simple example of change that can be made when the app is in
 	// portrait or snapped view.
@@ -53,7 +53,7 @@ void Sample3DSceneRenderer::CreateWindowSizeDependentResources()
 		aspectRatio,
 		0.01f,
 		100.0f
-		);
+	);
 
 	XMFLOAT4X4 orientation = m_deviceResources->GetOrientationTransform3D();
 
@@ -62,16 +62,16 @@ void Sample3DSceneRenderer::CreateWindowSizeDependentResources()
 	XMStoreFloat4x4(
 		&m_VSConstantBufferData.projection,
 		XMMatrixTranspose(perspectiveMatrix * orientationMatrix)
-		);
+	);
 
 	// Eye is at (0,0.7,1.5), looking at point (0,-0.1,0) with the up-vector along the y-axis.
-	static const XMVECTORF32 eye = { 0.0f, 0.0f, -5.0f, 0.0f };
+	static const XMVECTORF32 eye = { 0.0f, 0.0f, 0.0f, 0.0f };
 	static const XMVECTORF32 at = { 0.0f, 0.0f, 1.0f, 0.0f };
 	static const XMVECTORF32 up = { 0.0f, 1.0f, 0.0f, 0.0f };
 
 	XMStoreFloat4x4(&m_VSConstantBufferData.view, XMMatrixTranspose(XMMatrixLookAtRH(eye, at, up)));
 	XMStoreFloat3(&m_PSConstantBufferData.camera_pos, eye);
-	XMStoreFloat3(&m_PSConstantBufferData.light_pos, XMVECTORF32{0, 0.7f, 1.5f, 0});
+	XMStoreFloat3(&m_PSConstantBufferData.light_pos, eye);
 
 
 }
@@ -101,15 +101,17 @@ void Sample3DSceneRenderer::Rotate(float radians, double totalSeconds)
 
 	auto now = std::chrono::high_resolution_clock::now();
 	double deltaTime = (now - lastFrame).count() / 1e9;
+	//deltaTime = 0;
 	lastFrame = now;
 
-	m_animator->updateAnimation(m_assimpModel->m_rootJoint, m_assimpModel->m_BoneInfoMap, deltaTime);
+	m_animator[0]->updateAnimation(m_assimpModel[0]->m_rootJoint, m_assimpModel[0]->m_BoneInfoMap, deltaTime);
+	m_animator[1]->updateAnimation(m_assimpModel[1]->m_rootJoint, m_assimpModel[1]->m_BoneInfoMap, deltaTime);
 
 
 
-	XMVECTORF32 eye = { 0.0f, 0.0f, -5.0f, 0.0f };
+	XMVECTORF32 eye = {2 * sin(radians), 0.0f, -2 * cos(radians), 0.0f};
 	//static const XMVECTORF32 at = { sin(radians), 0.0f, cos(radians), 0.0f};
-	XMVECTORF32 at = { sin(radians), 0.0f, cos(radians) - 10.f, 0.0f};
+	XMVECTORF32 at = { 0.0f, 0.0f, 0.0f, 0.0f };
 
 	XMVECTORF32 up = { 0.0f, 1.0f, 0.0f, 0.0f };
 
@@ -118,21 +120,15 @@ void Sample3DSceneRenderer::Rotate(float radians, double totalSeconds)
 
 	// Prepare to pass the updated model matrix to the shader
 	//auto modelMatrix = XMMatrixScaling(0.01, 0.01, 0.01) * XMMatrixRotationY(radians);
-	//auto modelMatrix = XMMatrixScaling(0.8, 0.8, 0.8);
-	auto modelMatrix = XMMatrixScaling(0.8, 0.8, 0.8) * XMMatrixRotationY(3.1415);
+	//auto modelMatrix = XMMatrixScaling(0.08, 0.08, 0.08);
+	//auto modelMatrix = XMMatrixScaling(0.008, 0.008, 0.008) * XMMatrixRotationY(3.1415);
 
 
+	auto modelMatrix = XMMatrixScaling(0.8, 0.8, 0.8);
 	XMStoreFloat4x4(&m_VSConstantBufferData.model, XMMatrixTranspose(modelMatrix));
 	auto det = XMMatrixDeterminant(modelMatrix);
 	XMStoreFloat4x4(&m_VSConstantBufferData.inv_model, XMMatrixTranspose(XMMatrixInverse(&det, modelMatrix)));
 
-	auto pose = m_animator->m_FinalBoneMatrices;
-	for (int i = 0; i < 55; i++)
-	{
-		auto loaded = DirectX::XMLoadFloat4x4(&pose[i]);
-		XMStoreFloat4x4(&m_VSConstantBufferData.pose[i], XMMatrixTranspose(loaded));
-		//XMStoreFloat4x4(&m_VSConstantBufferData.pose[i], DirectX::XMMatrixIdentity());
-	}
 }
 
 void Sample3DSceneRenderer::StartTracking()
@@ -148,7 +144,7 @@ void Sample3DSceneRenderer::TrackingUpdate(float positionX)
 		float radians = XM_2PI * 2.0f * positionX / m_deviceResources->GetOutputSize().Width;
 		//Rotate(radians);
 		Rotate(radians, 0.f);
-		
+
 	}
 }
 
@@ -167,7 +163,26 @@ void Sample3DSceneRenderer::Render()
 		return;
 	}
 
-	this->Render(*m_assimpModel);
+	auto modelMatrix = XMMatrixScaling(1.f, 1.f, 1.f);
+	XMStoreFloat4x4(&m_VSConstantBufferData.model, XMMatrixTranspose(modelMatrix));
+	auto pose = m_animator[0]->m_FinalBoneMatrices;
+	for (int i = 0; i < 55; i++)
+	{
+		auto loaded = DirectX::XMLoadFloat4x4(&pose[i]);
+		XMStoreFloat4x4(&m_VSConstantBufferData.pose[i], XMMatrixTranspose(loaded));
+	}
+	this->Render(*m_assimpModel[0]);
+
+	//modelMatrix = XMMatrixScaling(1.f, 1.f, 1.f) * XMMatrixTranslation(-0.126505, -0.175764, 0.016334f + 0.4572);
+	modelMatrix = XMMatrixScaling(1.f, 1.f, 1.f) * XMMatrixTranslation(0, 0, 0.4572);
+	XMStoreFloat4x4(&m_VSConstantBufferData.model, XMMatrixTranspose(modelMatrix));
+	pose = m_animator[1]->m_FinalBoneMatrices;
+	for (int i = 0; i < 55; i++)
+	{
+		auto loaded = DirectX::XMLoadFloat4x4(&pose[i]);
+		XMStoreFloat4x4(&m_VSConstantBufferData.pose[i], XMMatrixTranspose(loaded));
+	}
+	this->Render(*m_assimpModel[1]);
 }
 
 void FirstPersonShooter::Sample3DSceneRenderer::Render(const Mesh& m)
@@ -267,7 +282,7 @@ void FirstPersonShooter::Sample3DSceneRenderer::Render(const Mesh& m)
 void FirstPersonShooter::Sample3DSceneRenderer::Render(const AssimpModel& m)
 {
 	for (const auto& m_mesh : m.meshes)
-	{	
+	{
 		this->Render(m_mesh);
 	}
 }
@@ -286,10 +301,10 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 				fileData.size(),
 				nullptr,
 				&m_vertexShader
-				)
-			);
+			)
+		);
 
-		static const D3D11_INPUT_ELEMENT_DESC vertexDesc [] =
+		static const D3D11_INPUT_ELEMENT_DESC vertexDesc[] =
 		{
 			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 			{ "UV", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 3 * sizeof(float), D3D11_INPUT_PER_VERTEX_DATA, 0},
@@ -305,9 +320,9 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 				&fileData[0],
 				fileData.size(),
 				&m_inputLayout
-				)
-			);
-	});
+			)
+		);
+		});
 
 	// After the pixel shader file is loaded, create the shader and constant buffer.
 	auto createPSTask = loadPSTask.then([this](const std::vector<byte>& fileData) {
@@ -317,17 +332,17 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 				fileData.size(),
 				nullptr,
 				&m_pixelShader
-				)
-			);
+			)
+		);
 
-		CD3D11_BUFFER_DESC constantBufferDesc(sizeof(AnimationConstantBuffer) , D3D11_BIND_CONSTANT_BUFFER);
+		CD3D11_BUFFER_DESC constantBufferDesc(sizeof(AnimationConstantBuffer), D3D11_BIND_CONSTANT_BUFFER);
 		DX::ThrowIfFailed(
 			m_deviceResources->GetD3DDevice()->CreateBuffer(
 				&constantBufferDesc,
 				nullptr,
 				&m_VSConstantBuffer
-				)
-			);
+			)
+		);
 
 
 		CD3D11_BUFFER_DESC PSconstantBufferDesc(sizeof(LightingConstantBuffer), D3D11_BIND_CONSTANT_BUFFER);
@@ -338,12 +353,12 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 				&m_PSConstantBuffer
 			)
 		);
-	});
+		});
 
 	// Once both shaders are loaded, create the m_mesh.
-	auto createCubeTask = (createPSTask && createVSTask).then([this] () {
+	auto createCubeTask = (createPSTask && createVSTask).then([this]() {
 
-		static std::vector<VertexData> cubeVertices = 
+		static std::vector<VertexData> cubeVertices =
 		{
 			// Front face
 		{ XMFLOAT3(-0.5f,  0.5f, -0.5f), XMFLOAT2(0.0f, 0.0f), XMFLOAT3(0.0f, 0.0f, -1.0f)},
@@ -402,10 +417,17 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 		this->m_mesh = MeshFactory<FirstPersonShooter::VertexData>::createMesh(cubeVertices, cubeIndices, std::vector<std::shared_ptr<Texture>>(), m_deviceResources);
 		this->m_texture = TextureFactory::CreateTextureFromFile(L"Assets\\AK-47\\textures\\AK_Base_color.png", m_deviceResources);
 		//this->m_assimpModel = std::make_shared<AnimatedAssimpModel>(AssimpModelLoader::createAnimatedModelFromFile("Assets\\vampire\\dancing_vampire.dae", m_deviceResources));
-		this->m_assimpModel = std::make_shared<AnimatedAssimpModel>(AssimpModelLoader::createAnimatedModelFromFile("Assets\\myarms\\myarms.dae", m_deviceResources));
-		this->m_animator = std::make_unique<Animator>(&m_assimpModel->m_animations[0]);
+		this->m_assimpModel[0] = std::make_shared<AnimatedAssimpModel>(AssimpModelLoader::createAnimatedModelFromFile("Assets\\myarms\\myarms.glb", m_deviceResources));
+		//this->m_assimpModel[0] = std::make_shared<AnimatedAssimpModel>(AssimpModelLoader::createAnimatedModelFromFile("Assets\\simplest\\simplest_anim.dae", m_deviceResources));
+		this->m_assimpModel[1] = std::make_shared<AnimatedAssimpModel>(AssimpModelLoader::createAnimatedModelFromFile("Assets\\myarms\\mygun.glb", m_deviceResources));
+
+		AssimpModelLoader::appendTextureToMesh("Assets\\myarms\\Texture.png", this->m_assimpModel[0]->meshes[0], m_deviceResources);
+		AssimpModelLoader::appendTextureToMesh("Assets\\myarms\\Texture.png", this->m_assimpModel[1]->meshes[0], m_deviceResources);
+
+		this->m_animator[0] = std::make_unique<Animator>(&m_assimpModel[0]->m_animations["FP_reload"]);
+		this->m_animator[1] = std::make_unique<Animator>(&m_assimpModel[1]->m_animations["GUN_reload"]);
 		//this->m_assimpModel = std::unique_ptr<AssimpModel>(new AssimpModel("Assets\\cube\\cube.obj", m_deviceResources));
-	});
+		});
 
 	auto createSamplerTask = createCubeTask.then([this]() {
 		auto device = m_deviceResources->GetD3DDevice();
@@ -430,9 +452,9 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 
 		});
 	// Once the cube is loaded, the object is ready to be rendered.
-	createSamplerTask.then([this] () {
+	createSamplerTask.then([this]() {
 		m_loadingComplete = true;
-	});
+		});
 }
 
 void Sample3DSceneRenderer::ReleaseDeviceDependentResources()

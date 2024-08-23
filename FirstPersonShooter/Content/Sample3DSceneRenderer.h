@@ -40,9 +40,9 @@ namespace FirstPersonShooter
 		std::shared_ptr<DX::DeviceResources> m_deviceResources;
 
 		Mesh m_mesh;
-		std::shared_ptr<AnimatedAssimpModel> m_assimpModel;
+		std::shared_ptr<AnimatedAssimpModel> m_assimpModel[2];
 		std::unique_ptr<Animation> m_animation;
-		std::unique_ptr<Animator> m_animator;
+		std::unique_ptr<Animator> m_animator[2];
 
 		Texture m_texture;
 

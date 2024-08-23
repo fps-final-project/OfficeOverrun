@@ -21,6 +21,8 @@ public:
 	static AssimpModel createModelFromFile(const std::string& path, std::shared_ptr<DX::DeviceResources> deviceResources);
 	static AnimatedAssimpModel createAnimatedModelFromFile(const std::string& path, std::shared_ptr<DX::DeviceResources> deviceResources);
 
+	static void appendTextureToMesh(const std::string& path, Mesh& m, std::shared_ptr<DX::DeviceResources> deviceResources);
+
 	static DirectX::XMFLOAT4X4 aiToDirectXMatrix(aiMatrix4x4 matrix);
 	static DirectX::XMFLOAT3 aiToDirectFloat3(aiVector3D v);
 	static DirectX::XMFLOAT4 aiToDirectFloat4(aiQuaternion q);

@@ -29,6 +29,7 @@ struct KeyFrame
 
 struct Animation
 {
+	std::string name;
 	std::vector<KeyFrame> frames;
 	double m_TicksPerSecond;
 	double m_Duration;
@@ -39,7 +40,7 @@ struct AnimatedAssimpModel : public AssimpModel
 {
 	std::map<std::string, BoneInfo> m_BoneInfoMap;
 	Joint m_rootJoint;
-	std::vector<Animation> m_animations;
+	std::map<std::string, Animation> m_animations;
 	int m_boneCounter;
 
 };
