@@ -23,21 +23,6 @@
     <ClCompile Include="Common\DeviceResources.cpp">
       <Filter>Common</Filter>
     </ClCompile>
-    <ClInclude Include="Content\Sample3DSceneRenderer.h">
-      <Filter>Content</Filter>
-    </ClInclude>
-    <ClInclude Include="Content\SampleFpsTextRenderer.h">
-      <Filter>Content</Filter>
-    </ClInclude>
-    <ClInclude Include="Content\ShaderStructures.h">
-      <Filter>Content</Filter>
-    </ClInclude>
-    <ClCompile Include="Content\Sample3DSceneRenderer.cpp">
-      <Filter>Content</Filter>
-    </ClCompile>
-    <ClCompile Include="Content\SampleFpsTextRenderer.cpp">
-      <Filter>Content</Filter>
-    </ClCompile>
     <Image Include="Assets\LockScreenLogo.scale-200.png">
       <Filter>Assets</Filter>
     </Image>
@@ -89,14 +74,20 @@
     <Filter Include="Assets\vampire\textures">
       <UniqueIdentifier>{b388464f-f7be-40df-9612-e20e4b53ed23}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Assets\zombie">
-      <UniqueIdentifier>{6cbc4767-dd95-49aa-885b-8d5d0be72833}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Assets\myarms">
       <UniqueIdentifier>{0465f5a2-e041-4cb6-b906-94ea0f2552ea}</UniqueIdentifier>
     </Filter>
     <Filter Include="Assets\simplest">
       <UniqueIdentifier>{b8d50479-1371-4fe1-a314-b719d2c69427}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\Entity">
+      <UniqueIdentifier>{675191b9-1eec-4ae2-9cc0-614336ab7477}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\Renderer">
+      <UniqueIdentifier>{8b6bdbd5-1633-4c5a-9e5b-4f0492959883}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\Model\Animation">
+      <UniqueIdentifier>{98242906-809f-419f-9852-136fea955114}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -109,7 +100,24 @@
     <ClCompile Include="AssimpModelLoader.cpp">
       <Filter>Content\Model</Filter>
     </ClCompile>
-    <ClCompile Include="Animator.cpp" />
+    <ClCompile Include="Drawable.cpp">
+      <Filter>Content\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Content\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Hittable.cpp">
+      <Filter>Content\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Content\Sample3DSceneRenderer.cpp">
+      <Filter>Content\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Content\SampleFpsTextRenderer.cpp">
+      <Filter>Content\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Animator.cpp">
+      <Filter>Content\Model\Animation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
@@ -133,13 +141,39 @@
     <ClInclude Include="AssimpModelLoader.h">
       <Filter>Content\Model</Filter>
     </ClInclude>
-    <ClInclude Include="BoneInfo.h">
-      <Filter>Content</Filter>
-    </ClInclude>
     <ClInclude Include="AnimatedAssimpModel.h">
       <Filter>Content\Model</Filter>
     </ClInclude>
-    <ClInclude Include="Animator.h" />
+    <ClInclude Include="Drawable.hpp">
+      <Filter>Content\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.hpp">
+      <Filter>Content\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Hittable.hpp">
+      <Filter>Content\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Animable.hpp">
+      <Filter>Content\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedEntity.hpp">
+      <Filter>Content\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Content\Sample3DSceneRenderer.h">
+      <Filter>Content\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Content\SampleFpsTextRenderer.h">
+      <Filter>Content\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Content\ShaderStructures.h">
+      <Filter>Content\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="BoneInfo.h">
+      <Filter>Content\Model\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Animator.h">
+      <Filter>Content\Model\Animation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\StoreLogo.png">
@@ -178,9 +212,6 @@
     <Image Include="Assets\vampire\textures\Vampire_specular.png">
       <Filter>Assets\vampire\textures</Filter>
     </Image>
-    <Image Include="Assets\zombie\Body text\diffuse.png">
-      <Filter>Assets\zombie</Filter>
-    </Image>
     <Image Include="Assets\myarms\Texture.png">
       <Filter>Assets\myarms</Filter>
     </Image>
@@ -207,9 +238,6 @@
     </None>
     <None Include="Assets\vampire\dancing_vampire.dae">
       <Filter>Assets\vampire</Filter>
-    </None>
-    <None Include="Assets\zombie\Zombie_DAE.dae">
-      <Filter>Assets\zombie</Filter>
     </None>
     <None Include="Assets\myarms\myarms.fbx">
       <Filter>Assets\myarms</Filter>

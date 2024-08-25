@@ -1,11 +1,9 @@
-#pragma once
-
-#include "Drawable.hpp"
 #include "Hittable.hpp"
+#include "Animable.hpp"
 
 using namespace DirectX;
 
-class Entity : public Drawable, public Hittable
+public class AnimatedEntity : public Hittable, Animable
 {
 public:
 	virtual void Update(float dt) = 0;
@@ -14,4 +12,3 @@ protected:
 	XMFLOAT3 rotation;
 	XMFLOAT3 velocity;
 };
-

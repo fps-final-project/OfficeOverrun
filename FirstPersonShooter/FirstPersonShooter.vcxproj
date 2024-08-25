@@ -280,22 +280,26 @@
     <Image Include="Assets\vampire\textures\Vampire_normal.png" />
     <Image Include="Assets\vampire\textures\Vampire_specular.png" />
     <Image Include="Assets\Wide310x150Logo.scale-200.png" />
-    <Image Include="Assets\zombie\Body text\diffuse.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animable.hpp" />
     <ClInclude Include="AnimatedAssimpModel.h" />
+    <ClInclude Include="AnimatedEntity.hpp" />
     <ClInclude Include="Animator.h" />
     <ClInclude Include="App.h" />
     <ClInclude Include="AssimpModel.h" />
     <ClInclude Include="AssimpModelLoader.h" />
     <ClInclude Include="BoneInfo.h" />
     <ClInclude Include="Common\DeviceResources.h" />
+    <ClInclude Include="Drawable.hpp" />
+    <ClInclude Include="Entity.hpp" />
     <ClInclude Include="FirstPersonShooterMain.h" />
     <ClInclude Include="Common\DirectXHelper.h" />
     <ClInclude Include="Common\StepTimer.h" />
     <ClInclude Include="Content\Sample3DSceneRenderer.h" />
     <ClInclude Include="Content\SampleFpsTextRenderer.h" />
     <ClInclude Include="Content\ShaderStructures.h" />
+    <ClInclude Include="Hittable.hpp" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshFactory.h" />
     <ClInclude Include="pch.h" />
@@ -307,9 +311,12 @@
     <ClCompile Include="App.cpp" />
     <ClCompile Include="AssimpModelLoader.cpp" />
     <ClCompile Include="Common\DeviceResources.cpp" />
+    <ClCompile Include="Drawable.cpp" />
+    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="FirstPersonShooterMain.cpp" />
     <ClCompile Include="Content\SampleFpsTextRenderer.cpp" />
     <ClCompile Include="Content\Sample3DSceneRenderer.cpp" />
+    <ClCompile Include="Hittable.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -372,12 +379,6 @@
     <None Include="Assets\vampire\dancing_vampire.dae">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
       <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)%(Filename).dae</ContentOutput>
-      <FileType>Document</FileType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Assets\zombie\Zombie_DAE.dae">
-      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
       <FileType>Document</FileType>
     </None>
   </ItemGroup>
