@@ -3,7 +3,7 @@
 
 using namespace DirectX;
 
-public class AnimatedEntity : public Hittable, Animable
+class AnimatedEntity : public Hittable, Animable
 {
 public:
 	virtual void Update(float dt) = 0;

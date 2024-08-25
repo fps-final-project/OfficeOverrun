@@ -2,7 +2,7 @@
 #include "AnimatedAssimpModel.h"
 
 
-public class Animable
+class Animable
 {
 public:
 	virtual void Draw() = 0;
