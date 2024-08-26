@@ -1,3 +1,4 @@
+#pragma once
 #include "Hittable.hpp"
 #include "Animable.hpp"
 

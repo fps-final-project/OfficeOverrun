@@ -1,6 +1,7 @@
 ﻿#include "pch.h"
 #include "FirstPersonShooterMain.h"
 #include "Common\DirectXHelper.h"
+#include "ResourceManager.h"
 
 using namespace FirstPersonShooter;
 using namespace Windows::Foundation;
@@ -15,10 +16,13 @@ FirstPersonShooterMain::FirstPersonShooterMain(const std::shared_ptr<DX::DeviceR
 	m_deviceResources->RegisterDeviceNotify(this);
 
 	// TODO: Replace this with your app's content initialization.
-	m_sceneRenderer = std::unique_ptr<Sample3DSceneRenderer>(new Sample3DSceneRenderer(m_deviceResources));
 
+
+	ResourceManager::Instance.loadAnimatedModel("Assets\\myarms\\myarms.glb", m_deviceResources, { "Assets\\myarms\\Texture.png" });
+	ResourceManager::Instance.loadAnimatedModel("Assets\\myarms\\mygun.glb", m_deviceResources, { "Assets\\myarms\\Texture.png" });
+
+	m_sceneRenderer = std::unique_ptr<Base3DRenderer>(new Base3DRenderer(m_deviceResources));
 	m_fpsTextRenderer = std::unique_ptr<SampleFpsTextRenderer>(new SampleFpsTextRenderer(m_deviceResources));
-
 	// TODO: Change the timer settings if you want something other than the default variable timestep mode.
 	// e.g. for 60 FPS fixed timestep update logic, call:
 	/*

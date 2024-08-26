@@ -1,19 +1,18 @@
 ﻿#include "pch.h"
-#include "Sample3DSceneRenderer.h"
+#include "Base3DRenderer.h"
 
 #include "..\Common\DirectXHelper.h"
 
 #include <vector>
 #include "TextureFactory.h"
 #include "AssimpModelLoader.h"
-
-using namespace FirstPersonShooter;
+#include "ResourceManager.h"
 
 using namespace DirectX;
 using namespace Windows::Foundation;
 
 // Loads vertex and pixel shaders from files and instantiates the cube geometry.
-Sample3DSceneRenderer::Sample3DSceneRenderer(const std::shared_ptr<DX::DeviceResources>& deviceResources) :
+Base3DRenderer::Base3DRenderer(const std::shared_ptr<DX::DeviceResources>& deviceResources) :
 	m_loadingComplete(false),
 	m_degreesPerSecond(45),
 	m_indexCount(0),
@@ -28,7 +27,7 @@ Sample3DSceneRenderer::Sample3DSceneRenderer(const std::shared_ptr<DX::DeviceRes
 }
 
 // Initializes view parameters when the window size changes.
-void Sample3DSceneRenderer::CreateWindowSizeDependentResources()
+void Base3DRenderer::CreateWindowSizeDependentResources()
 {
 	Size outputSize = m_deviceResources->GetOutputSize();
 	float aspectRatio = outputSize.Width / outputSize.Height;
@@ -77,7 +76,7 @@ void Sample3DSceneRenderer::CreateWindowSizeDependentResources()
 }
 
 // Called once per frame, rotates the cube and calculates the model and view matrices.
-void Sample3DSceneRenderer::Update(DX::StepTimer const& timer)
+void Base3DRenderer::Update(DX::StepTimer const& timer)
 {
 	if (!m_tracking)
 	{
@@ -94,7 +93,7 @@ void Sample3DSceneRenderer::Update(DX::StepTimer const& timer)
 }
 
 // Rotate the 3D cube model a set amount of radians.
-void Sample3DSceneRenderer::Rotate(float radians, double totalSeconds)
+void Base3DRenderer::Rotate(float radians, double totalSeconds)
 {
 	if (!m_loadingComplete)
 		return;
@@ -104,8 +103,11 @@ void Sample3DSceneRenderer::Rotate(float radians, double totalSeconds)
 	//deltaTime = 0;
 	lastFrame = now;
 
-	m_animator[0]->updateAnimation(m_assimpModel[0]->m_rootJoint, m_assimpModel[0]->m_BoneInfoMap, deltaTime);
-	m_animator[1]->updateAnimation(m_assimpModel[1]->m_rootJoint, m_assimpModel[1]->m_BoneInfoMap, deltaTime);
+	auto arms_model = ResourceManager::Instance.getAnimatedModel("myarms");
+	auto gun_model = ResourceManager::Instance.getAnimatedModel("mygun");
+
+	m_animator[0]->updateAnimation(arms_model->m_rootJoint, arms_model->m_BoneInfoMap, deltaTime);
+	m_animator[1]->updateAnimation(gun_model->m_rootJoint, gun_model->m_BoneInfoMap, deltaTime);
 
 
 
@@ -131,13 +133,13 @@ void Sample3DSceneRenderer::Rotate(float radians, double totalSeconds)
 
 }
 
-void Sample3DSceneRenderer::StartTracking()
+void Base3DRenderer::StartTracking()
 {
 	m_tracking = true;
 }
 
 // When tracking, the 3D cube can be rotated around its Y axis by tracking pointer position relative to the output screen width.
-void Sample3DSceneRenderer::TrackingUpdate(float positionX)
+void Base3DRenderer::TrackingUpdate(float positionX)
 {
 	if (m_tracking)
 	{
@@ -148,13 +150,13 @@ void Sample3DSceneRenderer::TrackingUpdate(float positionX)
 	}
 }
 
-void Sample3DSceneRenderer::StopTracking()
+void Base3DRenderer::StopTracking()
 {
 	m_tracking = false;
 }
 
 // Renders one frame using the vertex and pixel shaders.
-void Sample3DSceneRenderer::Render()
+void Base3DRenderer::Render()
 {
 
 	// Loading is asynchronous. Only draw geometry after it's loaded.
@@ -171,7 +173,7 @@ void Sample3DSceneRenderer::Render()
 		auto loaded = DirectX::XMLoadFloat4x4(&pose[i]);
 		XMStoreFloat4x4(&m_VSConstantBufferData.pose[i], XMMatrixTranspose(loaded));
 	}
-	this->Render(*m_assimpModel[0]);
+	this->Render(*ResourceManager::Instance.getAnimatedModel("myarms"));
 
 	//modelMatrix = XMMatrixScaling(1.f, 1.f, 1.f) * XMMatrixTranslation(-0.126505, -0.175764, 0.016334f + 0.4572);
 	modelMatrix = XMMatrixScaling(1.f, 1.f, 1.f) * XMMatrixTranslation(0, 0, 0.4572);
@@ -182,10 +184,11 @@ void Sample3DSceneRenderer::Render()
 		auto loaded = DirectX::XMLoadFloat4x4(&pose[i]);
 		XMStoreFloat4x4(&m_VSConstantBufferData.pose[i], XMMatrixTranspose(loaded));
 	}
-	this->Render(*m_assimpModel[1]);
+	this->Render(*ResourceManager::Instance.getAnimatedModel("mygun"));
 }
 
-void FirstPersonShooter::Sample3DSceneRenderer::Render(const Mesh& m)
+
+void Base3DRenderer::Render(const Mesh& m)
 {
 	auto context = m_deviceResources->GetD3DDeviceContext();
 
@@ -279,7 +282,7 @@ void FirstPersonShooter::Sample3DSceneRenderer::Render(const Mesh& m)
 
 }
 
-void FirstPersonShooter::Sample3DSceneRenderer::Render(const AssimpModel& m)
+void Base3DRenderer::Render(const AssimpModel& m)
 {
 	for (const auto& m_mesh : m.meshes)
 	{
@@ -287,7 +290,7 @@ void FirstPersonShooter::Sample3DSceneRenderer::Render(const AssimpModel& m)
 	}
 }
 
-void Sample3DSceneRenderer::CreateDeviceDependentResources()
+void Base3DRenderer::CreateDeviceDependentResources()
 {
 	// Load shaders asynchronously.
 	auto loadVSTask = DX::ReadDataAsync(L"SkeletalVertexShader.cso");
@@ -353,83 +356,12 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 				&m_PSConstantBuffer
 			)
 		);
+
+		this->m_animator[0] = std::make_unique<Animator>(&ResourceManager::Instance.getAnimatedModel("myarms")->m_animations["FP_reload"]);
+		this->m_animator[1] = std::make_unique<Animator>(&ResourceManager::Instance.getAnimatedModel("mygun")->m_animations["GUN_reload"]);
 		});
 
-	// Once both shaders are loaded, create the m_mesh.
-	auto createCubeTask = (createPSTask && createVSTask).then([this]() {
-
-		static std::vector<VertexData> cubeVertices =
-		{
-			// Front face
-		{ XMFLOAT3(-0.5f,  0.5f, -0.5f), XMFLOAT2(0.0f, 0.0f), XMFLOAT3(0.0f, 0.0f, -1.0f)},
-		{ XMFLOAT3(-0.5f, -0.5f, -0.5f), XMFLOAT2(0.0f, 1.0f), XMFLOAT3(0.0f, 0.0f, -1.0f) },
-		{ XMFLOAT3(0.5f,  -0.5f, -0.5f), XMFLOAT2(1.0f, 1.0f), XMFLOAT3(0.0f, 0.0f, -1.0f) },
-		{ XMFLOAT3(0.5f, 0.5f, -0.5f), XMFLOAT2(1.0f, 0.0f), XMFLOAT3(0.0f, 0.0f, -1.0f) },
-
-		// Back face
-		{ XMFLOAT3(0.5f,  0.5f, 0.5f), XMFLOAT2(0.0f, 0.0f), XMFLOAT3(0.0f, 0.0f, 1.0f) },
-		{ XMFLOAT3(0.5f, -0.5f, 0.5f), XMFLOAT2(0.0f, 1.0f), XMFLOAT3(0.0f, 0.0f, 1.0f)  },
-		{ XMFLOAT3(-0.5f,  -0.5f, 0.5f), XMFLOAT2(1.0f, 1.0f), XMFLOAT3(0.0f, 0.0f, 1.0f)  },
-		{ XMFLOAT3(-0.5f, 0.5f, 0.5f), XMFLOAT2(1.0f, 0.0f), XMFLOAT3(0.0f, 0.0f, 1.0f)  },
-
-		// Left face
-		{ XMFLOAT3(-0.5f,  0.5f,  0.5f), XMFLOAT2(0.0f, 0.0f), XMFLOAT3(-1.0f, 0.0f, 0.0f) },
-		{ XMFLOAT3(-0.5f, -0.5f,  0.5f), XMFLOAT2(0.0f, 1.0f), XMFLOAT3(-1.0f, 0.0f, 0.0f) },
-		{ XMFLOAT3(-0.5f, -0.5f, -0.5f), XMFLOAT2(1.0f, 1.0f), XMFLOAT3(-1.0f, 0.0f, 0.0f) },
-		{ XMFLOAT3(-0.5f,  0.5f, -0.5f), XMFLOAT2(1.0f, 0.0f), XMFLOAT3(-1.0f, 0.0f, 0.0f) },
-
-		// Right face
-		{ XMFLOAT3(0.5f,  0.5f,  -0.5f), XMFLOAT2(0.0f, 0.0f), XMFLOAT3(1.0f, 0.0f, 0.0f) },
-		{ XMFLOAT3(0.5f, -0.5f,  -0.5f), XMFLOAT2(0.0f, 1.0f), XMFLOAT3(1.0f, 0.0f, 0.0f)  },
-		{ XMFLOAT3(0.5f, -0.5f, 0.5f), XMFLOAT2(1.0f, 1.0f), XMFLOAT3(1.0f, 0.0f, 0.0f)  },
-		{ XMFLOAT3(0.5f,  0.5f, 0.5f), XMFLOAT2(1.0f, 0.0f), XMFLOAT3(1.0f, 0.0f, 0.0f)  },
-
-		// Top face
-		{ XMFLOAT3(-0.5f,  0.5f,  0.5f), XMFLOAT2(0.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f)  },
-		{ XMFLOAT3(-0.5f,  0.5f,  -0.5f), XMFLOAT2(0.0f, 1.0f), XMFLOAT3(0.0f, 1.0f, 0.0f)  },
-		{ XMFLOAT3(0.5f,  0.5f, -0.5f), XMFLOAT2(1.0f, 1.0f), XMFLOAT3(0.0f, 1.0f, 0.0f)  },
-		{ XMFLOAT3(0.5f,  0.5f, 0.5f), XMFLOAT2(1.0f, 0.0f), XMFLOAT3(0.0f, 1.0f, 0.0f)  },
-
-		// Bottom face
-		{ XMFLOAT3(-0.5f, -0.5f, -0.5f), XMFLOAT2(0.0f, 0.0f), XMFLOAT3(0.0f, -1.0f, 0.0f)  },
-		{ XMFLOAT3(-0.5f, -0.5f, 0.5f), XMFLOAT2(0.0f, 1.0f), XMFLOAT3(0.0f, -1.0f, 0.0f)   },
-		{ XMFLOAT3(0.5f, -0.5f,  0.5f), XMFLOAT2(0.0f, 0.0f), XMFLOAT3(0.0f, -1.0f, 0.0f)   },
-		{ XMFLOAT3(0.5f, -0.5f,  -0.5f), XMFLOAT2(1.0f, 0.0f), XMFLOAT3(0.0f, -1.0f, 0.0f)   }
-		};
-
-		static std::vector<unsigned short> cubeIndices =
-		{
-			// Front face
-		0, 1, 2, 2, 3, 0,
-		// Back face
-		4, 5, 6, 6, 7, 4,
-		// Left face
-		8, 9, 10, 10, 11, 8,
-		// Right face
-		12, 13, 14, 14, 15, 12,
-		// Top face
-		16, 17, 18, 18, 19, 16,
-		// Bottom face
-		20, 21, 22, 22, 23, 20
-		};
-
-
-		this->m_mesh = MeshFactory<FirstPersonShooter::VertexData>::createMesh(cubeVertices, cubeIndices, std::vector<std::shared_ptr<Texture>>(), m_deviceResources);
-		this->m_texture = TextureFactory::CreateTextureFromFile(L"Assets\\AK-47\\textures\\AK_Base_color.png", m_deviceResources);
-		//this->m_assimpModel = std::make_shared<AnimatedAssimpModel>(AssimpModelLoader::createAnimatedModelFromFile("Assets\\vampire\\dancing_vampire.dae", m_deviceResources));
-		this->m_assimpModel[0] = std::make_shared<AnimatedAssimpModel>(AssimpModelLoader::createAnimatedModelFromFile("Assets\\myarms\\myarms.glb", m_deviceResources));
-		//this->m_assimpModel[0] = std::make_shared<AnimatedAssimpModel>(AssimpModelLoader::createAnimatedModelFromFile("Assets\\simplest\\simplest_anim.dae", m_deviceResources));
-		this->m_assimpModel[1] = std::make_shared<AnimatedAssimpModel>(AssimpModelLoader::createAnimatedModelFromFile("Assets\\myarms\\mygun.glb", m_deviceResources));
-
-		AssimpModelLoader::appendTextureToMesh("Assets\\myarms\\Texture.png", this->m_assimpModel[0]->meshes[0], m_deviceResources);
-		AssimpModelLoader::appendTextureToMesh("Assets\\myarms\\Texture.png", this->m_assimpModel[1]->meshes[0], m_deviceResources);
-
-		this->m_animator[0] = std::make_unique<Animator>(&m_assimpModel[0]->m_animations["FP_reload"]);
-		this->m_animator[1] = std::make_unique<Animator>(&m_assimpModel[1]->m_animations["GUN_reload"]);
-		//this->m_assimpModel = std::unique_ptr<AssimpModel>(new AssimpModel("Assets\\cube\\cube.obj", m_deviceResources));
-		});
-
-	auto createSamplerTask = createCubeTask.then([this]() {
+	auto createSamplerTask = (createPSTask && createVSTask).then([this]() {
 		auto device = m_deviceResources->GetD3DDevice();
 		D3D11_SAMPLER_DESC ImageSamplerDesc = {};
 
@@ -457,7 +389,7 @@ void Sample3DSceneRenderer::CreateDeviceDependentResources()
 		});
 }
 
-void Sample3DSceneRenderer::ReleaseDeviceDependentResources()
+void Base3DRenderer::ReleaseDeviceDependentResources()
 {
 	m_loadingComplete = false;
 	m_vertexShader.Reset();
@@ -468,7 +400,7 @@ void Sample3DSceneRenderer::ReleaseDeviceDependentResources()
 }
 
 
-void Sample3DSceneRenderer::SetClockwiseCulling()
+void Base3DRenderer::SetClockwiseCulling()
 {
 	ID3D11Device* device = m_deviceResources->GetD3DDevice();
 	ID3D11DeviceContext* context = m_deviceResources->GetD3DDeviceContext();
