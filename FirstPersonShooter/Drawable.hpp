@@ -7,7 +7,7 @@
 class Drawable
 {
 public:
-	virtual void Render() = 0;
+	virtual void Render() {}
 protected:
 	std::shared_ptr<AssimpModel> m_model;
 };

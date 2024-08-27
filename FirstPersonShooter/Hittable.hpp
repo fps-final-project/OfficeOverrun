@@ -3,7 +3,7 @@
 class Hittable
 {
 public:
-	virtual bool Hit(const Hittable& other) const = 0;
+	virtual bool Hit(const Hittable& other) const { return false; }
 
 protected:
 	//bounding box

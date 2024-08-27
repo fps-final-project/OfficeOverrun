@@ -14,9 +14,7 @@ using namespace Windows::Foundation;
 // Loads vertex and pixel shaders from files and instantiates the cube geometry.
 Base3DRenderer::Base3DRenderer(const std::shared_ptr<DX::DeviceResources>& deviceResources) :
 	m_loadingComplete(false),
-	m_degreesPerSecond(45),
 	m_indexCount(0),
-	m_tracking(false),
 	m_deviceResources(deviceResources),
 	lastFrame(std::chrono::high_resolution_clock::now())
 {
@@ -75,117 +73,6 @@ void Base3DRenderer::CreateWindowSizeDependentResources()
 
 }
 
-// Called once per frame, rotates the cube and calculates the model and view matrices.
-void Base3DRenderer::Update(DX::StepTimer const& timer)
-{
-	if (!m_tracking)
-	{
-		// Convert degrees to radians, then convert seconds to rotation angle
-		float radiansPerSecond = XMConvertToRadians(m_degreesPerSecond);
-		double totalSeconds = timer.GetTotalSeconds();
-		double totalRotation = totalSeconds * radiansPerSecond;
-		float radians = static_cast<float>(fmod(totalRotation, XM_2PI));
-
-
-
-		Rotate(radians, totalSeconds);
-	}
-}
-
-// Rotate the 3D cube model a set amount of radians.
-void Base3DRenderer::Rotate(float radians, double totalSeconds)
-{
-	if (!m_loadingComplete)
-		return;
-
-	auto now = std::chrono::high_resolution_clock::now();
-	double deltaTime = (now - lastFrame).count() / 1e9;
-	//deltaTime = 0;
-	lastFrame = now;
-
-	auto arms_model = ResourceManager::Instance.getAnimatedModel("myarms");
-	auto gun_model = ResourceManager::Instance.getAnimatedModel("mygun");
-
-	m_animator[0]->updateAnimation(arms_model->m_rootJoint, arms_model->m_BoneInfoMap, deltaTime);
-	m_animator[1]->updateAnimation(gun_model->m_rootJoint, gun_model->m_BoneInfoMap, deltaTime);
-
-
-
-	XMVECTORF32 eye = {2 * sin(radians), 0.0f, -2 * cos(radians), 0.0f};
-	//static const XMVECTORF32 at = { sin(radians), 0.0f, cos(radians), 0.0f};
-	XMVECTORF32 at = { 0.0f, 0.0f, 0.0f, 0.0f };
-
-	XMVECTORF32 up = { 0.0f, 1.0f, 0.0f, 0.0f };
-
-	//XMStoreFloat4x4(&m_VSConstantBufferData.view, XMMatrixTranspose(XMMatrixLookAtRH(eye, at, up)));
-
-
-	// Prepare to pass the updated model matrix to the shader
-	//auto modelMatrix = XMMatrixScaling(0.01, 0.01, 0.01) * XMMatrixRotationY(radians);
-	//auto modelMatrix = XMMatrixScaling(0.08, 0.08, 0.08);
-	//auto modelMatrix = XMMatrixScaling(0.008, 0.008, 0.008) * XMMatrixRotationY(3.1415);
-
-
-	auto modelMatrix = XMMatrixScaling(0.8, 0.8, 0.8);
-	XMStoreFloat4x4(&m_VSConstantBufferData.model, XMMatrixTranspose(modelMatrix));
-	auto det = XMMatrixDeterminant(modelMatrix);
-	XMStoreFloat4x4(&m_VSConstantBufferData.inv_model, XMMatrixTranspose(XMMatrixInverse(&det, modelMatrix)));
-
-}
-
-void Base3DRenderer::StartTracking()
-{
-	m_tracking = true;
-}
-
-// When tracking, the 3D cube can be rotated around its Y axis by tracking pointer position relative to the output screen width.
-void Base3DRenderer::TrackingUpdate(float positionX)
-{
-	if (m_tracking)
-	{
-		float radians = XM_2PI * 2.0f * positionX / m_deviceResources->GetOutputSize().Width;
-		//Rotate(radians);
-		Rotate(radians, 0.f);
-
-	}
-}
-
-void Base3DRenderer::StopTracking()
-{
-	m_tracking = false;
-}
-
-// Renders one frame using the vertex and pixel shaders.
-void Base3DRenderer::Render()
-{
-
-	// Loading is asynchronous. Only draw geometry after it's loaded.
-	if (!m_loadingComplete)
-	{
-		return;
-	}
-
-	auto modelMatrix = XMMatrixScaling(1.f, 1.f, 1.f);
-	XMStoreFloat4x4(&m_VSConstantBufferData.model, XMMatrixTranspose(modelMatrix));
-	auto pose = m_animator[0]->m_FinalBoneMatrices;
-	for (int i = 0; i < 55; i++)
-	{
-		auto loaded = DirectX::XMLoadFloat4x4(&pose[i]);
-		XMStoreFloat4x4(&m_VSConstantBufferData.pose[i], XMMatrixTranspose(loaded));
-	}
-	this->Render(*ResourceManager::Instance.getAnimatedModel("myarms"));
-
-	//modelMatrix = XMMatrixScaling(1.f, 1.f, 1.f) * XMMatrixTranslation(-0.126505, -0.175764, 0.016334f + 0.4572);
-	modelMatrix = XMMatrixScaling(1.f, 1.f, 1.f) * XMMatrixTranslation(0, 0, 0.4572);
-	XMStoreFloat4x4(&m_VSConstantBufferData.model, XMMatrixTranspose(modelMatrix));
-	pose = m_animator[1]->m_FinalBoneMatrices;
-	for (int i = 0; i < 55; i++)
-	{
-		auto loaded = DirectX::XMLoadFloat4x4(&pose[i]);
-		XMStoreFloat4x4(&m_VSConstantBufferData.pose[i], XMMatrixTranspose(loaded));
-	}
-	this->Render(*ResourceManager::Instance.getAnimatedModel("mygun"));
-}
 
 
 void Base3DRenderer::Render(const Mesh& m)
@@ -290,6 +177,24 @@ void Base3DRenderer::Render(const AssimpModel& m)
 	}
 }
 
+void Base3DRenderer::Render(const AnimatedModelDrawRequest& request)
+{
+	if (!m_loadingComplete)
+	{
+		return;
+	}
+
+	auto modelMatrix = XMMatrixScaling(1.f, 1.f, 1.f);
+	XMStoreFloat4x4(&m_VSConstantBufferData.model, XMMatrixTranspose(request.model));
+	auto pose = request.m_animator.m_FinalBoneMatrices;
+	for (int i = 0; i < 55; i++)
+	{
+		auto loaded = DirectX::XMLoadFloat4x4(&pose[i]);
+		XMStoreFloat4x4(&m_VSConstantBufferData.pose[i], XMMatrixTranspose(loaded));
+	}
+	this->Render(*request.m_animatedModel);
+}
+
 void Base3DRenderer::CreateDeviceDependentResources()
 {
 	// Load shaders asynchronously.
@@ -356,9 +261,6 @@ void Base3DRenderer::CreateDeviceDependentResources()
 				&m_PSConstantBuffer
 			)
 		);
-
-		this->m_animator[0] = std::make_unique<Animator>(&ResourceManager::Instance.getAnimatedModel("myarms")->m_animations["FP_reload"]);
-		this->m_animator[1] = std::make_unique<Animator>(&ResourceManager::Instance.getAnimatedModel("mygun")->m_animations["GUN_reload"]);
 		});
 
 	auto createSamplerTask = (createPSTask && createVSTask).then([this]() {

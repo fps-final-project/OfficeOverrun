@@ -5,6 +5,7 @@
 class Animator
 {
 public:
+	Animator();
 	Animator(Animation* animation);
 	void updateAnimation(const Joint& rootJoint, const std::map<std::string, BoneInfo>& boneInfoMap, float dt);
 	void playAnimation(Animation* animation);

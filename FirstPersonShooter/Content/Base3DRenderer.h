@@ -8,6 +8,7 @@
 #include "Texture.h"
 #include "MeshFactory.h"
 #include "Animator.h"
+#include "AnimatedModelDrawRequest.hpp"
 
 #include <chrono>
 
@@ -20,25 +21,17 @@ public:
 	void CreateDeviceDependentResources();
 	void CreateWindowSizeDependentResources();
 	void ReleaseDeviceDependentResources();
-	void Update(DX::StepTimer const& timer);
-	void Render();
 	void Render(const Mesh& m);
 	void Render(const AssimpModel& m);
-	void StartTracking();
-	void TrackingUpdate(float positionX);
-	void StopTracking();
-	bool IsTracking() { return m_tracking; }
+	void Render(const AnimatedModelDrawRequest& request);
 
 	void SetClockwiseCulling();
 
 private:
-	void Rotate(float radians, double totalSeconds);
 
 private:
 	// Cached pointer to device resources.
 	std::shared_ptr<DX::DeviceResources> m_deviceResources;
-
-	std::unique_ptr<Animator> m_animator[2];
 
 	// Direct3D resources for cube geometry.
 	Microsoft::WRL::ComPtr<ID3D11InputLayout>	m_inputLayout;
@@ -56,6 +49,4 @@ private:
 
 	// Variables used with the rendering loop.
 	bool	m_loadingComplete;
-	float	m_degreesPerSecond;
-	bool	m_tracking;
 };

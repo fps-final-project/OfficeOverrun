@@ -5,6 +5,10 @@
 #include "Content\Base3DRenderer.h"
 #include "Content\SampleFpsTextRenderer.h"
 
+#include <queue>
+#include <AnimatedModelDrawRequest.hpp>
+#include "World.h"
+
 // Renders Direct2D and 3D content on the screen.
 namespace FirstPersonShooter
 {
@@ -31,5 +35,8 @@ namespace FirstPersonShooter
 
 		// Rendering loop timer.
 		DX::StepTimer m_timer;
+
+		std::queue<AnimatedModelDrawRequest> m_drawQueue;
+		World world;
 	};
 }

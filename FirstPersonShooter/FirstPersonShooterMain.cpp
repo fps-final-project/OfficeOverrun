@@ -17,12 +17,23 @@ FirstPersonShooterMain::FirstPersonShooterMain(const std::shared_ptr<DX::DeviceR
 
 	// TODO: Replace this with your app's content initialization.
 
-
 	ResourceManager::Instance.loadAnimatedModel("Assets\\myarms\\myarms.glb", m_deviceResources, { "Assets\\myarms\\Texture.png" });
 	ResourceManager::Instance.loadAnimatedModel("Assets\\myarms\\mygun.glb", m_deviceResources, { "Assets\\myarms\\Texture.png" });
 
 	m_sceneRenderer = std::unique_ptr<Base3DRenderer>(new Base3DRenderer(m_deviceResources));
 	m_fpsTextRenderer = std::unique_ptr<SampleFpsTextRenderer>(new SampleFpsTextRenderer(m_deviceResources));
+
+	
+	AnimatedEntity hands(DirectX::XMFLOAT3(0.f, 0.f, 0.f), DirectX::XMFLOAT3(0.f, 0.f, 0.f), DirectX::XMFLOAT3(0.f, 0.f, 0.f));
+	hands.m_animatedModel = ResourceManager::Instance.getAnimatedModel("myarms");
+	hands.m_animator = Animator(&hands.m_animatedModel->m_animations["FP_reload"]);
+	this->world.m_entities.push_back(hands);
+
+
+	AnimatedEntity gun(DirectX::XMFLOAT3(0, 0, 0.4572), DirectX::XMFLOAT3(0.f, 0.f, 0.f), DirectX::XMFLOAT3(0.f, 0.f, 0.f));
+	gun.m_animatedModel = ResourceManager::Instance.getAnimatedModel("mygun");
+	gun.m_animator = Animator(&gun.m_animatedModel->m_animations["GUN_reload"]);
+	this->world.m_entities.push_back(gun);
 	// TODO: Change the timer settings if you want something other than the default variable timestep mode.
 	// e.g. for 60 FPS fixed timestep update logic, call:
 	/*
@@ -51,7 +62,10 @@ void FirstPersonShooterMain::Update()
 	m_timer.Tick([&]()
 	{
 		// TODO: Replace this with your app's content update functions.
-		m_sceneRenderer->Update(m_timer);
+		for (auto& entity : world.m_entities)
+		{
+			m_drawQueue.push(entity.Update(m_timer.GetElapsedSeconds()));
+		}
 		m_fpsTextRenderer->Update(m_timer);
 	});
 }
@@ -82,7 +96,13 @@ bool FirstPersonShooterMain::Render()
 
 	// Render the scene objects.
 	// TODO: Replace this with your app's content rendering functions.
-	m_sceneRenderer->Render();
+	while (!m_drawQueue.empty())
+	{
+		m_sceneRenderer->Render(m_drawQueue.front());
+		m_drawQueue.pop();
+	}
+
+
 	m_fpsTextRenderer->Render();
 
 	return true;

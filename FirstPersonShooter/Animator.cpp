@@ -1,6 +1,11 @@
 #include "pch.h"
 #include "Animator.h"
 
+Animator::Animator()
+{
+    *this = Animator(nullptr);
+}
+
 Animator::Animator(Animation* animation)
 {
 	m_CurrentTime = 0.0f;
