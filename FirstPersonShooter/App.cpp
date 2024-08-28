@@ -66,6 +66,12 @@ void App::SetWindow(CoreWindow^ window)
 	window->Closed += 
 		ref new TypedEventHandler<CoreWindow^, CoreWindowEventArgs^>(this, &App::OnWindowClosed);
 
+	window->KeyDown +=
+		ref new TypedEventHandler<CoreWindow^, KeyEventArgs^>(this, &App::OnKeyDown);
+
+	window->KeyUp +=
+		ref new TypedEventHandler<CoreWindow^, KeyEventArgs^>(this, &App::OnKeyUp);
+
 	DisplayInformation^ currentDisplayInformation = DisplayInformation::GetForCurrentView();
 
 	currentDisplayInformation->DpiChanged +=
@@ -86,6 +92,10 @@ void App::Load(Platform::String^ entryPoint)
 	if (m_main == nullptr)
 	{
 		m_main = std::unique_ptr<FirstPersonShooterMain>(new FirstPersonShooterMain(m_deviceResources));
+	}
+	if (m_inputHandler == nullptr)
+	{
+		m_inputHandler = std::shared_ptr<InputHandler>(new InputHandler());
 	}
 }
 
@@ -172,8 +182,18 @@ void App::OnWindowClosed(CoreWindow^ sender, CoreWindowEventArgs^ args)
 	m_windowClosed = true;
 }
 
-// DisplayInformation event handlers.
 
+void App::OnKeyDown(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::KeyEventArgs^ args)
+{
+	m_inputHandler.get()->AddEvent(ButtonState::CLICKED, args->KeyStatus.ScanCode);
+}
+
+void App::OnKeyUp(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::KeyEventArgs^ args)
+{
+	m_inputHandler.get()->AddEvent(ButtonState::RELEASED, args->KeyStatus.ScanCode);
+}
+
+// DisplayInformation event handlers.
 void App::OnDpiChanged(DisplayInformation^ sender, Object^ args)
 {
 	// Note: The value for LogicalDpi retrieved here may not match the effective DPI of the app
@@ -194,3 +214,4 @@ void App::OnDisplayContentsInvalidated(DisplayInformation^ sender, Object^ args)
 {
 	m_deviceResources->ValidateDevice();
 }
+

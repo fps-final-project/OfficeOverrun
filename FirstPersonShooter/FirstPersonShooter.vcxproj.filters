@@ -80,6 +80,12 @@
     <Filter Include="Assets\cube">
       <UniqueIdentifier>{1d14699e-0ca2-4b6b-831b-2d71b7fe137d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Base">
+      <UniqueIdentifier>{55808537-456c-4681-8aa2-a22854a1caaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Events">
+      <UniqueIdentifier>{7fb1627b-d8e3-4f7c-b79f-509e91e0b17e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -93,6 +99,24 @@
     </ClCompile>
     <ClCompile Include="AssimpModelLoader.cpp">
       <Filter>Content\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Drawable.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Hittable.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionDetector.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleCollisionDetector.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="InputHandler.cpp">
+      <Filter>Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -116,6 +140,27 @@
     </ClInclude>
     <ClInclude Include="AssimpModelLoader.h">
       <Filter>Content\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Drawable.hpp">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.hpp">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Hittable.hpp">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionDetector.hpp">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleCollisionDetector.hpp">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="InputEvent.hpp">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="InputHandler.hpp">
+      <Filter>Events</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,10 +1,15 @@
 #pragma once
+
+#include <DirectXCollision.h>
+
 class Hittable
 {
 public:
-	virtual bool Hit(const Hittable& other) const = 0;
+	Hittable(DirectX::BoundingBox box);
+
+	bool Hit(const Hittable& other);
 
 protected:
-	//bounding box
+	DirectX::BoundingBox boundingBox;
 };
 

@@ -1,6 +1,8 @@
 ﻿#include "pch.h"
 #include "FirstPersonShooterMain.h"
 #include "Common\DirectXHelper.h"
+#include <Keyboard.h>
+#include <Mouse.h>
 
 using namespace FirstPersonShooter;
 using namespace Windows::Foundation;
@@ -19,6 +21,9 @@ FirstPersonShooterMain::FirstPersonShooterMain(const std::shared_ptr<DX::DeviceR
 
 	m_fpsTextRenderer = std::unique_ptr<SampleFpsTextRenderer>(new SampleFpsTextRenderer(m_deviceResources));
 
+	m_keyboard = std::make_unique<DirectX::Keyboard>();
+	m_mouse = std::make_unique<DirectX::Mouse>();
+	
 	// TODO: Change the timer settings if you want something other than the default variable timestep mode.
 	// e.g. for 60 FPS fixed timestep update logic, call:
 	/*

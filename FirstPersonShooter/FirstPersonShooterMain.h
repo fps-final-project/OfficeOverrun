@@ -4,6 +4,8 @@
 #include "Common\DeviceResources.h"
 #include "Content\Sample3DSceneRenderer.h"
 #include "Content\SampleFpsTextRenderer.h"
+#include <Keyboard.h>
+#include <Mouse.h>
 
 // Renders Direct2D and 3D content on the screen.
 namespace FirstPersonShooter
@@ -31,5 +33,8 @@ namespace FirstPersonShooter
 
 		// Rendering loop timer.
 		DX::StepTimer m_timer;
+
+		std::unique_ptr<DirectX::Keyboard> m_keyboard;
+		std::unique_ptr<DirectX::Mouse> m_mouse;
 	};
 }

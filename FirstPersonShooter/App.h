@@ -3,6 +3,7 @@
 #include "pch.h"
 #include "Common\DeviceResources.h"
 #include "FirstPersonShooterMain.h"
+#include "InputHandler.hpp"
 
 namespace FirstPersonShooter
 {
@@ -30,6 +31,10 @@ namespace FirstPersonShooter
 		void OnVisibilityChanged(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::VisibilityChangedEventArgs^ args);
 		void OnWindowClosed(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::CoreWindowEventArgs^ args);
 
+		// Keyboard & Mouse Handlers
+		void OnKeyDown(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::KeyEventArgs^ args);
+		void OnKeyUp(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::KeyEventArgs^ args);
+
 		// DisplayInformation event handlers.
 		void OnDpiChanged(Windows::Graphics::Display::DisplayInformation^ sender, Platform::Object^ args);
 		void OnOrientationChanged(Windows::Graphics::Display::DisplayInformation^ sender, Platform::Object^ args);
@@ -38,6 +43,7 @@ namespace FirstPersonShooter
 	private:
 		std::shared_ptr<DX::DeviceResources> m_deviceResources;
 		std::unique_ptr<FirstPersonShooterMain> m_main;
+		std::shared_ptr<InputHandler> m_inputHandler;
 		bool m_windowClosed;
 		bool m_windowVisible;
 	};
