@@ -107,6 +107,9 @@
     <Filter Include="Content\Renderer\3D\AnimatedModel">
       <UniqueIdentifier>{7461cf45-36e2-4d4d-ba74-64f06c45a80b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Content\Camera">
+      <UniqueIdentifier>{70b64313-a96b-4eb3-85d5-35d3640126e1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -144,6 +147,12 @@
     </ClCompile>
     <ClCompile Include="AnimatedEntity.cpp">
       <Filter>Content\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Animable.cpp">
+      <Filter>Content\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Content\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -214,6 +223,9 @@
       <Filter>Content\Renderer\3D\AnimatedModel</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Camera.hpp">
+      <Filter>Content\Camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\StoreLogo.png">

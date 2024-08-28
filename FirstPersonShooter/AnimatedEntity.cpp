@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "AnimatedEntity.hpp"
 
-AnimatedEntity::AnimatedEntity(XMFLOAT3 position, XMFLOAT3 rotation, XMFLOAT3 velocity)
-	: position(position), rotation(rotation), velocity(velocity)
+AnimatedEntity::AnimatedEntity(std::shared_ptr<AnimatedAssimpModel> model, XMFLOAT3 position, XMFLOAT3 rotation, XMFLOAT3 velocity)
+	: Animable(model), position(position), rotation(rotation), velocity(velocity)
 {
 
 }

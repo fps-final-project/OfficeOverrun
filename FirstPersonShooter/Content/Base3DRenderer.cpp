@@ -14,66 +14,14 @@ using namespace Windows::Foundation;
 // Loads vertex and pixel shaders from files and instantiates the cube geometry.
 Base3DRenderer::Base3DRenderer(const std::shared_ptr<DX::DeviceResources>& deviceResources) :
 	m_loadingComplete(false),
-	m_indexCount(0),
-	m_deviceResources(deviceResources),
-	lastFrame(std::chrono::high_resolution_clock::now())
+	m_deviceResources(deviceResources)
 {
 	CreateDeviceDependentResources();
-	CreateWindowSizeDependentResources();
+
+	XMStoreFloat3(&m_PSConstantBufferData.light_pos, {0.f, 0.f, 0.f, 0.f});
 
 	this->SetClockwiseCulling();
 }
-
-// Initializes view parameters when the window size changes.
-void Base3DRenderer::CreateWindowSizeDependentResources()
-{
-	Size outputSize = m_deviceResources->GetOutputSize();
-	float aspectRatio = outputSize.Width / outputSize.Height;
-	float fovAngleY = 95.0f * XM_PI / 180.0f;
-
-	// This is a simple example of change that can be made when the app is in
-	// portrait or snapped view.
-	if (aspectRatio < 1.0f)
-	{
-		fovAngleY *= 2.0f;
-	}
-
-	// Note that the OrientationTransform3D matrix is post-multiplied here
-	// in order to correctly orient the scene to match the display orientation.
-	// This post-multiplication step is required for any draw calls that are
-	// made to the swap chain render target. For draw calls to other targets,
-	// this transform should not be applied.
-
-	// This sample makes use of a right-handed coordinate system using row-major matrices.
-	XMMATRIX perspectiveMatrix = XMMatrixPerspectiveFovRH(
-		fovAngleY,
-		aspectRatio,
-		0.01f,
-		100.0f
-	);
-
-	XMFLOAT4X4 orientation = m_deviceResources->GetOrientationTransform3D();
-
-	XMMATRIX orientationMatrix = XMLoadFloat4x4(&orientation);
-
-	XMStoreFloat4x4(
-		&m_VSConstantBufferData.projection,
-		XMMatrixTranspose(perspectiveMatrix * orientationMatrix)
-	);
-
-	// Eye is at (0,0.7,1.5), looking at point (0,-0.1,0) with the up-vector along the y-axis.
-	static const XMVECTORF32 eye = { 0.0f, 0.0f, 0.0f, 0.0f };
-	static const XMVECTORF32 at = { 0.0f, 0.0f, 1.0f, 0.0f };
-	static const XMVECTORF32 up = { 0.0f, 1.0f, 0.0f, 0.0f };
-
-	XMStoreFloat4x4(&m_VSConstantBufferData.view, XMMatrixTranspose(XMMatrixLookAtRH(eye, at, up)));
-	XMStoreFloat3(&m_PSConstantBufferData.camera_pos, eye);
-	XMStoreFloat3(&m_PSConstantBufferData.light_pos, eye);
-
-
-}
-
-
 
 void Base3DRenderer::Render(const Mesh& m)
 {
@@ -177,24 +125,6 @@ void Base3DRenderer::Render(const AssimpModel& m)
 	}
 }
 
-void Base3DRenderer::Render(const AnimatedModelDrawRequest& request)
-{
-	if (!m_loadingComplete)
-	{
-		return;
-	}
-
-	auto modelMatrix = XMMatrixScaling(1.f, 1.f, 1.f);
-	XMStoreFloat4x4(&m_VSConstantBufferData.model, XMMatrixTranspose(request.model));
-	auto pose = request.m_animator.m_FinalBoneMatrices;
-	for (int i = 0; i < 55; i++)
-	{
-		auto loaded = DirectX::XMLoadFloat4x4(&pose[i]);
-		XMStoreFloat4x4(&m_VSConstantBufferData.pose[i], XMMatrixTranspose(loaded));
-	}
-	this->Render(*request.m_animatedModel);
-}
-
 void Base3DRenderer::Render(const Animable& animable)
 {
 	if (!m_loadingComplete)
@@ -211,6 +141,16 @@ void Base3DRenderer::Render(const Animable& animable)
 		XMStoreFloat4x4(&m_VSConstantBufferData.pose[i], XMMatrixTranspose(loaded));
 	}
 	this->Render(*animable.m_animatedModel);
+}
+
+void Base3DRenderer::setProjectionMatrix(DirectX::XMFLOAT4X4 projection)
+{
+	m_VSConstantBufferData.projection = projection;
+}
+
+void Base3DRenderer::setViewMatrix(DirectX::XMFLOAT4X4 view)
+{
+	m_VSConstantBufferData.view = view;
 }
 
 void Base3DRenderer::CreateDeviceDependentResources()

@@ -23,17 +23,17 @@ FirstPersonShooterMain::FirstPersonShooterMain(const std::shared_ptr<DX::DeviceR
 	m_sceneRenderer = std::unique_ptr<Base3DRenderer>(new Base3DRenderer(m_deviceResources));
 	m_fpsTextRenderer = std::unique_ptr<SampleFpsTextRenderer>(new SampleFpsTextRenderer(m_deviceResources));
 
-	
-	AnimatedEntity hands(DirectX::XMFLOAT3(0.f, 0.f, 0.f), DirectX::XMFLOAT3(0.f, 0.f, 0.f), DirectX::XMFLOAT3(0.f, 0.f, 0.f));
-	hands.m_animatedModel = ResourceManager::Instance.getAnimatedModel("myarms");
-	hands.m_animator = Animator(&hands.m_animatedModel->m_animations["FP_reload"]);
-	this->world.m_entities.push_back(hands);
+	m_world = std::unique_ptr<World>(new World());
+	m_camera = std::unique_ptr<Camera>(new Camera(m_deviceResources));
 
+	AnimatedEntity arms(ResourceManager::Instance.getAnimatedModel("myarms"));
+	arms.setAnimation("FP_reload");
+	m_world->m_entities.push_back(arms);
 
-	AnimatedEntity gun(DirectX::XMFLOAT3(0, 0, 0.4572), DirectX::XMFLOAT3(0.f, 0.f, 0.f), DirectX::XMFLOAT3(0.f, 0.f, 0.f));
-	gun.m_animatedModel = ResourceManager::Instance.getAnimatedModel("mygun");
-	gun.m_animator = Animator(&gun.m_animatedModel->m_animations["GUN_reload"]);
-	this->world.m_entities.push_back(gun);
+	AnimatedEntity gun(ResourceManager::Instance.getAnimatedModel("mygun"), XMFLOAT3(0.f, 0.f, 0.4572f));
+	gun.setAnimation("GUN_reload");
+	m_world->m_entities.push_back(gun);
+
 	// TODO: Change the timer settings if you want something other than the default variable timestep mode.
 	// e.g. for 60 FPS fixed timestep update logic, call:
 	/*
@@ -52,7 +52,8 @@ FirstPersonShooterMain::~FirstPersonShooterMain()
 void FirstPersonShooterMain::CreateWindowSizeDependentResources() 
 {
 	// TODO: Replace this with the size-dependent initialization of your app's content.
-	m_sceneRenderer->CreateWindowSizeDependentResources();
+	// useless?
+	m_camera->CreateWindowSizeDependentResources(FOV);
 }
 
 // Updates the application state once per frame.
@@ -62,7 +63,7 @@ void FirstPersonShooterMain::Update()
 	m_timer.Tick([&]()
 	{
 		// TODO: Replace this with your app's content update functions.
-		for (auto& entity : world.m_entities)
+		for (auto& entity : m_world->m_entities)
 		{
 			entity.Update(m_timer.GetElapsedSeconds());
 		}
@@ -96,8 +97,12 @@ bool FirstPersonShooterMain::Render()
 
 	// Render the scene objects.
 	// TODO: Replace this with your app's content rendering functions.
+	m_sceneRenderer->setProjectionMatrix(m_camera->getProjectionMatrix());
+	m_sceneRenderer->setViewMatrix(m_camera->getViewMatrix());
 
-	for (const auto& entity : world.m_entities)
+
+
+	for (const auto& entity : m_world->m_entities)
 	{
 		m_sceneRenderer->Render(entity);
 	}

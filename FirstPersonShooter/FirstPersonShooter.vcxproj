@@ -291,6 +291,7 @@
     <ClInclude Include="AssimpModel.h" />
     <ClInclude Include="AssimpModelLoader.h" />
     <ClInclude Include="BoneInfo.h" />
+    <ClInclude Include="Camera.hpp" />
     <ClInclude Include="Common\DeviceResources.h" />
     <ClInclude Include="Drawable.hpp" />
     <ClInclude Include="Entity.hpp" />
@@ -312,10 +313,12 @@
     <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Animable.cpp" />
     <ClCompile Include="AnimatedEntity.cpp" />
     <ClCompile Include="Animator.cpp" />
     <ClCompile Include="App.cpp" />
     <ClCompile Include="AssimpModelLoader.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Common\DeviceResources.cpp" />
     <ClCompile Include="Drawable.cpp" />
     <ClCompile Include="Entity.cpp" />

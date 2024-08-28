@@ -8,6 +8,7 @@
 #include <queue>
 #include <AnimatedModelDrawRequest.hpp>
 #include "World.h"
+#include "Camera.hpp"
 
 // Renders Direct2D and 3D content on the screen.
 namespace FirstPersonShooter
@@ -33,9 +34,13 @@ namespace FirstPersonShooter
 		std::unique_ptr<Base3DRenderer> m_sceneRenderer;
 		std::unique_ptr<SampleFpsTextRenderer> m_fpsTextRenderer;
 
+		std::unique_ptr<Camera> m_camera;
+		std::unique_ptr<World> m_world;
+
 		// Rendering loop timer.
 		DX::StepTimer m_timer;
 
-		World world;
+		const float FOV = 95.0f;
+
 	};
 }

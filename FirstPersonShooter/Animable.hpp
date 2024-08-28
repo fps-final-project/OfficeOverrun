@@ -8,7 +8,9 @@
 class Animable
 {
 public:
-	virtual void Draw() {}
+	Animable(std::shared_ptr<AnimatedAssimpModel> animatedModel);
+	void setAnimation(std::string name);
+	virtual void Draw();
 	Animator m_animator;
 	std::shared_ptr<AnimatedAssimpModel> m_animatedModel;
 	DirectX::XMMATRIX m_model;
