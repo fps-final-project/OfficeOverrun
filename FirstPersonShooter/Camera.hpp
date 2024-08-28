@@ -7,6 +7,7 @@ class Camera
 {
 public:
 	Camera(const std::shared_ptr<DX::DeviceResources>& deviceResources,
+		float fov = 95.0f,
 		DirectX::XMVECTORF32 position = { 0.0f, 0.0f, 0.0f, 0.0f },
 		DirectX::XMVECTORF32 at = { 0.0f, 0.0f, 1.0f, 0.0f },
 		DirectX::XMVECTORF32 up = { 0.0f, 1.0f, 0.0f, 0.0f });

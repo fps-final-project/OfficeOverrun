@@ -24,7 +24,7 @@ FirstPersonShooterMain::FirstPersonShooterMain(const std::shared_ptr<DX::DeviceR
 	m_fpsTextRenderer = std::unique_ptr<SampleFpsTextRenderer>(new SampleFpsTextRenderer(m_deviceResources));
 
 	m_world = std::unique_ptr<World>(new World());
-	m_camera = std::unique_ptr<Camera>(new Camera(m_deviceResources));
+	m_camera = std::unique_ptr<Camera>(new Camera(m_deviceResources, FOV));
 
 	AnimatedEntity arms(ResourceManager::Instance.getAnimatedModel("myarms"));
 	arms.setAnimation("FP_reload");

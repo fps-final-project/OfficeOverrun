@@ -4,12 +4,14 @@
 
 using namespace Windows::Foundation;
 
-Camera::Camera(const std::shared_ptr<DX::DeviceResources>& deviceResources, 
+Camera::Camera(const std::shared_ptr<DX::DeviceResources>& deviceResources,
+	float fov,
 	DirectX::XMVECTORF32 position, 
 	DirectX::XMVECTORF32 at, 
 	DirectX::XMVECTORF32 up)
-	: m_position(position), m_at(at), m_up(up)
+	: m_position(position), m_at(at), m_up(up), m_deviceResources(deviceResources)
 {
+	this->CreateWindowSizeDependentResources(95.0f);
 	this->updateViewMatrix();
 }
 
