@@ -64,7 +64,7 @@ void FirstPersonShooterMain::Update()
 		// TODO: Replace this with your app's content update functions.
 		for (auto& entity : world.m_entities)
 		{
-			m_drawQueue.push(entity.Update(m_timer.GetElapsedSeconds()));
+			entity.Update(m_timer.GetElapsedSeconds());
 		}
 		m_fpsTextRenderer->Update(m_timer);
 	});
@@ -96,10 +96,10 @@ bool FirstPersonShooterMain::Render()
 
 	// Render the scene objects.
 	// TODO: Replace this with your app's content rendering functions.
-	while (!m_drawQueue.empty())
+
+	for (const auto& entity : world.m_entities)
 	{
-		m_sceneRenderer->Render(m_drawQueue.front());
-		m_drawQueue.pop();
+		m_sceneRenderer->Render(entity);
 	}
 
 

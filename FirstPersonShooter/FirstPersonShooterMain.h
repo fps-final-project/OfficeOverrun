@@ -36,7 +36,6 @@ namespace FirstPersonShooter
 		// Rendering loop timer.
 		DX::StepTimer m_timer;
 
-		std::queue<AnimatedModelDrawRequest> m_drawQueue;
 		World world;
 	};
 }

@@ -6,6 +6,6 @@
 class World
 {
 public:
-	void update(float dt, std::queue<AnimatedModelDrawRequest>& m_drawQueue);
+	void update(float dt);
 	std::vector<AnimatedEntity> m_entities;
 };

@@ -1,10 +1,10 @@
 #include "pch.h"
 #include "World.h"
 
-void World::update(float dt, std::queue<AnimatedModelDrawRequest>& m_drawQueue)
+void World::update(float dt)
 {
 	for (auto& entity : m_entities)
 	{
-		m_drawQueue.push(entity.Update(dt));
+		entity.Update(dt);
 	}
 }

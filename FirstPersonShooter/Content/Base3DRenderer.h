@@ -9,6 +9,7 @@
 #include "MeshFactory.h"
 #include "Animator.h"
 #include "AnimatedModelDrawRequest.hpp"
+#include "Animable.hpp"
 
 #include <chrono>
 
@@ -24,6 +25,7 @@ public:
 	void Render(const Mesh& m);
 	void Render(const AssimpModel& m);
 	void Render(const AnimatedModelDrawRequest& request);
+	void Render(const Animable& animable);
 
 	void SetClockwiseCulling();
 

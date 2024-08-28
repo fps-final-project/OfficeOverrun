@@ -107,9 +107,6 @@
     <Filter Include="Content\Renderer\3D\AnimatedModel">
       <UniqueIdentifier>{7461cf45-36e2-4d4d-ba74-64f06c45a80b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Content\Entity\DrawRequest">
-      <UniqueIdentifier>{5e28a2c2-ac7f-4022-9022-45f86e65efba}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -142,9 +139,11 @@
     <ClCompile Include="Content\Base3DRenderer.cpp">
       <Filter>Content\Renderer\3D</Filter>
     </ClCompile>
-    <ClCompile Include="AnimatedEntity.cpp" />
     <ClCompile Include="World.cpp">
       <Filter>Content\World</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatedEntity.cpp">
+      <Filter>Content\Entity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -215,9 +214,6 @@
       <Filter>Content\Renderer\3D\AnimatedModel</Filter>
     </ClInclude>
     <ClInclude Include="resource.h" />
-    <ClInclude Include="AnimatedModelDrawRequest.hpp">
-      <Filter>Content\Entity\DrawRequest</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\StoreLogo.png">

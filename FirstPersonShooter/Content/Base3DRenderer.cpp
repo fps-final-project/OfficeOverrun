@@ -195,6 +195,24 @@ void Base3DRenderer::Render(const AnimatedModelDrawRequest& request)
 	this->Render(*request.m_animatedModel);
 }
 
+void Base3DRenderer::Render(const Animable& animable)
+{
+	if (!m_loadingComplete)
+	{
+		return;
+	}
+
+	auto modelMatrix = XMMatrixScaling(1.f, 1.f, 1.f);
+	XMStoreFloat4x4(&m_VSConstantBufferData.model, XMMatrixTranspose(animable.m_model));
+	auto pose = animable.m_animator.m_FinalBoneMatrices;
+	for (int i = 0; i < 55; i++)
+	{
+		auto loaded = DirectX::XMLoadFloat4x4(&pose[i]);
+		XMStoreFloat4x4(&m_VSConstantBufferData.pose[i], XMMatrixTranspose(loaded));
+	}
+	this->Render(*animable.m_animatedModel);
+}
+
 void Base3DRenderer::CreateDeviceDependentResources()
 {
 	// Load shaders asynchronously.

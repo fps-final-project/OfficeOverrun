@@ -303,7 +303,6 @@
     <ClInclude Include="Hittable.hpp" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshFactory.h" />
-    <ClInclude Include="AnimatedModelDrawRequest.hpp" />
     <ClInclude Include="ModelRenderer.hpp" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="resource.h" />
