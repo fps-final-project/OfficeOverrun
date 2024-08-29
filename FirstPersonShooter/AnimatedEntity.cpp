@@ -2,7 +2,7 @@
 #include "AnimatedEntity.hpp"
 
 AnimatedEntity::AnimatedEntity(std::shared_ptr<AnimatedAssimpModel> model, XMFLOAT3 position, XMFLOAT3 rotation, XMFLOAT3 velocity)
-	: Animable(model), position(position), rotation(rotation), velocity(velocity)
+	: Animable(model), Hittable(DirectX::BoundingBox()), position(position), rotation(rotation), velocity(velocity)
 {
 
 }

@@ -1,6 +1,8 @@
 ﻿#include "pch.h"
 #include "FirstPersonShooterMain.h"
 #include "Common\DirectXHelper.h"
+#include <Keyboard.h>
+#include <Mouse.h>
 #include "ResourceManager.h"
 
 using namespace FirstPersonShooter;
@@ -39,6 +41,9 @@ FirstPersonShooterMain::FirstPersonShooterMain(const std::shared_ptr<DX::DeviceR
 
 	m_world->m_entities.push_back(Entity(ResourceManager::Instance.getModel("AK47NoSubdiv_cw"), XMFLOAT3(0.f, 0.f, 10.f)));
 
+	m_keyboard = std::make_unique<DirectX::Keyboard>();
+	m_mouse = std::make_unique<DirectX::Mouse>();
+	
 	// TODO: Change the timer settings if you want something other than the default variable timestep mode.
 	// e.g. for 60 FPS fixed timestep update logic, call:
 	/*

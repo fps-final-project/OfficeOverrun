@@ -110,6 +110,12 @@
     <Filter Include="Content\Camera">
       <UniqueIdentifier>{70b64313-a96b-4eb3-85d5-35d3640126e1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Base">
+      <UniqueIdentifier>{55808537-456c-4681-8aa2-a22854a1caaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Events">
+      <UniqueIdentifier>{7fb1627b-d8e3-4f7c-b79f-509e91e0b17e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -136,9 +142,6 @@
     <ClCompile Include="ResourceManager.cpp">
       <Filter>Content\ResourceManager</Filter>
     </ClCompile>
-    <ClCompile Include="Content\SampleFpsTextRenderer.cpp">
-      <Filter>Content\Renderer\Text</Filter>
-    </ClCompile>
     <ClCompile Include="World.cpp">
       <Filter>Content\World</Filter>
     </ClCompile>
@@ -156,6 +159,15 @@
     </ClCompile>
     <ClCompile Include="ModelRenderer.cpp">
       <Filter>Content\Renderer\3D\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionDetector.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleCollisionDetector.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="InputHandler.cpp">
+      <Filter>Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -228,6 +240,18 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="Camera.hpp">
       <Filter>Content\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionDetector.hpp">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleCollisionDetector.hpp">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="InputEvent.hpp">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="InputHandler.hpp">
+      <Filter>Events</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
