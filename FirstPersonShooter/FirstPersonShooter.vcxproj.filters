@@ -139,9 +139,6 @@
     <ClCompile Include="Content\SampleFpsTextRenderer.cpp">
       <Filter>Content\Renderer\Text</Filter>
     </ClCompile>
-    <ClCompile Include="Content\Base3DRenderer.cpp">
-      <Filter>Content\Renderer\3D</Filter>
-    </ClCompile>
     <ClCompile Include="World.cpp">
       <Filter>Content\World</Filter>
     </ClCompile>
@@ -153,6 +150,12 @@
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Content\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatedModelRenderer.cpp">
+      <Filter>Content\Renderer\3D\AnimatedModel</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelRenderer.cpp">
+      <Filter>Content\Renderer\3D\Model</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -312,6 +315,7 @@
     <None Include="Assets\myarms\mygun.glb">
       <Filter>Assets\myarms</Filter>
     </None>
+    <None Include="Assets\AK-47\AK47NoSubdiv_cw.obj" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Content\SamplePixelShader.hlsl">

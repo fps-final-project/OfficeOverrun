@@ -7,4 +7,9 @@ void World::update(float dt)
 	{
 		entity.Update(dt);
 	}
+
+	for (auto& entity : m_animatedEntities)
+	{
+		entity.Update(dt);
+	}
 }

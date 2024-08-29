@@ -1,11 +1,6 @@
 #include "pch.h"
 #include "Animable.hpp"
 
-void Animable::Draw()
-{
-
-}
-
 Animable::Animable(std::shared_ptr<AnimatedAssimpModel> animatedModel)
 	: m_animatedModel(animatedModel), m_model(DirectX::XMMatrixIdentity()), m_animator(Animator())
 {

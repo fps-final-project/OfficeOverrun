@@ -11,7 +11,7 @@ Camera::Camera(const std::shared_ptr<DX::DeviceResources>& deviceResources,
 	DirectX::XMVECTORF32 up)
 	: m_position(position), m_at(at), m_up(up), m_deviceResources(deviceResources)
 {
-	this->CreateWindowSizeDependentResources(95.0f);
+	this->CreateWindowSizeDependentResources(fov);
 	this->updateViewMatrix();
 }
 

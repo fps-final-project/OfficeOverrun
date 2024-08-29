@@ -1,8 +1,11 @@
 #pragma once
 #include "Content/Base3DRenderer.h"
+#include "Drawable.hpp"
 
-class ModelRenderer 
+class ModelRenderer : public Base3DRenderer<ModelViewProjectionConstantBuffer, LightingConstantBuffer, VertexData>
 {
 public:
-	ModelRenderer() {}
+	ModelRenderer(const std::shared_ptr<DX::DeviceResources>& deviceResources);
+	virtual void CreateDeviceDependentResources() override;
+	void Render(const Drawable& drawable);
 };

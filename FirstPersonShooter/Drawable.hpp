@@ -7,8 +7,11 @@
 class Drawable
 {
 public:
-	virtual void Render() {}
+	Drawable(std::shared_ptr<AssimpModel> model);
+	//virtual void Render() {}
+	friend class ModelRenderer;
 protected:
 	std::shared_ptr<AssimpModel> m_model;
+	DirectX::XMMATRIX m_modelMatrix;
 };
 

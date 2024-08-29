@@ -16,10 +16,7 @@ Base3DRenderer::Base3DRenderer(const std::shared_ptr<DX::DeviceResources>& devic
 	m_loadingComplete(false),
 	m_deviceResources(deviceResources)
 {
-	CreateDeviceDependentResources();
-
 	XMStoreFloat3(&m_PSConstantBufferData.light_pos, {0.f, 0.f, 0.f, 0.f});
-
 	this->SetClockwiseCulling();
 }
 
@@ -30,6 +27,8 @@ void Base3DRenderer::Render(const Mesh& m)
 	// We only handle diffuse textures for now (actual color textures)
 	context->PSSetShaderResources(0, 1, m.textures[0].shaderResourceView.GetAddressOf());
 
+	// it has to be called per Entity cause we dynamically set animation offsets in the buffer, 
+	// maybe we can optimize this if it is an issue
 	context->UpdateSubresource1(
 		m_VSConstantBuffer.Get(),
 		0,
@@ -53,6 +52,7 @@ void Base3DRenderer::Render(const Mesh& m)
 	// Each vertex is one instance of the VertexData struct.
 	UINT stride = sizeof(AnimatedVertexData);
 	UINT offset = 0;
+
 	context->IASetVertexBuffers(
 		0,
 		1,
@@ -67,25 +67,8 @@ void Base3DRenderer::Render(const Mesh& m)
 		0
 	);
 
-	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-	context->IASetInputLayout(m_inputLayout.Get());
-
-	// Attach our vertex shader.
-	context->VSSetShader(
-		m_vertexShader.Get(),
-		nullptr,
-		0
-	);
-
-	// Attach our pixel shader.
-	context->PSSetShader(
-		m_pixelShader.Get(),
-		nullptr,
-		0
-	);
-
-	// Send the constant buffer to the graphics device.
+	
+	// Send the constant buffer to the graphics device. Same as before can be optimized
 	context->VSSetConstantBuffers1(
 		0,
 		1,
@@ -102,12 +85,7 @@ void Base3DRenderer::Render(const Mesh& m)
 		nullptr
 	);
 
-	// set texture sampler
-	context->PSSetSamplers(
-		0,
-		1,
-		m_samplerState.GetAddressOf());
-
+	
 	// Draw the objects.
 	context->DrawIndexed(
 		m.indexCount,
@@ -125,42 +103,24 @@ void Base3DRenderer::Render(const AssimpModel& m)
 	}
 }
 
-void Base3DRenderer::Render(const Animable& animable)
-{
-	if (!m_loadingComplete)
-	{
-		return;
-	}
-
-	auto modelMatrix = XMMatrixScaling(1.f, 1.f, 1.f);
-	XMStoreFloat4x4(&m_VSConstantBufferData.model, XMMatrixTranspose(animable.m_model));
-	auto pose = animable.m_animator.m_FinalBoneMatrices;
-	for (int i = 0; i < 55; i++)
-	{
-		auto loaded = DirectX::XMLoadFloat4x4(&pose[i]);
-		XMStoreFloat4x4(&m_VSConstantBufferData.pose[i], XMMatrixTranspose(loaded));
-	}
-	this->Render(*animable.m_animatedModel);
-}
-
-void Base3DRenderer::setProjectionMatrix(DirectX::XMFLOAT4X4 projection)
+void Base3DRenderer::setProjectionMatrix(const DirectX::XMFLOAT4X4& projection)
 {
 	m_VSConstantBufferData.projection = projection;
 }
 
-void Base3DRenderer::setViewMatrix(DirectX::XMFLOAT4X4 view)
+void Base3DRenderer::setViewMatrix(const DirectX::XMFLOAT4X4& view)
 {
 	m_VSConstantBufferData.view = view;
 }
 
-void Base3DRenderer::CreateDeviceDependentResources()
+void Base3DRenderer::CreateDeviceDependentResources_internal(std::wstring VSpath, std::wstring PSpath, const std::vector<D3D11_INPUT_ELEMENT_DESC>& inputDesc)
 {
 	// Load shaders asynchronously.
-	auto loadVSTask = DX::ReadDataAsync(L"SkeletalVertexShader.cso");
-	auto loadPSTask = DX::ReadDataAsync(L"SkeletalPixelShader.cso");
+	auto loadVSTask = DX::ReadDataAsync(VSpath);
+	auto loadPSTask = DX::ReadDataAsync(PSpath);
 
 	// After the vertex shader file is loaded, create the shader and input layout.
-	auto createVSTask = loadVSTask.then([this](const std::vector<byte>& fileData) {
+	auto createVSTask = loadVSTask.then([&, this](const std::vector<byte>& fileData) {
 		DX::ThrowIfFailed(
 			m_deviceResources->GetD3DDevice()->CreateVertexShader(
 				&fileData[0],
@@ -181,8 +141,8 @@ void Base3DRenderer::CreateDeviceDependentResources()
 
 		DX::ThrowIfFailed(
 			m_deviceResources->GetD3DDevice()->CreateInputLayout(
-				vertexDesc,
-				ARRAYSIZE(vertexDesc),
+				inputDesc.data(),
+				inputDesc.size(),
 				&fileData[0],
 				fileData.size(),
 				&m_inputLayout
@@ -283,4 +243,33 @@ void Base3DRenderer::SetClockwiseCulling()
 
 	// Set the rasterizer state
 	context->RSSetState(rasterizerState.Get());
+}
+
+void Base3DRenderer::use()
+{
+	auto context = m_deviceResources->GetD3DDeviceContext();
+
+	// Attach vertex shader.
+	context->VSSetShader(
+		m_vertexShader.Get(),
+		nullptr,
+		0
+	);
+
+	// Attach pixel shader.
+	context->PSSetShader(
+		m_pixelShader.Get(),
+		nullptr,
+		0
+	);
+
+	// set texture sampler
+	context->PSSetSamplers(
+		0,
+		1,
+		m_samplerState.GetAddressOf()
+	);
+
+	context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	context->IASetInputLayout(m_inputLayout.Get());
 }

@@ -315,6 +315,7 @@
   <ItemGroup>
     <ClCompile Include="Animable.cpp" />
     <ClCompile Include="AnimatedEntity.cpp" />
+    <ClCompile Include="AnimatedModelRenderer.cpp" />
     <ClCompile Include="Animator.cpp" />
     <ClCompile Include="App.cpp" />
     <ClCompile Include="AssimpModelLoader.cpp" />
@@ -324,8 +325,8 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="FirstPersonShooterMain.cpp" />
     <ClCompile Include="Content\SampleFpsTextRenderer.cpp" />
-    <ClCompile Include="Content\Base3DRenderer.cpp" />
     <ClCompile Include="Hittable.cpp" />
+    <ClCompile Include="ModelRenderer.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -425,6 +426,12 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="FirstPersonShooter.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\AK-47\AK47NoSubdiv_cw.obj">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+      <FileType>Document</FileType>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
