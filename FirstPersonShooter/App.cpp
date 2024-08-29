@@ -182,7 +182,6 @@ void App::OnWindowClosed(CoreWindow^ sender, CoreWindowEventArgs^ args)
 	m_windowClosed = true;
 }
 
-
 void App::OnKeyDown(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::KeyEventArgs^ args)
 {
 	m_inputHandler.get()->AddEvent(ButtonState::CLICKED, args->KeyStatus.ScanCode);

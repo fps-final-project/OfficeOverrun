@@ -30,6 +30,14 @@ struct PixelShaderInput
 
 PixelShaderInput main(VertexShaderInput input)
 {
+	matrix BoneTransform =
+	{
+		{ 0, 0, 0, 0 },
+		{ 0, 0, 0, 0 },
+		{ 0, 0, 0, 0 },
+		{ 0, 0, 0, 0 }
+	};
+
 	float4 total_position = float4(0.f, 0.f, 0.f, 0.f);
     for (int i = 0; i < 4; i++)
     {
@@ -41,18 +49,23 @@ PixelShaderInput main(VertexShaderInput input)
             total_position = float4(input.pos, 1.0f);
             break;
         }
-		
-        float4 localPosition = mul(float4(input.pos, 1.0f), finalBonesMatricies[input.boneIds[i]]);
-        total_position += localPosition * input.weights[i];
-		//float3 localNormal = finalBonesMatricies[input.boneIds[i]]
+
+		BoneTransform += finalBonesMatricies[input.boneIds[i]] * input.weights[i];
     }
+
+	// dobrze
+	matrix model_final = mul(BoneTransform, model);
+
+
+	// DUPA
+	// kiedys cos sie pomysli
+	//float3x3 normalMatrix = (float3x3)transpose(inv(model_final));
 
 
     PixelShaderInput output;
-	float4 pos = total_position;
-	//float4 pos = float4(input.pos, 1.0f);
+	float4 pos = mul(float4(input.pos, 1.0f), model_final);
+	//float4 pos = total_position;
 
-	pos = mul(pos, model);
 	pos = mul(pos, view);
 	pos = mul(pos, projection);
 	output.pos = pos;
@@ -60,7 +73,8 @@ PixelShaderInput main(VertexShaderInput input)
 
 	output.texture_pos = input.texture_pos;
 
-	output.normal = mul(input.normal, transpose(inv_model));
+	//output.normal = mul(input.normal, input.inv_model);
+	output.normal = input.normal;
 
 	return output;
 }

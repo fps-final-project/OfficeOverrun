@@ -30,6 +30,10 @@ FirstPersonShooterMain::FirstPersonShooterMain(const std::shared_ptr<DX::DeviceR
 
 	m_world = std::unique_ptr<World>(new World());
 	m_camera = std::unique_ptr<Camera>(new Camera(m_deviceResources, FOV));
+	//m_camera = std::unique_ptr<Camera>(new Camera(m_deviceResources, FOV,
+	//	{2.f, 0.f, 0.f, 0.f},
+	//	{-1.f, 0.f, 0.f, 0.f},
+	//	{0.f, 1.f, 0.f, 0.f}));
 
 	AnimatedEntity arms(ResourceManager::Instance.getAnimatedModel("myarms"));
 	arms.setAnimation("FP_reload");
@@ -39,7 +43,7 @@ FirstPersonShooterMain::FirstPersonShooterMain(const std::shared_ptr<DX::DeviceR
 	gun.setAnimation("GUN_reload");
 	m_world->m_animatedEntities.push_back(gun);
 
-	m_world->m_entities.push_back(Entity(ResourceManager::Instance.getModel("AK47NoSubdiv_cw"), XMFLOAT3(0.f, 0.f, 10.f)));
+	m_world->m_entities.push_back(Entity(ResourceManager::Instance.getModel("AK47NoSubdiv_cw"), XMFLOAT3(0.f, -1.f, 5.f)));
 
 	m_keyboard = std::make_unique<DirectX::Keyboard>();
 	m_mouse = std::make_unique<DirectX::Mouse>();
