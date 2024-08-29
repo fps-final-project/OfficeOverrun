@@ -2,10 +2,15 @@
 
 #include "Common\StepTimer.h"
 #include "Common\DeviceResources.h"
-#include "Content\Sample3DSceneRenderer.h"
 #include "Content\SampleFpsTextRenderer.h"
 #include <Keyboard.h>
 #include <Mouse.h>
+
+#include <queue>
+#include "World.h"
+#include "Camera.hpp"
+#include "AnimatedModelRenderer.hpp"
+#include "ModelRenderer.hpp"
 
 // Renders Direct2D and 3D content on the screen.
 namespace FirstPersonShooter
@@ -28,13 +33,20 @@ namespace FirstPersonShooter
 		std::shared_ptr<DX::DeviceResources> m_deviceResources;
 
 		// TODO: Replace with your own content renderers.
-		std::unique_ptr<Sample3DSceneRenderer> m_sceneRenderer;
+		std::unique_ptr<ModelRenderer> m_modelRenderer;
+		std::unique_ptr<AnimatedModelRenderer> m_animatedRenderer;
 		std::unique_ptr<SampleFpsTextRenderer> m_fpsTextRenderer;
+
+		std::unique_ptr<Camera> m_camera;
+		std::unique_ptr<World> m_world;
 
 		// Rendering loop timer.
 		DX::StepTimer m_timer;
 
 		std::unique_ptr<DirectX::Keyboard> m_keyboard;
 		std::unique_ptr<DirectX::Mouse> m_mouse;
+
+		const float FOV = 95.0f;
+
 	};
 }

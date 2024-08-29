@@ -267,18 +267,31 @@
     <Image Include="Assets\AK-47\textures\AK_Roughness.png" />
     <Image Include="Assets\cube\smile.jpg" />
     <Image Include="Assets\LockScreenLogo.scale-200.png" />
+    <Image Include="Assets\myarms\Texture.png" />
+    <Image Include="Assets\simplest\Texture.png" />
     <Image Include="Assets\smile.jpg" />
     <Image Include="Assets\SplashScreen.scale-200.png" />
     <Image Include="Assets\Square150x150Logo.scale-200.png" />
     <Image Include="Assets\Square44x44Logo.scale-200.png" />
     <Image Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
     <Image Include="Assets\StoreLogo.png" />
+    <Image Include="Assets\vampire\textures\Vampire_diffuse.png" />
+    <Image Include="Assets\vampire\textures\Vampire_emission.png" />
+    <Image Include="Assets\vampire\textures\Vampire_normal.png" />
+    <Image Include="Assets\vampire\textures\Vampire_specular.png" />
     <Image Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animable.hpp" />
+    <ClInclude Include="AnimatedAssimpModel.h" />
+    <ClInclude Include="AnimatedEntity.hpp" />
+    <ClInclude Include="AnimatedModelRenderer.hpp" />
+    <ClInclude Include="Animator.h" />
     <ClInclude Include="App.h" />
     <ClInclude Include="AssimpModel.h" />
     <ClInclude Include="AssimpModelLoader.h" />
+    <ClInclude Include="BoneInfo.h" />
+    <ClInclude Include="Camera.hpp" />
     <ClInclude Include="CollisionDetector.hpp" />
     <ClInclude Include="Common\DeviceResources.h" />
     <ClInclude Include="Drawable.hpp" />
@@ -287,31 +300,39 @@
     <ClInclude Include="FirstPersonShooterMain.h" />
     <ClInclude Include="Common\DirectXHelper.h" />
     <ClInclude Include="Common\StepTimer.h" />
-    <ClInclude Include="Content\Sample3DSceneRenderer.h" />
+    <ClInclude Include="Content\Base3DRenderer.h" />
     <ClInclude Include="Content\SampleFpsTextRenderer.h" />
     <ClInclude Include="Content\ShaderStructures.h" />
     <ClInclude Include="Hittable.hpp" />
     <ClInclude Include="InputHandler.hpp" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshFactory.h" />
+    <ClInclude Include="ModelRenderer.hpp" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SimpleCollisionDetector.hpp" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureFactory.h" />
+    <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Animable.cpp" />
+    <ClCompile Include="AnimatedEntity.cpp" />
+    <ClCompile Include="AnimatedModelRenderer.cpp" />
+    <ClCompile Include="Animator.cpp" />
     <ClCompile Include="App.cpp" />
     <ClCompile Include="AssimpModelLoader.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CollisionDetector.cpp" />
     <ClCompile Include="Common\DeviceResources.cpp" />
     <ClCompile Include="Drawable.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="FirstPersonShooterMain.cpp" />
     <ClCompile Include="Content\SampleFpsTextRenderer.cpp" />
-    <ClCompile Include="Content\Sample3DSceneRenderer.cpp" />
     <ClCompile Include="Hittable.cpp" />
     <ClCompile Include="InputHandler.cpp" />
-    <ClCompile Include="MeshFactory.cpp" />
+    <ClCompile Include="ModelRenderer.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -323,7 +344,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="SimpleCollisionDetector.cpp" />
+    <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="TextureFactory.cpp" />
+    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -337,12 +360,24 @@
     <FxCompile Include="Content\SampleVertexShader.hlsl">
       <ShaderType>Vertex</ShaderType>
     </FxCompile>
+    <FxCompile Include="SkeletalPixelShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="SkeletalVertexShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\AK-47\AK47NoSubdiv.mtl">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
     </None>
     <None Include="Assets\cube\cube.mtl">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\myarms\myarms.glb">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\myarms\mygun.glb">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
     </None>
     <None Include="packages.config" />
@@ -355,6 +390,52 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\cube\cube.obj">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\vampire\dancing_vampire.dae">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+      <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutDir)%(Filename).dae</ContentOutput>
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\myarms\myarms.fbx">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\simplest\simplest_anim.dae">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\myarms\myarms.dae">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\myarms\mygun.dae">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\myarms\myarms2.dae">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="FirstPersonShooter.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\AK-47\AK47NoSubdiv_cw.obj">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
       <FileType>Document</FileType>
     </None>

@@ -1,4 +1,6 @@
 ﻿#pragma once
+#define MAX_BONE_INFLUENCE 4
+
 
 namespace FirstPersonShooter
 {
@@ -9,6 +11,12 @@ namespace FirstPersonShooter
 		DirectX::XMFLOAT4X4 inv_model;
 		DirectX::XMFLOAT4X4 view;
 		DirectX::XMFLOAT4X4 projection;
+	};
+
+	struct AnimationConstantBuffer : public ModelViewProjectionConstantBuffer
+	{
+		static const int MAX_BONES = 55;
+		DirectX::XMFLOAT4X4 pose[MAX_BONES];
 	};
 
 	__declspec(align(16))
@@ -24,5 +32,20 @@ namespace FirstPersonShooter
 		DirectX::XMFLOAT3 pos;
 		DirectX::XMFLOAT2 texture_pos;
 		DirectX::XMFLOAT3 normal;
+	};
+
+	struct AnimatedVertexData : public VertexData
+	{
+		int boneIds[MAX_BONE_INFLUENCE];
+		float weights[MAX_BONE_INFLUENCE];
+
+		AnimatedVertexData()
+		{
+			for (int i = 0; i < MAX_BONE_INFLUENCE; i++)
+			{
+				this->boneIds[i] = -1;
+				this->weights[i] = 0.0f;
+			}
+		}
 	};
 }

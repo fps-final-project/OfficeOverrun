@@ -2,13 +2,16 @@
 #include <Mesh.h>
 #include <Texture.h>
 
+#include "AssimpModel.h"
+
 class Drawable
 {
 public:
-	virtual void Render() = 0;
-
+	Drawable(std::shared_ptr<AssimpModel> model);
+	//virtual void Render() {}
+	friend class ModelRenderer;
 protected:
-	Mesh ObjectMesh;
-	Texture ObjectTexture;
+	std::shared_ptr<AssimpModel> m_model;
+	DirectX::XMMATRIX m_modelMatrix;
 };
 

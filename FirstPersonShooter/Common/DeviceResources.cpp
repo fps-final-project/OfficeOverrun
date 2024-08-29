@@ -326,7 +326,7 @@ void DX::DeviceResources::CreateWindowSizeDependentResources()
 
 	// Set the proper orientation for the swap chain, and generate 2D and
 	// 3D matrix transformations for rendering to the rotated swap chain.
-	// Note the rotation angle for the 2D and 3D transforms are different.
+	// Note the rotation angle for the 2D and 3D pose are different.
 	// This is due to the difference in coordinate spaces.  Additionally,
 	// the 3D matrix is specified explicitly to avoid rounding errors.
 

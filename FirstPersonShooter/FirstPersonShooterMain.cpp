@@ -3,6 +3,7 @@
 #include "Common\DirectXHelper.h"
 #include <Keyboard.h>
 #include <Mouse.h>
+#include "ResourceManager.h"
 
 using namespace FirstPersonShooter;
 using namespace Windows::Foundation;
@@ -17,9 +18,28 @@ FirstPersonShooterMain::FirstPersonShooterMain(const std::shared_ptr<DX::DeviceR
 	m_deviceResources->RegisterDeviceNotify(this);
 
 	// TODO: Replace this with your app's content initialization.
-	m_sceneRenderer = std::unique_ptr<Sample3DSceneRenderer>(new Sample3DSceneRenderer(m_deviceResources));
 
+	ResourceManager::Instance.loadAnimatedModel("Assets\\myarms\\myarms.glb", m_deviceResources, { "Assets\\myarms\\Texture.png" });
+	ResourceManager::Instance.loadAnimatedModel("Assets\\myarms\\mygun.glb", m_deviceResources, { "Assets\\myarms\\Texture.png" });
+
+	ResourceManager::Instance.loadModel("Assets\\AK-47\\AK47NoSubdiv_cw.obj", m_deviceResources);
+
+	m_modelRenderer = std::unique_ptr<ModelRenderer>(new ModelRenderer(m_deviceResources));
+	m_animatedRenderer = std::unique_ptr<AnimatedModelRenderer>(new AnimatedModelRenderer(m_deviceResources));
 	m_fpsTextRenderer = std::unique_ptr<SampleFpsTextRenderer>(new SampleFpsTextRenderer(m_deviceResources));
+
+	m_world = std::unique_ptr<World>(new World());
+	m_camera = std::unique_ptr<Camera>(new Camera(m_deviceResources, FOV));
+
+	AnimatedEntity arms(ResourceManager::Instance.getAnimatedModel("myarms"));
+	arms.setAnimation("FP_reload");
+	m_world->m_animatedEntities.push_back(arms);
+
+	AnimatedEntity gun(ResourceManager::Instance.getAnimatedModel("mygun"), XMFLOAT3(0.f, 0.f, 0.4572f));
+	gun.setAnimation("GUN_reload");
+	m_world->m_animatedEntities.push_back(gun);
+
+	m_world->m_entities.push_back(Entity(ResourceManager::Instance.getModel("AK47NoSubdiv_cw"), XMFLOAT3(0.f, 0.f, 10.f)));
 
 	m_keyboard = std::make_unique<DirectX::Keyboard>();
 	m_mouse = std::make_unique<DirectX::Mouse>();
@@ -42,7 +62,8 @@ FirstPersonShooterMain::~FirstPersonShooterMain()
 void FirstPersonShooterMain::CreateWindowSizeDependentResources() 
 {
 	// TODO: Replace this with the size-dependent initialization of your app's content.
-	m_sceneRenderer->CreateWindowSizeDependentResources();
+	// useless?
+	m_camera->CreateWindowSizeDependentResources(FOV);
 }
 
 // Updates the application state once per frame.
@@ -52,7 +73,7 @@ void FirstPersonShooterMain::Update()
 	m_timer.Tick([&]()
 	{
 		// TODO: Replace this with your app's content update functions.
-		m_sceneRenderer->Update(m_timer);
+		m_world->update(m_timer.GetElapsedSeconds());
 		m_fpsTextRenderer->Update(m_timer);
 	});
 }
@@ -83,7 +104,27 @@ bool FirstPersonShooterMain::Render()
 
 	// Render the scene objects.
 	// TODO: Replace this with your app's content rendering functions.
-	m_sceneRenderer->Render();
+
+	// ANIMATED ENTITIES
+	m_animatedRenderer->setProjectionMatrix(m_camera->getProjectionMatrix());
+	m_animatedRenderer->setViewMatrix(m_camera->getViewMatrix());
+
+	m_animatedRenderer->use();
+	for (const auto& entity : m_world->m_animatedEntities)
+	{
+		m_animatedRenderer->Render(entity);
+	}
+
+	// REGULAR ENTITES
+	m_modelRenderer->setProjectionMatrix(m_camera->getProjectionMatrix());
+	m_modelRenderer->setViewMatrix(m_camera->getViewMatrix());
+
+	m_modelRenderer->use();
+	for (const auto& entity : m_world->m_entities)
+	{
+		m_modelRenderer->Render(entity);
+	}
+
 	m_fpsTextRenderer->Render();
 
 	return true;
@@ -92,14 +133,16 @@ bool FirstPersonShooterMain::Render()
 // Notifies renderers that device resources need to be released.
 void FirstPersonShooterMain::OnDeviceLost()
 {
-	m_sceneRenderer->ReleaseDeviceDependentResources();
+	m_modelRenderer->ReleaseDeviceDependentResources();
+	m_animatedRenderer->ReleaseDeviceDependentResources();
 	m_fpsTextRenderer->ReleaseDeviceDependentResources();
 }
 
 // Notifies renderers that device resources may now be recreated.
 void FirstPersonShooterMain::OnDeviceRestored()
 {
-	m_sceneRenderer->CreateDeviceDependentResources();
+	m_modelRenderer->CreateDeviceDependentResources();
+	m_animatedRenderer->CreateDeviceDependentResources();
 	m_fpsTextRenderer->CreateDeviceDependentResources();
 	CreateWindowSizeDependentResources();
 }
