@@ -118,7 +118,7 @@ bool FirstPersonShooterMain::Render()
 
 	// ANIMATED ENTITIES
 	m_animatedRenderer->setProjectionMatrix(m_camera->getProjectionMatrix());
-	m_animatedRenderer->setViewMatrix(m_camera->getViewMatrix());
+	m_animatedRenderer->setViewMatrix(Camera::m_staticViewMatrix);
 
 	m_animatedRenderer->use();
 	for (const auto& entity : m_world->m_animatedEntities)

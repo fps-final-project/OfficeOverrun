@@ -20,6 +20,8 @@ public:
 
 	void alignWithMouse(const DirectX::Mouse::State& mouseState);
 
+	static DirectX::XMFLOAT4X4 m_staticViewMatrix;
+
 private:
 	// TODO:
 	// camera speed should be the same regardless of fps
