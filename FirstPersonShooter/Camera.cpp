@@ -52,10 +52,8 @@ DirectX::XMFLOAT4X4 Camera::getViewMatrix() const
 	return m_viewMatrix;
 }
 
-void Camera::alignWithMouse(const std::shared_ptr<DirectX::Mouse>& mouse)
+void Camera::alignWithMouse(const DirectX::Mouse::State& mouseState)
 {
-	auto mouseState = mouse->GetState();
-
 	if (mouseState.positionMode == DirectX::Mouse::MODE_RELATIVE)
 	{
 		m_pitch -= mouseState.y * ROTATION_GAIN;
@@ -75,14 +73,19 @@ void Camera::alignWithMouse(const std::shared_ptr<DirectX::Mouse>& mouse)
 		m_yaw = 180.0f;
 
 	
-	float y = sinf(m_pitch);
-	float r = cosf(m_pitch);
-	float z = r * cosf(m_yaw);
-	float x = r * sinf(m_yaw);
+	float y = sinf(toRadians(m_pitch));
+	float r = cosf(toRadians(m_pitch));
+	float z = r * cosf(toRadians(m_yaw));
+	float x = r * sinf(toRadians(m_yaw));
 
 	m_at = DirectX::XMVectorAdd(m_position, {x, y, z, 0.f});
 
 	updateViewMatrix();
+}
+
+float Camera::toRadians(float degrees)
+{
+	return degrees / 180.f * DirectX::XM_PI;
 }
 
 void Camera::updateViewMatrix()

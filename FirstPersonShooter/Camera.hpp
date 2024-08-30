@@ -18,10 +18,12 @@ public:
 	DirectX::XMFLOAT4X4 getProjectionMatrix() const;
 	DirectX::XMFLOAT4X4 getViewMatrix() const;
 
-	void alignWithMouse(const std::shared_ptr<DirectX::Mouse>& mouse);
+	void alignWithMouse(const DirectX::Mouse::State& mouseState);
 
 private:
-	const float ROTATION_GAIN = 0.004f;
+	// TODO:
+	// camera speed should be the same regardless of fps
+	const float ROTATION_GAIN = 0.1f;
 	const float MAX_PITCH = 89.0f;
 
 	std::shared_ptr<DX::DeviceResources> m_deviceResources;
@@ -34,6 +36,8 @@ private:
 
 	float m_yaw;
 	float m_pitch;
+
+	float toRadians(float degrees);
 
 	void updateViewMatrix();
 };

@@ -76,7 +76,9 @@ void FirstPersonShooterMain::CreateWindowSizeDependentResources()
 // Updates the application state once per frame.
 void FirstPersonShooterMain::Update() 
 {
-	m_camera->alignWithMouse(m_mouse);
+	auto mouseState = m_mouse->GetState();
+
+	m_camera->alignWithMouse(mouseState);
 
 	// Update scene objects.
 	m_timer.Tick([&]()
