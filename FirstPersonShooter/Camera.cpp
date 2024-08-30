@@ -6,10 +6,10 @@ using namespace Windows::Foundation;
 
 Camera::Camera(const std::shared_ptr<DX::DeviceResources>& deviceResources,
 	float fov,
-	DirectX::XMVECTORF32 position, 
-	DirectX::XMVECTORF32 at, 
-	DirectX::XMVECTORF32 up)
-	: m_position(position), m_at(at), m_up(up), m_deviceResources(deviceResources)
+	DirectX::XMVECTOR position, 
+	DirectX::XMVECTOR at, 
+	DirectX::XMVECTOR up)
+	: m_position(position), m_at(at), m_up(up), m_deviceResources(deviceResources), m_yaw(0), m_pitch(0)
 {
 	this->CreateWindowSizeDependentResources(fov);
 	this->updateViewMatrix();
@@ -52,10 +52,44 @@ DirectX::XMFLOAT4X4 Camera::getViewMatrix() const
 	return m_viewMatrix;
 }
 
+void Camera::alignWithMouse(const std::shared_ptr<DirectX::Mouse>& mouse)
+{
+	auto mouseState = mouse->GetState();
+
+	if (mouseState.positionMode == DirectX::Mouse::MODE_RELATIVE)
+	{
+		m_pitch -= mouseState.y * ROTATION_GAIN;
+		m_yaw -= mouseState.x * ROTATION_GAIN;
+	}
+	
+	if (m_pitch > MAX_PITCH)
+		m_pitch = MAX_PITCH;
+
+	if (m_pitch < -MAX_PITCH)
+		m_pitch = -MAX_PITCH;
+
+	if (m_yaw > 180.0f)
+		m_yaw = -180.0f;
+
+	if (m_yaw < -180.0f)
+		m_yaw = 180.0f;
+
+	
+	float y = sinf(m_pitch);
+	float r = cosf(m_pitch);
+	float z = r * cosf(m_yaw);
+	float x = r * sinf(m_yaw);
+
+	m_at = DirectX::XMVectorAdd(m_position, {x, y, z, 0.f});
+
+	updateViewMatrix();
+}
+
 void Camera::updateViewMatrix()
 {
 	DirectX::XMStoreFloat4x4(
 		&m_viewMatrix,
 		DirectX::XMMatrixTranspose(DirectX::XMMatrixLookAtRH(m_position, m_at, m_up))
 	);
+
 }

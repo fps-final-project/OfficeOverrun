@@ -11,8 +11,10 @@ using namespace Windows::System::Threading;
 using namespace Concurrency;
 
 // Loads and initializes application assets when the application is loaded.
-FirstPersonShooterMain::FirstPersonShooterMain(const std::shared_ptr<DX::DeviceResources>& deviceResources) :
-	m_deviceResources(deviceResources)
+FirstPersonShooterMain::FirstPersonShooterMain(
+	const std::shared_ptr<DX::DeviceResources>& deviceResources,
+	const std::shared_ptr<DirectX::Mouse>& mouse) :
+	m_deviceResources(deviceResources), m_mouse(mouse)
 {
 	// Register to be notified if the Device is lost or recreated
 	m_deviceResources->RegisterDeviceNotify(this);
@@ -46,7 +48,8 @@ FirstPersonShooterMain::FirstPersonShooterMain(const std::shared_ptr<DX::DeviceR
 	m_world->m_entities.push_back(Entity(ResourceManager::Instance.getModel("AK47NoSubdiv_cw"), XMFLOAT3(0.f, -1.f, 5.f)));
 
 	m_keyboard = std::make_unique<DirectX::Keyboard>();
-	m_mouse = std::make_unique<DirectX::Mouse>();
+
+	m_mouse->SetMode(DirectX::Mouse::MODE_RELATIVE);
 	
 	// TODO: Change the timer settings if you want something other than the default variable timestep mode.
 	// e.g. for 60 FPS fixed timestep update logic, call:
@@ -73,6 +76,8 @@ void FirstPersonShooterMain::CreateWindowSizeDependentResources()
 // Updates the application state once per frame.
 void FirstPersonShooterMain::Update() 
 {
+	m_camera->alignWithMouse(m_mouse);
+
 	// Update scene objects.
 	m_timer.Tick([&]()
 	{

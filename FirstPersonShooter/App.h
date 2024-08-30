@@ -44,6 +44,7 @@ namespace FirstPersonShooter
 		std::shared_ptr<DX::DeviceResources> m_deviceResources;
 		std::unique_ptr<FirstPersonShooterMain> m_main;
 		std::shared_ptr<InputHandler> m_inputHandler;
+		std::shared_ptr<DirectX::Mouse> m_mouse;
 		bool m_windowClosed;
 		bool m_windowVisible;
 	};

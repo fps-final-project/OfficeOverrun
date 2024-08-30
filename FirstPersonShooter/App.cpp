@@ -52,6 +52,9 @@ void App::Initialize(CoreApplicationView^ applicationView)
 	// At this point we have access to the device. 
 	// We can create the device-dependent resources.
 	m_deviceResources = std::make_shared<DX::DeviceResources>();
+	m_inputHandler = std::make_shared<InputHandler>();
+	m_mouse = std::make_shared<Mouse>();
+
 }
 
 // Called when the CoreWindow object is created (or re-created).
@@ -84,6 +87,7 @@ void App::SetWindow(CoreWindow^ window)
 		ref new TypedEventHandler<DisplayInformation^, Object^>(this, &App::OnDisplayContentsInvalidated);
 
 	m_deviceResources->SetWindow(window);
+	m_mouse->SetWindow(window);
 }
 
 // Initializes scene resources, or loads a previously saved app state.
@@ -91,11 +95,7 @@ void App::Load(Platform::String^ entryPoint)
 {
 	if (m_main == nullptr)
 	{
-		m_main = std::unique_ptr<FirstPersonShooterMain>(new FirstPersonShooterMain(m_deviceResources));
-	}
-	if (m_inputHandler == nullptr)
-	{
-		m_inputHandler = std::shared_ptr<InputHandler>(new InputHandler());
+		m_main = std::unique_ptr<FirstPersonShooterMain>(new FirstPersonShooterMain(m_deviceResources, m_mouse));
 	}
 }
 

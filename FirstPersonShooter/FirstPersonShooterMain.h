@@ -18,7 +18,10 @@ namespace FirstPersonShooter
 	class FirstPersonShooterMain : public DX::IDeviceNotify
 	{
 	public:
-		FirstPersonShooterMain(const std::shared_ptr<DX::DeviceResources>& deviceResources);
+		FirstPersonShooterMain(
+			const std::shared_ptr<DX::DeviceResources>& deviceResources,
+			const std::shared_ptr<DirectX::Mouse>& mouse);
+
 		~FirstPersonShooterMain();
 		void CreateWindowSizeDependentResources();
 		void Update();
@@ -44,7 +47,7 @@ namespace FirstPersonShooter
 		DX::StepTimer m_timer;
 
 		std::unique_ptr<DirectX::Keyboard> m_keyboard;
-		std::unique_ptr<DirectX::Mouse> m_mouse;
+		std::shared_ptr<DirectX::Mouse> m_mouse;
 
 		const float FOV = 95.0f;
 
