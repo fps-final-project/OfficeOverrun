@@ -35,7 +35,7 @@ private:
 	std::shared_ptr<DX::DeviceResources> m_deviceResources;
 	std::string m_directory;
 
-	void ExtractBoneWeightForVerticies(std::vector<FirstPersonShooter::AnimatedVertexData>& verticies, aiMesh* mesh, const aiScene* scene);
+	void ExtractBoneWeightForVerticies(std::vector<AnimatedVertexData>& verticies, aiMesh* mesh, const aiScene* scene);
 	void createAnimations(AnimatedAssimpModel& outModel, const aiScene* scene);
 	void loadJointHierarchy(Joint& joint, aiNode* src);
 
@@ -47,7 +47,7 @@ private:
 	void processAnimatedNode(AnimatedAssimpModel& outModel, aiNode* node, const aiScene* scene);
 	Mesh processAnimatedMesh(aiMesh* m_mesh, const aiScene* scene);
 
-	void setBasicVertexData(FirstPersonShooter::VertexData& vertex, aiMesh* m_mesh, int idx);
+	void setBasicVertexData(VertexData& vertex, aiMesh* m_mesh, int idx);
 	std::vector<std::shared_ptr<Texture>> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName);
 
 };

@@ -107,14 +107,20 @@
     <Filter Include="Content\Renderer\3D\AnimatedModel">
       <UniqueIdentifier>{7461cf45-36e2-4d4d-ba74-64f06c45a80b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Content\Camera">
-      <UniqueIdentifier>{70b64313-a96b-4eb3-85d5-35d3640126e1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Base">
       <UniqueIdentifier>{55808537-456c-4681-8aa2-a22854a1caaf}</UniqueIdentifier>
     </Filter>
     <Filter Include="Events">
       <UniqueIdentifier>{7fb1627b-d8e3-4f7c-b79f-509e91e0b17e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\Renderer\2D">
+      <UniqueIdentifier>{575c322f-ecaf-4bba-b36e-51ed15cfdff9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\Shaders\HUD">
+      <UniqueIdentifier>{9306adaf-1138-4e63-92af-88c00fb66e03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Content\Camera">
+      <UniqueIdentifier>{70b64313-a96b-4eb3-85d5-35d3640126e1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -168,6 +174,12 @@
     </ClCompile>
     <ClCompile Include="InputHandler.cpp">
       <Filter>Events</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteRenderer.cpp">
+      <Filter>Content\Renderer\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Content\SampleFpsTextRenderer.cpp">
+      <Filter>Content\Renderer\Text</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -253,6 +265,12 @@
     <ClInclude Include="InputHandler.hpp">
       <Filter>Events</Filter>
     </ClInclude>
+    <ClInclude Include="SpriteRenderer.hpp">
+      <Filter>Content\Renderer\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseRenderer.hpp">
+      <Filter>Content\Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\StoreLogo.png">
@@ -297,6 +315,9 @@
     <Image Include="Assets\simplest\Texture.png">
       <Filter>Assets\simplest</Filter>
     </Image>
+    <Image Include="Assets\cube\crosshair.png">
+      <Filter>Assets\cube</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -339,7 +360,9 @@
     <None Include="Assets\myarms\mygun.glb">
       <Filter>Assets\myarms</Filter>
     </None>
-    <None Include="Assets\AK-47\AK47NoSubdiv_cw.obj" />
+    <None Include="Assets\AK-47\AK47NoSubdiv_cw.obj">
+      <Filter>Assets\AK-47</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Content\SamplePixelShader.hlsl">
@@ -353,6 +376,12 @@
     </FxCompile>
     <FxCompile Include="SkeletalPixelShader.hlsl">
       <Filter>Content\Shaders\Skeletal</Filter>
+    </FxCompile>
+    <FxCompile Include="HUDVertexShader.hlsl">
+      <Filter>Content\Shaders\HUD</Filter>
+    </FxCompile>
+    <FxCompile Include="HUDPixelShader.hlsl">
+      <Filter>Content\Shaders\HUD</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

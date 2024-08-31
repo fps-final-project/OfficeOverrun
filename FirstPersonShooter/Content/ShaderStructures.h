@@ -1,51 +1,74 @@
 ﻿#pragma once
 #define MAX_BONE_INFLUENCE 4
 
-
-namespace FirstPersonShooter
+#pragma region 2D
+struct VertexData2D
 {
-	// Constant buffer used to send MVP matrices to the vertex shader.
-	struct ModelViewProjectionConstantBuffer
-	{
-		DirectX::XMFLOAT4X4 model;
-		DirectX::XMFLOAT4X4 inv_model;
-		DirectX::XMFLOAT4X4 view;
-		DirectX::XMFLOAT4X4 projection;
-	};
+	DirectX::XMFLOAT2 pos;
+	DirectX::XMFLOAT2 texture_pos;
+};
 
-	struct AnimationConstantBuffer : public ModelViewProjectionConstantBuffer
-	{
-		static const int MAX_BONES = 55;
-		DirectX::XMFLOAT4X4 pose[MAX_BONES];
-	};
+struct VertexShaderData2D
+{
+	DirectX::XMFLOAT4X4 model;
+	DirectX::XMFLOAT4X4 projection;
+};
 
-	__declspec(align(16))
-	struct LightingConstantBuffer
-	{
-		DirectX::XMFLOAT3 camera_pos;
-		DirectX::XMFLOAT3 light_pos;
-	};
+#pragma endregion
 
-	// Used to send per-vertex data to the vertex shader.
-	struct VertexData
-	{
-		DirectX::XMFLOAT3 pos;
-		DirectX::XMFLOAT2 texture_pos;
-		DirectX::XMFLOAT3 normal;
-	};
+#pragma region 3D
 
-	struct AnimatedVertexData : public VertexData
-	{
-		int boneIds[MAX_BONE_INFLUENCE];
-		float weights[MAX_BONE_INFLUENCE];
+struct VertexData
+{
+	DirectX::XMFLOAT3 pos;
+	DirectX::XMFLOAT2 texture_pos;
+	DirectX::XMFLOAT3 normal;
+};
 
-		AnimatedVertexData()
+struct ModelViewProjectionConstantBuffer
+{
+	DirectX::XMFLOAT4X4 model;
+	DirectX::XMFLOAT4X4 inv_model;
+	DirectX::XMFLOAT4X4 view;
+	DirectX::XMFLOAT4X4 projection;
+};
+
+__declspec(align(16))
+struct LightingConstantBuffer
+{
+	DirectX::XMFLOAT3 camera_pos;
+	DirectX::XMFLOAT3 light_pos;
+};
+
+#pragma endregion
+
+#pragma region 3DAnimated
+
+struct AnimatedVertexData : public VertexData
+{
+	int boneIds[MAX_BONE_INFLUENCE];
+	float weights[MAX_BONE_INFLUENCE];
+
+	AnimatedVertexData()
+	{
+		for (int i = 0; i < MAX_BONE_INFLUENCE; i++)
 		{
-			for (int i = 0; i < MAX_BONE_INFLUENCE; i++)
-			{
-				this->boneIds[i] = -1;
-				this->weights[i] = 0.0f;
-			}
+			this->boneIds[i] = -1;
+			this->weights[i] = 0.0f;
 		}
-	};
-}
+	}
+};
+
+struct AnimationConstantBuffer : public ModelViewProjectionConstantBuffer
+{
+	static const int MAX_BONES = 55;
+	DirectX::XMFLOAT4X4 pose[MAX_BONES];
+};
+
+#pragma endregion
+
+
+
+
+
+

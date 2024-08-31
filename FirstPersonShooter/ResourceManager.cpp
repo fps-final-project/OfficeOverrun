@@ -2,6 +2,7 @@
 #include "ResourceManager.h"
 
 #include "AssimpModelLoader.h"
+#include "TextureFactory.h"
 #include <filesystem>
 
 ResourceManager ResourceManager::Instance;
@@ -13,7 +14,9 @@ void ResourceManager::loadModel(const std::string& path, const std::shared_ptr<D
 		std::make_shared<AssimpModel>(AssimpModelLoader::createModelFromFile(path, deviceResources))));
 }
 
-void ResourceManager::loadAnimatedModel(const std::string& path, const std::shared_ptr<DX::DeviceResources>& deviceResources, const std::vector<std::string>& missingTextures)
+void ResourceManager::loadAnimatedModel(const std::string& path, 
+	const std::shared_ptr<DX::DeviceResources>& deviceResources, 
+	const std::vector<std::string>& missingTextures)
 {
 	std::string name = std::filesystem::path(path).stem().string();
 
@@ -25,4 +28,15 @@ void ResourceManager::loadAnimatedModel(const std::string& path, const std::shar
 	{
 		AssimpModelLoader::appendTextureToMesh(texturePath, this->m_animatedModels[name]->meshes[0], deviceResources);
 	}
+}
+
+void ResourceManager::loadTexture(const std::string& path, const std::shared_ptr<DX::DeviceResources>& deviceResources)
+{
+	std::string name = std::filesystem::path(path).stem().string();
+	this->m_textures.insert(std::make_pair(
+		name,
+		std::make_shared<Texture>(
+			TextureFactory::CreateTextureFromFile(std::wstring(path.begin(), path.end()).c_str(),
+			deviceResources
+		))));
 }

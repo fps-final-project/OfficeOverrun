@@ -265,6 +265,7 @@
     <Image Include="Assets\AK-47\textures\AK_Mixed_AO.png" />
     <Image Include="Assets\AK-47\textures\AK_Normal_OpenGL.png" />
     <Image Include="Assets\AK-47\textures\AK_Roughness.png" />
+    <Image Include="Assets\cube\crosshair.png" />
     <Image Include="Assets\cube\smile.jpg" />
     <Image Include="Assets\LockScreenLogo.scale-200.png" />
     <Image Include="Assets\myarms\Texture.png" />
@@ -282,6 +283,8 @@
     <Image Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BaseRenderer.hpp" />
+    <ClInclude Include="SpriteRenderer.hpp" />
     <ClInclude Include="Animable.hpp" />
     <ClInclude Include="AnimatedAssimpModel.h" />
     <ClInclude Include="AnimatedEntity.hpp" />
@@ -343,6 +346,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="SimpleCollisionDetector.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="TextureFactory.cpp" />
@@ -359,6 +363,12 @@
     </FxCompile>
     <FxCompile Include="Content\SampleVertexShader.hlsl">
       <ShaderType>Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="HUDPixelShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="HUDVertexShader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="SkeletalPixelShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>

@@ -49,13 +49,13 @@ void AssimpModelLoader::processNode(AssimpModel& outModel, aiNode* node, const a
 
 Mesh AssimpModelLoader::processMesh(aiMesh* m_mesh, const aiScene* scene)
 {
-	std::vector<FirstPersonShooter::VertexData> vertexData;
+	std::vector<VertexData> vertexData;
 	std::vector<unsigned short> indicies;
 	std::vector<std::shared_ptr<Texture>> textures;
 
 	for (unsigned int i = 0; i < m_mesh->mNumVertices; i++)
 	{
-		FirstPersonShooter::VertexData vertex;
+		VertexData vertex;
 
 		this->setBasicVertexData(vertex, m_mesh, i);
 
@@ -87,7 +87,7 @@ Mesh AssimpModelLoader::processMesh(aiMesh* m_mesh, const aiScene* scene)
 		}
 	}
 
-	return MeshFactory<FirstPersonShooter::VertexData>::createMesh(vertexData, indicies, textures, m_deviceResources);
+	return MeshFactory<VertexData>::createMesh(vertexData, indicies, textures, m_deviceResources);
 }
 
 #pragma endregion
@@ -101,7 +101,7 @@ AnimatedAssimpModel AssimpModelLoader::createAnimatedModelFromFile(const std::st
 }
 
 void AssimpModelLoader::ExtractBoneWeightForVerticies(
-	std::vector<FirstPersonShooter::AnimatedVertexData>& verticies,
+	std::vector<AnimatedVertexData>& verticies,
 	aiMesh* mesh,
 	const aiScene* scene)
 {
@@ -252,13 +252,13 @@ void AssimpModelLoader::processAnimatedNode(AnimatedAssimpModel& outModel, aiNod
 
 Mesh AssimpModelLoader::processAnimatedMesh(aiMesh* m_mesh, const aiScene* scene)
 {
-	std::vector<FirstPersonShooter::AnimatedVertexData> vertexData;
+	std::vector<AnimatedVertexData> vertexData;
 	std::vector<unsigned short> indicies;
 	std::vector<std::shared_ptr<Texture>> textures;
 
 	for (unsigned int i = 0; i < m_mesh->mNumVertices; i++)
 	{
-		FirstPersonShooter::AnimatedVertexData vertex;
+		AnimatedVertexData vertex;
 
 		this->setBasicVertexData(vertex, m_mesh, i);
 
@@ -292,14 +292,14 @@ Mesh AssimpModelLoader::processAnimatedMesh(aiMesh* m_mesh, const aiScene* scene
 
 	ExtractBoneWeightForVerticies(vertexData, m_mesh, scene);
 
-	return MeshFactory<FirstPersonShooter::AnimatedVertexData>::createMesh(vertexData, indicies, textures, m_deviceResources);
+	return MeshFactory<AnimatedVertexData>::createMesh(vertexData, indicies, textures, m_deviceResources);
 }
 
 #pragma endregion
 
 #pragma region Common
 
-void AssimpModelLoader::setBasicVertexData(FirstPersonShooter::VertexData& vertex, aiMesh* m_mesh, int idx)
+void AssimpModelLoader::setBasicVertexData(VertexData& vertex, aiMesh* m_mesh, int idx)
 {
 	// process vertex positions, normals and m_texture coordinates
 	vertex.pos.x = m_mesh->mVertices[idx].x;
