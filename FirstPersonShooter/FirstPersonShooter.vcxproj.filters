@@ -268,9 +268,6 @@
     <ClInclude Include="SpriteRenderer.hpp">
       <Filter>Content\Renderer\2D</Filter>
     </ClInclude>
-    <ClInclude Include="BaseRenderer.hpp">
-      <Filter>Content\Renderer</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\StoreLogo.png">

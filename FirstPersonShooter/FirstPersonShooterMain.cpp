@@ -29,7 +29,7 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 
 	m_modelRenderer = std::unique_ptr<ModelRenderer>(new ModelRenderer(m_deviceResources));
 	m_animatedRenderer = std::unique_ptr<AnimatedModelRenderer>(new AnimatedModelRenderer(m_deviceResources));
-	m_spriteBatch = std::make_unique<DirectX::SpriteBatch>(m_deviceResources->GetD3DDeviceContext());
+	m_spriteRenderer = std::make_unique<SpriteRenderer>(m_deviceResources->GetD3DDeviceContext());
 	m_fpsTextRenderer = std::unique_ptr<SampleFpsTextRenderer>(new SampleFpsTextRenderer(m_deviceResources));
 
 	m_states = std::make_unique<DirectX::CommonStates>(m_deviceResources->GetD3DDevice());
@@ -109,7 +109,6 @@ bool FirstPersonShooterMain::Render()
 	// Reset the viewport to target the whole screen.
 	auto viewport = m_deviceResources->GetScreenViewport();
 	context->RSSetViewports(1, &viewport);
-	m_spriteBatch->SetViewport(viewport);
 
 	// Reset render targets to the screen.
 	ID3D11RenderTargetView *const targets[1] = { m_deviceResources->GetBackBufferRenderTargetView() };
@@ -141,7 +140,15 @@ bool FirstPersonShooterMain::Render()
 		m_modelRenderer->Render(entity);
 	}
 
-	this->Render2DElements(context);
+	m_spriteRenderer->BeginRendering(context, viewport);
+	Size outputSize = m_deviceResources->GetOutputSize();
+	int size = 100;
+	m_spriteRenderer->Render(ResourceManager::Instance.getTexture("crosshair"),
+		(outputSize.Width - size) / 2,
+		(outputSize.Height - size) / 2,
+		size,
+		size);
+	m_spriteRenderer->EndRendering(context);
 
 	m_fpsTextRenderer->Render();
 
@@ -163,40 +170,4 @@ void FirstPersonShooterMain::OnDeviceRestored()
 	m_animatedRenderer->CreateDeviceDependentResources();
 	m_fpsTextRenderer->CreateDeviceDependentResources();
 	CreateWindowSizeDependentResources();
-}
-
-void FirstPersonShooter::FirstPersonShooterMain::Render2DElements(ID3D11DeviceContext3* context)
-{
-	ID3D11DepthStencilState* pDepthStencilState = nullptr;
-	UINT stencilRef;
-	context->OMGetDepthStencilState(&pDepthStencilState, &stencilRef);
-
-	ID3D11BlendState* pBlendState = nullptr;
-	FLOAT blendFactor[4];
-	UINT sampleMask;
-	context->OMGetBlendState(&pBlendState, blendFactor, &sampleMask);
-
-	ID3D11RasterizerState* pRasterizerState = nullptr;
-	context->RSGetState(&pRasterizerState);
-
-	m_spriteBatch->Begin();
-	Size outputSize = m_deviceResources->GetOutputSize();
-	int size = 100;
-	RECT rect;
-	rect.top = (outputSize.Height - size) / 2;
-	rect.left = (outputSize.Width - size) / 2;
-	rect.bottom = (outputSize.Height + size) / 2;
-	rect.right = (outputSize.Width + size) / 2;
-
-	m_spriteBatch->Draw(ResourceManager::Instance.getTexture("crosshair")->shaderResourceView.Get(), rect);
-	m_spriteBatch->End();
-
-
-	context->OMSetDepthStencilState(pDepthStencilState, stencilRef);
-	context->OMSetBlendState(pBlendState, blendFactor, sampleMask);
-	context->RSSetState(pRasterizerState);
-
-	if(pDepthStencilState) pDepthStencilState->Release();
-	if(pBlendState) pBlendState->Release();
-	if(pRasterizerState) pRasterizerState->Release();
 }

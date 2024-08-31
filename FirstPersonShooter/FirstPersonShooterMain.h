@@ -12,7 +12,6 @@
 #include "AnimatedModelRenderer.hpp"
 #include "ModelRenderer.hpp"
 #include "SpriteRenderer.hpp"
-#include <SpriteBatch.h>
 #include <CommonStates.h>
 
 // Renders Direct2D and 3D content on the screen.
@@ -41,7 +40,7 @@ namespace FirstPersonShooter
 		// TODO: Replace with your own content renderers.
 		std::unique_ptr<ModelRenderer> m_modelRenderer;
 		std::unique_ptr<AnimatedModelRenderer> m_animatedRenderer;
-		std::unique_ptr<DirectX::SpriteBatch> m_spriteBatch;
+		std::unique_ptr<SpriteRenderer> m_spriteRenderer;
 		std::unique_ptr<SampleFpsTextRenderer> m_fpsTextRenderer;
 
 		std::unique_ptr<Camera> m_camera;
@@ -53,8 +52,6 @@ namespace FirstPersonShooter
 
 		std::unique_ptr<DirectX::Keyboard> m_keyboard;
 		std::shared_ptr<DirectX::Mouse> m_mouse;
-
-		void Render2DElements(ID3D11DeviceContext3* context);
 
 		const float FOV = 95.0f;
 

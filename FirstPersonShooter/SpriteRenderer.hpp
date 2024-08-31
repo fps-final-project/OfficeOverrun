@@ -1,15 +1,30 @@
 #pragma once
-#include "BaseRenderer.hpp"
-#include "Mesh.h"
+#include <SpriteBatch.h>
+#include <memory>
+#include "Texture.h"
+
+struct PipelineState
+{
+	ID3D11DepthStencilState* pDepthStencilState;
+	UINT stencilRef;
+
+	ID3D11BlendState* pBlendState;
+	FLOAT blendFactor[4];
+	UINT sampleMask;
+
+	ID3D11RasterizerState* pRasterizerState;
+};
 
 
-class SpriteRenderer : public BaseRenderer<VertexShaderData2D, VertexData2D>
+// wrapper for the SpriteBatch class 
+class SpriteRenderer 
 {
 public:
-	SpriteRenderer(const std::shared_ptr<DX::DeviceResources>& deviceResources);
-	virtual void CreateDeviceDependentResources();
-	void CreateWindowSizeDependentResources();
+	SpriteRenderer(ID3D11DeviceContext3* context);
+	void BeginRendering(ID3D11DeviceContext3* context, D3D11_VIEWPORT viewport);
+	void EndRendering(ID3D11DeviceContext3* context);
 	void Render(const std::shared_ptr<Texture>& s, int x, int y, int sizeX, int sizeY);
 private:
-	Mesh m_spriteMesh;
+	std::unique_ptr<DirectX::SpriteBatch> m_spriteBatch;
+	PipelineState state;
 };
