@@ -41,11 +41,11 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	//	{0.f, 1.f, 0.f, 0.f}));
 
 	AnimatedEntity arms(ResourceManager::Instance.getAnimatedModel("myarms"));
-	arms.setAnimation("FP_reload");
+	arms.setAnimation("FP_fire");
 	m_world->m_animatedEntities.push_back(arms);
 
 	AnimatedEntity gun(ResourceManager::Instance.getAnimatedModel("mygun"), XMFLOAT3(0.f, 0.f, 0.4572f));
-	gun.setAnimation("GUN_reload");
+	gun.setAnimation("GUN_fire");
 	m_world->m_animatedEntities.push_back(gun);
 
 	m_world->m_entities.push_back(Entity(ResourceManager::Instance.getModel("AK47NoSubdiv_cw"), XMFLOAT3(0.f, -1.f, 5.f)));
