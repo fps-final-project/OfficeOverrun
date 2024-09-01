@@ -31,7 +31,7 @@ void AnimatedModelRenderer::Render(const Animable& animable)
 
 	auto modelMatrix = DirectX::XMMatrixScaling(1.f, 1.f, 1.f);
 	DirectX::XMStoreFloat4x4(&m_VSConstantBufferData.model, DirectX::XMMatrixTranspose(animable.m_model));
-	auto pose = animable.m_animator.m_FinalBoneMatrices;
+	auto pose = animable.m_animator.m_finalBoneMatrices;
 	for (int i = 0; i < 55; i++)
 	{
 		auto loaded = DirectX::XMLoadFloat4x4(&pose[i]);

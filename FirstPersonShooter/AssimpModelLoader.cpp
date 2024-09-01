@@ -194,7 +194,7 @@ void AssimpModelLoader::createAnimations(AnimatedAssimpModel& outModel, const ai
 			}
 		}
 
-		outModel.m_animations.insert(std::make_pair(aiAnimation->mName.C_Str(), animation));
+		outModel.m_animations.insert(std::make_pair(aiAnimation->mName.C_Str(), std::make_shared<Animation>(animation)));
 	}
 }
 

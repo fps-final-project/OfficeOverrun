@@ -40,7 +40,7 @@ struct AnimatedAssimpModel : public AssimpModel
 {
 	std::map<std::string, BoneInfo> m_BoneInfoMap;
 	Joint m_rootJoint;
-	std::map<std::string, Animation> m_animations;
+	std::map<std::string, std::shared_ptr<Animation>> m_animations;
 	int m_boneCounter;
 
 };

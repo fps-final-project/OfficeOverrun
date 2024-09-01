@@ -7,10 +7,18 @@ Animable::Animable(std::shared_ptr<AnimatedAssimpModel> animatedModel)
 
 }
 
-void Animable::setAnimation(std::string name)
+void Animable::setAnimation(std::string name, bool wrap)
 {
 	if (this->m_animatedModel->m_animations.find(name) != this->m_animatedModel->m_animations.end())
 	{
-		m_animator.playAnimation(&this->m_animatedModel->m_animations[name]);
+		m_animator.playAnimation(this->m_animatedModel->m_animations[name], wrap);
+	}
+}
+
+void Animable::setFallbackAnimation(std::string name)
+{
+	if (this->m_animatedModel->m_animations.find(name) != this->m_animatedModel->m_animations.end())
+	{
+		m_animator.setFallbackAnimation(this->m_animatedModel->m_animations[name]);
 	}
 }

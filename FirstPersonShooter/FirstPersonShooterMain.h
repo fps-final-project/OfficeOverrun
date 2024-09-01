@@ -8,6 +8,7 @@
 
 #include <queue>
 #include "World.h"
+#include "GunRig.h"
 #include "Camera.hpp"
 #include "AnimatedModelRenderer.hpp"
 #include "ModelRenderer.hpp"
@@ -22,7 +23,8 @@ namespace FirstPersonShooter
 	public:
 		FirstPersonShooterMain(
 			const std::shared_ptr<DX::DeviceResources>& deviceResources,
-			const std::shared_ptr<DirectX::Mouse>& mouse);
+			const std::shared_ptr<DirectX::Mouse>& mouse,
+			const std::shared_ptr<DirectX::Keyboard>& keyboard);
 
 		~FirstPersonShooterMain();
 		void CreateWindowSizeDependentResources();
@@ -45,12 +47,13 @@ namespace FirstPersonShooter
 
 		std::unique_ptr<Camera> m_camera;
 		std::unique_ptr<World> m_world;
+		std::unique_ptr<GunRig> m_gunRig;
 		std::unique_ptr<DirectX::CommonStates> m_states;
 
 		// Rendering loop timer.
 		DX::StepTimer m_timer;
 
-		std::unique_ptr<DirectX::Keyboard> m_keyboard;
+		std::shared_ptr<DirectX::Keyboard> m_keyboard;
 		std::shared_ptr<DirectX::Mouse> m_mouse;
 
 		const float FOV = 95.0f;

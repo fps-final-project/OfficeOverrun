@@ -9,7 +9,8 @@ class Animable
 {
 public:
 	Animable(std::shared_ptr<AnimatedAssimpModel> animatedModel);
-	void setAnimation(std::string name);
+	void setAnimation(std::string name, bool wrap = false);
+	void setFallbackAnimation(std::string name);
 	//virtual void Draw();
 	friend class AnimatedModelRenderer;
 protected:

@@ -13,8 +13,9 @@ using namespace Concurrency;
 // Loads and initializes application assets when the application is loaded.
 FirstPersonShooterMain::FirstPersonShooterMain(
 	const std::shared_ptr<DX::DeviceResources>& deviceResources,
-	const std::shared_ptr<DirectX::Mouse>& mouse) :
-	m_deviceResources(deviceResources), m_mouse(mouse)
+	const std::shared_ptr<DirectX::Mouse>& mouse,
+	const std::shared_ptr<DirectX::Keyboard>& keyboard) :
+	m_deviceResources(deviceResources), m_mouse(mouse), m_keyboard(keyboard)
 {
 	// Register to be notified if the Device is lost or recreated
 	m_deviceResources->RegisterDeviceNotify(this);
@@ -35,27 +36,29 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	m_states = std::make_unique<DirectX::CommonStates>(m_deviceResources->GetD3DDevice());
 	m_world = std::unique_ptr<World>(new World());
 	m_camera = std::unique_ptr<Camera>(new Camera(m_deviceResources, FOV));
-	//m_camera = std::unique_ptr<Camera>(new Camera(m_deviceResources, FOV,
-	//	{2.f, 0.f, 0.f, 0.f},
-	//	{-1.f, 0.f, 0.f, 0.f},
-	//	{0.f, 1.f, 0.f, 0.f}));
 
-	AnimatedEntity arms(ResourceManager::Instance.getAnimatedModel("myarms"));
-	arms.setAnimation("FP_fire");
+	/*AnimatedEntity arms(ResourceManager::Instance.getAnimatedModel("myarms"));
+	arms.setAnimation("FP_fire", true);
 	m_world->m_animatedEntities.push_back(arms);
 
 	AnimatedEntity gun(ResourceManager::Instance.getAnimatedModel("mygun"), XMFLOAT3(0.f, 0.f, 0.4572f));
-	gun.setAnimation("GUN_fire");
-	m_world->m_animatedEntities.push_back(gun);
+	gun.setAnimation("GUN_fire", true);
+	m_world->m_animatedEntities.push_back(gun);*/
+
+
+	m_gunRig = std::make_unique<GunRig>(
+		ResourceManager::Instance.getAnimatedModel("myarms"),
+		ResourceManager::Instance.getAnimatedModel("mygun"),
+		XMFLOAT3(0.f, 0.f, 0.4572f));
+
+	//m_gunRig->shoot();
 
 	m_world->m_entities.push_back(Entity(ResourceManager::Instance.getModel("AK47NoSubdiv_cw"), XMFLOAT3(0.f, -1.f, 5.f)));
-
-	m_keyboard = std::make_unique<DirectX::Keyboard>();
 
 	m_mouse->SetMode(DirectX::Mouse::MODE_RELATIVE);
 
 
-	
+
 	// TODO: Change the timer settings if you want something other than the default variable timestep mode.
 	// e.g. for 60 FPS fixed timestep update logic, call:
 	/*
@@ -71,7 +74,7 @@ FirstPersonShooterMain::~FirstPersonShooterMain()
 }
 
 // Updates application state when the window size changes (e.g. device orientation change)
-void FirstPersonShooterMain::CreateWindowSizeDependentResources() 
+void FirstPersonShooterMain::CreateWindowSizeDependentResources()
 {
 	// TODO: Replace this with the size-dependent initialization of your app's content.
 	// useless?
@@ -79,24 +82,36 @@ void FirstPersonShooterMain::CreateWindowSizeDependentResources()
 }
 
 // Updates the application state once per frame.
-void FirstPersonShooterMain::Update() 
+void FirstPersonShooterMain::Update()
 {
 	auto mouseState = m_mouse->GetState();
 
+	if (mouseState.leftButton)
+	{
+		m_gunRig->shoot();
+	}
+
+	if (m_keyboard->GetState().R)
+	{
+		m_gunRig->reload();
+	}
+	
 	m_camera->alignWithMouse(mouseState);
 
 	// Update scene objects.
 	m_timer.Tick([&]()
-	{
-		// TODO: Replace this with your app's content update functions.
-		m_world->update(m_timer.GetElapsedSeconds());
-		m_fpsTextRenderer->Update(m_timer);
-	});
+		{
+			// TODO: Replace this with your app's content update functions.
+			float dt = m_timer.GetElapsedSeconds();
+			m_gunRig->update(dt);
+			m_world->update(dt);
+			m_fpsTextRenderer->Update(m_timer);
+		});
 }
 
 // Renders the current frame according to the current application state.
 // Returns true if the frame was rendered and is ready to be displayed.
-bool FirstPersonShooterMain::Render() 
+bool FirstPersonShooterMain::Render()
 {
 	// Don't try to render anything before the first Update.
 	if (m_timer.GetFrameCount() == 0)
@@ -111,7 +126,7 @@ bool FirstPersonShooterMain::Render()
 	context->RSSetViewports(1, &viewport);
 
 	// Reset render targets to the screen.
-	ID3D11RenderTargetView *const targets[1] = { m_deviceResources->GetBackBufferRenderTargetView() };
+	ID3D11RenderTargetView* const targets[1] = { m_deviceResources->GetBackBufferRenderTargetView() };
 	context->OMSetRenderTargets(1, targets, m_deviceResources->GetDepthStencilView());
 
 	// Clear the back buffer and depth stencil view.
@@ -119,7 +134,7 @@ bool FirstPersonShooterMain::Render()
 	context->ClearDepthStencilView(m_deviceResources->GetDepthStencilView(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 	// Render the scene objects.
 	// TODO: Replace this with your app's content rendering functions.
-	
+
 	// ANIMATED ENTITIES
 	m_animatedRenderer->setProjectionMatrix(m_camera->getProjectionMatrix());
 	m_animatedRenderer->setViewMatrix(Camera::m_staticViewMatrix);
@@ -130,6 +145,10 @@ bool FirstPersonShooterMain::Render()
 		m_animatedRenderer->Render(entity);
 	}
 
+	for (const auto& entity : m_gunRig->getEntites())
+	{
+		m_animatedRenderer->Render(*entity);
+	}
 	// REGULAR ENTITES
 	m_modelRenderer->setProjectionMatrix(m_camera->getProjectionMatrix());
 	m_modelRenderer->setViewMatrix(m_camera->getViewMatrix());

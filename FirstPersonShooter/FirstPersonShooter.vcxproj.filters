@@ -122,6 +122,9 @@
     <Filter Include="Content\Camera">
       <UniqueIdentifier>{70b64313-a96b-4eb3-85d5-35d3640126e1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Content\Entity\GunRig">
+      <UniqueIdentifier>{f5d3f666-f005-4e87-9563-2779be746441}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -180,6 +183,9 @@
     </ClCompile>
     <ClCompile Include="Content\SampleFpsTextRenderer.cpp">
       <Filter>Content\Renderer\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="GunRig.cpp">
+      <Filter>Content\Entity\GunRig</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -267,6 +273,9 @@
     </ClInclude>
     <ClInclude Include="SpriteRenderer.hpp">
       <Filter>Content\Renderer\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="GunRig.h">
+      <Filter>Content\Entity\GunRig</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
