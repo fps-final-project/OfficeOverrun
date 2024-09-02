@@ -1,4 +1,4 @@
-const int MAX_BONE_INFLUENCE = 4;
+static const int MAX_BONE_INFLUENCE = 4;
 
 cbuffer ModelViewProjectionConstantBuffer : register(b0)
 {
@@ -16,8 +16,7 @@ struct VertexShaderInput
 	float3 pos : POSITION;
 	float2 texture_pos : UV;
 	float3 normal : NORMAL;
-	int4 boneIds : BONE_IDS;
-	float4 weights : WEIGHTS;
+	int finalTransformId : FINAL_ID;
 };
 
 struct PixelShaderInput
@@ -30,31 +29,8 @@ struct PixelShaderInput
 
 PixelShaderInput main(VertexShaderInput input)
 {
-	matrix BoneTransform =
-	{
-		{ 0, 0, 0, 0 },
-		{ 0, 0, 0, 0 },
-		{ 0, 0, 0, 0 },
-		{ 0, 0, 0, 0 }
-	};
-
-	float4 total_position = float4(0.f, 0.f, 0.f, 0.f);
-    for (int i = 0; i < 4; i++)
-    {
-		if(input.boneIds[i] == -1)
-            continue;
-
-		if(input.boneIds[i] >= MAX_BONES)
-        {
-            total_position = float4(input.pos, 1.0f);
-            break;
-        }
-
-		BoneTransform += finalBonesMatricies[input.boneIds[i]] * input.weights[i];
-    }
-
 	// dobrze
-	matrix model_final = mul(BoneTransform, model);
+	matrix model_final = mul(finalBonesMatricies[input.finalTransformId], model);
 
 
 	// DUPA

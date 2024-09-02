@@ -11,6 +11,7 @@
 
 class AssimpModel;
 class AnimatedAssimpModel;
+class FinalTransformData;
 class Joint;
 class Mesh;
 class Texture;
@@ -35,7 +36,7 @@ private:
 	std::shared_ptr<DX::DeviceResources> m_deviceResources;
 	std::string m_directory;
 
-	void ExtractBoneWeightForVerticies(std::vector<AnimatedVertexData>& verticies, aiMesh* mesh, const aiScene* scene);
+	std::vector<FinalTransformData> ExtractBoneWeightForVerticies(std::vector<AnimatedVertexData>& verticies, aiMesh* mesh, const aiScene* scene);
 	void createAnimations(AnimatedAssimpModel& outModel, const aiScene* scene);
 	void loadJointHierarchy(Joint& joint, aiNode* src);
 
@@ -45,7 +46,7 @@ private:
 	
 	AnimatedAssimpModel createAnimatedModel(const std::string& path);
 	void processAnimatedNode(AnimatedAssimpModel& outModel, aiNode* node, const aiScene* scene);
-	Mesh processAnimatedMesh(aiMesh* m_mesh, const aiScene* scene);
+	void processAnimatedMesh(AnimatedAssimpModel& outModel, aiMesh* m_mesh, const aiScene* scene);
 
 	void setBasicVertexData(VertexData& vertex, aiMesh* m_mesh, int idx);
 	std::vector<std::shared_ptr<Texture>> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName);

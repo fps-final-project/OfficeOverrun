@@ -12,10 +12,7 @@ Animator::Animator(std::shared_ptr<Animation> animation, std::shared_ptr<Animati
 	m_finalBoneMatrices.reserve(55);
 	for (int i = 0; i < 55; i++)
 	{
-		auto ident = DirectX::XMMatrixIdentity();
-		DirectX::XMFLOAT4X4 ident_store;
-		DirectX::XMStoreFloat4x4(&ident_store, ident);
-		m_finalBoneMatrices.push_back(ident_store);
+		m_finalBoneMatrices.push_back(DirectX::XMMatrixIdentity());
 	}
 }
 
@@ -75,11 +72,36 @@ void Animator::calculateTransform(const Joint& data, const std::map<std::string,
 	{
 		int index = boneInfoMap.at(nodeName).id;
 		auto offset = DirectX::XMLoadFloat4x4(&boneInfoMap.at(nodeName).offsetMatrix);
-		DirectX::XMStoreFloat4x4(&m_finalBoneMatrices[index], DirectX::XMMatrixMultiply(offset, globalTransfomation));
+		m_finalBoneMatrices[index] = DirectX::XMMatrixMultiply(offset, globalTransfomation);
 	}
 
 	for (int i = 0; i < data.children.size(); i++)
 		calculateTransform(data.children[i], boneInfoMap, globalTransfomation);
+}
+
+std::vector<DirectX::XMMATRIX> Animator::getFinalTransformationMatricies(const std::vector<FinalTransformData>& data) const
+{
+    std::vector<DirectX::XMMATRIX> result;
+    for (const auto& transformData : data)
+    {
+        DirectX::XMMATRIX transform = DirectX::XMMatrixSet(
+            0.0f, 0.0f, 0.0f, 0.0f,
+            0.0f, 0.0f, 0.0f, 0.0f,
+            0.0f, 0.0f, 0.0f, 0.0f,
+            0.0f, 0.0f, 0.0f, 0.0f 
+        );
+
+        for (int i = 0; i < MAX_BONE_INFLUENCE; i++)
+        {
+            if (transformData.boneIds[i] == -1) continue;
+
+            transform += transformData.weights[i] * m_finalBoneMatrices[transformData.boneIds[i]];
+        }
+
+        result.push_back(transform);
+    }
+
+    return result;
 }
 
 DirectX::XMMATRIX Animator::getJointTransform(const Joint& data, float animationTime)

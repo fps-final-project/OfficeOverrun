@@ -36,8 +36,25 @@ struct Animation
 
 };
 
+
+struct FinalTransformData
+{
+	int boneIds[MAX_BONE_INFLUENCE];
+	float weights[MAX_BONE_INFLUENCE];
+
+	FinalTransformData()
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			boneIds[i] = -1;
+			weights[i] = 0.0f;
+		}
+	}
+};
+
 struct AnimatedAssimpModel : public AssimpModel
 {
+	std::vector<FinalTransformData> m_transformData;
 	std::map<std::string, BoneInfo> m_BoneInfoMap;
 	Joint m_rootJoint;
 	std::map<std::string, std::shared_ptr<Animation>> m_animations;

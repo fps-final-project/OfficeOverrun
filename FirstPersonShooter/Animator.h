@@ -12,7 +12,8 @@ public:
 	void setFallbackAnimation(std::shared_ptr<Animation> animation);
 	void calculateTransform(const Joint& data, const std::map<std::string, BoneInfo>& boneInfoMap, DirectX::XMMATRIX parentTransform);
 
-	std::vector<DirectX::XMFLOAT4X4> m_finalBoneMatrices;
+	std::vector<DirectX::XMMATRIX> getFinalTransformationMatricies(const std::vector<FinalTransformData>& data) const;
+
 	std::shared_ptr<Animation> m_currentAnimation, m_fallbackAnimation;
 	float m_currentTime;
 	float m_deltaTime;
@@ -26,4 +27,5 @@ private:
 	DirectX::XMMATRIX interpolatePosition(const Joint& data, float animationTime);
 	DirectX::XMMATRIX interpolateRotation(const Joint& data, float animationTime);
 	DirectX::XMMATRIX interpolateScaling(const Joint& data, float animationTime);
+	std::vector<DirectX::XMMATRIX> m_finalBoneMatrices;
 };
