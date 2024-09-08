@@ -52,7 +52,6 @@ void App::Initialize(CoreApplicationView^ applicationView)
 	// At this point we have access to the device. 
 	// We can create the device-dependent resources.
 	m_deviceResources = std::make_shared<DX::DeviceResources>();
-	m_inputHandler = std::make_shared<InputHandler>();
 	m_mouse = std::make_shared<Mouse>();
 	m_keyboard = std::make_shared<Keyboard>();
 
@@ -69,12 +68,6 @@ void App::SetWindow(CoreWindow^ window)
 
 	window->Closed += 
 		ref new TypedEventHandler<CoreWindow^, CoreWindowEventArgs^>(this, &App::OnWindowClosed);
-
-	window->KeyDown +=
-		ref new TypedEventHandler<CoreWindow^, KeyEventArgs^>(this, &App::OnKeyDown);
-
-	window->KeyUp +=
-		ref new TypedEventHandler<CoreWindow^, KeyEventArgs^>(this, &App::OnKeyUp);
 
 	DisplayInformation^ currentDisplayInformation = DisplayInformation::GetForCurrentView();
 
@@ -182,16 +175,6 @@ void App::OnVisibilityChanged(CoreWindow^ sender, VisibilityChangedEventArgs^ ar
 void App::OnWindowClosed(CoreWindow^ sender, CoreWindowEventArgs^ args)
 {
 	m_windowClosed = true;
-}
-
-void App::OnKeyDown(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::KeyEventArgs^ args)
-{
-	m_inputHandler.get()->AddEvent(ButtonState::CLICKED, args->KeyStatus.ScanCode);
-}
-
-void App::OnKeyUp(Windows::UI::Core::CoreWindow^ sender, Windows::UI::Core::KeyEventArgs^ args)
-{
-	m_inputHandler.get()->AddEvent(ButtonState::RELEASED, args->KeyStatus.ScanCode);
 }
 
 // DisplayInformation event handlers.

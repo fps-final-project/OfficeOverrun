@@ -125,6 +125,9 @@
     <Filter Include="Content\Entity\GunRig">
       <UniqueIdentifier>{f5d3f666-f005-4e87-9563-2779be746441}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\bullet">
+      <UniqueIdentifier>{3de93eb3-ce64-4119-8dd8-b64a0549f718}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -265,9 +268,6 @@
     <ClInclude Include="SimpleCollisionDetector.hpp">
       <Filter>Base</Filter>
     </ClInclude>
-    <ClInclude Include="InputEvent.hpp">
-      <Filter>Events</Filter>
-    </ClInclude>
     <ClInclude Include="InputHandler.hpp">
       <Filter>Events</Filter>
     </ClInclude>
@@ -368,6 +368,12 @@
     </None>
     <None Include="Assets\AK-47\AK47NoSubdiv_cw.obj">
       <Filter>Assets\AK-47</Filter>
+    </None>
+    <None Include="Assets\bullet\bullet.mtl">
+      <Filter>Assets\bullet</Filter>
+    </None>
+    <None Include="Assets\bullet\bullet.obj">
+      <Filter>Assets\bullet</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

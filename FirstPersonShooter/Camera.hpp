@@ -22,6 +22,9 @@ public:
 
 	static DirectX::XMFLOAT4X4 m_staticViewMatrix;
 
+	inline DirectX::XMFLOAT3 getPosition() const { return { m_position.m128_f32[0], m_position.m128_f32[1], m_position.m128_f32[2] }; }
+	inline DirectX::XMFLOAT3 getAt() const { return { m_at.m128_f32[0], m_at.m128_f32[1], m_at.m128_f32[2]}; }
+
 private:
 	// TODO:
 	// camera speed should be the same regardless of fps

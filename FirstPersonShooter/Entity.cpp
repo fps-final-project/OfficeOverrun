@@ -2,15 +2,16 @@
 #include "Entity.hpp"
 
 Entity::Entity(std::shared_ptr<AssimpModel> model, XMFLOAT3 position, XMFLOAT3 rotation, XMFLOAT3 velocity)
-	: Drawable(model), Hittable(DirectX::BoundingBox()), position(position), rotation(rotation), velocity(velocity)
+	: Drawable(model), Hittable(DirectX::BoundingBox(position, XMFLOAT3(5.0f, 2.0f, 2.0f))), position(position), rotation(rotation), velocity(velocity)
 {
 }
 
 void Entity::Update(float dt)
 {
-	const float period = 4.f;
-	//this->rotation.y = fmod(this->rotation.y + DirectX::XM_2PI * dt / period, DirectX::XM_2PI);
-	this->rotation.y = DirectX::XM_PI / 2;
+	this->position.x += this->velocity.x * dt;
+	this->position.y += this->velocity.y * dt;
+	this->position.z += this->velocity.z * dt;
+	this->boundingBox.Center = this->position;
 
 	this->m_modelMatrix =
 		DirectX::XMMatrixRotationY(this->rotation.y)
