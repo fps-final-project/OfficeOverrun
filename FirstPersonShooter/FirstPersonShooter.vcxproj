@@ -265,6 +265,7 @@
     <Image Include="Assets\AK-47\textures\AK_Mixed_AO.png" />
     <Image Include="Assets\AK-47\textures\AK_Normal_OpenGL.png" />
     <Image Include="Assets\AK-47\textures\AK_Roughness.png" />
+    <Image Include="Assets\bullet\bullet.jpg" />
     <Image Include="Assets\cube\crosshair.png" />
     <Image Include="Assets\cube\smile.jpg" />
     <Image Include="Assets\LockScreenLogo.scale-200.png" />

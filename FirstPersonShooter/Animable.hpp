@@ -12,6 +12,7 @@ public:
 	void setAnimation(std::string name, bool wrap = false);
 	void setFallbackAnimation(std::string name);
 	//virtual void Draw();
+	bool isIdle() { return m_animator.isIdle(); }
 	friend class AnimatedModelRenderer;
 protected:
 	Animator m_animator;

@@ -11,16 +11,17 @@ public:
 	void playAnimation(std::shared_ptr<Animation> animation, bool wrap = false);
 	void setFallbackAnimation(std::shared_ptr<Animation> animation);
 	void calculateTransform(const Joint& data, const std::map<std::string, BoneInfo>& boneInfoMap, DirectX::XMMATRIX parentTransform);
+	bool isIdle() { return m_currentAnimation == m_fallbackAnimation; }
 
 	std::vector<DirectX::XMMATRIX> getFinalTransformationMatricies(const std::vector<FinalTransformData>& data) const;
 
-	std::shared_ptr<Animation> m_currentAnimation, m_fallbackAnimation;
-	float m_currentTime;
-	float m_deltaTime;
 	DirectX::XMMATRIX getJointTransform(const Joint& data, float animationTime);
 	int getIndex(float animationTime);
 
 private:
+	std::shared_ptr<Animation> m_currentAnimation, m_fallbackAnimation;
+	float m_deltaTime;
+	float m_currentTime;
 	bool m_wrapAnimation;
 	bool hasKeyframeData(const Joint& data);
 	float getScaleFactor(float lastTimestamp, float nextTimestamp, float animationTime);

@@ -55,18 +55,16 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 		ResourceManager::Instance.getAnimatedModel("mygun"),
 		XMFLOAT3(0.f, 0.f, 0.4572f));
 
-	//m_gunRig->shoot();
-
 	m_world->m_entities.push_back(Entity(ResourceManager::Instance.getModel("AK47NoSubdiv_cw"), XMFLOAT3(5.f, -1.f, 5.f)));
 
 	m_mouse->SetMode(DirectX::Mouse::MODE_RELATIVE);
 
 	m_inputHandler->AddActionHandler(
-		[](InputState newState, InputState oldState) {	return newState.first.leftButton && !oldState.first.leftButton; },
-		Action::SHOOT 
+		[](InputState newState, InputState oldState) {	return newState.first.leftButton; },
+		Action::SHOOT
 	);
 	m_inputHandler->AddActionHandler(
-		[](InputState newState, InputState oldState) {	return newState.second.R && oldState.second.R; },
+		[](InputState newState, InputState oldState) {	return newState.second.R; },
 		Action::RELOAD
 	);
 
@@ -106,20 +104,31 @@ void FirstPersonShooterMain::Update()
 	{
 		if (action == Action::SHOOT)
 		{
-			m_gunRig->shoot();
+			if (m_gunRig->isIdle())
+			{
+				m_gunRig->shoot();
+				auto vector_at = m_camera->getAt();
+				XMFLOAT3 v;
+				DirectX::XMStoreFloat3(&v, DirectX::XMVectorScale(vector_at, 10));
 
-			m_world->m_timedEntities.push_back(std::make_pair(
-				Entity(ResourceManager::Instance.getModel("bullet"), m_camera->getPosition(), m_camera->getAt(), m_camera->getAt()),
-				3.f
+
+				m_world->m_timedEntities.push_back(std::make_pair(
+					Entity(ResourceManager::Instance.getModel("bullet"), {-0.118846, -0.106299, 0.55291 }, { 0.f, 0.f, 0.f }, v),
+					3.f
 				));
+			}
 		}
+
 		if (action == Action::RELOAD)
 		{
-			m_gunRig->reload();
+			if (m_gunRig->isIdle())
+			{
+				m_gunRig->reload();
+			}
 		}
 	}
 
-	
+
 	m_camera->alignWithMouse(mouseState);
 
 	// Update scene objects.
@@ -132,12 +141,12 @@ void FirstPersonShooterMain::Update()
 			m_fpsTextRenderer->Update(m_timer);
 		});
 
-	auto collisions = m_collisionDetector->GetCollisions(m_world->GetEntities());
+	/*auto collisions = m_collisionDetector->GetCollisions(m_world->GetEntities());
 	std::for_each(
 		collisions.begin(),
 		collisions.end(),
 		[this](std::pair<Hittable, Hittable> pair) { m_world->DeleteEntity(pair.first); m_world->DeleteEntity(pair.second);}
-	);
+	);*/
 }
 
 // Renders the current frame according to the current application state.

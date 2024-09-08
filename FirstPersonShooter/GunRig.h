@@ -12,6 +12,7 @@ public:
 	void update(float dt);
 	void reload();
 	void shoot();
+	bool isIdle() { return m_hands->isIdle(); }
 	std::vector<std::shared_ptr<AnimatedEntity>> getEntites();
 private:
 	std::shared_ptr<AnimatedEntity> m_hands, m_gun;
