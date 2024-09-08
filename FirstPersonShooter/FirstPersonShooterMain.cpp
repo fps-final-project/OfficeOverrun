@@ -57,14 +57,16 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 
 	m_world->m_entities.push_back(Entity(ResourceManager::Instance.getModel("AK47NoSubdiv_cw"), XMFLOAT3(5.f, -1.f, 5.f)));
 
+	//m_world->m_entities.push_back(Entity(ResourceManager::Instance.getModel("AK47NoSubdiv_cw"), XMFLOAT3(0.f, -1.f, 5.f)));
+
 	m_mouse->SetMode(DirectX::Mouse::MODE_RELATIVE);
 
 	m_inputHandler->AddActionHandler(
-		[](InputState newState, InputState oldState) {	return newState.first.leftButton; },
-		Action::SHOOT
+		[](InputState newState, InputState oldState) {	return newState.first.leftButton && !oldState.first.leftButton; },
+		Action::SHOOT 
 	);
 	m_inputHandler->AddActionHandler(
-		[](InputState newState, InputState oldState) {	return newState.second.R; },
+		[](InputState newState, InputState oldState) {	return newState.second.R && oldState.second.R; },
 		Action::RELOAD
 	);
 
@@ -113,7 +115,7 @@ void FirstPersonShooterMain::Update()
 
 
 				m_world->m_timedEntities.push_back(std::make_pair(
-					Entity(ResourceManager::Instance.getModel("bullet"), {-0.118846, -0.106299, 0.55291 }, { 0.f, 0.f, 0.f }, v),
+					Entity(ResourceManager::Instance.getModel("bullet"), { -0.118846, -0.106299, 0.55291 }, {1.f, 1.f, 1.f}, { 0.f, 0.f, 0.f }, v),
 					3.f
 				));
 			}
@@ -141,12 +143,12 @@ void FirstPersonShooterMain::Update()
 			m_fpsTextRenderer->Update(m_timer);
 		});
 
-	/*auto collisions = m_collisionDetector->GetCollisions(m_world->GetEntities());
+	auto collisions = m_collisionDetector->GetCollisions(m_world->GetEntities());
 	std::for_each(
 		collisions.begin(),
 		collisions.end(),
-		[this](std::pair<Hittable, Hittable> pair) { m_world->DeleteEntity(pair.first); m_world->DeleteEntity(pair.second);}
-	);*/
+		[this](std::pair<Hittable, Hittable>& pair) { m_world->DeleteEntity(pair.first); m_world->DeleteEntity(pair.second);}
+	);
 }
 
 // Renders the current frame according to the current application state.

@@ -3,7 +3,9 @@
 #include <DirectXCollision.h>
 
 
-Hittable::Hittable(DirectX::BoundingBox box) : boundingBox{ box }, id{ reinterpret_cast<uint32_t>(this) }
+uint32_t Hittable::idCounter = 0;
+
+Hittable::Hittable(DirectX::BoundingBox box) : boundingBox{ box }, id{ idCounter++ }
 {
 }
 

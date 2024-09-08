@@ -8,6 +8,11 @@ void World::Update(float dt)
 		entity.Update(dt);
 	}
 
+	for (auto& entity : m_timedEntities)
+	{
+		entity.first.Update(dt);
+	}
+
 	std::for_each(
 		m_timedEntities.begin(),
 		m_timedEntities.end(),
@@ -50,7 +55,7 @@ std::vector<Hittable> World::GetEntities()
 	return entities;
 }
 
-void World::DeleteEntity(Hittable entity)
+void World::DeleteEntity(Hittable& entity)
 {
 	m_entities.erase(
 		std::remove_if(

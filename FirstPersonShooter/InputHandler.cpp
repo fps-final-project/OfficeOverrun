@@ -13,6 +13,7 @@ std::vector<Action> InputHandler::HandleInputState(InputState newState)
 		m_actions.end(), [&actions, &newState, this](std::pair<std::function<bool(InputState, InputState)>, Action> pair) 
 		{ if (pair.first(newState, m_inputState)) actions.push_back(pair.second); }
 	);
+	m_inputState = newState;
 	return actions;
 }
 

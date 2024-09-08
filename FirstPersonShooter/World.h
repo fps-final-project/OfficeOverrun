@@ -9,7 +9,7 @@ class World
 public:
 	void Update(float dt);
 	std::vector<Hittable> GetEntities();
-	void DeleteEntity(Hittable entity);
+	void DeleteEntity(Hittable& entity);
 
 	std::vector<AnimatedEntity> m_animatedEntities;
 	std::vector<Entity> m_entities;
