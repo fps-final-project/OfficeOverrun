@@ -8,6 +8,7 @@ class Drawable
 {
 public:
 	Drawable(std::shared_ptr<AssimpModel> model);
+	virtual ~Drawable() {}
 	//virtual void Render() {}
 	friend class ModelRenderer;
 protected:

@@ -23,7 +23,12 @@ public:
 		this->SetClockwiseCulling();
 	}
 
-	void ReleaseDeviceDependentResources()
+	virtual ~Base3DRenderer() 
+	{
+		this->ReleaseDeviceDependentResources();
+	}
+
+	virtual void ReleaseDeviceDependentResources()
 	{
 		m_loadingComplete = false;
 		m_vertexShader.Reset();

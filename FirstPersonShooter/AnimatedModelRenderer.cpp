@@ -9,6 +9,18 @@ AnimatedModelRenderer::AnimatedModelRenderer(const std::shared_ptr<DX::DeviceRes
 	this->CreateDeviceDependentResources();
 }
 
+AnimatedModelRenderer::~AnimatedModelRenderer()
+{
+	this->ReleaseDeviceDependentResources();
+}
+
+void AnimatedModelRenderer::ReleaseDeviceDependentResources()
+{
+	m_AnimationInverseTransformBuffer.Reset();
+	m_AnimationTransformBuffer.Reset();
+	Base3DRenderer::ReleaseDeviceDependentResources();
+}
+
 void AnimatedModelRenderer::CreateDeviceDependentResources()
 {
 	static const std::vector<D3D11_INPUT_ELEMENT_DESC> vertexDesc =

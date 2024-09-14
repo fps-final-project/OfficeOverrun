@@ -6,6 +6,8 @@ class AnimatedModelRenderer : public Base3DRenderer<ModelViewProjectionConstantB
 {
 public:
 	AnimatedModelRenderer(const std::shared_ptr<DX::DeviceResources>& deviceResources);
+	virtual ~AnimatedModelRenderer() override;
+	virtual void ReleaseDeviceDependentResources() override;
 	virtual void CreateDeviceDependentResources() override;
 	void Render(const Animable& animable);
 private:

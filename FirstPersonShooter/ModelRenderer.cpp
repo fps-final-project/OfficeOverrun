@@ -8,6 +8,11 @@ ModelRenderer::ModelRenderer(const std::shared_ptr<DX::DeviceResources>& deviceR
 	this->CreateDeviceDependentResources();
 }
 
+ModelRenderer::~ModelRenderer()
+{
+	this->ReleaseDeviceDependentResources();
+}
+
 void ModelRenderer::CreateDeviceDependentResources()
 {
 	static const std::vector<D3D11_INPUT_ELEMENT_DESC> vertexDesc =

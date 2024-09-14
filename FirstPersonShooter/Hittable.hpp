@@ -6,6 +6,7 @@ class Hittable
 {
 public:
 	Hittable(DirectX::BoundingBox box);
+	virtual ~Hittable() {}
 
 	bool Hit(const Hittable& other);
 	uint32_t id;

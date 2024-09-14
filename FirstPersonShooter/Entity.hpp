@@ -13,6 +13,7 @@ public:
 		XMFLOAT3 size = DirectX::XMFLOAT3(1.f, 1.f, 1.f),
 		XMFLOAT3 rotation = DirectX::XMFLOAT3(0.f, 0.f, 0.f),
 		XMFLOAT3 velocity = DirectX::XMFLOAT3(0.f, 0.f, 0.f));
+	virtual ~Entity() {}
 	virtual void Update(float dt);
 protected:
 	XMFLOAT3 position;
