@@ -6,10 +6,18 @@ cbuffer ModelViewProjectionConstantBuffer : register(b0)
 	matrix inv_model;
 	matrix view;
 	matrix projection;
-
-	static const int MAX_BONES = 55;
-	matrix finalBonesMatricies[MAX_BONES];
 };
+
+cbuffer AnimationTransformBuffer : register(b2)
+{
+	static const int MAX_BONES = 50;
+	matrix finalBonesMatricies[MAX_BONES];
+}
+
+cbuffer AnimationInverseTransformBuffer : register(b3)
+{
+	matrix finalBonesMatriciesInverses[MAX_BONES];
+}
 
 struct VertexShaderInput
 {
@@ -32,15 +40,8 @@ PixelShaderInput main(VertexShaderInput input)
 	// dobrze
 	matrix model_final = mul(finalBonesMatricies[input.finalTransformId], model);
 
-
-	// DUPA
-	// kiedys cos sie pomysli
-	//float3x3 normalMatrix = (float3x3)transpose(inv(model_final));
-
-
-    PixelShaderInput output;
+	PixelShaderInput output;
 	float4 pos = mul(float4(input.pos, 1.0f), model_final);
-	//float4 pos = total_position;
 
 	pos = mul(pos, view);
 	pos = mul(pos, projection);
@@ -49,7 +50,10 @@ PixelShaderInput main(VertexShaderInput input)
 
 	output.texture_pos = input.texture_pos;
 
-	//output.normal = mul(input.normal, input.inv_model);
+	// (AB)^(-1) = B^(-1) * A^(-1)
+	output.normal = mul(input.normal, transpose(finalBonesMatriciesInverses[input.finalTransformId] * inv_model));
+	//output.normal = mul(input.normal, transpose(inv_model * finalBonesMatriciesInverses[input.finalTransformId]));
+
 	output.normal = input.normal;
 
 	return output;

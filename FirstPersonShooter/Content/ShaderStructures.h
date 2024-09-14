@@ -49,9 +49,9 @@ struct AnimatedVertexData : public VertexData
 	int finalTransformId;
 };
 
-struct AnimationConstantBuffer : public ModelViewProjectionConstantBuffer
+struct AnimationConstantBuffer 
 {
-	static const int MAX_BONES = 55;
+	static const int MAX_BONES = 50;
 	DirectX::XMFLOAT4X4 pose[MAX_BONES];
 };
 

@@ -180,6 +180,7 @@ bool FirstPersonShooterMain::Render()
 	// ANIMATED ENTITIES
 	m_animatedRenderer->setProjectionMatrix(m_camera->getProjectionMatrix());
 	m_animatedRenderer->setViewMatrix(Camera::m_staticViewMatrix);
+	m_animatedRenderer->setCameraPosition(m_camera->getPosition());
 
 	m_animatedRenderer->use();
 	for (const auto& entity : m_world->m_animatedEntities)
@@ -194,6 +195,7 @@ bool FirstPersonShooterMain::Render()
 	// REGULAR ENTITES
 	m_modelRenderer->setProjectionMatrix(m_camera->getProjectionMatrix());
 	m_modelRenderer->setViewMatrix(m_camera->getViewMatrix());
+	m_modelRenderer->setCameraPosition(m_camera->getPosition());
 
 	m_modelRenderer->use();
 	for (const auto& entity : m_world->m_entities)

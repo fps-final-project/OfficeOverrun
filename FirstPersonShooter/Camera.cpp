@@ -90,7 +90,7 @@ void Camera::alignWithMouse(const DirectX::Mouse::State& mouseState)
 	updateViewMatrix();
 }
 
-float Camera::toRadians(float degrees)
+float Camera::toRadians(float degrees) const
 {
 	return degrees / 180.f * DirectX::XM_PI;
 }

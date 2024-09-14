@@ -20,7 +20,6 @@ public:
 		m_loadingComplete(false),
 		m_deviceResources(deviceResources)
 	{
-		XMStoreFloat3(&m_PSConstantBufferData.light_pos, { 0.f, 0.f, 0.f, 0.f });
 		this->SetClockwiseCulling();
 	}
 
@@ -127,6 +126,11 @@ public:
 	void setViewMatrix(const DirectX::XMFLOAT4X4& view)
 	{
 		m_VSConstantBufferData.view = view;
+	}
+
+	void setCameraPosition(const DirectX::XMFLOAT3& pos)
+	{
+		DirectX::XMStoreFloat3(&m_PSConstantBufferData.camera_pos, DirectX::XMLoadFloat3(&pos));
 	}
 
 	void SetClockwiseCulling()
