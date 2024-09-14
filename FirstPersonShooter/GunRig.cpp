@@ -25,8 +25,9 @@ void GunRig::reload()
 
 void GunRig::shoot()
 {
-	this->m_hands->setAnimation("FP_fire");
- 	this->m_gun->setAnimation("GUN_fire");
+	const float speedup = 1.6f;
+	this->m_hands->setAnimation("FP_fire", speedup);
+	this->m_gun->setAnimation("GUN_fire", speedup);
 }
 
 std::vector<std::shared_ptr<AnimatedEntity>> GunRig::getEntites()

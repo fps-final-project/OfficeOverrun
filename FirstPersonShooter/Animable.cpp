@@ -7,11 +7,11 @@ Animable::Animable(std::shared_ptr<AnimatedAssimpModel> animatedModel)
 
 }
 
-void Animable::setAnimation(std::string name, bool wrap)
+void Animable::setAnimation(std::string name, float speed, bool wrap)
 {
 	if (this->m_animatedModel->m_animations.find(name) != this->m_animatedModel->m_animations.end())
 	{
-		m_animator.playAnimation(this->m_animatedModel->m_animations[name], wrap);
+		m_animator.playAnimation(this->m_animatedModel->m_animations[name], speed, wrap);
 	}
 }
 
