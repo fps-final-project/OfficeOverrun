@@ -324,6 +324,9 @@
     <Image Include="Assets\cube\crosshair.png">
       <Filter>Assets\cube</Filter>
     </Image>
+    <Image Include="Assets\bullet\bullet.jpg">
+      <Filter>Assets</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />

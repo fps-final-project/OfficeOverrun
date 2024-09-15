@@ -14,6 +14,9 @@ public:
 	virtual ~AnimatedEntity() {}
 	void Update(float dt);
 
+	void setPosition(DirectX::XMFLOAT3 pos);
+	void setRotation(DirectX::XMFLOAT3 rot);
+
 protected:
 	XMFLOAT3 position;
 	XMFLOAT3 rotation;

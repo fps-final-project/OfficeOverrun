@@ -1,4 +1,5 @@
 static const int MAX_BONE_INFLUENCE = 4;
+static const int MAX_BONES = 50;
 
 cbuffer ModelViewProjectionConstantBuffer : register(b0)
 {
@@ -10,7 +11,6 @@ cbuffer ModelViewProjectionConstantBuffer : register(b0)
 
 cbuffer AnimationTransformBuffer : register(b2)
 {
-	static const int MAX_BONES = 50;
 	matrix finalBonesMatricies[MAX_BONES];
 }
 
@@ -51,10 +51,8 @@ PixelShaderInput main(VertexShaderInput input)
 	output.texture_pos = input.texture_pos;
 
 	// (AB)^(-1) = B^(-1) * A^(-1)
-	output.normal = mul(input.normal, transpose(finalBonesMatriciesInverses[input.finalTransformId] * inv_model));
-	//output.normal = mul(input.normal, transpose(inv_model * finalBonesMatriciesInverses[input.finalTransformId]));
-
-	output.normal = input.normal;
+	output.normal = mul(input.normal, transpose(mul(finalBonesMatriciesInverses[input.finalTransformId], inv_model)));
+	//output.normal = mul(input.normal, transpose(mul(inv_model, finalBonesMatriciesInverses[input.finalTransformId])));
 
 	return output;
 }

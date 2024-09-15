@@ -41,19 +41,11 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	m_inputHandler = std::make_unique<InputHandler>();
 	m_collisionDetector = std::make_unique<SimpleCollisionDetector>();
 
-	/*AnimatedEntity arms(ResourceManager::Instance.getAnimatedModel("myarms"));
-	arms.setAnimation("FP_fire", true);
-	m_world->m_animatedEntities.push_back(arms);
-
-	AnimatedEntity gun(ResourceManager::Instance.getAnimatedModel("mygun"), XMFLOAT3(0.f, 0.f, 0.4572f));
-	gun.setAnimation("GUN_fire", true);
-	m_world->m_animatedEntities.push_back(gun);*/
-
-
 	m_gunRig = std::make_unique<GunRig>(
 		ResourceManager::Instance.getAnimatedModel("myarms"),
 		ResourceManager::Instance.getAnimatedModel("mygun"),
-		XMFLOAT3(0.f, 0.f, 0.4572f));
+		XMFLOAT3(0.f, 0.f, 0.4572f),
+		XMFLOAT3(-0.118846, -0.106299, 0.55291));
 
 	m_world->m_entities.push_back(Entity(ResourceManager::Instance.getModel("AK47NoSubdiv_cw"), XMFLOAT3(5.f, -1.f, 5.f)));
 
@@ -96,7 +88,9 @@ void FirstPersonShooterMain::CreateWindowSizeDependentResources()
 // Updates the application state once per frame.
 void FirstPersonShooterMain::Update()
 {
-
+	// call before trying to shoot
+	m_gunRig->rotate(m_camera->getYawPitchRoll());
+	
 	auto mouseState = m_mouse->GetState();
 	auto keyboardState = m_keyboard->GetState();
 
@@ -115,7 +109,7 @@ void FirstPersonShooterMain::Update()
 
 
 				m_world->m_timedEntities.push_back(std::make_pair(
-					Entity(ResourceManager::Instance.getModel("bullet"), { -0.118846, -0.106299, 0.55291 }, {1.f, 1.f, 1.f}, { 0.f, 0.f, 0.f }, v),
+					Entity(ResourceManager::Instance.getModel("bullet"), m_gunRig->getBarrelOffset(), {1.f, 1.f, 1.f}, {0.f, 0.f, 0.f}, v),
 					3.f
 				));
 			}
@@ -179,7 +173,7 @@ bool FirstPersonShooterMain::Render()
 
 	// ANIMATED ENTITIES
 	m_animatedRenderer->setProjectionMatrix(m_camera->getProjectionMatrix());
-	m_animatedRenderer->setViewMatrix(Camera::m_staticViewMatrix);
+	m_animatedRenderer->setViewMatrix(m_camera->getViewMatrix());
 	m_animatedRenderer->setCameraPosition(m_camera->getPosition());
 
 	m_animatedRenderer->use();
