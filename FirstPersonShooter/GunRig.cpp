@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "GunRig.h"
+#include <cmath>
 
 GunRig::GunRig(std::shared_ptr<AnimatedAssimpModel> hands, std::shared_ptr<AnimatedAssimpModel> gun, DirectX::XMFLOAT3 gunOffset, DirectX::XMFLOAT3 barrelOffset)
 	: m_gunOffset(gunOffset), m_initialBarrelOffset(barrelOffset), m_barrelOffset(barrelOffset)
@@ -10,6 +11,11 @@ GunRig::GunRig(std::shared_ptr<AnimatedAssimpModel> hands, std::shared_ptr<Anima
 
 	m_hands->setFallbackAnimation("FP_idle_pose");
 	m_gun->setFallbackAnimation("GUN_idle_pose");
+}
+
+DirectX::XMFLOAT3 GunRig::calculateBulletOrientation(DirectX::XMFLOAT3 yawPitchRoll)
+{
+	return { 0.f, yawPitchRoll.x - DirectX::XM_PIDIV2, yawPitchRoll.y };
 }
 
 void GunRig::update(float dt)

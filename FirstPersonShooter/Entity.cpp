@@ -34,9 +34,7 @@ void Entity::Update(float dt)
 	);
 
 	this->m_modelMatrix =
-		DirectX::XMMatrixRotationY(this->rotation.y)
-		* DirectX::XMMatrixRotationX(this->rotation.x)
-		* DirectX::XMMatrixRotationZ(this->rotation.z)
+		DirectX::XMMatrixRotationRollPitchYaw(this->rotation.x, this->rotation.y, this->rotation.z)
 		* DirectX::XMMatrixTranslation(this->position.x, this->position.y, this->position.z)
 		* DirectX::XMMatrixScaling(0.2f, 0.2f, 0.2f);
 }

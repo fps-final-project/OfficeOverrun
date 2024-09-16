@@ -63,12 +63,12 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	);
 
 
-	// TODO: Change the timer settings if you want something other than the default variable timestep mode.
-	// e.g. for 60 FPS fixed timestep update logic, call:
-	/*
-	m_timer.SetFixedTimeStep(true);
-	m_timer.SetTargetElapsedSeconds(1.0 / 60);
-	*/
+	 //TODO: Change the timer settings if you want something other than the default variable timestep mode.
+	 //e.g. for 60 FPS fixed timestep update logic, call:
+	
+	//m_timer.SetFixedTimeStep(true);
+	//m_timer.SetTargetElapsedSeconds(1.0 / 10);
+	
 }
 
 FirstPersonShooterMain::~FirstPersonShooterMain()
@@ -105,11 +105,12 @@ void FirstPersonShooterMain::Update()
 				m_gunRig->shoot();
 				auto vector_at = m_camera->getAt();
 				XMFLOAT3 v;
-				DirectX::XMStoreFloat3(&v, DirectX::XMVectorScale(vector_at, 10));
+				DirectX::XMStoreFloat3(&v, DirectX::XMVectorScale(vector_at, 0.3f));
 
-
+				auto barrelOffset = m_gunRig->getBarrelOffset();
 				m_world->m_timedEntities.push_back(std::make_pair(
-					Entity(ResourceManager::Instance.getModel("bullet"), m_gunRig->getBarrelOffset(), {1.f, 1.f, 1.f}, {0.f, 0.f, 0.f}, v),
+					Entity(ResourceManager::Instance.getModel("bullet"), barrelOffset, 
+						{1.f, 1.f, 1.f}, GunRig::calculateBulletOrientation(m_camera->getYawPitchRoll()), v),
 					3.f
 				));
 			}
