@@ -55,7 +55,7 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 
 	m_inputHandler->AddActionHandler(
 		[](InputState newState, InputState oldState) {	return newState.first.leftButton && !oldState.first.leftButton; },
-		Action::SHOOT 
+		Action::SHOOT
 	);
 	m_inputHandler->AddActionHandler(
 		[](InputState newState, InputState oldState) {	return newState.second.R && oldState.second.R; },
@@ -63,12 +63,12 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	);
 
 
-	 //TODO: Change the timer settings if you want something other than the default variable timestep mode.
-	 //e.g. for 60 FPS fixed timestep update logic, call:
-	
-	//m_timer.SetFixedTimeStep(true);
-	//m_timer.SetTargetElapsedSeconds(1.0 / 10);
-	
+	//TODO: Change the timer settings if you want something other than the default variable timestep mode.
+	//e.g. for 60 FPS fixed timestep update logic, call:
+
+   //m_timer.SetFixedTimeStep(true);
+   //m_timer.SetTargetElapsedSeconds(1.0 / 10);
+
 }
 
 FirstPersonShooterMain::~FirstPersonShooterMain()
@@ -88,62 +88,62 @@ void FirstPersonShooterMain::CreateWindowSizeDependentResources()
 // Updates the application state once per frame.
 void FirstPersonShooterMain::Update()
 {
-	// call before trying to shoot
-	m_gunRig->rotate(m_camera->getYawPitchRoll());
-	
-	auto mouseState = m_mouse->GetState();
-	auto keyboardState = m_keyboard->GetState();
 
-	std::vector<Action> actions = m_inputHandler->HandleInputState({ mouseState, keyboardState });
-
-	for (auto& action : actions)
-	{
-		if (action == Action::SHOOT)
-		{
-			if (m_gunRig->isIdle())
-			{
-				m_gunRig->shoot();
-				auto vector_at = m_camera->getAt();
-				XMFLOAT3 v;
-				DirectX::XMStoreFloat3(&v, DirectX::XMVectorScale(vector_at, 0.3f));
-
-				auto barrelOffset = m_gunRig->getBarrelOffset();
-				m_world->m_timedEntities.push_back(std::make_pair(
-					Entity(ResourceManager::Instance.getModel("bullet"), barrelOffset, 
-						{1.f, 1.f, 1.f}, GunRig::calculateBulletOrientation(m_camera->getYawPitchRoll()), v),
-					3.f
-				));
-			}
-		}
-
-		if (action == Action::RELOAD)
-		{
-			if (m_gunRig->isIdle())
-			{
-				m_gunRig->reload();
-			}
-		}
-	}
-
-
-	m_camera->alignWithMouse(mouseState);
 
 	// Update scene objects.
 	m_timer.Tick([&]()
 		{
-			// TODO: Replace this with your app's content update functions.
+			auto mouseState = m_mouse->GetState();
+			auto keyboardState = m_keyboard->GetState();
+
+			m_camera->alignWithMouse(mouseState);
+			m_gunRig->rotate(m_camera->getYawPitchRoll());
+
+			std::vector<Action> actions = m_inputHandler->HandleInputState({ mouseState, keyboardState });
+
+			for (auto& action : actions)
+			{
+				if (action == Action::SHOOT)
+				{
+					if (m_gunRig->isIdle())
+					{
+						m_gunRig->shoot();
+						auto vector_at = m_camera->getAt();
+						XMFLOAT3 v;
+						DirectX::XMStoreFloat3(&v, DirectX::XMVectorScale(vector_at, 10.f));
+
+						auto barrelOffset = m_gunRig->getBarrelOffset();
+						m_world->m_timedEntities.push_back(std::make_pair(
+							Entity(ResourceManager::Instance.getModel("bullet"), barrelOffset,
+								{ 1.f, 1.f, 1.f }, GunRig::calculateBulletOrientation(m_camera->getYawPitchRoll()), v),
+							3.f
+						));
+					}
+				}
+
+				if (action == Action::RELOAD)
+				{
+					if (m_gunRig->isIdle())
+					{
+						m_gunRig->reload();
+					}
+				}
+			}
+
 			float dt = m_timer.GetElapsedSeconds();
 			m_gunRig->update(dt);
 			m_world->Update(dt);
 			m_fpsTextRenderer->Update(m_timer);
+
+			auto collisions = m_collisionDetector->GetCollisions(m_world->GetEntities());
+			std::for_each(
+				collisions.begin(),
+				collisions.end(),
+				[this](std::pair<Hittable, Hittable>& pair) { m_world->DeleteEntity(pair.first); m_world->DeleteEntity(pair.second); }
+			);
+
 		});
 
-	auto collisions = m_collisionDetector->GetCollisions(m_world->GetEntities());
-	std::for_each(
-		collisions.begin(),
-		collisions.end(),
-		[this](std::pair<Hittable, Hittable>& pair) { m_world->DeleteEntity(pair.first); m_world->DeleteEntity(pair.second);}
-	);
 }
 
 // Renders the current frame according to the current application state.
