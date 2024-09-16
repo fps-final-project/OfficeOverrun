@@ -18,6 +18,15 @@ DirectX::XMFLOAT3 GunRig::calculateBulletOrientation(DirectX::XMFLOAT3 yawPitchR
 	return { 0.f, yawPitchRoll.x - DirectX::XM_PIDIV2, yawPitchRoll.y };
 }
 
+DirectX::XMVECTOR GunRig::calculateBulletDirection(DirectX::XMVECTOR cameraAt)
+{
+	// first scale the vector to (almost) inf, then subtract barrel position to get the direction from barrel, then normalize
+	auto result = DirectX::XMVector3Normalize(DirectX::XMVectorSubtract(DirectX::XMVectorScale(cameraAt, 100),
+		DirectX::XMLoadFloat3(&m_barrelOffset)));
+
+	return result;
+}
+
 void GunRig::update(float dt)
 {
 	this->m_hands->Update(dt);

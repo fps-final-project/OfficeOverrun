@@ -10,6 +10,7 @@ class GunRig
 public:
 	GunRig(std::shared_ptr<AnimatedAssimpModel> hands, std::shared_ptr<AnimatedAssimpModel> gun, DirectX::XMFLOAT3 gunOffset, DirectX::XMFLOAT3 barrelOffset);
 	static DirectX::XMFLOAT3 calculateBulletOrientation(DirectX::XMFLOAT3 yawPitchRoll);
+	DirectX::XMVECTOR calculateBulletDirection(DirectX::XMVECTOR cameraAt);
 	void update(float dt);
 	void reload();
 	void shoot();

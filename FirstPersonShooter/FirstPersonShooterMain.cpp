@@ -108,7 +108,7 @@ void FirstPersonShooterMain::Update()
 					if (m_gunRig->isIdle())
 					{
 						m_gunRig->shoot();
-						auto vector_at = m_camera->getAt();
+						auto vector_at = m_gunRig->calculateBulletDirection(m_camera->getAt());
 						XMFLOAT3 v;
 						DirectX::XMStoreFloat3(&v, DirectX::XMVectorScale(vector_at, 10.f));
 
