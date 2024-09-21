@@ -1,20 +1,19 @@
 #include "pch.h"
 #include "InputHandler.hpp"
 
-InputHandler::InputHandler() : m_actions{}, m_inputState{}
+InputHandler::InputHandler(std::shared_ptr<std::queue<Action>> actionQueue) : m_actions{}, m_inputState{}
 {
+	m_actionQueue = actionQueue;
 }
 
-std::vector<Action> InputHandler::HandleInputState(InputState newState)
+void InputHandler::HandleInputState(InputState newState)
 {
-	std::vector<Action> actions{};
 	std::for_each(
 		m_actions.begin(), 
-		m_actions.end(), [&actions, &newState, this](std::pair<std::function<bool(InputState, InputState)>, Action> pair) 
-		{ if (pair.first(newState, m_inputState)) actions.push_back(pair.second); }
+		m_actions.end(), [&newState, this](std::pair<std::function<bool(InputState, InputState)>, Action> pair) 
+		{ if (pair.first(newState, m_inputState)) m_actionQueue->push(pair.second); }
 	);
 	m_inputState = newState;
-	return actions;
 }
 
 void InputHandler::AddActionHandler(std::function<bool(InputState newState, InputState oldState)> condition, Action action)
