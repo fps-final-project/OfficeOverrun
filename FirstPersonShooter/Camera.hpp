@@ -20,7 +20,9 @@ public:
 
 	void alignWithMouse(const DirectX::Mouse::State& mouseState);
 
-	static DirectX::XMFLOAT4X4 m_staticViewMatrix;
+	inline DirectX::XMFLOAT3 getPosition() const { return { m_position.m128_f32[0], m_position.m128_f32[1], m_position.m128_f32[2] }; }
+	inline DirectX::XMVECTOR getAt() const { return m_at; }
+	inline DirectX::XMFLOAT3 getYawPitchRoll() const { return { toRadians(m_yaw), toRadians(m_pitch), 0 }; }
 
 private:
 	// TODO:
@@ -39,7 +41,7 @@ private:
 	float m_yaw;
 	float m_pitch;
 
-	float toRadians(float degrees);
+	float toRadians(float degrees) const;
 
 	void updateViewMatrix();
 };

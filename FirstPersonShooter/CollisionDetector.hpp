@@ -7,9 +7,10 @@ class CollisionDetector
 {
 
 public:
-	virtual std::vector<std::pair<std::shared_ptr<Hittable>, std::shared_ptr<Hittable>>> GetCollisions() = 0;
+	virtual ~CollisionDetector() = default;
 
-private:
-	std::vector<std::shared_ptr<Hittable>> elements;
+	virtual std::vector<std::pair<Hittable, Hittable>> GetCollisions(std::vector<Hittable> elements) = 0;
+
+protected:
 };
 

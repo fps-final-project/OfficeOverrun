@@ -4,7 +4,6 @@
 
 using namespace Windows::Foundation;
 
-DirectX::XMFLOAT4X4 Camera::m_staticViewMatrix;
 
 Camera::Camera(const std::shared_ptr<DX::DeviceResources>& deviceResources,
 	float fov,
@@ -13,11 +12,6 @@ Camera::Camera(const std::shared_ptr<DX::DeviceResources>& deviceResources,
 	DirectX::XMVECTOR up)
 	: m_position(position), m_at(at), m_up(up), m_deviceResources(deviceResources), m_yaw(0), m_pitch(0)
 {
-	DirectX::XMStoreFloat4x4(
-		&m_staticViewMatrix,
-		DirectX::XMMatrixTranspose(DirectX::XMMatrixLookAtRH(m_position, m_at, m_up))
-	);
-
 	this->CreateWindowSizeDependentResources(fov);
 	this->updateViewMatrix();
 }
@@ -90,7 +84,7 @@ void Camera::alignWithMouse(const DirectX::Mouse::State& mouseState)
 	updateViewMatrix();
 }
 
-float Camera::toRadians(float degrees)
+float Camera::toRadians(float degrees) const
 {
 	return degrees / 180.f * DirectX::XM_PI;
 }

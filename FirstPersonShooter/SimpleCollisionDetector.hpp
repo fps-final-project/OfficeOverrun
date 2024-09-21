@@ -4,7 +4,6 @@
 class SimpleCollisionDetector : public CollisionDetector
 {
 public:
-
-	std::vector<std::pair<std::shared_ptr<Hittable>, std::shared_ptr<Hittable>>> GetCollisions() override;
+	std::vector<std::pair<Hittable, Hittable>> GetCollisions(std::vector<Hittable> elements) override;
 };
 

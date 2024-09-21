@@ -3,6 +3,7 @@
 #include "Common\StepTimer.h"
 #include "Common\DeviceResources.h"
 #include "Content\SampleFpsTextRenderer.h"
+#include "InputHandler.hpp"
 #include <Keyboard.h>
 #include <Mouse.h>
 
@@ -14,6 +15,7 @@
 #include "ModelRenderer.hpp"
 #include "SpriteRenderer.hpp"
 #include <CommonStates.h>
+#include "SimpleCollisionDetector.hpp"
 
 // Renders Direct2D and 3D content on the screen.
 namespace FirstPersonShooter
@@ -49,12 +51,15 @@ namespace FirstPersonShooter
 		std::unique_ptr<World> m_world;
 		std::unique_ptr<GunRig> m_gunRig;
 		std::unique_ptr<DirectX::CommonStates> m_states;
+		std::unique_ptr<CollisionDetector> m_collisionDetector;
 
 		// Rendering loop timer.
 		DX::StepTimer m_timer;
 
 		std::shared_ptr<DirectX::Keyboard> m_keyboard;
 		std::shared_ptr<DirectX::Mouse> m_mouse;
+
+		std::unique_ptr<InputHandler> m_inputHandler;
 
 		const float FOV = 95.0f;
 

@@ -7,7 +7,7 @@ Animator::Animator()
 }
 
 Animator::Animator(std::shared_ptr<Animation> animation, std::shared_ptr<Animation> fallback, bool wrap)
-    : m_wrapAnimation(wrap), m_currentTime(0.f), m_currentAnimation(animation), m_fallbackAnimation(fallback)
+    : m_wrapAnimation(wrap), m_currentTime(0.f), m_currentAnimation(animation), m_fallbackAnimation(fallback), m_animationSpeedMultiplier(1.f)
 {
 	m_finalBoneMatrices.reserve(55);
 	for (int i = 0; i < 55; i++)
@@ -25,16 +25,18 @@ void Animator::updateAnimation(const Joint& rootJoint, const std::map<std::strin
         m_currentAnimation = m_fallbackAnimation;
         m_wrapAnimation = true;
         m_currentTime = 0;
+        m_animationSpeedMultiplier = 1.f;
     }
 
 	if (m_currentAnimation)
 	{
-		m_currentTime += m_currentAnimation->m_TicksPerSecond * dt;
+		m_currentTime += m_currentAnimation->m_TicksPerSecond * dt * m_animationSpeedMultiplier;
         if (!m_wrapAnimation && m_currentTime > m_currentAnimation->m_Duration)
         {
             m_currentAnimation = m_fallbackAnimation;
             m_wrapAnimation = true;
             m_currentTime = 0;
+            m_animationSpeedMultiplier = 1.f;
         }
 		m_currentTime = fmod(m_currentTime, m_currentAnimation->m_Duration);
 		auto ident = DirectX::XMMatrixIdentity();
@@ -43,11 +45,12 @@ void Animator::updateAnimation(const Joint& rootJoint, const std::map<std::strin
 	}
 }
 
-void Animator::playAnimation(std::shared_ptr<Animation> animation, bool wrap)
+void Animator::playAnimation(std::shared_ptr<Animation> animation, float speed, bool wrap)
 {
 	m_currentAnimation = animation;
 	m_currentTime = 0.0f;
     m_wrapAnimation = wrap;
+    m_animationSpeedMultiplier = speed;
 }
 
 void Animator::setFallbackAnimation(std::shared_ptr<Animation> animation)

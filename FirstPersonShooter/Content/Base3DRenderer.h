@@ -20,11 +20,15 @@ public:
 		m_loadingComplete(false),
 		m_deviceResources(deviceResources)
 	{
-		XMStoreFloat3(&m_PSConstantBufferData.light_pos, { 0.f, 0.f, 0.f, 0.f });
 		this->SetClockwiseCulling();
 	}
 
-	void ReleaseDeviceDependentResources()
+	virtual ~Base3DRenderer() 
+	{
+		this->ReleaseDeviceDependentResources();
+	}
+
+	virtual void ReleaseDeviceDependentResources()
 	{
 		m_loadingComplete = false;
 		m_vertexShader.Reset();
@@ -41,7 +45,8 @@ public:
 		auto context = m_deviceResources->GetD3DDeviceContext();
 
 		// We only handle diffuse textures for now (actual color textures)
-		context->PSSetShaderResources(0, 1, m.textures[0].shaderResourceView.GetAddressOf());
+		if (m.textures.size() > 0)
+			context->PSSetShaderResources(0, 1, m.textures[0].shaderResourceView.GetAddressOf());
 
 		// it has to be called per Entity cause we dynamically set animation offsets in the buffer, 
 		// maybe we can optimize this if it is an issue
@@ -126,6 +131,11 @@ public:
 	void setViewMatrix(const DirectX::XMFLOAT4X4& view)
 	{
 		m_VSConstantBufferData.view = view;
+	}
+
+	void setCameraPosition(const DirectX::XMFLOAT3& pos)
+	{
+		DirectX::XMStoreFloat3(&m_PSConstantBufferData.camera_pos, DirectX::XMLoadFloat3(&pos));
 	}
 
 	void SetClockwiseCulling()

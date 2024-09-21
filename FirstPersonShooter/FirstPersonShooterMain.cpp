@@ -28,6 +28,8 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	ResourceManager::Instance.loadModel("Assets\\AK-47\\AK47NoSubdiv_cw.obj", m_deviceResources);
 	ResourceManager::Instance.loadTexture("Assets\\cube\\crosshair.png", m_deviceResources);
 
+	ResourceManager::Instance.loadModel("Assets\\bullet\\bullet.obj", m_deviceResources);
+
 	m_modelRenderer = std::unique_ptr<ModelRenderer>(new ModelRenderer(m_deviceResources));
 	m_animatedRenderer = std::unique_ptr<AnimatedModelRenderer>(new AnimatedModelRenderer(m_deviceResources));
 	m_spriteRenderer = std::make_unique<SpriteRenderer>(m_deviceResources->GetD3DDeviceContext());
@@ -36,35 +38,37 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	m_states = std::make_unique<DirectX::CommonStates>(m_deviceResources->GetD3DDevice());
 	m_world = std::unique_ptr<World>(new World());
 	m_camera = std::unique_ptr<Camera>(new Camera(m_deviceResources, FOV));
-
-	/*AnimatedEntity arms(ResourceManager::Instance.getAnimatedModel("myarms"));
-	arms.setAnimation("FP_fire", true);
-	m_world->m_animatedEntities.push_back(arms);
-
-	AnimatedEntity gun(ResourceManager::Instance.getAnimatedModel("mygun"), XMFLOAT3(0.f, 0.f, 0.4572f));
-	gun.setAnimation("GUN_fire", true);
-	m_world->m_animatedEntities.push_back(gun);*/
-
+	m_inputHandler = std::make_unique<InputHandler>();
+	m_collisionDetector = std::make_unique<SimpleCollisionDetector>();
 
 	m_gunRig = std::make_unique<GunRig>(
 		ResourceManager::Instance.getAnimatedModel("myarms"),
 		ResourceManager::Instance.getAnimatedModel("mygun"),
-		XMFLOAT3(0.f, 0.f, 0.4572f));
+		XMFLOAT3(0.f, 0.f, 0.4572f),
+		XMFLOAT3(-0.118846, -0.106299, 0.55291));
 
-	//m_gunRig->shoot();
+	m_world->m_entities.push_back(Entity(ResourceManager::Instance.getModel("AK47NoSubdiv_cw"), XMFLOAT3(5.f, -1.f, 5.f)));
 
-	m_world->m_entities.push_back(Entity(ResourceManager::Instance.getModel("AK47NoSubdiv_cw"), XMFLOAT3(0.f, -1.f, 5.f)));
+	//m_world->m_entities.push_back(Entity(ResourceManager::Instance.getModel("AK47NoSubdiv_cw"), XMFLOAT3(0.f, -1.f, 5.f)));
 
 	m_mouse->SetMode(DirectX::Mouse::MODE_RELATIVE);
 
+	m_inputHandler->AddActionHandler(
+		[](InputState newState, InputState oldState) {	return newState.first.leftButton && !oldState.first.leftButton; },
+		Action::SHOOT
+	);
+	m_inputHandler->AddActionHandler(
+		[](InputState newState, InputState oldState) {	return newState.second.R && oldState.second.R; },
+		Action::RELOAD
+	);
 
 
-	// TODO: Change the timer settings if you want something other than the default variable timestep mode.
-	// e.g. for 60 FPS fixed timestep update logic, call:
-	/*
-	m_timer.SetFixedTimeStep(true);
-	m_timer.SetTargetElapsedSeconds(1.0 / 60);
-	*/
+	//TODO: Change the timer settings if you want something other than the default variable timestep mode.
+	//e.g. for 60 FPS fixed timestep update logic, call:
+
+   //m_timer.SetFixedTimeStep(true);
+   //m_timer.SetTargetElapsedSeconds(1.0 / 10);
+
 }
 
 FirstPersonShooterMain::~FirstPersonShooterMain()
@@ -84,29 +88,62 @@ void FirstPersonShooterMain::CreateWindowSizeDependentResources()
 // Updates the application state once per frame.
 void FirstPersonShooterMain::Update()
 {
-	auto mouseState = m_mouse->GetState();
 
-	if (mouseState.leftButton)
-	{
-		m_gunRig->shoot();
-	}
-
-	if (m_keyboard->GetState().R)
-	{
-		m_gunRig->reload();
-	}
-	
-	m_camera->alignWithMouse(mouseState);
 
 	// Update scene objects.
 	m_timer.Tick([&]()
 		{
-			// TODO: Replace this with your app's content update functions.
+			auto mouseState = m_mouse->GetState();
+			auto keyboardState = m_keyboard->GetState();
+
+			m_camera->alignWithMouse(mouseState);
+			m_gunRig->rotate(m_camera->getYawPitchRoll());
+
+			std::vector<Action> actions = m_inputHandler->HandleInputState({ mouseState, keyboardState });
+
+			for (auto& action : actions)
+			{
+				if (action == Action::SHOOT)
+				{
+					if (m_gunRig->isIdle())
+					{
+						m_gunRig->shoot();
+						auto vector_at = m_gunRig->calculateBulletDirection(m_camera->getAt());
+						XMFLOAT3 v;
+						DirectX::XMStoreFloat3(&v, DirectX::XMVectorScale(vector_at, 10.f));
+
+						auto barrelOffset = m_gunRig->getBarrelOffset();
+						m_world->m_timedEntities.push_back(std::make_pair(
+							Entity(ResourceManager::Instance.getModel("bullet"), barrelOffset,
+								{ 1.f, 1.f, 1.f }, GunRig::calculateBulletOrientation(m_camera->getYawPitchRoll()), v),
+							3.f
+						));
+					}
+				}
+
+				if (action == Action::RELOAD)
+				{
+					if (m_gunRig->isIdle())
+					{
+						m_gunRig->reload();
+					}
+				}
+			}
+
 			float dt = m_timer.GetElapsedSeconds();
 			m_gunRig->update(dt);
-			m_world->update(dt);
+			m_world->Update(dt);
 			m_fpsTextRenderer->Update(m_timer);
+
+			auto collisions = m_collisionDetector->GetCollisions(m_world->GetEntities());
+			std::for_each(
+				collisions.begin(),
+				collisions.end(),
+				[this](std::pair<Hittable, Hittable>& pair) { m_world->DeleteEntity(pair.first); m_world->DeleteEntity(pair.second); }
+			);
+
 		});
+
 }
 
 // Renders the current frame according to the current application state.
@@ -137,7 +174,8 @@ bool FirstPersonShooterMain::Render()
 
 	// ANIMATED ENTITIES
 	m_animatedRenderer->setProjectionMatrix(m_camera->getProjectionMatrix());
-	m_animatedRenderer->setViewMatrix(Camera::m_staticViewMatrix);
+	m_animatedRenderer->setViewMatrix(m_camera->getViewMatrix());
+	m_animatedRenderer->setCameraPosition(m_camera->getPosition());
 
 	m_animatedRenderer->use();
 	for (const auto& entity : m_world->m_animatedEntities)
@@ -152,11 +190,16 @@ bool FirstPersonShooterMain::Render()
 	// REGULAR ENTITES
 	m_modelRenderer->setProjectionMatrix(m_camera->getProjectionMatrix());
 	m_modelRenderer->setViewMatrix(m_camera->getViewMatrix());
+	m_modelRenderer->setCameraPosition(m_camera->getPosition());
 
 	m_modelRenderer->use();
 	for (const auto& entity : m_world->m_entities)
 	{
 		m_modelRenderer->Render(entity);
+	}
+	for (const auto& entity : m_world->m_timedEntities)
+	{
+		m_modelRenderer->Render(entity.first);
 	}
 
 	m_spriteRenderer->BeginRendering(context, viewport);

@@ -8,19 +8,21 @@ public:
 	Animator();
 	Animator(std::shared_ptr<Animation> animation, std::shared_ptr<Animation> fallback = nullptr, bool wrap = false);
 	void updateAnimation(const Joint& rootJoint, const std::map<std::string, BoneInfo>& boneInfoMap, float dt);
-	void playAnimation(std::shared_ptr<Animation> animation, bool wrap = false);
+	void playAnimation(std::shared_ptr<Animation> animation, float speed = 1.f, bool wrap = false);
 	void setFallbackAnimation(std::shared_ptr<Animation> animation);
 	void calculateTransform(const Joint& data, const std::map<std::string, BoneInfo>& boneInfoMap, DirectX::XMMATRIX parentTransform);
+	bool isIdle() { return m_currentAnimation == m_fallbackAnimation; }
 
 	std::vector<DirectX::XMMATRIX> getFinalTransformationMatricies(const std::vector<FinalTransformData>& data) const;
 
-	std::shared_ptr<Animation> m_currentAnimation, m_fallbackAnimation;
-	float m_currentTime;
-	float m_deltaTime;
 	DirectX::XMMATRIX getJointTransform(const Joint& data, float animationTime);
 	int getIndex(float animationTime);
 
 private:
+	std::shared_ptr<Animation> m_currentAnimation, m_fallbackAnimation;
+	float m_deltaTime;
+	float m_currentTime;
+	float m_animationSpeedMultiplier;
 	bool m_wrapAnimation;
 	bool hasKeyframeData(const Joint& data);
 	float getScaleFactor(float lastTimestamp, float nextTimestamp, float animationTime);
