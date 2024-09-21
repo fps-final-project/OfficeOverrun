@@ -287,6 +287,9 @@
     <Image Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ActionHandler.hpp" />
+    <ClInclude Include="ActionTypes.hpp" />
+    <ClInclude Include="GameState.hpp" />
     <ClInclude Include="GunRig.h" />
     <ClInclude Include="SpriteRenderer.hpp" />
     <ClInclude Include="Animable.hpp" />
@@ -323,6 +326,7 @@
     <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ActionHandler.cpp" />
     <ClCompile Include="Animable.cpp" />
     <ClCompile Include="AnimatedEntity.cpp" />
     <ClCompile Include="AnimatedModelRenderer.cpp" />
@@ -336,6 +340,7 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="FirstPersonShooterMain.cpp" />
     <ClCompile Include="Content\SampleFpsTextRenderer.cpp" />
+    <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GunRig.cpp" />
     <ClCompile Include="Hittable.cpp" />
     <ClCompile Include="InputHandler.cpp" />

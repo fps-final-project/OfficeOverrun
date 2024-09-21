@@ -13,12 +13,12 @@ GunRig::GunRig(std::shared_ptr<AnimatedAssimpModel> hands, std::shared_ptr<Anima
 	m_gun->setFallbackAnimation("GUN_idle_pose");
 }
 
-DirectX::XMFLOAT3 GunRig::calculateBulletOrientation(DirectX::XMFLOAT3 yawPitchRoll)
+DirectX::XMFLOAT3 GunRig::CalculateBulletOrientation(DirectX::XMFLOAT3 yawPitchRoll)
 {
 	return { 0.f, yawPitchRoll.x - DirectX::XM_PIDIV2, yawPitchRoll.y };
 }
 
-DirectX::XMVECTOR GunRig::calculateBulletDirection(DirectX::XMVECTOR cameraAt)
+DirectX::XMVECTOR GunRig::CalculateBulletDirection(DirectX::XMVECTOR cameraAt)
 {
 	// first scale the vector to (almost) inf, then subtract barrel position to get the direction from barrel, then normalize
 	auto result = DirectX::XMVector3Normalize(DirectX::XMVectorSubtract(DirectX::XMVectorScale(cameraAt, 100),
@@ -27,36 +27,36 @@ DirectX::XMVECTOR GunRig::calculateBulletDirection(DirectX::XMVECTOR cameraAt)
 	return result;
 }
 
-void GunRig::update(float dt)
+void GunRig::Update(float dt)
 {
 	this->m_hands->Update(dt);
 	this->m_gun->Update(dt);
 }
 
-void GunRig::reload()
+void GunRig::Reload()
 {
 	this->m_hands->setAnimation("FP_reload");
 	this->m_gun->setAnimation("GUN_reload");
 }
 
-void GunRig::shoot()
+void GunRig::Shoot()
 {
 	const float speedup = 1.6f;
 	this->m_hands->setAnimation("FP_fire", speedup);
 	this->m_gun->setAnimation("GUN_fire", speedup);
 }
 
-DirectX::XMFLOAT3 GunRig::getBarrelOffset()
+DirectX::XMFLOAT3 GunRig::GetBarrelOffset()
 {
 	return m_barrelOffset;
 }
 
-std::vector<std::shared_ptr<AnimatedEntity>> GunRig::getEntites()
+std::vector<std::shared_ptr<AnimatedEntity>> GunRig::GetEntites()
 {
 	return { m_hands, m_gun };
 }
 
-void GunRig::rotate(DirectX::XMFLOAT3 yawPitchRoll)
+void GunRig::Rotate(DirectX::XMFLOAT3 yawPitchRoll)
 {
 	DirectX::XMFLOAT3 actualRotation = { -yawPitchRoll.y, yawPitchRoll.x, 0 };
 	this->m_gun->setRotation(actualRotation);

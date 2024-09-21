@@ -1,21 +1,21 @@
 ﻿#pragma once
-
-#include "Common\StepTimer.h"
-#include "Common\DeviceResources.h"
-#include "Content\SampleFpsTextRenderer.h"
-#include "InputHandler.hpp"
+#include <CommonStates.h>
 #include <Keyboard.h>
 #include <Mouse.h>
-
 #include <queue>
+
+#include "Content\SampleFpsTextRenderer.h"
+#include "SimpleCollisionDetector.hpp"
+#include "AnimatedModelRenderer.hpp"
+#include "Common\DeviceResources.h"
+#include "Common\StepTimer.h"
+#include "SpriteRenderer.hpp"
+#include "ModelRenderer.hpp"
+#include "InputHandler.hpp"
+#include "GameState.hpp"
+#include "Camera.hpp"
 #include "World.h"
 #include "GunRig.h"
-#include "Camera.hpp"
-#include "AnimatedModelRenderer.hpp"
-#include "ModelRenderer.hpp"
-#include "SpriteRenderer.hpp"
-#include <CommonStates.h>
-#include "SimpleCollisionDetector.hpp"
 
 // Renders Direct2D and 3D content on the screen.
 namespace FirstPersonShooter
@@ -41,27 +41,19 @@ namespace FirstPersonShooter
 		// Cached pointer to device resources.
 		std::shared_ptr<DX::DeviceResources> m_deviceResources;
 
-		// TODO: Replace with your own content renderers.
 		std::unique_ptr<ModelRenderer> m_modelRenderer;
 		std::unique_ptr<AnimatedModelRenderer> m_animatedRenderer;
 		std::unique_ptr<SpriteRenderer> m_spriteRenderer;
 		std::unique_ptr<SampleFpsTextRenderer> m_fpsTextRenderer;
 
-		std::unique_ptr<Camera> m_camera;
-		std::unique_ptr<World> m_world;
-		std::unique_ptr<GunRig> m_gunRig;
 		std::unique_ptr<DirectX::CommonStates> m_states;
-		std::unique_ptr<CollisionDetector> m_collisionDetector;
+		std::unique_ptr<GameState> m_gameState;
 
 		// Rendering loop timer.
 		DX::StepTimer m_timer;
 
 		std::shared_ptr<DirectX::Keyboard> m_keyboard;
 		std::shared_ptr<DirectX::Mouse> m_mouse;
-
-		std::unique_ptr<InputHandler> m_inputHandler;
-
-		const float FOV = 95.0f;
 
 	};
 }
