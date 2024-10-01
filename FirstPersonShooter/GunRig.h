@@ -4,7 +4,7 @@
 
 
 
-class GunRig 
+class GunRig : public Drawable
 {
 
 public:
@@ -15,6 +15,7 @@ public:
 	void Reload();
 	void Shoot();
 	bool IsIdle() { return m_hands->isIdle(); }
+	virtual void Render(std::shared_ptr<RenderMaster> renderMaster);
 	DirectX::XMFLOAT3 GetBarrelOffset();
 	std::vector<std::shared_ptr<AnimatedEntity>> GetEntites();
 	void Rotate(DirectX::XMFLOAT3 yawPitchRoll);

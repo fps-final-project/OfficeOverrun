@@ -46,6 +46,12 @@ void GunRig::Shoot()
 	this->m_gun->setAnimation("GUN_fire", speedup);
 }
 
+void GunRig::Render(std::shared_ptr<RenderMaster> renderMaster)
+{
+	this->m_gun->Render(renderMaster);
+	this->m_hands->Render(renderMaster);
+}
+
 DirectX::XMFLOAT3 GunRig::GetBarrelOffset()
 {
 	return m_barrelOffset;
