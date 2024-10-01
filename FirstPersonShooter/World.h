@@ -3,6 +3,7 @@
 #include <queue>
 #include "AnimatedEntity.hpp" 
 #include "Entity.hpp" 
+#include "RenderQueue.hpp"
 
 class World
 {
@@ -14,4 +15,6 @@ public:
 	std::vector<AnimatedEntity> m_animatedEntities;
 	std::vector<Entity> m_entities;
 	std::vector<std::pair<Entity, float>> m_timedEntities;
+
+	RenderQueue createRenderQueue();
 };

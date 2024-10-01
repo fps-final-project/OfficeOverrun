@@ -11,6 +11,7 @@
 #include "Common\StepTimer.h"
 #include "SpriteRenderer.hpp"
 #include "ModelRenderer.hpp"
+#include "RenderMaster.hpp"
 #include "InputHandler.hpp"
 #include "GameState.hpp"
 #include "Camera.hpp"
@@ -41,10 +42,10 @@ namespace FirstPersonShooter
 		// Cached pointer to device resources.
 		std::shared_ptr<DX::DeviceResources> m_deviceResources;
 
-		std::unique_ptr<ModelRenderer> m_modelRenderer;
-		std::unique_ptr<AnimatedModelRenderer> m_animatedRenderer;
 		std::unique_ptr<SpriteRenderer> m_spriteRenderer;
 		std::unique_ptr<SampleFpsTextRenderer> m_fpsTextRenderer;
+
+		std::shared_ptr<RenderMaster> m_renderMaster;
 
 		std::unique_ptr<DirectX::CommonStates> m_states;
 		std::unique_ptr<GameState> m_gameState;

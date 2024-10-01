@@ -139,9 +139,6 @@
     <ClCompile Include="AssimpModelLoader.cpp">
       <Filter>Content\Model</Filter>
     </ClCompile>
-    <ClCompile Include="Drawable.cpp">
-      <Filter>Content\Entity</Filter>
-    </ClCompile>
     <ClCompile Include="Entity.cpp">
       <Filter>Content\Entity</Filter>
     </ClCompile>
@@ -189,6 +186,14 @@
     </ClCompile>
     <ClCompile Include="GunRig.cpp">
       <Filter>Content\Entity\GunRig</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionHandler.cpp" />
+    <ClCompile Include="GameState.cpp" />
+    <ClCompile Include="RenderMaster.cpp">
+      <Filter>Content\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderQueue.cpp">
+      <Filter>Content\Renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -276,6 +281,18 @@
     </ClInclude>
     <ClInclude Include="GunRig.h">
       <Filter>Content\Entity\GunRig</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionHandler.hpp" />
+    <ClInclude Include="ActionTypes.hpp" />
+    <ClInclude Include="GameState.hpp" />
+    <ClInclude Include="RendererType.hpp">
+      <Filter>Content\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderMaster.hpp">
+      <Filter>Content\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderQueue.hpp">
+      <Filter>Content\Renderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

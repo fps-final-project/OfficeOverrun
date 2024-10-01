@@ -82,3 +82,24 @@ void World::DeleteEntity(Hittable& entity)
 		m_timedEntities.end()
 	);
 }
+
+RenderQueue World::createRenderQueue()
+{
+	RenderQueue queue;
+	for (const auto& entity : m_entities)
+	{
+		queue.push(RenderData(RendererType::MODEL, (Drawable*)&entity));
+	}
+
+	for (const auto& entity : m_timedEntities)
+	{
+		queue.push(RenderData(RendererType::MODEL, (Drawable*)&entity.first));
+	}
+
+	for (const auto& entity : m_animatedEntities)
+	{
+		queue.push(RenderData(RendererType::ANIMATED, (Drawable*)&entity));
+	}
+
+	return queue;
+}

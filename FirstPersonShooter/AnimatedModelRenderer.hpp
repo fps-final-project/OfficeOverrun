@@ -1,6 +1,7 @@
 #pragma once
 #include "Content\Base3DRenderer.h"
-#include "Animable.hpp"
+
+class Animable;
 
 class AnimatedModelRenderer : public Base3DRenderer<ModelViewProjectionConstantBuffer, LightingConstantBuffer, AnimatedVertexData>
 {

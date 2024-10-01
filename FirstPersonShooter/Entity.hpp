@@ -14,8 +14,13 @@ public:
 		XMFLOAT3 rotation = DirectX::XMFLOAT3(0.f, 0.f, 0.f),
 		XMFLOAT3 velocity = DirectX::XMFLOAT3(0.f, 0.f, 0.f));
 	virtual ~Entity() {}
+	virtual void Render(std::shared_ptr<RenderMaster> renderMaster) override;
 	virtual void Update(float dt);
+	friend class ModelRenderer;
 protected:
+	std::shared_ptr<AssimpModel> m_model;
+	DirectX::XMMATRIX m_modelMatrix;
+
 	XMFLOAT3 position;
 	XMFLOAT3 rotation;
 	XMFLOAT3 size;

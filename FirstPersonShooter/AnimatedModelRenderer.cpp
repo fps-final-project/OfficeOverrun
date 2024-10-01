@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "AnimatedModelRenderer.hpp"
+#include "Animable.hpp"
 #include <vector>
 
 AnimatedModelRenderer::AnimatedModelRenderer(const std::shared_ptr<DX::DeviceResources>& deviceResources)

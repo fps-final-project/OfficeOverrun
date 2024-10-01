@@ -2,15 +2,10 @@
 
 #include "Common\DeviceResources.h"
 #include "ShaderStructures.h"
-#include "Common\StepTimer.h"
 #include "AssimpModel.h"
 #include "Mesh.h"
 #include "Texture.h"
 #include "MeshFactory.h"
-#include "Animator.h"
-#include "Animable.hpp"
-
-#include <chrono>
 
 template<typename VertexShaderBuffer, typename PixelShaderBuffer, typename VertexDataType>
 class Base3DRenderer

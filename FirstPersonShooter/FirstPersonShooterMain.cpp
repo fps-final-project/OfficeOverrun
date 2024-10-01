@@ -28,10 +28,10 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 
 	ResourceManager::Instance.loadModel("Assets\\bullet\\bullet.obj", m_deviceResources);
 
-	m_modelRenderer = std::unique_ptr<ModelRenderer>(new ModelRenderer(m_deviceResources));
-	m_animatedRenderer = std::unique_ptr<AnimatedModelRenderer>(new AnimatedModelRenderer(m_deviceResources));
 	m_spriteRenderer = std::make_unique<SpriteRenderer>(m_deviceResources->GetD3DDeviceContext());
 	m_fpsTextRenderer = std::unique_ptr<SampleFpsTextRenderer>(new SampleFpsTextRenderer(m_deviceResources));
+
+	m_renderMaster = std::make_unique<RenderMaster>(m_deviceResources);
 
 	m_states = std::make_unique<DirectX::CommonStates>(m_deviceResources->GetD3DDevice());
 	m_gameState = std::make_unique<GameState>(keyboard, mouse, deviceResources);
@@ -92,35 +92,14 @@ bool FirstPersonShooterMain::Render()
 	// Render the scene objects.
 	// TODO: Replace this with your app's content rendering functions.
 
-	// ANIMATED ENTITIES
-	m_animatedRenderer->setProjectionMatrix(m_gameState->m_camera->getProjectionMatrix());
-	m_animatedRenderer->setViewMatrix(m_gameState->m_camera->getViewMatrix());
-	m_animatedRenderer->setCameraPosition(m_gameState->m_camera->getPosition());
+	m_renderMaster->setupShaders(
+		m_gameState->m_camera->getProjectionMatrix(), 
+		m_gameState->m_camera->getViewMatrix(), 
+		m_gameState->m_camera->getPosition());
 
-	m_animatedRenderer->use();
-	for (const auto& entity : m_gameState->m_world->m_animatedEntities)
-	{
-		m_animatedRenderer->Render(entity);
-	}
-
-	for (const auto& entity : m_gameState->m_gunRig->GetEntites())
-	{
-		m_animatedRenderer->Render(*entity);
-	}
-	// REGULAR ENTITES
-	m_modelRenderer->setProjectionMatrix(m_gameState->m_camera->getProjectionMatrix());
-	m_modelRenderer->setViewMatrix(m_gameState->m_camera->getViewMatrix());
-	m_modelRenderer->setCameraPosition(m_gameState->m_camera->getPosition());
-
-	m_modelRenderer->use();
-	for (const auto& entity : m_gameState->m_world->m_entities)
-	{
-		m_modelRenderer->Render(entity);
-	}
-	for (const auto& entity : m_gameState->m_world->m_timedEntities)
-	{
-		m_modelRenderer->Render(entity.first);
-	}
+	auto queue = m_gameState->m_world->createRenderQueue();
+	queue.push(RenderData(RendererType::ANIMATED, (Drawable*)m_gameState->m_gunRig.get()));
+	queue.drawAllAndClear(m_renderMaster);
 
 	m_spriteRenderer->BeginRendering(context, viewport);
 	Size outputSize = m_deviceResources->GetOutputSize();
@@ -140,16 +119,12 @@ bool FirstPersonShooterMain::Render()
 // Notifies renderers that device resources need to be released.
 void FirstPersonShooterMain::OnDeviceLost()
 {
-	m_modelRenderer->ReleaseDeviceDependentResources();
-	m_animatedRenderer->ReleaseDeviceDependentResources();
 	m_fpsTextRenderer->ReleaseDeviceDependentResources();
 }
 
 // Notifies renderers that device resources may now be recreated.
 void FirstPersonShooterMain::OnDeviceRestored()
 {
-	m_modelRenderer->CreateDeviceDependentResources();
-	m_animatedRenderer->CreateDeviceDependentResources();
 	m_fpsTextRenderer->CreateDeviceDependentResources();
 	m_gameState->CreateWindowSizeDependentResources();
 }

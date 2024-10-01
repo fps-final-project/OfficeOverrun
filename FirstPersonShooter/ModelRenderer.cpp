@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "ModelRenderer.hpp"
+#include "Entity.hpp"
 
 ModelRenderer::ModelRenderer(const std::shared_ptr<DX::DeviceResources>& deviceResources)
 	: Base3DRenderer(deviceResources)
@@ -25,15 +26,15 @@ void ModelRenderer::CreateDeviceDependentResources()
 	this->CreateDeviceDependentResources_internal(L"SampleVertexShader.cso", L"SamplePixelShader.cso", vertexDesc);
 }
 
-void ModelRenderer::Render(const Drawable& drawable)
+void ModelRenderer::Render(const Entity& entity)
 {
 	if (!m_loadingComplete)
 	{
 		return;
 	}
 
-	DirectX::XMStoreFloat4x4(&m_VSConstantBufferData.model, DirectX::XMMatrixTranspose(drawable.m_modelMatrix));
-	auto det = DirectX::XMMatrixDeterminant(drawable.m_modelMatrix);
-	XMStoreFloat4x4(&m_VSConstantBufferData.inv_model, DirectX::XMMatrixTranspose(DirectX::XMMatrixInverse(&det, drawable.m_modelMatrix)));
-	Base3DRenderer::Render(*drawable.m_model);
+	DirectX::XMStoreFloat4x4(&m_VSConstantBufferData.model, DirectX::XMMatrixTranspose(entity.m_modelMatrix));
+	auto det = DirectX::XMMatrixDeterminant(entity.m_modelMatrix);
+	XMStoreFloat4x4(&m_VSConstantBufferData.inv_model, DirectX::XMMatrixTranspose(DirectX::XMMatrixInverse(&det, entity.m_modelMatrix)));
+	Base3DRenderer::Render(*entity.m_model);
 }

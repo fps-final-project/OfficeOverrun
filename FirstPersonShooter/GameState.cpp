@@ -58,11 +58,12 @@ void GameState::Update(float dt)
 	m_world->Update(dt);
 
 	auto collisions = m_collisionDetector->GetCollisions(m_world->GetEntities());
+	int a = 0;
 	std::for_each(
 		collisions.begin(),
 		collisions.end(),
-		[this](std::pair<Hittable, Hittable>& pair) { m_world->DeleteEntity(pair.first); m_world->DeleteEntity(pair.second); }
-	);
+		[this](std::pair<Hittable, Hittable>& pair) { m_world->DeleteEntity(pair.first); m_world->DeleteEntity(pair.second); });
+
 }
 
 void GameState::CreateWindowSizeDependentResources()

@@ -2,10 +2,16 @@
 #include "Entity.hpp"
 
 Entity::Entity(std::shared_ptr<AssimpModel> model, XMFLOAT3 position, XMFLOAT3 size, XMFLOAT3 rotation, XMFLOAT3 velocity)
-	: Drawable(model), Hittable(DirectX::BoundingBox(position, size)), 
+	: Hittable(DirectX::BoundingBox(position, size)), m_model(model),
 	position(position), rotation(rotation), velocity(velocity),
 	size(size)
 {
+}
+
+void Entity::Render(std::shared_ptr<RenderMaster> renderMaster)
+{
+	auto renderer = renderMaster->getModelRenderer();
+	renderer->Render(*this);
 }
 
 void Entity::Update(float dt)
