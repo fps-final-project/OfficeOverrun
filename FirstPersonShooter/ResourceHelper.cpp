@@ -9,9 +9,9 @@ void ResourceHelper::addWallModel(const std::string& texturePath, const std::sha
 {
 	std::vector<VertexData> verticies = {
 		VertexData(DirectX::XMFLOAT3(0.f, 0.f, 0.f), DirectX::XMFLOAT2(0.f, 0.f), DirectX::XMFLOAT3(0.f, 0.f, -1.f)),
-		VertexData(DirectX::XMFLOAT3(0.f, 1.f, 0.f), DirectX::XMFLOAT2(0.f, 1.f), DirectX::XMFLOAT3(0.f, 0.f, -1.f)),
+		VertexData(DirectX::XMFLOAT3(1.f, 0.f, 0.f), DirectX::XMFLOAT2(1.f, 0.f), DirectX::XMFLOAT3(0.f, 0.f, -1.f)),
 		VertexData(DirectX::XMFLOAT3(1.f, 1.f, 0.f), DirectX::XMFLOAT2(1.f, 1.f), DirectX::XMFLOAT3(0.f, 0.f, -1.f)),
-		VertexData(DirectX::XMFLOAT3(1.f, 0.f, 0.f), DirectX::XMFLOAT2(1.f, 0.f), DirectX::XMFLOAT3(0.f, 0.f, -1.f))
+		VertexData(DirectX::XMFLOAT3(0.f, 1.f, 0.f), DirectX::XMFLOAT2(0.f, 1.f), DirectX::XMFLOAT3(0.f, 0.f, -1.f))
 	};
 
 	std::vector<unsigned short> indicies = {

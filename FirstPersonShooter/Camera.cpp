@@ -75,7 +75,7 @@ void Camera::alignWithMouse(const DirectX::Mouse::State& mouseState)
 
 	
 	float y = sinf(toRadians(m_pitch));
-	float r = cosf(toRadians(m_pitch));
+	float r = -cosf(toRadians(m_pitch));
 	float z = r * cosf(toRadians(m_yaw));
 	float x = r * sinf(toRadians(m_yaw));
 

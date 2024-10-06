@@ -28,9 +28,9 @@ GameState::GameState(
 	m_collisionDetector = std::make_unique<SimpleCollisionDetector>();
 
 	m_world->m_entities.push_back(Entity(ResourceManager::Instance.getModel("AK47NoSubdiv_cw"), 
-		XMFLOAT3(5.f, -1.f, 5.f), XMFLOAT3(0.2f, 0.2f, 0.2f)));
+		XMFLOAT3(5.f, -1.f, -5.f), XMFLOAT3(0.2f, 0.2f, 0.2f)));
 
-	m_world->m_rooms.push_back(Room(XMFLOAT3(0.f, 0.f, 4.f), XMFLOAT3(1.f, 1.f, 1.f)));
+	m_world->m_rooms.push_back(Room(XMFLOAT3(-1.f, -1.f, -2.f), XMFLOAT3(4.f, 3.f, 6.f)));
 
 	m_inputHandler->AddActionHandler(
 		[](InputState newState, InputState oldState) {	return newState.first.leftButton && !oldState.first.leftButton; },
