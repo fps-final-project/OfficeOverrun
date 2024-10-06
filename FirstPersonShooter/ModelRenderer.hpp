@@ -9,5 +9,5 @@ public:
 	ModelRenderer(const std::shared_ptr<DX::DeviceResources>& deviceResources);
 	virtual ~ModelRenderer() override;
 	virtual void CreateDeviceDependentResources() override;
-	void Render(const Entity& entityd);
+	void Render(const Entity& entity);
 };

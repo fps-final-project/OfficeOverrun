@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "Hittable.hpp"
-#include <DirectXCollision.h>
 
 
 uint32_t Hittable::idCounter = 0;

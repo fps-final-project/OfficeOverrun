@@ -269,6 +269,7 @@
     <Image Include="Assets\AK-47\textures\AK_Normal_OpenGL.png" />
     <Image Include="Assets\AK-47\textures\AK_Roughness.png" />
     <Image Include="Assets\bullet\bullet.jpg" />
+    <Image Include="Assets\cube\brickwall.jpg" />
     <Image Include="Assets\cube\crosshair.png" />
     <Image Include="Assets\cube\smile.jpg" />
     <Image Include="Assets\LockScreenLogo.scale-200.png" />
@@ -294,6 +295,8 @@
     <ClInclude Include="RendererType.hpp" />
     <ClInclude Include="RenderMaster.hpp" />
     <ClInclude Include="RenderQueue.hpp" />
+    <ClInclude Include="ResourceHelper.hpp" />
+    <ClInclude Include="Room.hpp" />
     <ClInclude Include="SpriteRenderer.hpp" />
     <ClInclude Include="Animable.hpp" />
     <ClInclude Include="AnimatedAssimpModel.h" />
@@ -359,6 +362,8 @@
     </ClCompile>
     <ClCompile Include="RenderMaster.cpp" />
     <ClCompile Include="RenderQueue.cpp" />
+    <ClCompile Include="ResourceHelper.cpp" />
+    <ClCompile Include="Room.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="SimpleCollisionDetector.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
