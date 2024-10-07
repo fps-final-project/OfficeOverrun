@@ -60,10 +60,14 @@ void FirstPersonShooterMain::Update()
 	// Update scene objects.
 	m_timer.Tick([&]()
 		{
-			m_gameState->HandleInput();
 			float dt = m_timer.GetElapsedSeconds();
-			m_fpsTextRenderer->Update(m_timer);
+
+			// do not change this order
+			m_gameState->HandleInput();
 			m_gameState->Update(dt);
+
+
+			m_fpsTextRenderer->Update(m_timer);
 
 		});
 
@@ -101,7 +105,7 @@ bool FirstPersonShooterMain::Render()
 		m_gameState->m_camera->getPosition());
 
 	auto queue = m_gameState->m_world->createRenderQueue();
-	queue.push(RenderData(RendererType::ANIMATED, (Drawable*)m_gameState->m_gunRig.get()));
+	queue.push(RenderData(RendererType::ANIMATED, (Drawable*)m_gameState->m_player.get()));
 	queue.drawAllAndClear(m_renderMaster);
 
 	m_spriteRenderer->BeginRendering(context, viewport);

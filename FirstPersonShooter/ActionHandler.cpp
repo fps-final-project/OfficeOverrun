@@ -1,19 +1,25 @@
 #include "pch.h"
 #include "ActionHandler.hpp"
 #include "ResourceManager.h"
+#include "Player.h"
 
 ActionHandler::ActionHandler(std::shared_ptr<std::queue<Action>> actionQueue)
 {
 	m_actionQueue = actionQueue;
 }
 
-void ActionHandler::HandleActions(GunRig* gunRig, World* world, Camera* camera)
+void ActionHandler::HandleActions(Player* player, World* world, Camera* camera)
 {
+	std::unique_ptr<GunRig>& gunRig = player->getGunRig();
+
+	// this could be turned into the observer pattern
 	while (!m_actionQueue->empty())
 	{
 		auto action = m_actionQueue->front();
 		m_actionQueue->pop();
-		if (action == Action::SHOOT)
+		switch (action)
+		{
+		case Action::SHOOT:
 		{
 			if (gunRig->IsIdle())
 			{
@@ -29,13 +35,27 @@ void ActionHandler::HandleActions(GunRig* gunRig, World* world, Camera* camera)
 					3.f
 				));
 			}
+			break;
 		}
-		if (action == Action::RELOAD)
+		case Action::RELOAD:
 		{
 			if (gunRig->IsIdle())
 			{
 				gunRig->Reload();
 			}
+			break;
 		}
-	}
+		case Action::WALK_FORWARD:
+		{
+			auto walkDirection = camera->getAt();
+			walkDirection.m128_f32[1] = 0.f;
+			DirectX::XMFLOAT3 normalizedAt;
+			DirectX::XMStoreFloat3(&normalizedAt, DirectX::XMVector3Normalize(walkDirection));
+
+			player->updateVelocity({ normalizedAt.x, normalizedAt.y, normalizedAt.z });
+			break;
+		}
+
+		}
+		}
 }

@@ -292,6 +292,7 @@
     <ClInclude Include="ActionTypes.hpp" />
     <ClInclude Include="GameState.hpp" />
     <ClInclude Include="GunRig.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="RendererType.hpp" />
     <ClInclude Include="RenderMaster.hpp" />
     <ClInclude Include="RenderQueue.hpp" />
@@ -360,6 +361,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="RenderMaster.cpp" />
     <ClCompile Include="RenderQueue.cpp" />
     <ClCompile Include="ResourceHelper.cpp" />

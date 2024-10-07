@@ -17,8 +17,7 @@ public:
 	bool IsIdle() { return m_hands->isIdle(); }
 	virtual void Render(std::shared_ptr<RenderMaster> renderMaster);
 	DirectX::XMFLOAT3 GetBarrelOffset();
-	std::vector<std::shared_ptr<AnimatedEntity>> GetEntites();
-	void Rotate(DirectX::XMFLOAT3 yawPitchRoll);
+	void RotateAndOffset(DirectX::XMFLOAT3 yawPitchRoll, DirectX::XMFLOAT3 playerPos, float dt);
 private:
 	DirectX::XMFLOAT3 m_gunOffset, m_initialBarrelOffset, m_barrelOffset;
 	std::shared_ptr<AnimatedEntity> m_hands, m_gun;

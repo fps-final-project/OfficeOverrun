@@ -24,6 +24,8 @@ public:
 	inline DirectX::XMVECTOR getAt() const { return m_at; }
 	inline DirectX::XMFLOAT3 getYawPitchRoll() const { return { toRadians(m_yaw), toRadians(m_pitch), 0 }; }
 
+	void setPosition(DirectX::XMFLOAT3 position);
+
 private:
 	// TODO:
 	// camera speed should be the same regardless of fps
