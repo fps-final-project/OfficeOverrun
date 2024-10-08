@@ -83,4 +83,19 @@ void GameState::setupActionHandlers()
 		Action::WALK_FORWARD
 	);
 
+	m_inputHandler->AddActionHandler(
+		[](InputState newState, InputState oldState) {	return newState.second.S && oldState.second.S; },
+		Action::WALK_BACKWARD
+	);
+
+	m_inputHandler->AddActionHandler(
+		[](InputState newState, InputState oldState) {	return newState.second.A && oldState.second.A; },
+		Action::WALK_LEFT
+	);
+
+	m_inputHandler->AddActionHandler(
+		[](InputState newState, InputState oldState) {	return newState.second.D && oldState.second.D; },
+		Action::WALK_RIGHT
+	);
+
 }

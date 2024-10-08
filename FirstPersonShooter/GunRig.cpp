@@ -78,7 +78,7 @@ void GunRig::RotateAndOffset(DirectX::XMFLOAT3 yawPitchRoll, DirectX::XMFLOAT3 p
 	// set up the barrel offset
 	DirectX::XMVECTOR newBarrelOffset = DirectX::XMLoadFloat3(&m_initialBarrelOffset);
 	newBarrelOffset = DirectX::XMVector3Transform(newBarrelOffset, rotationMatrix);
-	DirectX::XMStoreFloat3(&m_barrelOffset, newBarrelOffset);
+	DirectX::XMStoreFloat3(&m_barrelOffset, DirectX::XMVectorAdd(newBarrelOffset, { playerPos.x, playerPos.y, playerPos.z, 0.f }));
 
 	this->Update(dt);
 }

@@ -14,21 +14,21 @@ Player::Player()
 
 void Player::Update(float dt)
 {
-	// so i cant put it here because i need to first update the player position, then update the gun rig position and offset
+	// i cant put it here because i need to first update the player position, then update the gun rig position and offset
 	// and then update the gun rig model matricies
 	//m_gunRig->Update(dt);
 
-	m_position.x += m_velocity.x * dt;
-	m_position.y += m_velocity.y * dt;
-	m_position.z += m_velocity.z * dt;
 
 	float velocityCap = 5.f;
-	float max_slowoff = 0.3f;
+	float max_slowoff = 0.5f;
 
 	m_velocity.x -= (m_velocity.x / velocityCap) * max_slowoff;
 	m_velocity.y -= (m_velocity.y / velocityCap) * max_slowoff;
 	m_velocity.z -= (m_velocity.z / velocityCap) * max_slowoff;
 
+	m_position.x += m_velocity.x * dt;
+	m_position.y += m_velocity.y * dt;
+	m_position.z += m_velocity.z * dt;
 
 }
 

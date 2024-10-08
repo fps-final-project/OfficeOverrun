@@ -83,12 +83,14 @@ void Camera::alignWithMouse(const DirectX::Mouse::State& mouseState)
 	//m_at = DirectX::XMVectorAdd(m_position, {x, y, z, 0.f});
 	m_at = {x, y, z, 0.f};
 
-	updateViewMatrix();
+	// it does not have to be called because we call it in update position anyway
+	this->updateViewMatrix();
 }
 
 void Camera::setPosition(DirectX::XMFLOAT3 position)
 {
 	m_position = DirectX::XMLoadFloat3(&position);
+	this->updateViewMatrix();
 }
 
 float Camera::toRadians(float degrees) const
