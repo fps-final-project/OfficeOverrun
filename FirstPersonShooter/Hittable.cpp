@@ -2,9 +2,8 @@
 #include "Hittable.hpp"
 
 
-uint32_t Hittable::idCounter = 0;
 
-Hittable::Hittable(DirectX::BoundingBox box) : boundingBox{ box }, id{ idCounter++ }
+Hittable::Hittable(DirectX::BoundingBox box) : boundingBox{ box }
 {
 }
 

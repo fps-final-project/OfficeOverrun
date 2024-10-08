@@ -1,5 +1,6 @@
 ﻿#pragma once
 
+#include <dxgi.h>
 #include "Common\DeviceResources.h"
 #include "ShaderStructures.h"
 #include "AssimpModel.h"
@@ -35,6 +36,7 @@ public:
 	}
 
 	virtual void CreateDeviceDependentResources() = 0;
+
 
 	void Render(const Mesh& m)
 	{
@@ -111,6 +113,52 @@ public:
 		);
 	}
 
+	void ClearStencilBuffer()
+	{
+		m_deviceResources
+			->GetD3DDeviceContext()
+			->ClearDepthStencilView(
+				m_deviceResources->GetDepthStencilView(),
+				D3D11_CLEAR_STENCIL,
+				1.0f,
+				0
+			);
+	}
+
+	UINT8 GetStencilBufferValue()
+	{
+		auto depthStencilTexture = m_deviceResources->GetDepthStencilTexture();
+
+		m_deviceResources
+			->GetD3DDeviceContext()
+			->CopyResource(m_stagingTexture.Get(), depthStencilTexture);
+
+		D3D11_MAPPED_SUBRESOURCE mappedResource;
+		HRESULT hr = m_deviceResources
+			->GetD3DDeviceContext()
+			->Map(m_stagingTexture.Get(), 0, D3D11_MAP_READ, 0, &mappedResource);
+
+		if (SUCCEEDED(hr))
+		{
+			BYTE* pData = reinterpret_cast<BYTE*>(mappedResource.pData);
+
+			// Calculate the address of the middle pixel
+			BYTE* row = pData + middlePixel.second * mappedResource.RowPitch;
+			UINT32* pixel = reinterpret_cast<UINT32*>(row + middlePixel.first * sizeof(UINT32));
+
+			// Extract the stencil value (the upper 8 bits)
+			UINT8 stencilValue = static_cast<UINT8>((*pixel >> 24));
+
+			// Get the size of the data
+			m_deviceResources
+				->GetD3DDeviceContext()
+				->Unmap(m_stagingTexture.Get(), 0);
+
+			return stencilValue;
+		}
+		return 0;
+	}
+
 	void Render(const AssimpModel& m)
 	{
 		for (const auto& m_mesh : m.meshes)
@@ -162,7 +210,10 @@ public:
 	// Call this function just before the first render calls
 	void use()
 	{
+
 		auto context = m_deviceResources->GetD3DDeviceContext();
+
+		context->OMSetDepthStencilState(m_deviceResources->GetDepthStencilState(), 1);
 
 		// Attach vertex shader.
 		context->VSSetShader(
@@ -184,6 +235,8 @@ public:
 			1,
 			m_samplerState.GetAddressOf()
 		);
+
+
 
 		context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		context->IASetInputLayout(m_inputLayout.Get());
@@ -210,7 +263,8 @@ protected:
 	Microsoft::WRL::ComPtr<ID3D11PixelShader>	m_pixelShader;
 	Microsoft::WRL::ComPtr<ID3D11Buffer>		m_VSConstantBuffer, m_PSConstantBuffer;
 	Microsoft::WRL::ComPtr<ID3D11SamplerState>	m_samplerState;
-
+	Microsoft::WRL::ComPtr<ID3D11Texture2D>		m_stagingTexture;
+	
 	// System resources for cube geometry.
 	VertexShaderBuffer	m_VSConstantBufferData;
 	LightingConstantBuffer m_PSConstantBufferData;
@@ -218,11 +272,44 @@ protected:
 	// Variables used with the rendering loop.
 	bool	m_loadingComplete;
 
+	std::pair<UINT, UINT> middlePixel;
+
 	void CreateDeviceDependentResources_internal(
 		std::wstring VSpath,
 		std::wstring PSpath,
 		const std::vector<D3D11_INPUT_ELEMENT_DESC>& inputDesc)
 	{
+
+		auto depthStencilTexture = m_deviceResources->GetDepthStencilTexture();
+
+		D3D11_TEXTURE2D_DESC depthStencilDesc;
+		depthStencilTexture->GetDesc(&depthStencilDesc);
+
+		// Modify the description for the staging resource
+		D3D11_TEXTURE2D_DESC stagingDesc = depthStencilDesc;
+		stagingDesc.BindFlags = 0; // No binding flags
+		stagingDesc.CPUAccessFlags = D3D11_CPU_ACCESS_READ; // CPU read access
+		stagingDesc.Usage = D3D11_USAGE_STAGING; // Usage staging
+		stagingDesc.MiscFlags = 0; // No miscellaneous flags
+
+		// Create the staging resource
+		DX::ThrowIfFailed(
+			m_deviceResources
+				->GetD3DDevice()
+				->CreateTexture2D(
+					&stagingDesc, 
+					nullptr, 
+					m_stagingTexture.GetAddressOf()
+				)
+			);
+
+
+		UINT middleX = stagingDesc.Width / 2;
+		UINT middleY = stagingDesc.Height / 2;
+
+		middlePixel = std::make_pair(middleX, middleY);
+
+
 		// Load shaders asynchronously.
 		auto loadVSTask = DX::ReadDataAsync(VSpath);
 		auto loadPSTask = DX::ReadDataAsync(PSpath);
@@ -282,6 +369,7 @@ protected:
 
 		auto createSamplerTask = (createPSTask && createVSTask).then([this]() {
 			auto device = m_deviceResources->GetD3DDevice();
+			
 			D3D11_SAMPLER_DESC ImageSamplerDesc = {};
 
 			ImageSamplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
@@ -302,6 +390,7 @@ protected:
 				&m_samplerState);
 
 			});
+
 		// Once the cube is loaded, the object is ready to be rendered.
 		createSamplerTask.then([this]() {
 			m_loadingComplete = true;

@@ -25,7 +25,7 @@ class RenderQueue
 public:
 	RenderQueue();
 	void push(const RenderData& data);
-	void drawAllAndClear(std::shared_ptr<RenderMaster> renderMaster);
+	GUID drawAllAndClear(std::shared_ptr<RenderMaster> renderMaster);
 private:
 	// The idea is to sort the draw calls
 	// The most obvious part is sorting by Renderer Type - such that we do not need

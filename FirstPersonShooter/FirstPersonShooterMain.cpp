@@ -104,7 +104,8 @@ bool FirstPersonShooterMain::Render()
 
 	auto queue = m_gameState->m_world->createRenderQueue();
 	queue.push(RenderData(RendererType::ANIMATED, (Drawable*)m_gameState->m_player.get()));
-	queue.drawAllAndClear(m_renderMaster);
+	GUID entityToHit = queue.drawAllAndClear(m_renderMaster);
+	m_gameState->m_actionHandler->SetLastHitEntity(entityToHit);
 
 	m_spriteRenderer->BeginRendering(context, viewport);
 	Size outputSize = m_deviceResources->GetOutputSize();

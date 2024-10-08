@@ -31,11 +31,8 @@ void ActionHandler::HandleActions(Player* player, World* world, Camera* camera)
 				DirectX::XMStoreFloat3(&v, DirectX::XMVectorScale(vector_at, 10.f));
 
 				auto barrelOffset = gunRig->GetBarrelOffset();
-				world->m_timedEntities.push_back(std::make_pair(
-					Entity(ResourceManager::Instance.getModel("bullet"), barrelOffset,
-						{ 1.f, 1.f, 1.f }, GunRig::CalculateBulletOrientation(camera->getYawPitchRoll()), v),
-					3.f
-				));
+				//find room thats id is the same as the last hit entity
+				world->DeleteEntity(m_lastHitEntity);
 			}
 			break;
 		}
