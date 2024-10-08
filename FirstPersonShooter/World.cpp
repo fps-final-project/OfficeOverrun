@@ -101,5 +101,10 @@ RenderQueue World::createRenderQueue()
 		queue.push(RenderData(RendererType::ANIMATED, (Drawable*)&entity));
 	}
 
+	for (const auto& entity : m_rooms)
+	{
+		queue.push(RenderData(RendererType::MODEL, (Drawable*)&entity));
+	}
+
 	return queue;
 }

@@ -14,14 +14,18 @@ class ResourceManager
 public:
 	static ResourceManager Instance;
 	void loadModel(const std::string& path, 
-		const std::shared_ptr<DX::DeviceResources>& deviceResources);
+		const std::shared_ptr<DX::DeviceResources>& deviceResources, const std::string& nameOverride = "");
+
+	void addModel(AssimpModel& model, const std::string& name);
 
 	void loadAnimatedModel(const std::string& path,
 		const std::shared_ptr<DX::DeviceResources>& deviceResources,
-		const std::vector<std::string>& missingTextures = std::vector<std::string>());
+		const std::vector<std::string>& missingTextures = std::vector<std::string>(), 
+		const std::string& nameOverride = "");
 
 	void loadTexture(const std::string& path, 
-		const std::shared_ptr<DX::DeviceResources>& deviceResources);
+		const std::shared_ptr<DX::DeviceResources>& deviceResources, 
+		const std::string& nameOverride = "");
 
 	inline std::shared_ptr<AssimpModel>& getModel(std::string name) { return m_models[name]; }
 	inline std::shared_ptr<AnimatedAssimpModel>& getAnimatedModel(std::string name) { return m_animatedModels[name]; }

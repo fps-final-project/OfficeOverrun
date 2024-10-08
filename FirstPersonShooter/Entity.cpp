@@ -6,6 +6,7 @@ Entity::Entity(std::shared_ptr<AssimpModel> model, XMFLOAT3 position, XMFLOAT3 s
 	position(position), rotation(rotation), velocity(velocity),
 	size(size)
 {
+	this->Update(0);
 }
 
 void Entity::Render(std::shared_ptr<RenderMaster> renderMaster)
@@ -40,8 +41,8 @@ void Entity::Update(float dt)
 	);
 
 	this->m_modelMatrix =
-		DirectX::XMMatrixRotationRollPitchYaw(this->rotation.x, this->rotation.y, this->rotation.z)
-		* DirectX::XMMatrixTranslation(this->position.x, this->position.y, this->position.z)
-		* DirectX::XMMatrixScaling(0.2f, 0.2f, 0.2f);
+		DirectX::XMMatrixScaling(this->size.x, this->size.y, this->size.z)
+		* DirectX::XMMatrixRotationRollPitchYaw(this->rotation.x, this->rotation.y, this->rotation.z)
+		* DirectX::XMMatrixTranslation(this->position.x, this->position.y, this->position.z);
 }
  

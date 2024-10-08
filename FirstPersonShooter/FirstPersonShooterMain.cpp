@@ -4,6 +4,7 @@
 #include <Keyboard.h>
 #include <Mouse.h>
 #include "ResourceManager.h"
+#include "ResourceHelper.hpp"
 
 using namespace FirstPersonShooter;
 using namespace Windows::Foundation;
@@ -27,6 +28,8 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	ResourceManager::Instance.loadTexture("Assets\\cube\\crosshair.png", m_deviceResources);
 
 	ResourceManager::Instance.loadModel("Assets\\bullet\\bullet.obj", m_deviceResources);
+	ResourceHelper::addWallModel("Assets\\cube\\brickwall.jpg", m_deviceResources);
+
 
 	m_spriteRenderer = std::make_unique<SpriteRenderer>(m_deviceResources->GetD3DDeviceContext());
 	m_fpsTextRenderer = std::unique_ptr<SampleFpsTextRenderer>(new SampleFpsTextRenderer(m_deviceResources));
@@ -57,10 +60,14 @@ void FirstPersonShooterMain::Update()
 	// Update scene objects.
 	m_timer.Tick([&]()
 		{
-			m_gameState->HandleInput();
 			float dt = m_timer.GetElapsedSeconds();
-			m_fpsTextRenderer->Update(m_timer);
+
+			// do not change this order
+			m_gameState->HandleInput();
 			m_gameState->Update(dt);
+
+
+			m_fpsTextRenderer->Update(m_timer);
 
 		});
 
@@ -98,7 +105,7 @@ bool FirstPersonShooterMain::Render()
 		m_gameState->m_camera->getPosition());
 
 	auto queue = m_gameState->m_world->createRenderQueue();
-	queue.push(RenderData(RendererType::ANIMATED, (Drawable*)m_gameState->m_gunRig.get()));
+	queue.push(RenderData(RendererType::ANIMATED, (Drawable*)m_gameState->m_player.get()));
 	queue.drawAllAndClear(m_renderMaster);
 
 	m_spriteRenderer->BeginRendering(context, viewport);

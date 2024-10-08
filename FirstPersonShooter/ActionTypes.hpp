@@ -4,4 +4,8 @@ enum class Action
 {
 	RELOAD,
 	SHOOT,
+	WALK_FORWARD,
+	WALK_BACKWARD,
+	WALK_LEFT,
+	WALK_RIGHT
 };

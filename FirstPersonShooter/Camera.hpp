@@ -10,7 +10,7 @@ public:
 	Camera(const std::shared_ptr<DX::DeviceResources>& deviceResources,
 		float fov = 95.0f,
 		DirectX::XMVECTOR position = { 0.0f, 0.0f, 0.0f, 0.0f },
-		DirectX::XMVECTOR at = { 0.0f, 0.0f, 1.0f, 0.0f },
+		DirectX::XMVECTOR at = { 0.0f, 0.0f, -1.0f, 0.0f },
 		DirectX::XMVECTOR up = { 0.0f, 1.0f, 0.0f, 0.0f });
 
 	void CreateWindowSizeDependentResources(float fov);
@@ -23,6 +23,8 @@ public:
 	inline DirectX::XMFLOAT3 getPosition() const { return { m_position.m128_f32[0], m_position.m128_f32[1], m_position.m128_f32[2] }; }
 	inline DirectX::XMVECTOR getAt() const { return m_at; }
 	inline DirectX::XMFLOAT3 getYawPitchRoll() const { return { toRadians(m_yaw), toRadians(m_pitch), 0 }; }
+
+	void setPosition(DirectX::XMFLOAT3 position);
 
 private:
 	// TODO:

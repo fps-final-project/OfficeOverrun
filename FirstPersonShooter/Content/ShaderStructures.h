@@ -23,6 +23,10 @@ struct VertexData
 	DirectX::XMFLOAT3 pos;
 	DirectX::XMFLOAT2 texture_pos;
 	DirectX::XMFLOAT3 normal;
+	VertexData() {}
+	VertexData(DirectX::XMFLOAT3 _pos, DirectX::XMFLOAT2 _tx, DirectX::XMFLOAT3 _norm)
+		: pos(_pos), texture_pos(_tx), normal(_norm)
+	{}
 };
 
 struct ModelViewProjectionConstantBuffer

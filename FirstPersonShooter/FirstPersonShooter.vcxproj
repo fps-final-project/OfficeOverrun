@@ -269,6 +269,7 @@
     <Image Include="Assets\AK-47\textures\AK_Normal_OpenGL.png" />
     <Image Include="Assets\AK-47\textures\AK_Roughness.png" />
     <Image Include="Assets\bullet\bullet.jpg" />
+    <Image Include="Assets\cube\brickwall.jpg" />
     <Image Include="Assets\cube\crosshair.png" />
     <Image Include="Assets\cube\smile.jpg" />
     <Image Include="Assets\LockScreenLogo.scale-200.png" />
@@ -291,9 +292,12 @@
     <ClInclude Include="ActionTypes.hpp" />
     <ClInclude Include="GameState.hpp" />
     <ClInclude Include="GunRig.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="RendererType.hpp" />
     <ClInclude Include="RenderMaster.hpp" />
     <ClInclude Include="RenderQueue.hpp" />
+    <ClInclude Include="ResourceHelper.hpp" />
+    <ClInclude Include="Room.hpp" />
     <ClInclude Include="SpriteRenderer.hpp" />
     <ClInclude Include="Animable.hpp" />
     <ClInclude Include="AnimatedAssimpModel.h" />
@@ -357,8 +361,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="RenderMaster.cpp" />
     <ClCompile Include="RenderQueue.cpp" />
+    <ClCompile Include="ResourceHelper.cpp" />
+    <ClCompile Include="Room.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="SimpleCollisionDetector.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
