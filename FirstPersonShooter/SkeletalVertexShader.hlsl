@@ -42,17 +42,17 @@ PixelShaderInput main(VertexShaderInput input)
 
 	PixelShaderInput output;
 	float4 pos = mul(float4(input.pos, 1.0f), model_final);
+	output.model_pos = pos;
 
 	pos = mul(pos, view);
 	pos = mul(pos, projection);
 	output.pos = pos;
-	output.model_pos = pos;
 
 	output.texture_pos = input.texture_pos;
 
 	// (AB)^(-1) = B^(-1) * A^(-1)
-	output.normal = mul(input.normal, transpose(mul(finalBonesMatriciesInverses[input.finalTransformId], inv_model)));
-	//output.normal = mul(input.normal, transpose(mul(inv_model, finalBonesMatriciesInverses[input.finalTransformId])));
+	//output.normal = mul(input.normal, transpose(mul(finalBonesMatriciesInverses[input.finalTransformId], inv_model)));
+	output.normal = mul(input.normal, transpose(mul(inv_model, finalBonesMatriciesInverses[input.finalTransformId])));
 
 	return output;
 }

@@ -3,7 +3,7 @@
 
 class Animable;
 
-class AnimatedModelRenderer : public Base3DRenderer<ModelViewProjectionConstantBuffer, LightingConstantBuffer, AnimatedVertexData>
+class AnimatedModelRenderer : public Base3DRenderer<ModelViewProjectionConstantBuffer, AnimatedVertexData>
 {
 public:
 	AnimatedModelRenderer(const std::shared_ptr<DX::DeviceResources>& deviceResources);

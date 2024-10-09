@@ -3,6 +3,7 @@
 #include "AnimatedModelRenderer.hpp"
 #include "ModelRenderer.hpp"
 #include "RendererType.hpp"
+#include "LightingData.hpp"
 
 
 class RenderMaster
@@ -11,6 +12,7 @@ public:
 	RenderMaster(const std::shared_ptr<DX::DeviceResources>& deviceResources);
 	~RenderMaster();
 	void setupShaders(DirectX::XMFLOAT4X4 projectionMatrix, DirectX::XMFLOAT4X4 viewMatrix, DirectX::XMFLOAT3 cameraPos);
+	void setLighting(const LightingData& data);
 
 	std::shared_ptr<AnimatedModelRenderer> getAnimatedRenderer();	
 	std::shared_ptr<ModelRenderer> getModelRenderer();

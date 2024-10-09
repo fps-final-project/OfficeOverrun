@@ -44,12 +44,9 @@ SampleFpsTextRenderer::SampleFpsTextRenderer(const std::shared_ptr<DX::DeviceRes
 }
 
 // Updates the text to be displayed.
-void SampleFpsTextRenderer::Update(DX::StepTimer const& timer)
+void SampleFpsTextRenderer::UpdateText(std::string text)
 {
-	// Update display text.
-	uint32 fps = timer.GetFramesPerSecond();
-
-	m_text = (fps > 0) ? std::to_wstring(fps) + L" FPS" : L" - FPS";
+	m_text = std::wstring(text.begin(), text.end());
 
 	ComPtr<IDWriteTextLayout> textLayout;
 	DX::ThrowIfFailed(
@@ -73,8 +70,10 @@ void SampleFpsTextRenderer::Update(DX::StepTimer const& timer)
 }
 
 // Renders a frame to the screen.
-void SampleFpsTextRenderer::Render()
+void SampleFpsTextRenderer::Render(std::string text)
 {
+	this->UpdateText(text);
+
 	ID2D1DeviceContext* context = m_deviceResources->GetD2DDeviceContext();
 	Windows::Foundation::Size logicalSize = m_deviceResources->GetLogicalSize();
 

@@ -6,8 +6,9 @@
 #include "Mesh.h"
 #include "Texture.h"
 #include "MeshFactory.h"
+#include "LightingData.hpp"
 
-template<typename VertexShaderBuffer, typename PixelShaderBuffer, typename VertexDataType>
+template<typename VertexShaderBuffer, typename VertexDataType>
 class Base3DRenderer
 {
 public:
@@ -188,6 +189,17 @@ public:
 		context->IASetInputLayout(m_inputLayout.Get());
 	}
 
+	void setLighting(const LightingData& data)
+	{
+		int nlights = min(data.lightPositions.size(), LightingConstantBuffer::MAX_LIGHTS);
+		for (int i = 0; i < nlights; i++)
+		{
+			m_PSConstantBufferData.light_pos[i] = data.lightPositions[i];
+		}
+
+		m_PSConstantBufferData.nlights = nlights;
+	}
+
 protected:
 	// Cached pointer to device resources.
 	std::shared_ptr<DX::DeviceResources> m_deviceResources;
@@ -201,7 +213,7 @@ protected:
 
 	// System resources for cube geometry.
 	VertexShaderBuffer	m_VSConstantBufferData;
-	PixelShaderBuffer m_PSConstantBufferData;
+	LightingConstantBuffer m_PSConstantBufferData;
 
 	// Variables used with the rendering loop.
 	bool	m_loadingComplete;
@@ -258,7 +270,7 @@ protected:
 			);
 
 
-			CD3D11_BUFFER_DESC PSconstantBufferDesc(sizeof(PixelShaderBuffer), D3D11_BIND_CONSTANT_BUFFER);
+			CD3D11_BUFFER_DESC PSconstantBufferDesc(sizeof(LightingConstantBuffer), D3D11_BIND_CONSTANT_BUFFER);
 			DX::ThrowIfFailed(
 				m_deviceResources->GetD3DDevice()->CreateBuffer(
 					&PSconstantBufferDesc,

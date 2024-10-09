@@ -83,6 +83,13 @@ void World::DeleteEntity(Hittable& entity)
 	);
 }
 
+LightingData World::getLightingData()
+{
+	LightingData data;
+	data.lightPositions.push_back({ 1.5f, 2.f, 2.f });
+	return data;
+}
+
 RenderQueue World::createRenderQueue()
 {
 	RenderQueue queue;

@@ -5,6 +5,7 @@
 #include "Entity.hpp" 
 #include "Room.hpp" 
 #include "RenderQueue.hpp"
+#include "LightingData.hpp"
 
 
 class World
@@ -18,6 +19,8 @@ public:
 	std::vector<Entity> m_entities;
 	std::vector<Room> m_rooms;
 	std::vector<std::pair<Entity, float>> m_timedEntities;
+
+	LightingData getLightingData();
 
 	RenderQueue createRenderQueue();
 };
