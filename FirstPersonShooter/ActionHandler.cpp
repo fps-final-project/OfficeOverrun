@@ -11,6 +11,7 @@ ActionHandler::ActionHandler(std::shared_ptr<std::queue<Action>> actionQueue)
 void ActionHandler::HandleActions(Player* player, World* world, Camera* camera)
 {
 	std::unique_ptr<GunRig>& gunRig = player->getGunRig();
+	const float defaultGravity = 20.f;
 	DirectX::XMFLOAT3 new_acceleration({ 0, 0, 0 });
 
 	// this could be turned into the observer pattern
@@ -88,6 +89,11 @@ void ActionHandler::HandleActions(Player* player, World* world, Camera* camera)
 			new_acceleration = { new_acceleration.x - normalizedAt.z, new_acceleration.y, new_acceleration.z + normalizedAt.x };
 			break;
 		}
+		case Action::JUMP:
+		{
+			player->jump();
+			break;
+		}
 
 		}
 		}
@@ -95,6 +101,6 @@ void ActionHandler::HandleActions(Player* player, World* world, Camera* camera)
 	auto normalized_acceleration = DirectX::XMVector3Normalize({ new_acceleration.x, new_acceleration.y, new_acceleration.z });
 	DirectX::XMFLOAT3 acc;
 	DirectX::XMStoreFloat3(&acc, normalized_acceleration);
-	player->setAcceleration(acc);
+	player->setAcceleration({acc.x, -defaultGravity, acc.z});
 
 }

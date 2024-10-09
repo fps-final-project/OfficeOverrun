@@ -7,5 +7,6 @@ enum class Action
 	WALK_FORWARD,
 	WALK_BACKWARD,
 	WALK_LEFT,
-	WALK_RIGHT
+	WALK_RIGHT,
+	JUMP	
 };

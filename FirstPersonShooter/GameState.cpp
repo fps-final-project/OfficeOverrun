@@ -18,7 +18,7 @@ GameState::GameState(
 	m_inputHandler = std::make_unique<InputHandler>(m_actionQueue);
 	m_actionHandler = std::make_unique<ActionHandler>(m_actionQueue);
 
-	m_world = std::unique_ptr<World>(new World());
+	m_world = std::make_unique<World>();
 	m_camera = std::unique_ptr<Camera>(new Camera(m_deviceResources, FOV));
 	m_player = std::make_unique<Player>();
 	m_collisionDetector = std::make_unique<SimpleCollisionDetector>();
@@ -26,7 +26,8 @@ GameState::GameState(
 	m_world->m_entities.push_back(Entity(ResourceManager::Instance.getModel("AK47NoSubdiv_cw"), 
 		XMFLOAT3(5.f, -1.f, -5.f), XMFLOAT3(0.2f, 0.2f, 0.2f)));
 
-	m_world->m_rooms.push_back(Room(XMFLOAT3(-1.f, -1.f, -2.f), XMFLOAT3(4.f, 3.f, 6.f)));
+	m_world->m_rooms.push_back(Room(XMFLOAT3(-1.f, -1.f, -2.f), XMFLOAT3(4.f, 4.f, 6.f)));
+	m_world->m_currentRoomIndex = 0;
 
 	this->setupActionHandlers();
 
@@ -47,6 +48,8 @@ void GameState::Update(float dt)
 {
 	m_player->Update(dt);
 	m_world->Update(dt);
+
+	m_player->handleRoomCollision(m_world->getCurrentRoom().isInBounds(m_player->getPostition()));
 
 	m_camera->setPosition(m_player->getPostition());
 	m_player->getGunRig()->RotateAndOffset(m_camera->getYawPitchRoll(), m_player->getPostition(), dt);
@@ -96,6 +99,11 @@ void GameState::setupActionHandlers()
 	m_inputHandler->AddActionHandler(
 		[](InputState newState, InputState oldState) {	return newState.second.D && oldState.second.D; },
 		Action::WALK_RIGHT
+	);
+
+	m_inputHandler->AddActionHandler(
+		[](InputState newState, InputState oldState) {	return newState.second.Space && oldState.second.Space; },
+		Action::JUMP
 	);
 
 }

@@ -299,6 +299,7 @@
     <ClInclude Include="RenderQueue.hpp" />
     <ClInclude Include="ResourceHelper.hpp" />
     <ClInclude Include="Room.hpp" />
+    <ClInclude Include="RoomCollision.hpp" />
     <ClInclude Include="SpriteRenderer.hpp" />
     <ClInclude Include="Animable.hpp" />
     <ClInclude Include="AnimatedAssimpModel.h" />

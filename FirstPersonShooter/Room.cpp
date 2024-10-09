@@ -10,22 +10,48 @@ Room::Room(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 size)
 {
 }
 
-bool Room::isInBoundsX(DirectX::XMFLOAT3 entityPos)
+RoomCollision Room::isInBounds(DirectX::XMFLOAT3 entityPos) const
 {
-	return entityPos.x >= this->pos.x + wallOffset &&
-		entityPos.x <= this->pos.x + this->size.x - wallOffset;
-}
+	// mapping:
+	// 0 - x, 1 - y, 2 - z
 
-bool Room::isInBoundsY(DirectX::XMFLOAT3 entityPos)
-{
-	return entityPos.y >= this->pos.y &&
-		entityPos.y <= this->pos.y + this->size.y;
-}
+	RoomCollision result;
+	if (entityPos.x < this->pos.x + wallOffset)
+	{
+		result.collision[0] = true;
+		result.correction[0] = this->pos.x + wallOffset;
+	}
+	else if (entityPos.x > this->pos.x + this->size.x - wallOffset)
+	{
+		result.collision[0] = true;
+		result.correction[0] = this->pos.x + this->size.x - wallOffset;
+	}
 
-bool Room::isInBoundsZ(DirectX::XMFLOAT3 entityPos)
-{
-	return entityPos.z >= this->pos.z + wallOffset &&
-		entityPos.z <= this->pos.z + this->size.z - wallOffset;
+	const float playerHeight = 1.f;
+	if (entityPos.y < this->pos.y + playerHeight)
+	{
+		result.collision[1] = true;
+		result.correction[1] = this->pos.y + playerHeight;
+		result.isOnGround = true;
+	}
+	else if (entityPos.y > this->pos.y + this->size.y - playerHeight)
+	{
+		result.collision[1] = true;
+		result.correction[1] = this->pos.y + this->size.y - playerHeight;
+	}
+		
+	if (entityPos.z < this->pos.z + wallOffset)
+	{
+		result.collision[2] = true;
+		result.correction[2] = this->pos.z + wallOffset;
+	}
+	else if (entityPos.z > this->pos.z + this->size.z - wallOffset)
+	{
+		result.collision[2] = true;
+		result.correction[2] = this->pos.z + this->size.z - wallOffset;
+	}
+
+	return result;
 }
 
 void Room::Render(std::shared_ptr<RenderMaster> renderMaster)
