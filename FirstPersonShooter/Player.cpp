@@ -20,11 +20,24 @@ void Player::Update(float dt)
 
 
 	float velocityCap = 5.f;
-	float max_slowoff = 0.5f;
+	float max_slowoff = 0.7f;
+	float min_velocity = 0.1f;
+
+	this->updateVelocity(dt);
 
 	m_velocity.x -= (m_velocity.x / velocityCap) * max_slowoff;
 	m_velocity.y -= (m_velocity.y / velocityCap) * max_slowoff;
 	m_velocity.z -= (m_velocity.z / velocityCap) * max_slowoff;
+
+	if (std::abs(m_velocity.x) < min_velocity)
+		m_velocity.x = 0;
+
+	if (std::abs(m_velocity.y) < min_velocity)
+		m_velocity.y = 0;
+
+	if (std::abs(m_velocity.z) < min_velocity)
+		m_velocity.z = 0;
+
 
 	m_position.x += m_velocity.x * dt;
 	m_position.y += m_velocity.y * dt;
@@ -32,13 +45,14 @@ void Player::Update(float dt)
 
 }
 
-void Player::updateVelocity(DirectX::XMFLOAT3 deltaV)
+void Player::updateVelocity(float dt)
 {
 	float velocityCap = 5.f;
+	float accelerationCoeff = 50.f;
 	
-	m_velocity.x += deltaV.x;
-	m_velocity.y += deltaV.y;
-	m_velocity.z += deltaV.z;
+	m_velocity.x += m_acceleration.x * dt * accelerationCoeff;
+	m_velocity.y += m_acceleration.y * dt * accelerationCoeff;
+	m_velocity.z += m_acceleration.z * dt * accelerationCoeff;
 
 	if (m_velocity.x > velocityCap)
 		m_velocity.x = velocityCap;
@@ -73,4 +87,9 @@ std::unique_ptr<GunRig>& Player::getGunRig()
 DirectX::XMFLOAT3 Player::getPostition()
 {
 	return m_position;
+}
+
+void Player::setAcceleration(DirectX::XMFLOAT3 acc)
+{
+	m_acceleration = acc;
 }
