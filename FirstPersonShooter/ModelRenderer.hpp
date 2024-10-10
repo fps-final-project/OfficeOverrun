@@ -3,7 +3,7 @@
 
 class Entity;
 
-class ModelRenderer : public Base3DRenderer<ModelViewProjectionConstantBuffer, LightingConstantBuffer, VertexData>
+class ModelRenderer : public Base3DRenderer<ModelViewProjectionConstantBuffer, VertexData>
 {
 public:
 	ModelRenderer(const std::shared_ptr<DX::DeviceResources>& deviceResources);

@@ -22,7 +22,7 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	m_deviceResources->RegisterDeviceNotify(this);
 
 	ResourceManager::Instance.loadAnimatedModel("Assets\\myarms\\myarms.glb", m_deviceResources, { "Assets\\myarms\\Texture.png" });
-	ResourceManager::Instance.loadAnimatedModel("Assets\\myarms\\mygun.glb", m_deviceResources, { "Assets\\myarms\\Texture.png" });
+	ResourceManager::Instance.loadAnimatedModel("Assets\\myarms\\mygun.glb", m_deviceResources, { "Assets\\myarms\\Texture.png" }, "mygun");
 
 	ResourceManager::Instance.loadModel("Assets\\AK-47\\AK47NoSubdiv_cw.obj", m_deviceResources);
 	ResourceManager::Instance.loadTexture("Assets\\cube\\crosshair.png", m_deviceResources);
@@ -65,10 +65,6 @@ void FirstPersonShooterMain::Update()
 			// do not change this order
 			m_gameState->HandleInput();
 			m_gameState->Update(dt);
-
-
-			m_fpsTextRenderer->Update(m_timer);
-
 		});
 
 }
@@ -99,6 +95,7 @@ bool FirstPersonShooterMain::Render()
 	// Render the scene objects.
 	// TODO: Replace this with your app's content rendering functions.
 
+	m_renderMaster->setLighting(m_gameState->m_world->getLightingData());
 	m_renderMaster->setupShaders(
 		m_gameState->m_camera->getProjectionMatrix(), 
 		m_gameState->m_camera->getViewMatrix(), 
@@ -118,7 +115,8 @@ bool FirstPersonShooterMain::Render()
 		size);
 	m_spriteRenderer->EndRendering(context);
 
-	m_fpsTextRenderer->Render();
+	auto pos = m_gameState->m_player->getPostition();
+	m_fpsTextRenderer->Render(std::to_string(pos.x) + ", " +std::to_string(pos.y) + ", " + std::to_string(pos.z));
 
 	return true;
 }

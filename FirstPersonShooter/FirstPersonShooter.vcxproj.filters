@@ -318,6 +318,12 @@
     <ClInclude Include="Room.hpp">
       <Filter>Content\Entity\Room</Filter>
     </ClInclude>
+    <ClInclude Include="LightingData.hpp">
+      <Filter>Content\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomCollision.hpp">
+      <Filter>Content\Entity\Room</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\StoreLogo.png">
@@ -422,6 +428,7 @@
     <None Include="Assets\bullet\bullet.obj">
       <Filter>Assets\bullet</Filter>
     </None>
+    <None Include="Assets\myarms\mygun_ccw.glb" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Content\SamplePixelShader.hlsl">

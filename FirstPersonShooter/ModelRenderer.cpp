@@ -5,7 +5,6 @@
 ModelRenderer::ModelRenderer(const std::shared_ptr<DX::DeviceResources>& deviceResources)
 	: Base3DRenderer(deviceResources)
 {
-	DirectX::XMStoreFloat3(&m_PSConstantBufferData.light_pos, { 0.f, 0.f, 2.5f, 0.f });
 	this->CreateDeviceDependentResources();
 }
 

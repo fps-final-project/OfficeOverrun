@@ -27,6 +27,12 @@ void RenderMaster::setupShaders(DirectX::XMFLOAT4X4 projectionMatrix, DirectX::X
 	m_currentRenderer = RendererType::ANIMATED;
 }
 
+void RenderMaster::setLighting(const LightingData& data)
+{
+	m_modelRenderer->setLighting(data);
+	m_animatedRenderer->setLighting(data);
+}
+
 std::shared_ptr<AnimatedModelRenderer> RenderMaster::getAnimatedRenderer()
 {
 	if (m_currentRenderer != RendererType::ANIMATED)

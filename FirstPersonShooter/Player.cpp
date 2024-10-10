@@ -12,6 +12,16 @@ Player::Player()
 {
 }
 
+void Player::jump()
+{
+	const float initialJumpVelocity = 6.5f;
+	if (m_isOnGround)
+	{
+		m_velocity.y = initialJumpVelocity;
+		m_isOnGround = false;
+	}
+}
+
 void Player::Update(float dt)
 {
 	// i cant put it here because i need to first update the player position, then update the gun rig position and offset
@@ -19,12 +29,21 @@ void Player::Update(float dt)
 	//m_gunRig->Update(dt);
 
 
-	float velocityCap = 5.f;
-	float max_slowoff = 0.5f;
+	const float velocityCap = 5.f;
+	const float max_slowoff = 0.7f;
+	const float min_velocity = 0.1f;
+
+	this->updateVelocity(dt);
 
 	m_velocity.x -= (m_velocity.x / velocityCap) * max_slowoff;
-	m_velocity.y -= (m_velocity.y / velocityCap) * max_slowoff;
 	m_velocity.z -= (m_velocity.z / velocityCap) * max_slowoff;
+
+	if (std::abs(m_velocity.x) < min_velocity)
+		m_velocity.x = 0;
+	
+	if (std::abs(m_velocity.z) < min_velocity)
+		m_velocity.z = 0;
+
 
 	m_position.x += m_velocity.x * dt;
 	m_position.y += m_velocity.y * dt;
@@ -32,26 +51,21 @@ void Player::Update(float dt)
 
 }
 
-void Player::updateVelocity(DirectX::XMFLOAT3 deltaV)
+void Player::updateVelocity(float dt)
 {
-	float velocityCap = 5.f;
+	const float velocityCap = 5.f;
+	const float accelerationCoeff = 50.f;
 	
-	m_velocity.x += deltaV.x;
-	m_velocity.y += deltaV.y;
-	m_velocity.z += deltaV.z;
+	m_velocity.x += m_acceleration.x * dt * accelerationCoeff;
+	m_velocity.y += m_acceleration.y * dt;
+	m_velocity.z += m_acceleration.z * dt * accelerationCoeff;
 
 	if (m_velocity.x > velocityCap)
 		m_velocity.x = velocityCap;
 
 	if (m_velocity.x < -velocityCap)
 		m_velocity.x = -velocityCap;
-
-	if (m_velocity.y > velocityCap)
-		m_velocity.y = velocityCap;
-
-	if (m_velocity.y < -velocityCap)
-		m_velocity.y = -velocityCap;
-
+	
 	if (m_velocity.z > velocityCap)
 		m_velocity.z = velocityCap;
 
@@ -73,4 +87,34 @@ std::unique_ptr<GunRig>& Player::getGunRig()
 DirectX::XMFLOAT3 Player::getPostition()
 {
 	return m_position;
+}
+
+void Player::setAcceleration(DirectX::XMFLOAT3 acc)
+{
+	m_acceleration = acc;
+}
+
+void Player::handleRoomCollision(const RoomCollision& collisionData)
+{
+
+	// x axis
+	if (collisionData.collision[0])
+	{
+		this->m_velocity.x = 0;
+		this->m_position.x = collisionData.correction[0];
+	}
+	// y axis
+	if (collisionData.collision[1])
+	{
+		this->m_velocity.y = 0;
+		this->m_position.y = collisionData.correction[1];
+		if (collisionData.isOnGround)
+			m_isOnGround = true;
+	}
+	// z axis
+	if (collisionData.collision[2])
+	{
+		this->m_velocity.z = 0;
+		this->m_position.z = collisionData.correction[2];
+	}
 }
