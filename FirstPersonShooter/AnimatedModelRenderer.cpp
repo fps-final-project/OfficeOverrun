@@ -3,6 +3,8 @@
 #include "Animable.hpp"
 #include <vector>
 
+//const int AnimatedModelRenderer::nBuffers = 3;
+
 AnimatedModelRenderer::AnimatedModelRenderer(const std::shared_ptr<DX::DeviceResources>& deviceResources)
 	: Base3DRenderer(deviceResources)
 {
@@ -16,8 +18,11 @@ AnimatedModelRenderer::~AnimatedModelRenderer()
 
 void AnimatedModelRenderer::ReleaseDeviceDependentResources()
 {
-	m_AnimationInverseTransformBuffer.Reset();
-	m_AnimationTransformBuffer.Reset();
+	for (int i = 0; i < nBuffers; i++)
+	{
+		m_AnimationInverseTransformBuffer[i].Reset();
+		m_AnimationTransformBuffer[i].Reset();
+	}
 	Base3DRenderer::ReleaseDeviceDependentResources();
 }
 
@@ -31,22 +36,25 @@ void AnimatedModelRenderer::CreateDeviceDependentResources()
 		{ "FINAL_ID", 0, DXGI_FORMAT_R32_SINT, 0, 8 * sizeof(int), D3D11_INPUT_PER_VERTEX_DATA, 0 },
 	};
 
-	CD3D11_BUFFER_DESC constantBufferDesc(sizeof(AnimationConstantBuffer), D3D11_BIND_CONSTANT_BUFFER);
-	DX::ThrowIfFailed(
-		m_deviceResources->GetD3DDevice()->CreateBuffer(
-			&constantBufferDesc,
-			nullptr,
-			&m_AnimationTransformBuffer
-		)
-	);
+	for (int i = 0; i < nBuffers; i++)
+	{
+		CD3D11_BUFFER_DESC constantBufferDesc(sizeof(AnimationConstantBuffer), D3D11_BIND_CONSTANT_BUFFER);
+		DX::ThrowIfFailed(
+			m_deviceResources->GetD3DDevice()->CreateBuffer(
+				&constantBufferDesc,
+				nullptr,
+				&m_AnimationTransformBuffer[i]
+			)
+		);
 
-	DX::ThrowIfFailed(
-		m_deviceResources->GetD3DDevice()->CreateBuffer(
-			&constantBufferDesc,
-			nullptr,
-			&m_AnimationInverseTransformBuffer
-		)
-	);
+		DX::ThrowIfFailed(
+			m_deviceResources->GetD3DDevice()->CreateBuffer(
+				&constantBufferDesc,
+				nullptr,
+				&m_AnimationInverseTransformBuffer[i]
+			)
+		);
+	}
 
 	this->CreateDeviceDependentResources_internal(L"SkeletalVertexShader.cso", L"SkeletalPixelShader.cso", vertexDesc);
 }
@@ -66,48 +74,55 @@ void AnimatedModelRenderer::Render(const Animable& animable)
 
 	for (int i = 0; i < pose.size(); i++)
 	{
-		DirectX::XMStoreFloat4x4(&m_AnimationTransformBufferData.pose[i], DirectX::XMMatrixTranspose(pose[i]));
+		int bufferIdx = i / 50;
+		int poseIdx = i - bufferIdx * AnimationConstantBuffer::MAX_BONES;
+
+		DirectX::XMStoreFloat4x4(&m_AnimationTransformBufferData[bufferIdx].pose[poseIdx], DirectX::XMMatrixTranspose(pose[i]));
 		auto det = DirectX::XMMatrixDeterminant(pose[i]);
-		XMStoreFloat4x4(&m_AnimationInverseTransformBufferData.pose[i], DirectX::XMMatrixTranspose(DirectX::XMMatrixInverse(&det, pose[i])));
+		XMStoreFloat4x4(&m_AnimationInverseTransformBufferData[bufferIdx].pose[poseIdx], DirectX::XMMatrixTranspose(DirectX::XMMatrixInverse(&det, pose[i])));
 	}
 
 	auto context = m_deviceResources->GetD3DDeviceContext();
 
-	context->UpdateSubresource1(
-		m_AnimationTransformBuffer.Get(),
-		0,
-		NULL,
-		&m_AnimationTransformBufferData,
-		0,
-		0,
-		0
-	);
+	for (int i = 0; i < nBuffers; i++)
+	{
 
-	context->UpdateSubresource1(
-		m_AnimationInverseTransformBuffer.Get(),
-		0,
-		NULL,
-		&m_AnimationInverseTransformBufferData,
-		0,
-		0,
-		0
-	);
+		context->UpdateSubresource1(
+			m_AnimationTransformBuffer[i].Get(),
+			0,
+			NULL,
+			&m_AnimationTransformBufferData[i],
+			0,
+			0,
+			0
+		);
 
-	context->VSSetConstantBuffers1(
-		2,
-		1,
-		m_AnimationTransformBuffer.GetAddressOf(),
-		nullptr,
-		nullptr
-	);
+		context->UpdateSubresource1(
+			m_AnimationInverseTransformBuffer[i].Get(),
+			0,
+			NULL,
+			&m_AnimationInverseTransformBufferData[i],
+			0,
+			0,
+			0
+		);
 
-	context->VSSetConstantBuffers1(
-		3,
-		1,
-		m_AnimationInverseTransformBuffer.GetAddressOf(),
-		nullptr,
-		nullptr
-	);
+		context->VSSetConstantBuffers1(
+			2 + i,
+			1,
+			m_AnimationTransformBuffer[i].GetAddressOf(),
+			nullptr,
+			nullptr
+		);
 
+		context->VSSetConstantBuffers1(
+			5 + i,
+			1,
+			m_AnimationInverseTransformBuffer[i].GetAddressOf(),
+			nullptr,
+			nullptr
+		);
+
+	}
 	Base3DRenderer::Render(*animable.m_animatedModel);
 }

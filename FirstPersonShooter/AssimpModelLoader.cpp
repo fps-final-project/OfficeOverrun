@@ -201,21 +201,23 @@ void AssimpModelLoader::createAnimations(AnimatedAssimpModel& outModel, const ai
 				//if (animation.frames[indexFrame].pose.find(channel->mNodeName.data) != animation.frames[indexFrame].pose.end())
 				//	animation.frames[indexFrame].pose[channel->mNodeName.data] = JointTransform();
 
-				if (outModel.m_BoneInfoMap.find(channel->mNodeName.data) == outModel.m_BoneInfoMap.end())
+				std::string nodeName = std::string(channel->mNodeName.data);
+
+				if (outModel.m_BoneInfoMap.find(nodeName) == outModel.m_BoneInfoMap.end())
 				{
-					outModel.m_BoneInfoMap[channel->mNodeName.data].id = m_boneCounter;
+					outModel.m_BoneInfoMap[nodeName].id = m_boneCounter;
 					m_boneCounter++;
 				}
 
 				animation.frames[indexFrame].timestamp = channel->mPositionKeys[indexFrame].mTime;
 
-				animation.frames[indexFrame].pose[channel->mNodeName.data].position = AssimpModelLoader::aiToDirectFloat3(
+				animation.frames[indexFrame].pose[nodeName].position = AssimpModelLoader::aiToDirectFloat3(
 					channel->mPositionKeys[indexFrame].mValue);
 
-				animation.frames[indexFrame].pose[channel->mNodeName.data].orientation = AssimpModelLoader::aiToDirectFloat4(
+				animation.frames[indexFrame].pose[nodeName].orientation = AssimpModelLoader::aiToDirectFloat4(
 					channel->mRotationKeys[indexFrame].mValue);
 
-				animation.frames[indexFrame].pose[channel->mNodeName.data].scale = AssimpModelLoader::aiToDirectFloat3(
+				animation.frames[indexFrame].pose[nodeName].scale = AssimpModelLoader::aiToDirectFloat3(
 					channel->mScalingKeys[indexFrame].mValue);
 			}
 		}
@@ -354,8 +356,12 @@ std::vector<std::shared_ptr<Texture>> AssimpModelLoader::loadMaterialTextures(ai
 	{
 		aiString str;
 		mat->GetTexture(type, i, &str);
+		if (!this->validateTextureName(std::string(str.C_Str())))
+			continue;
+
 		std::string path = m_directory + "/";
 		path = path.append(str.C_Str());
+		//bool skip = true;
 		bool skip = false;
 		for (unsigned int j = 0; j < m_texturesLoaded.size(); j++)
 		{
@@ -376,6 +382,15 @@ std::vector<std::shared_ptr<Texture>> AssimpModelLoader::loadMaterialTextures(ai
 		}
 	}
 	return textures;
+}
+
+bool AssimpModelLoader::validateTextureName(std::string name)
+{
+	auto extension_begin_idx = name.find(".");
+	if (extension_begin_idx == std::string::npos)
+		return false;
+	auto extension = name.substr(extension_begin_idx, name.size() - extension_begin_idx);
+	return extension == ".png" || extension == ".jpg";
 }
 
 void AssimpModelLoader::appendTextureToMesh(const std::string& path, Mesh& m, std::shared_ptr<DX::DeviceResources> deviceResources)

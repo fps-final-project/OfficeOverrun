@@ -23,6 +23,7 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 
 	ResourceManager::Instance.loadAnimatedModel("Assets\\myarms\\myarms.glb", m_deviceResources, { "Assets\\myarms\\Texture.png" });
 	ResourceManager::Instance.loadAnimatedModel("Assets\\myarms\\mygun.glb", m_deviceResources, { "Assets\\myarms\\Texture.png" }, "mygun");
+	ResourceManager::Instance.loadAnimatedModel("Assets\\zombie\\zombie_war.gltf", m_deviceResources);
 
 	ResourceManager::Instance.loadModel("Assets\\AK-47\\AK47NoSubdiv_cw.obj", m_deviceResources);
 	ResourceManager::Instance.loadTexture("Assets\\cube\\crosshair.png", m_deviceResources);

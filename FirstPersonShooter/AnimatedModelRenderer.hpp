@@ -12,6 +12,7 @@ public:
 	virtual void CreateDeviceDependentResources() override;
 	void Render(const Animable& animable);
 private:
-	Microsoft::WRL::ComPtr<ID3D11Buffer> m_AnimationTransformBuffer, m_AnimationInverseTransformBuffer;
-	AnimationConstantBuffer m_AnimationTransformBufferData, m_AnimationInverseTransformBufferData;
+	static const int nBuffers = 3;
+	Microsoft::WRL::ComPtr<ID3D11Buffer> m_AnimationTransformBuffer[nBuffers], m_AnimationInverseTransformBuffer[nBuffers];
+	AnimationConstantBuffer m_AnimationTransformBufferData[nBuffers], m_AnimationInverseTransformBufferData[nBuffers];
 };

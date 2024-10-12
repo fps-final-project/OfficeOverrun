@@ -50,5 +50,6 @@ private:
 
 	void setBasicVertexData(VertexData& vertex, aiMesh* m_mesh, int idx);
 	std::vector<std::shared_ptr<Texture>> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName);
+	bool validateTextureName(std::string name);
 
 };
