@@ -13,7 +13,7 @@ class World
 public:
 	void Update(float dt);
 	std::vector<Hittable> GetEntities();
-	void DeleteEntity(Hittable& entity);
+	void DeleteEntity(const GUID& entity);
 
 	std::vector<AnimatedEntity> m_animatedEntities;
 	std::vector<Entity> m_entities;
@@ -21,7 +21,6 @@ public:
 	int m_currentRoomIndex;
 
 	Room& getCurrentRoom() { return m_rooms[m_currentRoomIndex]; };
-	std::vector<std::pair<Entity, float>> m_timedEntities;
 
 	LightingData getLightingData();
 

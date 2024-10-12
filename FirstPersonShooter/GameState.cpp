@@ -24,7 +24,7 @@ GameState::GameState(
 	m_collisionDetector = std::make_unique<SimpleCollisionDetector>();
 
 	m_world->m_entities.push_back(Entity(ResourceManager::Instance.getModel("AK47NoSubdiv_cw"), 
-		XMFLOAT3(5.f, -1.f, -5.f), XMFLOAT3(0.2f, 0.2f, 0.2f)));
+		XMFLOAT3(1.f, -1.f, -1.f), XMFLOAT3(0.2f, 0.2f, 0.2f)));
 
 	m_world->m_rooms.push_back(Room(XMFLOAT3(-1.f, -1.f, -2.f), XMFLOAT3(4.f, 4.f, 6.f)));
 	m_world->m_currentRoomIndex = 0;
@@ -60,12 +60,10 @@ void GameState::Update(float dt)
 	m_camera->setPosition(m_player->getPostition());
 	m_player->getGunRig()->RotateAndOffset(m_camera->getYawPitchRoll(), m_player->getPostition(), dt);
 
+
+	//TODO: Collision handling
+
 	auto collisions = m_collisionDetector->GetCollisions(m_world->GetEntities());
-	int a = 0;
-	std::for_each(
-		collisions.begin(),
-		collisions.end(),
-		[this](std::pair<Hittable, Hittable>& pair) { m_world->DeleteEntity(pair.first); m_world->DeleteEntity(pair.second); });
 
 }
 
