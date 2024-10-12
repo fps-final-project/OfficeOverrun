@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "World.h"
+#include "ctime"
 
 void World::Update(float dt)
 {
@@ -11,6 +12,12 @@ void World::Update(float dt)
 	for (auto& entity : m_timedEntities)
 	{
 		entity.first.Update(dt);
+	}
+
+	if (m_animatedEntities.size() && m_animatedEntities[0].isIdle())
+	{
+		int idx = (time(NULL) % 2) + 1;
+		m_animatedEntities[0].setAnimation("attack" + std::to_string(idx), 1.5f);
 	}
 
 	std::for_each(

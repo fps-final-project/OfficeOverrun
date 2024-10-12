@@ -9,8 +9,8 @@ Animator::Animator()
 Animator::Animator(std::shared_ptr<Animation> animation, std::shared_ptr<Animation> fallback, bool wrap)
     : m_wrapAnimation(wrap), m_currentTime(0.f), m_currentAnimation(animation), m_fallbackAnimation(fallback), m_animationSpeedMultiplier(1.f)
 {
-	m_finalBoneMatrices.reserve(55);
-	for (int i = 0; i < 55; i++)
+	m_finalBoneMatrices.reserve(150);
+	for (int i = 0; i < 150; i++)
 	{
 		m_finalBoneMatrices.push_back(DirectX::XMMatrixIdentity());
 	}

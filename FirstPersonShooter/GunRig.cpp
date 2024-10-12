@@ -6,8 +6,8 @@ GunRig::GunRig(std::shared_ptr<AnimatedAssimpModel> hands, std::shared_ptr<Anima
 	: m_gunOffset(gunOffset), m_initialBarrelOffset(barrelOffset), m_barrelOffset(barrelOffset)
 {
 	// idea - they can be shared with world.entites
-	m_hands = std::make_shared<AnimatedEntity>(hands, XMFLOAT3(0.f, 0.f, 0.f), XMFLOAT3(0.f, DirectX::XM_PI, 0.f));
-	m_gun = std::make_shared<AnimatedEntity>(gun, gunOffset, XMFLOAT3(0.f, DirectX::XM_PI, 0.f));
+	m_hands = std::make_shared<AnimatedEntity>(hands, XMFLOAT3(0.f, 0.f, 0.f), XMFLOAT3(1.f, 1.f, 1.f), XMFLOAT3(0.f, DirectX::XM_PI, 0.f));
+	m_gun = std::make_shared<AnimatedEntity>(gun, gunOffset, XMFLOAT3(1.f, 1.f, 1.f), XMFLOAT3(0.f, DirectX::XM_PI, 0.f));
 
 	m_hands->setFallbackAnimation("FP_idle_pose");
 	m_gun->setFallbackAnimation("GUN_idle_pose");
