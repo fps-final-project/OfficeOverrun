@@ -134,6 +134,9 @@
     <Filter Include="Content\Entity\Room">
       <UniqueIdentifier>{a0c90a09-601c-44f0-96cb-c9a3c24ae15a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameElements">
+      <UniqueIdentifier>{c7913cd6-4577-4273-ae0a-bb2d03243413}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -209,6 +212,18 @@
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Content\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>GameElements</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyBuilder.cpp">
+      <Filter>GameElements</Filter>
+    </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>GameElements</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectBuilder.cpp">
+      <Filter>GameElements</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -324,6 +339,18 @@
     <ClInclude Include="RoomCollision.hpp">
       <Filter>Content\Entity\Room</Filter>
     </ClInclude>
+    <ClInclude Include="Enemy.hpp">
+      <Filter>GameElements</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBuilder.hpp">
+      <Filter>GameElements</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.hpp">
+      <Filter>GameElements</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectBuilder.hpp">
+      <Filter>GameElements</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\StoreLogo.png">
@@ -350,23 +377,8 @@
     <Image Include="Assets\cube\smile.jpg">
       <Filter>Assets\cube</Filter>
     </Image>
-    <Image Include="Assets\vampire\textures\Vampire_diffuse.png">
-      <Filter>Assets\vampire\textures</Filter>
-    </Image>
-    <Image Include="Assets\vampire\textures\Vampire_emission.png">
-      <Filter>Assets\vampire\textures</Filter>
-    </Image>
-    <Image Include="Assets\vampire\textures\Vampire_normal.png">
-      <Filter>Assets\vampire\textures</Filter>
-    </Image>
-    <Image Include="Assets\vampire\textures\Vampire_specular.png">
-      <Filter>Assets\vampire\textures</Filter>
-    </Image>
     <Image Include="Assets\myarms\Texture.png">
       <Filter>Assets\myarms</Filter>
-    </Image>
-    <Image Include="Assets\simplest\Texture.png">
-      <Filter>Assets\simplest</Filter>
     </Image>
     <Image Include="Assets\cube\crosshair.png">
       <Filter>Assets\cube</Filter>
@@ -375,6 +387,9 @@
       <Filter>Assets</Filter>
     </Image>
     <Image Include="Assets\cube\brickwall.jpg">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\zombie\world_war_zombie_diffuse.png">
       <Filter>Assets</Filter>
     </Image>
   </ItemGroup>
@@ -395,14 +410,8 @@
     <None Include="Assets\cube\cube.obj">
       <Filter>Assets\cube</Filter>
     </None>
-    <None Include="Assets\vampire\dancing_vampire.dae">
-      <Filter>Assets\vampire</Filter>
-    </None>
     <None Include="Assets\myarms\myarms.fbx">
       <Filter>Assets\myarms</Filter>
-    </None>
-    <None Include="Assets\simplest\simplest_anim.dae">
-      <Filter>Assets\simplest</Filter>
     </None>
     <None Include="Assets\myarms\myarms.dae">
       <Filter>Assets\myarms</Filter>
@@ -428,7 +437,7 @@
     <None Include="Assets\bullet\bullet.obj">
       <Filter>Assets\bullet</Filter>
     </None>
-    <None Include="Assets\myarms\mygun_ccw.glb" />
+    <None Include="Assets\zombie\zombie_war.gltf" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Content\SamplePixelShader.hlsl">
