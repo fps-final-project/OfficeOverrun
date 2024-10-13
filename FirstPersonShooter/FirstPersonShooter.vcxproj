@@ -286,11 +286,15 @@
   <ItemGroup>
     <ClInclude Include="ActionHandler.hpp" />
     <ClInclude Include="ActionTypes.hpp" />
+    <ClInclude Include="BinaryRoom.h" />
     <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="EnemyBuilder.hpp" />
     <ClInclude Include="GameState.hpp" />
+    <ClInclude Include="GeneratedRoom.h" />
+    <ClInclude Include="Graph.h" />
     <ClInclude Include="GunRig.h" />
     <ClInclude Include="LightingData.hpp" />
+    <ClInclude Include="Node.h" />
     <ClInclude Include="Object.hpp" />
     <ClInclude Include="ObjectBuilder.hpp" />
     <ClInclude Include="Player.h" />
@@ -298,8 +302,13 @@
     <ClInclude Include="RenderMaster.hpp" />
     <ClInclude Include="RenderQueue.hpp" />
     <ClInclude Include="ResourceHelper.hpp" />
+    <ClInclude Include="RNG.h" />
     <ClInclude Include="Room.hpp" />
     <ClInclude Include="RoomCollision.hpp" />
+    <ClInclude Include="RoomLayout.h" />
+    <ClInclude Include="RoomLayoutConfig.h" />
+    <ClInclude Include="RoomLayoutGenerator.h" />
+    <ClInclude Include="RoomLink.h" />
     <ClInclude Include="SpriteRenderer.hpp" />
     <ClInclude Include="Animable.hpp" />
     <ClInclude Include="AnimatedAssimpModel.h" />
@@ -332,7 +341,10 @@
     <ClInclude Include="SimpleCollisionDetector.hpp" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureFactory.h" />
+    <ClInclude Include="Utils.h" />
+    <ClInclude Include="Vector3.h" />
     <ClInclude Include="World.h" />
+    <ClInclude Include="WorldGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ActionHandler.cpp" />
@@ -342,6 +354,7 @@
     <ClCompile Include="Animator.cpp" />
     <ClCompile Include="App.cpp" />
     <ClCompile Include="AssimpModelLoader.cpp" />
+    <ClCompile Include="BinaryRoom.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CollisionDetector.cpp" />
     <ClCompile Include="Common\DeviceResources.cpp" />
@@ -351,6 +364,8 @@
     <ClCompile Include="FirstPersonShooterMain.cpp" />
     <ClCompile Include="Content\SampleFpsTextRenderer.cpp" />
     <ClCompile Include="GameState.cpp" />
+    <ClCompile Include="GeneratedRoom.cpp" />
+    <ClCompile Include="Graph.cpp" />
     <ClCompile Include="GunRig.cpp" />
     <ClCompile Include="Hittable.cpp" />
     <ClCompile Include="InputHandler.cpp" />
@@ -371,12 +386,17 @@
     <ClCompile Include="RenderMaster.cpp" />
     <ClCompile Include="RenderQueue.cpp" />
     <ClCompile Include="ResourceHelper.cpp" />
+    <ClCompile Include="RNG.cpp" />
     <ClCompile Include="Room.cpp" />
+    <ClCompile Include="RoomLayoutGenerator.cpp" />
+    <ClCompile Include="RoomLink.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="SimpleCollisionDetector.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="TextureFactory.cpp" />
+    <ClCompile Include="Utils.cpp" />
     <ClCompile Include="World.cpp" />
+    <ClCompile Include="WorldGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

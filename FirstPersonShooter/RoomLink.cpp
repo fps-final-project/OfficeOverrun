@@ -1,0 +1,22 @@
+#include "pch.h"
+#include "RoomLink.h"
+#include "Utils.h"
+
+RoomLink::RoomLink(const Vector3& pos, const Orientation& orientation, GeneratedRoom* linkedRoom)
+    : pos(pos), orientation(orientation), linkedRoom(linkedRoom)
+{
+}
+
+// TODO: make doors fun
+RoomLink RoomLink::MakeRoomLink(Vector3 pos, Vector3 size, GeneratedRoom* linkedRoom)
+{
+    Orientation orientation = (size.x == 0) ? YZ : ((size.y == 0)? XZ : XY);
+
+    Vector3 linkPos = Vector3(
+        pos.x + (size.x > 0 ? Utils::RandIntInRange(0, size.x - 1) : 0),
+        pos.y + (size.y > 0 ? Utils::RandIntInRange(0, size.y - 1) : 0),
+        pos.z + (size.z > 0 ? Utils::RandIntInRange(0, size.z - 1) : 0)
+    );
+
+    return RoomLink(linkPos, orientation, linkedRoom);
+}
