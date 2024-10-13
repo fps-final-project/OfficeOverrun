@@ -2,6 +2,8 @@
 #include "GameState.hpp"
 #include "ResourceManager.h"
 #include "SimpleCollisionDetector.hpp"
+#include "EnemyBuilder.hpp"
+#include "ObjectBuilder.hpp"
 
 GameState::GameState(
 	std::shared_ptr<DirectX::Keyboard> keyboard,
@@ -23,17 +25,34 @@ GameState::GameState(
 	m_player = std::make_unique<Player>();
 	m_collisionDetector = std::make_unique<SimpleCollisionDetector>();
 
-	m_world->m_entities.push_back(Entity(ResourceManager::Instance.getModel("AK47NoSubdiv_cw"), 
-		XMFLOAT3(1.f, -1.f, -1.f), XMFLOAT3(0.2f, 0.2f, 0.2f)));
+	EnemyBuilder enemyBuilder{};
+	ObjectBuilder objectBuilder{};
+
+	auto zombie = enemyBuilder
+		.WithNewEnemy(ResourceManager::Instance.getAnimatedModel("zombie_war"))
+		.WithMaxHealth(100)
+		.WithDamage(10)
+		.WithPosition({ 0.f, -1.f, -1.f })
+		.WithRotation({ 0.f, 0.f, 0.f })
+		.WithVelocity({ 0.f, 0.f, 0.f })
+		.WithSize({ 0.8f, 0.8f, 0.8f })
+		.WithFallbackAnimation("idle")
+		.Build();
+
+	auto ak = 
+		objectBuilder
+		.WithNewObject(ResourceManager::Instance.getModel("AK47NoSubdiv_cw"))
+		.WithPosition({ 1.f, -1.f, -1.f })
+		.WithSize({ 0.2f, 0.2f, 0.2f })
+		.Build();
+
+
 
 	m_world->m_rooms.push_back(Room(XMFLOAT3(-1.f, -1.f, -2.f), XMFLOAT3(4.f, 4.f, 6.f)));
 	m_world->m_currentRoomIndex = 0;
 
-	m_world->m_animatedEntities.push_back(AnimatedEntity(
-		ResourceManager::Instance.getAnimatedModel("zombie_war"),
-		{ 0.f, -1.f, -1.f }, {0.8f, 0.8f, 0.8f}));
-
-	m_world->m_animatedEntities[0].setFallbackAnimation("idle");
+	m_world->m_entities.push_back((Entity)*ak);
+	m_world->m_animatedEntities.push_back((AnimatedEntity)*zombie);
 
 	this->setupActionHandlers();
 

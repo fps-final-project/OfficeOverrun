@@ -286,9 +286,13 @@
   <ItemGroup>
     <ClInclude Include="ActionHandler.hpp" />
     <ClInclude Include="ActionTypes.hpp" />
+    <ClInclude Include="Enemy.hpp" />
+    <ClInclude Include="EnemyBuilder.hpp" />
     <ClInclude Include="GameState.hpp" />
     <ClInclude Include="GunRig.h" />
     <ClInclude Include="LightingData.hpp" />
+    <ClInclude Include="Object.hpp" />
+    <ClInclude Include="ObjectBuilder.hpp" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RendererType.hpp" />
     <ClInclude Include="RenderMaster.hpp" />
@@ -341,6 +345,8 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CollisionDetector.cpp" />
     <ClCompile Include="Common\DeviceResources.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyBuilder.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="FirstPersonShooterMain.cpp" />
     <ClCompile Include="Content\SampleFpsTextRenderer.cpp" />
@@ -349,6 +355,8 @@
     <ClCompile Include="Hittable.cpp" />
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="ModelRenderer.cpp" />
+    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="ObjectBuilder.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
