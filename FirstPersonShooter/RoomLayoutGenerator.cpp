@@ -10,7 +10,7 @@ RoomLayoutGenerator::RoomLayoutGenerator(RoomLayoutConfig config) : layout(RoomL
 {
 }
 
-RoomLayout RoomLayoutGenerator::Generate()
+RoomLayout& RoomLayoutGenerator::Generate()
 {
 	// Step 1
 	GenerateRooms();
@@ -38,7 +38,7 @@ void RoomLayoutGenerator::GenerateAdGraph()
 		Node<GeneratedRoom>& node = adGraph.nodes[i];
 		for (int j = i + 1; j < adGraph.nodes.size(); j++)
 		{
-			if (node.value.IsAdjacent(adGraph.nodes[j].value))
+			if (node.value->IsAdjacent(*adGraph.nodes[j].value))
 			{
 				node.neighbours.push_back(&adGraph.nodes[j]);
 				adGraph.nodes[j].neighbours.push_back(&node);
@@ -56,10 +56,10 @@ void RoomLayoutGenerator::GenerateRoomLinks()
 		Node<GeneratedRoom>& node = adGraph.nodes[i];
 		for (Node<GeneratedRoom>* neighbour : node.neighbours)
 		{
-			auto border = node.value.ComputeBorders(neighbour->value);
-			auto link = RoomLink::MakeRoomLink(std::get<0>(border), std::get<1>(border), &(neighbour->value));
-			node.value.links.push_back(link);
-			neighbour->value.links.push_back(link);
+			auto border = node.value->ComputeBorders(*neighbour->value);
+			auto link = RoomLink::MakeRoomLink(std::get<0>(border), std::get<1>(border), neighbour->value);
+			node.value->links.push_back(link);
+			neighbour->value->links.push_back(link);
 
 			auto it = std::find(neighbour->neighbours.begin(), neighbour->neighbours.end(), &node);
 			neighbour->neighbours.erase(it);

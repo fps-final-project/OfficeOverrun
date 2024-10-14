@@ -18,6 +18,6 @@ namespace WorldGenerator
 		void GenerateRoomLinks();
 	public:
 		RoomLayoutGenerator(RoomLayoutConfig);
-		RoomLayout Generate();
+		RoomLayout& Generate();
 	};
 }
