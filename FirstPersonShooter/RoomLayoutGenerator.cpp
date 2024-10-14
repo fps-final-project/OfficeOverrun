@@ -4,6 +4,8 @@
 #include "BinaryRoom.h"
 #include "RoomLink.h"
 
+using namespace WorldGenerator;
+
 RoomLayoutGenerator::RoomLayoutGenerator(RoomLayoutConfig config) : layout(RoomLayout(config.mapSize)), config(config)
 {
 }

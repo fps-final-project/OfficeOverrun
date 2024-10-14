@@ -1,23 +1,26 @@
 #pragma once
 #include <time.h>
 
-class RNG
+namespace WorldGenerator
 {
-private:
-	unsigned int seed;
-protected:
-	RNG(): seed(time(NULL))
+	class RNG
 	{
-	}
-	static RNG* instance_;
+	private:
+		unsigned int seed;
+	protected:
+		RNG() : seed(time(NULL))
+		{
+		}
+		static RNG* instance_;
 
-public:
-	RNG(RNG& other) = delete;
-	void operator=(const RNG&) = delete;
+	public:
+		RNG(RNG& other) = delete;
+		void operator=(const RNG&) = delete;
 
-	static RNG* GetInstance();
-	
-	void SetSeed(unsigned int seed);
+		static RNG* GetInstance();
 
-	unsigned int GetSeed();
-};
+		void SetSeed(unsigned int seed);
+
+		unsigned int GetSeed();
+	};
+}

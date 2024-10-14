@@ -2,6 +2,8 @@
 #include "RNG.h"
 #include <stdlib.h>
 
+using namespace WorldGenerator;
+
 RNG* RNG::instance_;
 
 RNG* RNG::GetInstance()

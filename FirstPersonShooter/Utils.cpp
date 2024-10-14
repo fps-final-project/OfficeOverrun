@@ -2,6 +2,8 @@
 #include "Utils.h"
 #include <stdlib.h>
 
+using namespace WorldGenerator;
+
 int Utils::RandIntInRange(int min, int max)
 {
     return min + rand() % (max - min + 1);

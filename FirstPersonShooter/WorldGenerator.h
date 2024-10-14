@@ -1,2 +1,7 @@
 #pragma once
-int testAPI();
+#include "RoomLayoutGenerator.h"
+
+namespace WorldGenerator
+{
+	RoomLayout testAPI();
+}

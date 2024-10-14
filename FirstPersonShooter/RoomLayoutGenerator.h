@@ -5,16 +5,19 @@
 #include "RoomLayoutConfig.h"
 #include "Graph.h"
 
-class RoomLayoutGenerator
+namespace WorldGenerator
 {
-private:
-	RoomLayout layout;
-	RoomLayoutConfig config;
-	Graph<GeneratedRoom> adGraph; // room adjacency graph
-	void GenerateRooms();
-	void GenerateAdGraph();
-	void GenerateRoomLinks();
-public:
-	RoomLayoutGenerator(RoomLayoutConfig);
-	RoomLayout Generate();
-};
+	class RoomLayoutGenerator
+	{
+	private:
+		RoomLayout layout;
+		RoomLayoutConfig config;
+		Graph<GeneratedRoom> adGraph; // room adjacency graph
+		void GenerateRooms();
+		void GenerateAdGraph();
+		void GenerateRoomLinks();
+	public:
+		RoomLayoutGenerator(RoomLayoutConfig);
+		RoomLayout Generate();
+	};
+}

@@ -2,6 +2,8 @@
 #include "GeneratedRoom.h"
 #include "Utils.h"
 
+using namespace WorldGenerator;
+
 bool GeneratedRoom::IsAdjacent(GeneratedRoom room)
 {
     if (Utils::LinesIntersect1D(pos.x, pos.x + size.x, room.pos.x, room.pos.x + room.size.x)

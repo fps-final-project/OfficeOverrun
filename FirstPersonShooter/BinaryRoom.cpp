@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "BinaryRoom.h"
 
+using namespace WorldGenerator;
+
 bool BinaryRoom::IsLeaf()
 {
     return leftRoom == nullptr && rightRoom == nullptr;

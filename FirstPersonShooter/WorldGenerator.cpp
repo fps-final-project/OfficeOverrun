@@ -1,9 +1,11 @@
 #include "pch.h"
 #include <iostream>
-#include "RoomLayoutGenerator.h"
+#include "WorldGenerator.h"
 #include "RNG.h"
 
 #define SEED 432423
+
+using namespace WorldGenerator;
 
 RoomLayoutConfig GetLayoutConfig()
 {
@@ -13,13 +15,12 @@ RoomLayoutConfig GetLayoutConfig()
 	return config;
 }
 
-int testAPI()
+RoomLayout WorldGenerator::testAPI()
 {
 	RNG::GetInstance()->SetSeed(SEED);
 	RoomLayoutGenerator generator(GetLayoutConfig());
 
 	RoomLayout layout = generator.Generate();
 
-	return 2137;
+	return layout;
 }
-

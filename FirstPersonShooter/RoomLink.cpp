@@ -2,6 +2,8 @@
 #include "RoomLink.h"
 #include "Utils.h"
 
+using namespace WorldGenerator;
+
 RoomLink::RoomLink(const Vector3& pos, const Orientation& orientation, GeneratedRoom* linkedRoom)
     : pos(pos), orientation(orientation), linkedRoom(linkedRoom)
 {
