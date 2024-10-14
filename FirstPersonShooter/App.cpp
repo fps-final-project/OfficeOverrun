@@ -2,6 +2,8 @@
 #include "App.h"
 
 #include <ppltasks.h>
+#include "MapGenerator.h"
+#include "RoomLayout.h"
 
 using namespace FirstPersonShooter;
 
@@ -14,6 +16,7 @@ using namespace Windows::UI::Input;
 using namespace Windows::System;
 using namespace Windows::Foundation;
 using namespace Windows::Graphics::Display;
+using namespace WorldGenerator;
 
 // The main function is only used to initialize our IFrameworkView class.
 [Platform::MTAThread]
@@ -97,6 +100,7 @@ void App::Load(Platform::String^ entryPoint)
 // This method is called after the window becomes active.
 void App::Run()
 {
+	RoomLayout layout = MapGenerator().GenerateRoomLayout();
 	while (!m_windowClosed)
 	{
 		if (m_windowVisible)

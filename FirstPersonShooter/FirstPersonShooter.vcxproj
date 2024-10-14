@@ -344,7 +344,7 @@
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="World.h" />
-    <ClInclude Include="WorldGenerator.h" />
+    <ClInclude Include="MapGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ActionHandler.cpp" />
@@ -396,7 +396,7 @@
     <ClCompile Include="TextureFactory.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="World.cpp" />
-    <ClCompile Include="WorldGenerator.cpp" />
+    <ClCompile Include="MapGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

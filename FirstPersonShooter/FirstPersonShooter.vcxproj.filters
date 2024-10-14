@@ -264,7 +264,7 @@
     <ClCompile Include="Utils.cpp">
       <Filter>WorldGenerator\Common</Filter>
     </ClCompile>
-    <ClCompile Include="WorldGenerator.cpp">
+    <ClCompile Include="MapGenerator.cpp">
       <Filter>WorldGenerator</Filter>
     </ClCompile>
   </ItemGroup>
@@ -426,7 +426,7 @@
     <ClInclude Include="RoomLayoutGenerator.h">
       <Filter>WorldGenerator\RoomLayout</Filter>
     </ClInclude>
-    <ClInclude Include="WorldGenerator.h">
+    <ClInclude Include="MapGenerator.h">
       <Filter>WorldGenerator</Filter>
     </ClInclude>
   </ItemGroup>

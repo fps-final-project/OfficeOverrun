@@ -10,6 +10,5 @@ namespace WorldGenerator
 		const static int maxRoomHeight = 2;
 
 		Vector3 mapSize;
-		int roomCount;
 	};
 }
