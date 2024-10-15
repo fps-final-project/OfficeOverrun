@@ -16,12 +16,12 @@ namespace WorldGenerator
 	class RoomLink
 	{
 	public:
-		GeneratedRoom* linkedRoom;
+		int linkedRoomIdx; // index to linked room in room collection
 		Vector3 pos;
 		Orientation orientation;
 
-		RoomLink(const Vector3& pos, const Orientation& orientation, GeneratedRoom* linkedRoom);
+		RoomLink(const Vector3& pos, const Orientation& orientation);
 
-		static RoomLink MakeRoomLink(Vector3 pos, Vector3 size, GeneratedRoom* linkedRoom);
+		static RoomLink MakeRoomLink(Vector3 pos, Vector3 size);
 	};
 }

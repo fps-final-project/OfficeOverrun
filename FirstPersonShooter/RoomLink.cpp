@@ -4,13 +4,13 @@
 
 using namespace WorldGenerator;
 
-RoomLink::RoomLink(const Vector3& pos, const Orientation& orientation, GeneratedRoom* linkedRoom)
-    : pos(pos), orientation(orientation), linkedRoom(linkedRoom)
+RoomLink::RoomLink(const Vector3& pos, const Orientation& orientation)
+    : pos(pos), orientation(orientation)
 {
 }
 
-// TODO: make doors fun
-RoomLink RoomLink::MakeRoomLink(Vector3 pos, Vector3 size, GeneratedRoom* linkedRoom)
+// TODO: play with rng
+RoomLink RoomLink::MakeRoomLink(Vector3 pos, Vector3 size)
 {
     Orientation orientation = (size.x == 0) ? YZ : ((size.y == 0)? XZ : XY);
 
@@ -20,5 +20,5 @@ RoomLink RoomLink::MakeRoomLink(Vector3 pos, Vector3 size, GeneratedRoom* linked
         pos.z + (size.z > 0 ? Utils::RandIntInRange(0, size.z - 1) : 0)
     );
 
-    return RoomLink(linkPos, orientation, linkedRoom);
+    return RoomLink(linkPos, orientation);
 }

@@ -8,8 +8,9 @@ namespace WorldGenerator
 	{
 	public:
 		T* value;
-		std::vector<Node*> neighbours;
+		std::vector<Node<T>*> neighbours;
 		Node(T* value);
+		bool IsConnectedTo(Node* neighbour);
 	};
 
 	template<typename T>
@@ -17,5 +18,11 @@ namespace WorldGenerator
 		: value(value)
 	{
 		neighbours = std::vector<Node*>();
+	}
+	template<typename T>
+	inline bool Node<T>::IsConnectedTo(Node* neighbour)
+	{
+		auto it = std::find(neighbours.begin(), neighbours.end(), neighbour);
+		return it != neighbours.end();
 	}
 }

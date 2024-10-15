@@ -54,15 +54,22 @@ void RoomLayoutGenerator::GenerateRoomLinks()
 	for (int i = 0; i < n; i++) 
 	{
 		Node<GeneratedRoom>& node = adGraph.nodes[i];
-		for (Node<GeneratedRoom>* neighbour : node.neighbours)
+		for (int j = i + 1; j < n; j++)
 		{
-			auto border = node.value->ComputeBorders(*neighbour->value);
-			auto link = RoomLink::MakeRoomLink(std::get<0>(border), std::get<1>(border), neighbour->value);
-			node.value->links.push_back(link);
-			neighbour->value->links.push_back(link);
+			Node<GeneratedRoom>& neighbour = adGraph.nodes[j];
+			if (!node.IsConnectedTo(&neighbour))
+				continue;
+			auto border = node.value->ComputeBorders(*neighbour.value);
+			RoomLink link = RoomLink::MakeRoomLink(std::get<0>(border), std::get<1>(border));
 
-			auto it = std::find(neighbour->neighbours.begin(), neighbour->neighbours.end(), &node);
-			neighbour->neighbours.erase(it);
+			RoomLink outLink = link;
+			outLink.linkedRoomIdx = j;
+
+			RoomLink inLink = link;
+			inLink.linkedRoomIdx = i;
+
+			node.value->links.push_back(outLink);
+			neighbour.value->links.push_back(inLink);
 		}
 	}
 }
