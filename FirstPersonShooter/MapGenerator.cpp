@@ -7,13 +7,6 @@
 
 using namespace WorldGenerator;
 
-RoomLayoutConfig MapGenerator::MakeTestLayoutConfig()
-{
-	RoomLayoutConfig config;
-	config.mapSize = Vector3(10, 10, 3);
-	return config;
-}
-
 RoomLayout MapGenerator::GenerateRoomLayout(RoomLayoutConfig config)
 {
 	RNG::GetInstance()->SetSeed(SEED);

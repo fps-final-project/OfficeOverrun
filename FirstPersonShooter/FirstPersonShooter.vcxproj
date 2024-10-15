@@ -293,7 +293,10 @@
     <ClInclude Include="GeneratedRoom.h" />
     <ClInclude Include="Graph.h" />
     <ClInclude Include="GunRig.h" />
+    <ClInclude Include="MapGeneratorAdapter.h" />
     <ClInclude Include="LightingData.hpp" />
+    <ClInclude Include="MapGeneratorMapper.h" />
+    <ClInclude Include="MappingHelpers.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Object.hpp" />
     <ClInclude Include="ObjectBuilder.hpp" />
@@ -369,6 +372,8 @@
     <ClCompile Include="GunRig.cpp" />
     <ClCompile Include="Hittable.cpp" />
     <ClCompile Include="InputHandler.cpp" />
+    <ClCompile Include="MapGeneratorAdapter.cpp" />
+    <ClCompile Include="MappingHelpers.cpp" />
     <ClCompile Include="ModelRenderer.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectBuilder.cpp" />

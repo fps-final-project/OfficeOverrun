@@ -5,9 +5,7 @@ namespace WorldGenerator
 {
 	class MapGenerator
 	{
-	private:
-		static RoomLayoutConfig MakeTestLayoutConfig();
 	public:
-		RoomLayout GenerateRoomLayout(RoomLayoutConfig config = MakeTestLayoutConfig());
+		RoomLayout GenerateRoomLayout(RoomLayoutConfig config);
 	};
 }
