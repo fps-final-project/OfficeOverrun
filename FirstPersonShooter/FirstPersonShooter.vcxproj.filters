@@ -137,6 +137,30 @@
     <Filter Include="GameElements">
       <UniqueIdentifier>{c7913cd6-4577-4273-ae0a-bb2d03243413}</UniqueIdentifier>
     </Filter>
+    <Filter Include="WorldGenerator">
+      <UniqueIdentifier>{706e0f5a-fcd5-4407-89df-e0b2155075f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WorldGenerator\Common">
+      <UniqueIdentifier>{1f11af94-cf83-491c-a7a0-29039046eea7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WorldGenerator\Common\Graph">
+      <UniqueIdentifier>{5fc7c998-0bda-4691-a0b7-0e3b9a471d9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WorldGenerator\RoomLayout">
+      <UniqueIdentifier>{d49c5293-81bd-467c-9bb7-b7cbac6c0020}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WorldGenerator\RoomLayout\BSP">
+      <UniqueIdentifier>{a0a89133-5811-4fe9-985d-9190e3604b97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WorldGenerator\RoomLayout\Model">
+      <UniqueIdentifier>{89bcd098-54e1-4e4b-b75f-ef0b36be974d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WorldGeneratorAdapter">
+      <UniqueIdentifier>{774b7bab-b759-451c-94f5-63d310975a76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WorldGeneratorAdapter\Mapper">
+      <UniqueIdentifier>{214de76f-0ded-4ce0-961f-ae52db94260f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -224,6 +248,36 @@
     </ClCompile>
     <ClCompile Include="ObjectBuilder.cpp">
       <Filter>GameElements</Filter>
+    </ClCompile>
+    <ClCompile Include="BinaryRoom.cpp">
+      <Filter>WorldGenerator\RoomLayout\BSP</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedRoom.cpp">
+      <Filter>WorldGenerator\RoomLayout\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Graph.cpp">
+      <Filter>WorldGenerator\Common\Graph</Filter>
+    </ClCompile>
+    <ClCompile Include="RNG.cpp">
+      <Filter>WorldGenerator\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomLayoutGenerator.cpp">
+      <Filter>WorldGenerator\RoomLayout</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomLink.cpp">
+      <Filter>WorldGenerator\RoomLayout\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>WorldGenerator\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="MapGenerator.cpp">
+      <Filter>WorldGenerator</Filter>
+    </ClCompile>
+    <ClCompile Include="MapGeneratorAdapter.cpp">
+      <Filter>WorldGeneratorAdapter</Filter>
+    </ClCompile>
+    <ClCompile Include="MappingHelpers.cpp">
+      <Filter>WorldGeneratorAdapter\Mapper</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -350,6 +404,51 @@
     </ClInclude>
     <ClInclude Include="ObjectBuilder.hpp">
       <Filter>GameElements</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryRoom.h">
+      <Filter>WorldGenerator\RoomLayout\BSP</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedRoom.h">
+      <Filter>WorldGenerator\RoomLayout\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Graph.h">
+      <Filter>WorldGenerator\Common\Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Node.h">
+      <Filter>WorldGenerator\Common\Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="RNG.h">
+      <Filter>WorldGenerator\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomLayout.h">
+      <Filter>WorldGenerator\RoomLayout\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomLayoutConfig.h">
+      <Filter>WorldGenerator\RoomLayout\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomLink.h">
+      <Filter>WorldGenerator\RoomLayout\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>WorldGenerator\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3.h">
+      <Filter>WorldGenerator\RoomLayout\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomLayoutGenerator.h">
+      <Filter>WorldGenerator\RoomLayout</Filter>
+    </ClInclude>
+    <ClInclude Include="MapGenerator.h">
+      <Filter>WorldGenerator</Filter>
+    </ClInclude>
+    <ClInclude Include="MapGeneratorAdapter.h">
+      <Filter>WorldGeneratorAdapter</Filter>
+    </ClInclude>
+    <ClInclude Include="MapGeneratorMapper.h">
+      <Filter>WorldGeneratorAdapter\Mapper</Filter>
+    </ClInclude>
+    <ClInclude Include="MappingHelpers.h">
+      <Filter>WorldGeneratorAdapter\Mapper</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

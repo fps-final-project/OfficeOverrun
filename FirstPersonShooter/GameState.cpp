@@ -4,6 +4,7 @@
 #include "SimpleCollisionDetector.hpp"
 #include "EnemyBuilder.hpp"
 #include "ObjectBuilder.hpp"
+#include "MapGeneratorAdapter.h"
 
 GameState::GameState(
 	std::shared_ptr<DirectX::Keyboard> keyboard,
@@ -49,6 +50,8 @@ GameState::GameState(
 
 
 	m_world->m_rooms.push_back(Room(XMFLOAT3(-1.f, -1.f, -2.f), XMFLOAT3(4.f, 4.f, 6.f)));
+	// generating rooms using WorldGenerator
+	//m_world->m_rooms = MapGeneratorAdapter().GenerateRooms();
 	m_world->m_currentRoomIndex = 0;
 
 	m_world->m_entities.push_back((Entity)*ak);
