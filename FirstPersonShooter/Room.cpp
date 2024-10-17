@@ -5,8 +5,8 @@
 
 const float Room::wallOffset = 0.5f;
 
-Room::Room(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 size)
-	: pos(pos), size(size)
+Room::Room(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 size, const std::vector<RoomLinkData>& links)
+	: pos(pos), size(size), m_links(links)
 {
 }
 
@@ -73,4 +73,13 @@ void Room::Render(std::shared_ptr<RenderMaster> renderMaster)
 	// bottom wall
 	renderer->Render(Entity(model, { pos.x, pos.y, pos.z + size.z }, { size.x, size.z, 1.f }, {-DirectX::XM_PIDIV2, 0.f, 0.f}));
 	//renderer->Render(Entity(model, { pos.x + size.x, pos.y, pos.z }, { size.z, size.y, 1.f }, {0.f, -DirectX::XM_PIDIV2, 0.f}));
+}
+
+std::vector<int> Room::getAdjacentRooms()
+{
+	std::vector<int> adjacentIds;
+	for (auto link : m_links)
+		adjacentIds.push_back(link.roomId);
+
+	return adjacentIds;
 }

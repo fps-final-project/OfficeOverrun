@@ -6,7 +6,7 @@
 RoomLayoutConfig MapGeneratorAdapter::MakeDefaultLayoutConfig()
 {
 	RoomLayoutConfig config;
-	config.mapSize = Vector3(30, 30, 16);
+	config.mapSize = Vector3(30, 30, 4);
 	return config;
 }
 
