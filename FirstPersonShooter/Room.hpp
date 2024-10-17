@@ -18,6 +18,8 @@ class Room : public Drawable
 	DirectX::XMFLOAT3 size;
 	std::vector<RoomLinkData> m_links;
 	static const float wallOffset;
+	void renderWall(std::shared_ptr<AssimpModel> model, std::shared_ptr<ModelRenderer> modelRenderer, 
+		DirectX::XMFLOAT3 position, DirectX::XMFLOAT3 size, DirectX::XMFLOAT3 rotation, bool alongX);
 public:
 	Room(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 size, const std::vector<RoomLinkData>& links = {});
 	RoomCollision checkCollision(DirectX::XMFLOAT3 entityPos) const;
