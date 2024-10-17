@@ -10,7 +10,7 @@ Room::Room(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 size, const std::vector<Room
 {
 }
 
-RoomCollision Room::isInBounds(DirectX::XMFLOAT3 entityPos) const
+RoomCollision Room::checkCollision(DirectX::XMFLOAT3 entityPos) const
 {
 	// mapping:
 	// 0 - x, 1 - y, 2 - z
@@ -51,7 +51,35 @@ RoomCollision Room::isInBounds(DirectX::XMFLOAT3 entityPos) const
 		result.correction[2] = this->pos.z + this->size.z - wallOffset;
 	}
 
+	for (auto link : m_links)
+	{
+		if (link.alongX)
+		{
+			if (result.collision[2] && entityPos.x > link.pos.x && entityPos.x < link.pos.x + link.size.x)
+			{
+				result.collision[2] = false;
+				result.correction[2] = 0.f;
+			}
+		}
+		else
+		{
+			if (result.collision[0] && entityPos.z > link.pos.z && entityPos.z < link.pos.z + link.size.z)
+			{
+				result.collision[0] = false;
+				result.correction[0] = 0.f;
+			}
+		}
+	}
+
 	return result;
+}
+
+
+bool Room::insideRoom(DirectX::XMFLOAT3 pos) const
+{
+	return pos.x > this->pos.x && pos.x < this->pos.x + this->size.x &&
+		pos.y > this->pos.y && pos.y < this->pos.y + this->size.y &&
+		pos.z > this->pos.z && pos.z < this->pos.z + this->size.z;
 }
 
 void Room::Render(std::shared_ptr<RenderMaster> renderMaster)

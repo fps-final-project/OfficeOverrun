@@ -1,15 +1,15 @@
+#pragma once
 #include "Drawable.hpp"
 #include <DirectXMath.h>
 #include "RoomCollision.hpp"
 
-#ifndef ROOM_H
-#define ROOM_H
 
 struct RoomLinkData
 {
 	int roomId;
 	DirectX::XMFLOAT3 pos;
 	DirectX::XMFLOAT3 size;
+	bool alongX;
 };
 
 class Room : public Drawable
@@ -20,9 +20,8 @@ class Room : public Drawable
 	static const float wallOffset;
 public:
 	Room(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 size, const std::vector<RoomLinkData>& links = {});
-	RoomCollision isInBounds(DirectX::XMFLOAT3 entityPos) const;
+	RoomCollision checkCollision(DirectX::XMFLOAT3 entityPos) const;
+	bool insideRoom(DirectX::XMFLOAT3 pos) const;
 	std::vector<int> getAdjacentRooms();
 	virtual void Render(std::shared_ptr<RenderMaster> renderMaster) override;
 };
-
-#endif

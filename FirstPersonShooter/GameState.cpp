@@ -75,9 +75,10 @@ void GameState::HandleInput()
 void GameState::Update(float dt)
 {
 	m_player->Update(dt);
+	m_world->updateCurrentRoom(m_player->getPostition());
 	m_world->Update(dt);
 
-	m_player->handleRoomCollision(m_world->getCurrentRoom().isInBounds(m_player->getPostition()));
+	m_player->handleRoomCollision(m_world->getCurrentRoom().checkCollision(m_player->getPostition()));
 
 	m_camera->setPosition(m_player->getPostition());
 	m_player->getGunRig()->RotateAndOffset(m_camera->getYawPitchRoll(), m_player->getPostition(), dt);

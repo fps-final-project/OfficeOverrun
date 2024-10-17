@@ -53,6 +53,18 @@ void World::DeleteEntity(const GUID& entityId)
 	);
 }
 
+void World::updateCurrentRoom(DirectX::XMFLOAT3 playerPos)
+{
+	for (auto neighbour : m_rooms[m_currentRoomIndex].getAdjacentRooms())
+	{
+		if (m_rooms[neighbour].insideRoom(playerPos))
+		{
+			m_currentRoomIndex = neighbour;
+			break;
+		}
+	}
+}
+
 LightingData World::getLightingData()
 {
 	LightingData data;
