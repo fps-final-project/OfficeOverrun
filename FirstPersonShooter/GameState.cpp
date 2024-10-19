@@ -33,7 +33,7 @@ GameState::GameState(
 		.WithNewEnemy(ResourceManager::Instance.getAnimatedModel("zombie_war"))
 		.WithMaxHealth(100)
 		.WithDamage(10)
-		.WithPosition({ 0.f, -1.f, -1.f })
+		.WithPosition({ 3.f, 0.f, 2.f })
 		.WithRotation({ 0.f, 0.f, 0.f })
 		.WithVelocity({ 0.f, 0.f, 0.f })
 		.WithSize({ 0.8f, 0.8f, 0.8f })

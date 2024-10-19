@@ -88,20 +88,20 @@ void Room::Render(std::shared_ptr<RenderMaster> renderMaster)
 	auto renderer = renderMaster->getModelRenderer();
 
 	// front wall
-	renderer->Render(Entity(model, { pos.x, pos.y, pos.z }, { size.x, size.y, 1.f}));
-	//this->renderWall(model, renderer, { pos.x, pos.y, pos.z }, size, { 0.f, 0.f, 0.f }, true);
+	//renderer->Render(Entity(model, { pos.x, pos.y, pos.z }, { size.x, size.y, 1.f}));
+	this->renderWall(model, renderer, { pos.x, pos.y, pos.z }, { pos.x + size.x, pos.y + size.y, pos.z }, { 0.f, 0.f, 0.f }, true);
 
 	// left wall
-	renderer->Render(Entity(model, { pos.x, pos.y, pos.z + size.z }, { size.z, size.y, 1.f }, {0.f, DirectX::XM_PIDIV2, 0.f}));
-	//this->renderWall(model, renderer, { pos.x, pos.y, pos.z + size.z }, size, { 0.f, DirectX::XM_PIDIV2, 0.f }, false);
+	//renderer->Render(Entity(model, { pos.x, pos.y, pos.z + size.z }, { size.z, size.y, 1.f }, {0.f, DirectX::XM_PIDIV2, 0.f}));
+	this->renderWall(model, renderer, { pos.x, pos.y, pos.z + size.z }, { pos.x, pos.y + size.y, pos.z }, { 0.f, DirectX::XM_PIDIV2, 0.f }, false);
 
 	// back wall
-	renderer->Render(Entity(model, { pos.x + size.x, pos.y, pos.z + size.z }, { size.x, size.y, 1.f }, {0.f, DirectX::XM_PI, 0.f}));
-	//this->renderWall(model, renderer, { pos.x + size.x, pos.y, pos.z + size.z }, size, { 0.f, DirectX::XM_PI, 0.f }, true);
+	//renderer->Render(Entity(model, { pos.x + size.x, pos.y, pos.z + size.z }, { size.x, size.y, 1.f }, {0.f, DirectX::XM_PI, 0.f}));
+	this->renderWall(model, renderer, { pos.x + size.x, pos.y, pos.z + size.z }, { pos.x, pos.y + size.y, pos.z + size.z }, { 0.f, DirectX::XM_PI, 0.f }, true);
 
 	// right wall
-	renderer->Render(Entity(model, { pos.x + size.x, pos.y, pos.z }, { size.z, size.y, 1.f }, {0.f, -DirectX::XM_PIDIV2, 0.f}));
-	//this->renderWall(model, renderer, { pos.x + size.x, pos.y, pos.z }, size, { 0.f, -DirectX::XM_PIDIV2, 0.f }, false);
+	//renderer->Render(Entity(model, { pos.x + size.x, pos.y, pos.z }, { size.z, size.y, 1.f }, {0.f, -DirectX::XM_PIDIV2, 0.f}));
+	this->renderWall(model, renderer, { pos.x + size.x, pos.y, pos.z }, { pos.x + size.x, pos.y + size.y, pos.z + size.z }, { 0.f, -DirectX::XM_PIDIV2, 0.f }, false);
 
 	// bottom wall
 	renderer->Render(Entity(model, { pos.x, pos.y, pos.z + size.z }, { size.x, size.z, 1.f }, { -DirectX::XM_PIDIV2, 0.f, 0.f }));
@@ -109,14 +109,15 @@ void Room::Render(std::shared_ptr<RenderMaster> renderMaster)
 }
 
 void Room::renderWall(std::shared_ptr<AssimpModel> model, std::shared_ptr<ModelRenderer> modelRenderer,
-	DirectX::XMFLOAT3 position, DirectX::XMFLOAT3 size, DirectX::XMFLOAT3 rotation, bool alongX)
+	DirectX::XMFLOAT3 bottomLeft, DirectX::XMFLOAT3 topRight, DirectX::XMFLOAT3 rotation, bool alongX)
 {
+	// check if there is a door on that particular wall
 	RoomLinkData* data = nullptr;
 	for (auto& link : m_links)
 	{
 		if (link.alongX == alongX)
 		{
-			if ((link.alongX && link.pos.z == position.z) || (!link.alongX && link.pos.x == position.x))
+			if ((link.alongX && link.pos.z == bottomLeft.z) || (!link.alongX && link.pos.x == topRight.x))
 			{
 				data = &link;
 				break;
@@ -124,96 +125,53 @@ void Room::renderWall(std::shared_ptr<AssimpModel> model, std::shared_ptr<ModelR
 		}
 	}
 
-	DirectX::XMFLOAT3 scaling = { alongX ? size.x : size.z, size.y, 1.f };
+	DirectX::XMFLOAT3 tileStep = {
+		alongX ? (topRight.x - bottomLeft.x < 0 ? -1.f : 1.f) : 0.f,
+		1.f,
+		alongX ? 0.f : (topRight.z - bottomLeft.z < 0 ? -1.f : 1.f),
+	};
 
-	if (data)
-	{
-		modelRenderer->Render(Entity(model,
-			{ position.x, position.y + data->size.y, position.z },
-			{ scaling.x, scaling.y - data->size.y, scaling.z }, rotation));
+	int nStepsY = topRight.y - bottomLeft.y;
+	int nStepsH = alongX ? std::abs(topRight.x - bottomLeft.x) - 0.5f : std::abs(topRight.z - bottomLeft.z) - 0.5f;
 
-
-		if (alongX)
+	auto overlapsDoor = [&](DirectX::XMFLOAT3 tilePos, DirectX::XMFLOAT3 tileTopRight) {
+		// overlaps in y coordinate
+		if (data && data->size.y - tilePos.y > 0.5f)
 		{
-			float leftSize = data->pos.x > position.x ? data->pos.x - position.x : position.x - data->pos.x - 1;
-			float rightSize = scaling.x - leftSize - 1;
-
-
-			if (leftSize)
+			if (alongX)
 			{
-				if (data->pos.x > position.x)
+				if (tilePos.x >= data->pos.x && tilePos.x <= data->pos.x + data->size.x &&
+					tileTopRight.x >= data->pos.x && tileTopRight.x <= data->pos.x + data->size.x)
 				{
-					modelRenderer->Render(Entity(model,
-						{ position.x, position.y, position.z },
-						{ leftSize, data->size.y, scaling.z }, rotation));
+					return true;
 				}
-				else
+
+			}
+			else
+			{
+				if (tilePos.z >= data->pos.z && tilePos.z <= data->pos.z + data->size.z &&
+					tileTopRight.z >= data->pos.z && tileTopRight.z <= data->pos.z + data->size.z)
 				{
-					modelRenderer->Render(Entity(model,
-						{ data->pos.x + 1, position.y, position.z },
-						{ leftSize, data->size.y, scaling.z }, rotation));
+					return true;
 				}
 			}
-			/*if (rightSize)
-			{
-				if (data->pos.x > position.x)
-				{
-					modelRenderer->Render(Entity(model,
-						{ position.x + leftSize + 1, position.y, position.z },
-						{ rightSize, data->size.y, scaling.z }, rotation));
-				}
-				else
-				{
-					modelRenderer->Render(Entity(model,
-						{ position.x - leftSize - 1, position.y, position.z },
-						{ rightSize, data->size.y, scaling.z }, rotation));
-				}
-			}*/
-
-
 		}
-		else
-		{
-			float leftSize = data->pos.z > position.z ? data->pos.z - position.z : position.z - data->pos.z - 1;
-			float rightSize = scaling.x - leftSize - 1;
 
+		return false;
+		};
 
-			if (leftSize)
-			{
-				if (data->pos.z > position.z)
-				{
-					modelRenderer->Render(Entity(model,
-						{ position.x, position.y, position.z },
-						{ leftSize, data->size.y, scaling.z }, rotation));
-				}
-				else
-				{
-					modelRenderer->Render(Entity(model,
-						{ position.x, position.y, position.z - rightSize - 1 },
-						{ leftSize, data->size.y, scaling.z }, rotation));
-				}
-			}
-			/*if (rightSize)
-			{
-				if (data->pos.z > position.z)
-				{
-					modelRenderer->Render(Entity(model,
-						{ position.x, position.y, position.z + leftSize + 1},
-						{ rightSize, data->size.y, scaling.z }, rotation));
-				}
-				else
-				{
-					modelRenderer->Render(Entity(model,
-						{ position.x, position.y, position.z - leftSize - 1 },
-						{ rightSize, data->size.y, scaling.z }, rotation));
-				}
-			}*/
-		}
-	}
-	else
+	for (int stepY = 0; stepY < nStepsY; stepY++)
 	{
-		modelRenderer->Render(Entity(model, position, scaling, rotation));
+		for (int stepH = 0; stepH <= nStepsH; stepH++)
+		{
+			// if there is a door and it overlaps with current tile - dont draw the tile
+			DirectX::XMFLOAT3 tilePos = { bottomLeft.x + tileStep.x * stepH, bottomLeft.y + tileStep.y * stepY, bottomLeft.z + tileStep.z * stepH };
+			if (overlapsDoor(tilePos, { tilePos.x + tileStep.x, tilePos.y + tileStep.y, tilePos.z + tileStep.z }))
+				continue;
+			modelRenderer->Render(Entity(model, tilePos, { 1.f, 1.f, 1.f }, rotation));
+		}
 	}
+
 }
 
 std::vector<int> Room::getAdjacentRooms()
