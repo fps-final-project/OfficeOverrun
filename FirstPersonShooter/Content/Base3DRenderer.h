@@ -125,6 +125,13 @@ public:
 			);
 	}
 
+	void SetSencilBufferRefernceValue(UINT8 value)
+	{
+		m_deviceResources
+			->GetD3DDeviceContext()
+			->OMSetDepthStencilState(m_deviceResources->GetDepthStencilState(), value);
+	}
+
 	UINT8 GetStencilBufferValue()
 	{
 		auto depthStencilTexture = m_deviceResources->GetDepthStencilTexture();

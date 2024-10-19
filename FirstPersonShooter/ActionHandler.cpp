@@ -26,12 +26,6 @@ void ActionHandler::HandleActions(Player* player, World* world, Camera* camera)
 			if (gunRig->IsIdle())
 			{
 				gunRig->Shoot();
-				auto vector_at = gunRig->CalculateBulletDirection(camera->getAt());
-				XMFLOAT3 v;
-				DirectX::XMStoreFloat3(&v, DirectX::XMVectorScale(vector_at, 10.f));
-
-				auto barrelOffset = gunRig->GetBarrelOffset();
-				//find room thats id is the same as the last hit entity
 				world->DeleteEntity(m_lastHitEntity);
 			}
 			break;
