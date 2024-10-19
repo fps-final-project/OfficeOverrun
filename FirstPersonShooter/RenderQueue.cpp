@@ -32,6 +32,7 @@ GUID RenderQueue::drawAllAndClear(std::shared_ptr<RenderMaster> renderMaster)
 			i = 1;
 		}
 	}
+	
 	UINT8 stencilValue = renderMaster->getModelRenderer()->GetStencilBufferValue();
 	if (stencilValue > 0)
 	{
