@@ -53,6 +53,18 @@ void World::DeleteEntity(const GUID& entityId)
 	);
 }
 
+void World::updateCurrentRoom(DirectX::XMFLOAT3 playerPos)
+{
+	for (auto neighbour : m_rooms[m_currentRoomIndex].getAdjacentRooms())
+	{
+		if (m_rooms[neighbour].insideRoom(playerPos))
+		{
+			m_currentRoomIndex = neighbour;
+			break;
+		}
+	}
+}
+
 LightingData World::getLightingData()
 {
 	LightingData data;
@@ -73,10 +85,12 @@ RenderQueue World::createRenderQueue()
 		queue.push(RenderData(RendererType::ANIMATED, (Drawable*)&entity));
 	}
 
-	for (const auto& entity : m_rooms)
+	queue.push(RenderData(RendererType::MODEL, (Drawable*)&m_rooms[m_currentRoomIndex]));
+	for (const auto& entity : m_rooms[m_currentRoomIndex].getAdjacentRooms())
 	{
-		queue.push(RenderData(RendererType::MODEL, (Drawable*)&entity));
+		queue.push(RenderData(RendererType::MODEL, (Drawable*)&m_rooms[entity]));
 	}
+
 
 	return queue;
 }

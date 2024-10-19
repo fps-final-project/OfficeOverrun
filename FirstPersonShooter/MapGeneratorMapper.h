@@ -4,6 +4,7 @@
 #include "Room.hpp"
 #include "MappingHelpers.h"
 
+
 using namespace WorldGenerator;
 
 // Class contains mapping methods for pairs of classes from the App and WorldGenerator
@@ -14,6 +15,8 @@ public:
 	static T2 Map(T1 obj);
 	template<>
 	static Room Map(GeneratedRoom obj);
+	template<>
+	static RoomLinkData MapGeneratorMapper::Map(RoomLink obj);
 	template<>
 	static DirectX::XMFLOAT3 Map(Vector3 obj);
 };
@@ -30,7 +33,25 @@ Room MapGeneratorMapper::Map(GeneratedRoom obj)
 	DirectX::XMFLOAT3 pos = Map<Vector3, DirectX::XMFLOAT3>(MappingHelpers::PositionToGameOrientation(obj.pos));
 	DirectX::XMFLOAT3 size = Map<Vector3, DirectX::XMFLOAT3>(obj.size);
 
-	return Room(pos, size);
+
+	std::vector<RoomLinkData> links;
+	for (auto link : obj.links)
+	{
+		links.push_back(Map<RoomLink, RoomLinkData>(link));
+	}
+
+	return Room(pos, size, links);
+}
+
+template<>
+RoomLinkData MapGeneratorMapper::Map(RoomLink obj)
+{
+	RoomLinkData data;
+	data.pos = MapGeneratorMapper::Map<Vector3, DirectX::XMFLOAT3>(MappingHelpers::PositionToGameOrientation(obj.pos));
+	data.alongX = obj.orientation == Orientation::XZ;
+	data.size = obj.orientation == Orientation::XZ ? DirectX::XMFLOAT3(1, 2, 0) : DirectX::XMFLOAT3(0, 2, 1);
+	data.roomId = obj.linkedRoomIdx;
+	return data;
 }
 
 template<>

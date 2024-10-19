@@ -21,6 +21,7 @@ public:
 	int m_currentRoomIndex;
 
 	Room& getCurrentRoom() { return m_rooms[m_currentRoomIndex]; };
+	void updateCurrentRoom(DirectX::XMFLOAT3 playerPos);
 
 	LightingData getLightingData();
 
