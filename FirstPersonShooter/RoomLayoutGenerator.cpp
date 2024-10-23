@@ -18,6 +18,9 @@ RoomLayout& RoomLayoutGenerator::Generate()
 	// Step 2
 	GenerateAdGraph();
 
+	// Step 3
+	
+
 	// Step X - after graph operations
 	GenerateRoomLinks();
 
@@ -40,11 +43,15 @@ void RoomLayoutGenerator::GenerateAdGraph()
 		{
 			if (node.value->IsAdjacent(*adGraph.nodes[j].value))
 			{
-				node.neighbours.push_back(&adGraph.nodes[j]);
-				adGraph.nodes[j].neighbours.push_back(&node);
+				node.neighbours.push_back(j);
+				adGraph.nodes[j].neighbours.push_back(i);
 			}
 		}
 	}
+}
+
+void WorldGenerator::RoomLayoutGenerator::SelectRooms()
+{
 }
 
 // The method removes some edges, spoils graph structure
@@ -57,7 +64,7 @@ void RoomLayoutGenerator::GenerateRoomLinks()
 		for (int j = i + 1; j < n; j++)
 		{
 			Node<GeneratedRoom>& neighbour = adGraph.nodes[j];
-			if (!node.IsConnectedTo(&neighbour))
+			if (!node.IsConnectedTo(j))
 				continue;
 			auto border = node.value->ComputeBorders(*neighbour.value);
 			RoomLink link = RoomLink::MakeRoomLink(std::get<0>(border), std::get<1>(border));
