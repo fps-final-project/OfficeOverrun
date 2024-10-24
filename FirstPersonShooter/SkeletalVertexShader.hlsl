@@ -19,26 +19,6 @@ cbuffer AnimationTransformBuffer2 : register(b3)
 	matrix finalBonesMatricies2[MAX_BONES];
 }
 
-cbuffer AnimationTransformBuffer3 : register(b4)
-{
-	matrix finalBonesMatricies3[MAX_BONES];
-}
-
-cbuffer AnimationInverseTransformBuffer1 : register(b5)
-{
-	matrix finalBonesMatriciesInverses1[MAX_BONES];
-}
-
-cbuffer AnimationInverseTransformBuffer2 : register(b6)
-{
-	matrix finalBonesMatriciesInverses2[MAX_BONES];
-}
-
-cbuffer AnimationInverseTransformBuffer3 : register(b7)
-{
-	matrix finalBonesMatriciesInverses3[MAX_BONES];
-}
-
 struct VertexShaderInput
 {
 	float3 pos : POSITION;
