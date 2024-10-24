@@ -82,31 +82,6 @@ void Animator::calculateTransform(const Joint& data, const std::map<std::string,
 		calculateTransform(data.children[i], boneInfoMap, globalTransfomation);
 }
 
-std::vector<DirectX::XMMATRIX> Animator::getFinalTransformationMatricies(const std::vector<FinalTransformData>& data) const
-{
-    std::vector<DirectX::XMMATRIX> result;
-    for (const auto& transformData : data)
-    {
-        DirectX::XMMATRIX transform = DirectX::XMMatrixSet(
-            0.0f, 0.0f, 0.0f, 0.0f,
-            0.0f, 0.0f, 0.0f, 0.0f,
-            0.0f, 0.0f, 0.0f, 0.0f,
-            0.0f, 0.0f, 0.0f, 0.0f 
-        );
-
-        for (int i = 0; i < MAX_BONE_INFLUENCE; i++)
-        {
-            if (transformData.boneIds[i] == -1) continue;
-
-            transform += transformData.weights[i] * m_finalBoneMatrices[transformData.boneIds[i]];
-        }
-
-        result.push_back(transform);
-    }
-
-    return result;
-}
-
 DirectX::XMMATRIX Animator::getJointTransform(const Joint& data, float animationTime)
 {
     DirectX::XMMATRIX translation = interpolatePosition(data, animationTime);

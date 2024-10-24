@@ -101,13 +101,11 @@ AnimatedAssimpModel AssimpModelLoader::createAnimatedModelFromFile(const std::st
 	return loader.createAnimatedModel(path);
 }
 
-std::vector<FinalTransformData> AssimpModelLoader::ExtractBoneWeightForVerticies(
+void AssimpModelLoader::ExtractBoneWeightForVerticies(
 	std::vector<AnimatedVertexData>& verticies,
 	aiMesh* mesh,
 	const aiScene* scene)
 {
-	std::vector<std::pair<FinalTransformData, int>> finalTransformDataPerVertex(verticies.size(), std::make_pair(FinalTransformData(), 0));
-
 	for (int boneIndex = 0; boneIndex < mesh->mNumBones; ++boneIndex)
 	{
 		int boneId = -1;
@@ -135,41 +133,18 @@ std::vector<FinalTransformData> AssimpModelLoader::ExtractBoneWeightForVerticies
 		{
 			int vertexId = weights[weightIndex].mVertexId;
 			float weight = weights[weightIndex].mWeight;
-			assert(vertexId <= finalTransformDataPerVertex.size());
+			assert(vertexId <= verticies.size());
 			for (int i = 0; i < MAX_BONE_INFLUENCE; ++i)
 			{
-				if (finalTransformDataPerVertex[vertexId].first.boneIds[i] < 0)
+				if (verticies[vertexId].boneIds[i] < 0)
 				{
-					finalTransformDataPerVertex[vertexId].first.weights[i] = weight;
-					finalTransformDataPerVertex[vertexId].first.boneIds[i] = boneId;
-
-					// hashing bone weights in the integer such that later we can easily generate finalTransformId out of it
-					finalTransformDataPerVertex[vertexId].second |= (boneId << (8 * i));
+					verticies[vertexId].weights[i] = weight;
+					verticies[vertexId].boneIds[i] = boneId;
 					break;
 				}
 			}
 		}
 	}
-
-	// now we are mapping those hashes to natural numbers - finalTransformId
-	// such that each vertex will know which final premultiplied transform to use
-	// and also the inverse transform
-
-	std::vector<FinalTransformData> result;
-	std::map<int, int> boneIdCodeToFinalTransformId;
-	int numFinalTransforms = 0;
-	for (int i = 0; i < verticies.size(); i++)
-	{
-		if (boneIdCodeToFinalTransformId.find(finalTransformDataPerVertex[i].second) == boneIdCodeToFinalTransformId.end())
-		{
-			boneIdCodeToFinalTransformId.insert(std::make_pair(finalTransformDataPerVertex[i].second, numFinalTransforms++));
-			result.push_back(finalTransformDataPerVertex[i].first);
-		}
-
-		verticies[i].finalTransformId = boneIdCodeToFinalTransformId[finalTransformDataPerVertex[i].second];
-	}
-
-	return result;
 }
 
 void AssimpModelLoader::createAnimations(AnimatedAssimpModel& outModel, const aiScene* scene)
@@ -318,7 +293,7 @@ void AssimpModelLoader::processAnimatedMesh(AnimatedAssimpModel& outModel, aiMes
 		}
 	}
 
-	outModel.m_transformData = ExtractBoneWeightForVerticies(vertexData, m_mesh, scene);
+	ExtractBoneWeightForVerticies(vertexData, m_mesh, scene);
 	outModel.meshes.push_back(MeshFactory<AnimatedVertexData>::createMesh(vertexData, indicies, textures, m_deviceResources));
 }
 

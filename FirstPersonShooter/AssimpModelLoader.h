@@ -36,7 +36,7 @@ private:
 	std::shared_ptr<DX::DeviceResources> m_deviceResources;
 	std::string m_directory;
 
-	std::vector<FinalTransformData> ExtractBoneWeightForVerticies(std::vector<AnimatedVertexData>& verticies, aiMesh* mesh, const aiScene* scene);
+	void ExtractBoneWeightForVerticies(std::vector<AnimatedVertexData>& verticies, aiMesh* mesh, const aiScene* scene);
 	void createAnimations(AnimatedAssimpModel& outModel, const aiScene* scene);
 	void loadJointHierarchy(Joint& joint, aiNode* src);
 

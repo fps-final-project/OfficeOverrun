@@ -44,7 +44,8 @@ struct VertexShaderInput
 	float3 pos : POSITION;
 	float2 texture_pos : UV;
 	float3 normal : NORMAL;
-	int finalTransformId : FINAL_ID;
+	int4 boneIds : BONE_IDS;
+	float4 weights : WEIGHTS;
 };
 
 struct PixelShaderInput
@@ -57,28 +58,37 @@ struct PixelShaderInput
 
 PixelShaderInput main(VertexShaderInput input)
 {
-	matrix finalBoneTransform;
-	matrix finalBoneTransformInverse;
+	matrix BoneTransform =
+	{
+		{ 0, 0, 0, 0 },
+		{ 0, 0, 0, 0 },
+		{ 0, 0, 0, 0 },
+		{ 0, 0, 0, 0 }
+	};
 
-	if (input.finalTransformId < MAX_BONES)
+	for (int i = 0; i < 4; i++)
 	{
-		finalBoneTransform = finalBonesMatricies1[input.finalTransformId];
-		finalBoneTransformInverse = finalBonesMatriciesInverses1[input.finalTransformId];
+		if (input.boneIds[i] == -1)
+			continue;
+
+		if (input.boneIds[i] >= 2 * MAX_BONES)
+		{
+			break;
+		}
+
+		if (input.boneIds[i] < 50)
+		{
+			BoneTransform += finalBonesMatricies1[input.boneIds[i]] * input.weights[i];
+		}
+		else
+		{
+			BoneTransform += finalBonesMatricies2[input.boneIds[i] - 50] * input.weights[i];
+		}
 	}
-	else if (input.finalTransformId < 2 * MAX_BONES)
-	{
-		finalBoneTransform = finalBonesMatricies2[input.finalTransformId - MAX_BONES];
-		finalBoneTransformInverse = finalBonesMatriciesInverses2[input.finalTransformId - MAX_BONES];
-	}
-	else
-	{
-		finalBoneTransform = finalBonesMatricies3[input.finalTransformId - 2 * MAX_BONES];
-		finalBoneTransformInverse = finalBonesMatriciesInverses3[input.finalTransformId - 2 * MAX_BONES];
-	}
-	
+
 	// dobrze
-	matrix model_final = mul(finalBoneTransform, model);
-
+	matrix model_final = mul(BoneTransform, model);
+	
 	PixelShaderInput output;
 	float4 pos = mul(float4(input.pos, 1.0f), model_final);
 	output.model_pos = pos;
@@ -89,8 +99,7 @@ PixelShaderInput main(VertexShaderInput input)
 
 	output.texture_pos = input.texture_pos;
 
-	// (AB)^(-1) = B^(-1) * A^(-1)
-	output.normal = mul(input.normal, transpose(mul(inv_model, finalBoneTransformInverse)));
+	output.normal = normalize(mul(input.normal, model_final));
 
 	return output;
 }
