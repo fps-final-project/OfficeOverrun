@@ -5,12 +5,12 @@ RenderQueue::RenderQueue()
 {
 }
 
-void RenderQueue::push(const RenderData& data)
+void RenderQueue::Push(const RenderData& data)
 {
 	m_queue.push(data);
 }
 
-GUID RenderQueue::drawAllAndClear(std::shared_ptr<RenderMaster> renderMaster)
+GUID RenderQueue::DrawAllAndClear(std::shared_ptr<RenderMaster> renderMaster)
 {	
 	renderMaster->getModelRenderer()->ClearStencilBuffer();
 	GUID ret = GUID();
