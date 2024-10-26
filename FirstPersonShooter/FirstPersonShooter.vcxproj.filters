@@ -50,15 +50,6 @@
     <Filter Include="Content\Texture">
       <UniqueIdentifier>{32632a9d-63ea-4bb1-8b4b-20dc8c08cf6b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Assets\AK-47">
-      <UniqueIdentifier>{510d271b-ff9b-422a-9f49-b253f553adc2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Assets\AK-47\textures">
-      <UniqueIdentifier>{660e3e6e-6146-4da7-afce-7897361028aa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Assets\cube">
-      <UniqueIdentifier>{1d14699e-0ca2-4b6b-831b-2d71b7fe137d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Content\Shaders">
       <UniqueIdentifier>{91f83ae6-6528-46d5-8659-0e7b5e5e88dd}</UniqueIdentifier>
     </Filter>
@@ -67,18 +58,6 @@
     </Filter>
     <Filter Include="Content\Shaders\Skeletal">
       <UniqueIdentifier>{8746d375-b1b7-41ea-a582-d5c5c8a5ede0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Assets\vampire">
-      <UniqueIdentifier>{f3ea4c9f-a564-4fb2-b78b-72e405a55606}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Assets\vampire\textures">
-      <UniqueIdentifier>{b388464f-f7be-40df-9612-e20e4b53ed23}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Assets\myarms">
-      <UniqueIdentifier>{0465f5a2-e041-4cb6-b906-94ea0f2552ea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Assets\simplest">
-      <UniqueIdentifier>{b8d50479-1371-4fe1-a314-b719d2c69427}</UniqueIdentifier>
     </Filter>
     <Filter Include="Content\Entity">
       <UniqueIdentifier>{675191b9-1eec-4ae2-9cc0-614336ab7477}</UniqueIdentifier>
@@ -125,9 +104,6 @@
     <Filter Include="Content\Entity\GunRig">
       <UniqueIdentifier>{f5d3f666-f005-4e87-9563-2779be746441}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Assets\bullet">
-      <UniqueIdentifier>{3de93eb3-ce64-4119-8dd8-b64a0549f718}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Content\Player">
       <UniqueIdentifier>{9fd31a02-dea0-4701-8e34-bbd4e5a3d198}</UniqueIdentifier>
     </Filter>
@@ -160,6 +136,30 @@
     </Filter>
     <Filter Include="WorldGeneratorAdapter\Mapper">
       <UniqueIdentifier>{214de76f-0ded-4ce0-961f-ae52db94260f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\GunRig">
+      <UniqueIdentifier>{9fc70142-bf4f-476d-bae9-198f1768cde9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\GunRig\AK">
+      <UniqueIdentifier>{2b3a2562-23af-4e30-a6dd-66635a276d53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Enemy">
+      <UniqueIdentifier>{e010ee67-03fe-4866-b7fa-070359f15a0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Other">
+      <UniqueIdentifier>{970b1e55-0947-41a3-9db3-afdbf61b0f87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Other\bullet">
+      <UniqueIdentifier>{3de93eb3-ce64-4119-8dd8-b64a0549f718}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Enemy\Zombie">
+      <UniqueIdentifier>{0b9d0f06-2265-41db-b6d4-f0ea8b9edb34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Other\wall">
+      <UniqueIdentifier>{7c0c4e4e-5929-4fd5-bdc4-af1d4fd0259b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Other\crosshair">
+      <UniqueIdentifier>{32ed6e74-9ad3-4e59-b9b2-762ba37a6b74}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -455,41 +455,26 @@
     <Image Include="Assets\StoreLogo.png">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="Assets\smile.jpg">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\AK-47\textures\AK_Base_color.png">
-      <Filter>Assets\AK-47\textures</Filter>
-    </Image>
-    <Image Include="Assets\AK-47\textures\AK_Metallic.png">
-      <Filter>Assets\AK-47\textures</Filter>
-    </Image>
-    <Image Include="Assets\AK-47\textures\AK_Mixed_AO.png">
-      <Filter>Assets\AK-47\textures</Filter>
-    </Image>
-    <Image Include="Assets\AK-47\textures\AK_Normal_OpenGL.png">
-      <Filter>Assets\AK-47\textures</Filter>
-    </Image>
-    <Image Include="Assets\AK-47\textures\AK_Roughness.png">
-      <Filter>Assets\AK-47\textures</Filter>
-    </Image>
-    <Image Include="Assets\cube\smile.jpg">
-      <Filter>Assets\cube</Filter>
-    </Image>
-    <Image Include="Assets\myarms\Texture.png">
-      <Filter>Assets\myarms</Filter>
-    </Image>
-    <Image Include="Assets\cube\crosshair.png">
-      <Filter>Assets\cube</Filter>
-    </Image>
-    <Image Include="Assets\bullet\bullet.jpg">
-      <Filter>Assets</Filter>
-    </Image>
     <Image Include="Assets\cube\brickwall.jpg">
       <Filter>Assets</Filter>
     </Image>
-    <Image Include="Assets\zombie\world_war_zombie_diffuse.png">
-      <Filter>Assets</Filter>
+    <Image Include="Assets\Enemy\Zombie\world_war_zombie_diffuse.png">
+      <Filter>Assets\Enemy\Zombie</Filter>
+    </Image>
+    <Image Include="Assets\GunRig\AK\ak74m_baseColor.png">
+      <Filter>Assets\GunRig\AK</Filter>
+    </Image>
+    <Image Include="Assets\GunRig\AK\armColor.png">
+      <Filter>Assets\GunRig\AK</Filter>
+    </Image>
+    <Image Include="Assets\Other\wall\brickwall.jpg">
+      <Filter>Assets\Other\wall</Filter>
+    </Image>
+    <Image Include="Assets\Other\bullet\bullet.jpg">
+      <Filter>Assets\Other\bullet</Filter>
+    </Image>
+    <Image Include="Assets\Other\crosshair\crosshair.png">
+      <Filter>Assets\Other\crosshair</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
@@ -497,46 +482,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Assets\AK-47\AK47NoSubdiv.mtl">
-      <Filter>Assets\AK-47</Filter>
+    <None Include="Assets\Enemy\Zombie\zombie_war.gltf">
+      <Filter>Assets\Enemy\Zombie</Filter>
     </None>
-    <None Include="Assets\cube\cube.mtl">
-      <Filter>Assets\cube</Filter>
+    <None Include="Assets\GunRig\AK\ak.gltf">
+      <Filter>Assets\GunRig\AK</Filter>
     </None>
-    <None Include="Assets\AK-47\AK47NoSubdiv.obj">
-      <Filter>Assets\AK-47</Filter>
+    <None Include="Assets\GunRig\AK\ak_gun.gltf">
+      <Filter>Assets\GunRig\AK</Filter>
     </None>
-    <None Include="Assets\cube\cube.obj">
-      <Filter>Assets\cube</Filter>
+    <None Include="Assets\Other\bullet\bullet.mtl">
+      <Filter>Assets\Other\bullet</Filter>
     </None>
-    <None Include="Assets\myarms\myarms.fbx">
-      <Filter>Assets\myarms</Filter>
+    <None Include="Assets\Other\bullet\bullet.obj">
+      <Filter>Assets\Other\bullet</Filter>
     </None>
-    <None Include="Assets\myarms\myarms.dae">
-      <Filter>Assets\myarms</Filter>
-    </None>
-    <None Include="Assets\myarms\mygun.dae">
-      <Filter>Assets\myarms</Filter>
-    </None>
-    <None Include="Assets\myarms\myarms2.dae">
-      <Filter>Assets\myarms</Filter>
-    </None>
-    <None Include="Assets\myarms\myarms.glb">
-      <Filter>Assets\myarms</Filter>
-    </None>
-    <None Include="Assets\myarms\mygun.glb">
-      <Filter>Assets\myarms</Filter>
-    </None>
-    <None Include="Assets\AK-47\AK47NoSubdiv_cw.obj">
-      <Filter>Assets\AK-47</Filter>
-    </None>
-    <None Include="Assets\bullet\bullet.mtl">
-      <Filter>Assets\bullet</Filter>
-    </None>
-    <None Include="Assets\bullet\bullet.obj">
-      <Filter>Assets\bullet</Filter>
-    </None>
-    <None Include="Assets\zombie\zombie_war.gltf" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Content\SamplePixelShader.hlsl">

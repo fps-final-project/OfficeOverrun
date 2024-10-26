@@ -10,11 +10,11 @@ void World::Update(float dt)
 	}
 
 
-	if (m_animatedEntities.size() && m_animatedEntities[0].isIdle())
+	/*if (m_animatedEntities.size() && m_animatedEntities[0].isIdle())
 	{
 		int idx = (time(NULL) % 2) + 1;
 		m_animatedEntities[0].setAnimation("attack" + std::to_string(idx), 1.5f);
-	}
+	}*/
 
 	for (auto& entity : m_animatedEntities)
 	{
@@ -86,10 +86,10 @@ RenderQueue World::createRenderQueue()
 	}
 
 	queue.push(RenderData(RendererType::MODEL, (Drawable*)&m_rooms[m_currentRoomIndex]));
-	for (const auto& entity : m_rooms[m_currentRoomIndex].getAdjacentRooms())
+	/*for (const auto& entity : m_rooms[m_currentRoomIndex].getAdjacentRooms())
 	{
 		queue.push(RenderData(RendererType::MODEL, (Drawable*)&m_rooms[entity]));
-	}
+	}*/
 
 
 	return queue;

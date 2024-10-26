@@ -136,7 +136,7 @@ void AssimpModelLoader::ExtractBoneWeightForVerticies(
 			assert(vertexId <= verticies.size());
 			for (int i = 0; i < MAX_BONE_INFLUENCE; ++i)
 			{
-				if (verticies[vertexId].boneIds[i] < 0)
+				if (verticies[vertexId].boneIds[i] < 0 || verticies[vertexId].weights[i] == 0)
 				{
 					verticies[vertexId].weights[i] = weight;
 					verticies[vertexId].boneIds[i] = boneId;

@@ -29,7 +29,7 @@ GameState::GameState(
 	EnemyBuilder enemyBuilder{};
 	ObjectBuilder objectBuilder{};
 
-	auto zombie = enemyBuilder
+	/*auto zombie = enemyBuilder
 		.WithNewEnemy(ResourceManager::Instance.getAnimatedModel("zombie_war"))
 		.WithMaxHealth(100)
 		.WithDamage(10)
@@ -38,13 +38,18 @@ GameState::GameState(
 		.WithVelocity({ 0.f, 0.f, 0.f })
 		.WithSize({ 0.8f, 0.8f, 0.8f })
 		.WithFallbackAnimation("idle")
-		.Build();
+		.Build();*/
 
-	auto ak = 
-		objectBuilder
-		.WithNewObject(ResourceManager::Instance.getModel("AK47NoSubdiv_cw"))
-		.WithPosition({ 1.f, -1.f, -1.f })
-		.WithSize({ 0.2f, 0.2f, 0.2f })
+	
+	auto new_rig = enemyBuilder
+		.WithNewEnemy(ResourceManager::Instance.getAnimatedModel("ak_gun"))
+		.WithMaxHealth(100)
+		.WithDamage(10)
+		.WithPosition({ 5.f, 1.f, 2.f })
+		.WithRotation({ 0.f, 0.f, 0.f })
+		.WithVelocity({ 0.f, 0.f, 0.f })
+		.WithSize({ 1.f, 1.f, 1.f })
+		.WithFallbackAnimation("AK/reload1")
 		.Build();
 
 
@@ -54,8 +59,8 @@ GameState::GameState(
 	m_world->m_rooms = MapGeneratorAdapter().GenerateRooms();
 	//m_world->m_currentRoomIndex = 0;
 
-	m_world->m_entities.push_back((Entity)*ak);
-	m_world->m_animatedEntities.push_back((AnimatedEntity)*zombie);
+	//m_world->m_animatedEntities.push_back((AnimatedEntity)*zombie);
+	m_world->m_animatedEntities.push_back((AnimatedEntity)*new_rig);
 
 	this->setupActionHandlers();
 
