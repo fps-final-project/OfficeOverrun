@@ -91,10 +91,10 @@ RenderQueue World::CreateRenderQueue()
 	}
 
 	queue.Push(RenderData(RendererType::MODEL, (Drawable*)&m_rooms[m_currentRoomIndex]));
-	/*for (const auto& entity : m_rooms[m_currentRoomIndex].getAdjacentRooms())
+	for (const auto& entity : m_rooms[m_currentRoomIndex].getAdjacentRooms())
 	{
-		queue.push(RenderData(RendererType::MODEL, (Drawable*)&m_rooms[entity]));
-	}*/
+		queue.Push(RenderData(RendererType::MODEL, (Drawable*)&m_rooms[entity]));
+	}
 
 	return queue;
 }
