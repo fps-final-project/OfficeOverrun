@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "GameState.hpp"
 #include "ResourceManager.h"
+#include "ResourceHelper.hpp"
 #include "SimpleCollisionDetector.hpp"
 #include "EnemyBuilder.hpp"
 #include "ObjectBuilder.hpp"
@@ -45,6 +46,14 @@ GameState::GameState(
 	//m_world->m_rooms.push_back(Room(XMFLOAT3(-1.f, -1.f, -2.f), XMFLOAT3(4.f, 4.f, 6.f)));
 	// generating rooms using WorldGenerator
 	m_world->m_rooms = MapGeneratorAdapter().GenerateRooms();
+	for (auto& room : m_world->m_rooms)
+	{
+		room.setModel(
+			ResourceHelper::generateRoomModel(
+				room.getPosition(), room.getSize(), room.getLinks(),
+				"wall", m_deviceResources));
+	}
+	m_world->UpdateVisibleRooms();
 	//m_world->m_currentRoomIndex = 0;
 
 	m_world->AddEnemy(zombie);

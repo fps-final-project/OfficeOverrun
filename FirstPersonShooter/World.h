@@ -9,6 +9,7 @@
 #include "RenderQueue.hpp"
 #include "LightingData.hpp"
 #include <map>
+#include <set>
 
 struct GUIDComparer
 {
@@ -21,10 +22,12 @@ struct GUIDComparer
 
 class World
 {
+	std::set<int> m_visibleRooms;
 public:
 	void Update(float dt);
 	//std::vector<Hittable> GetEntities();
 	void DeleteEntity(const GUID& entity);
+	void UpdateVisibleRooms();
 
 	std::map<GUID, std::shared_ptr<AnimatedEntity>, GUIDComparer> m_animatedEntities;
 	std::map<GUID, std::shared_ptr<Entity>, GUIDComparer> m_entities;

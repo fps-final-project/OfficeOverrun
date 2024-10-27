@@ -314,6 +314,7 @@
     <ClInclude Include="RoomLayoutConfig.h" />
     <ClInclude Include="RoomLayoutGenerator.h" />
     <ClInclude Include="RoomLink.h" />
+    <ClInclude Include="RoomLinkData.hpp" />
     <ClInclude Include="SpriteRenderer.hpp" />
     <ClInclude Include="Animable.hpp" />
     <ClInclude Include="AnimatedAssimpModel.h" />
