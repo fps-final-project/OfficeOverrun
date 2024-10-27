@@ -8,6 +8,7 @@
 #include <vector>
 #include "TextureFactory.h"
 
+std::map<std::string, std::shared_ptr<Texture>> AssimpModelLoader::m_textureCache;
 
 #pragma region AssimpModel 
 
@@ -336,24 +337,18 @@ std::vector<std::shared_ptr<Texture>> AssimpModelLoader::loadMaterialTextures(ai
 
 		std::string path = m_directory + "/";
 		path = path.append(str.C_Str());
-		//bool skip = true;
 		bool skip = false;
-		for (unsigned int j = 0; j < m_texturesLoaded.size(); j++)
+		if (m_textureCache.find(str.C_Str()) != m_textureCache.end())
 		{
-			if (std::strcmp(m_texturesLoaded[j].get()->path.data(), path.c_str()) == 0)
-			{
-				textures.push_back(m_texturesLoaded[j]);
-				skip = true;
-				break;
-			}
+			textures.push_back(m_textureCache[str.C_Str()]);
 		}
-		if (!skip)
+		else
 		{
-			std::shared_ptr<Texture> m_texture = std::make_shared<Texture>(TextureFactory::CreateTextureFromFile(std::wstring(path.begin(), path.end()).c_str(), m_deviceResources));
-			m_texture->type = typeName;
-			m_texture->path = path;
-			textures.push_back(m_texture);
-			m_texturesLoaded.push_back(m_texture);
+			std::shared_ptr<Texture> texture = std::make_shared<Texture>(TextureFactory::CreateTextureFromFile(std::wstring(path.begin(), path.end()).c_str(), m_deviceResources));
+			texture->type = typeName;
+			texture->path = path;
+			textures.push_back(texture);
+			m_textureCache.insert(std::make_pair(str.C_Str(), texture));
 		}
 	}
 	return textures;

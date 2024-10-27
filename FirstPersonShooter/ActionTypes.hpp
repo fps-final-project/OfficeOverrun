@@ -10,5 +10,6 @@ enum class Action
 	WALK_RIGHT,
 	JUMP,
 	WEAPON1,
-	WEAPON2
+	WEAPON2,
+	WEAPON3
 };

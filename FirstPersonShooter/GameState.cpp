@@ -49,7 +49,7 @@ GameState::GameState(
 		.WithRotation({ 0.f, 0.f, 0.f })
 		.WithVelocity({ 0.f, 0.f, 0.f })
 		.WithSize({ 1.f, 1.f, 1.f })
-		.WithFallbackAnimation("AK/reload1")
+		.WithFallbackAnimation("reload2")
 		.Build();
 
 
@@ -147,4 +147,8 @@ void GameState::setupActionHandlers()
 		Action::WEAPON2
 	);
 
+	m_inputHandler->AddActionHandler(
+		[](InputState newState, InputState oldState) {	return newState.second.D3 && oldState.second.D3; },
+		Action::WEAPON3
+	);
 }

@@ -30,10 +30,10 @@ public:
 
 	void loadGunRigMetadata(const std::string& path);
 
-	inline std::shared_ptr<AssimpModel> getModel(std::string name) { return m_models[name]; }
-	inline std::shared_ptr<AnimatedAssimpModel> getAnimatedModel(std::string name) { return m_animatedModels[name]; }
-	inline std::shared_ptr<Texture> getTexture(std::string name) { return m_textures[name]; }
-	inline std::shared_ptr<GunRigMetadata> getGunRigMetadata(std::string name) { return m_gunRigMetadata[name]; }
+	std::shared_ptr<AssimpModel> getModel(std::string name);
+	std::shared_ptr<AnimatedAssimpModel> getAnimatedModel(std::string name);
+	std::shared_ptr<Texture> getTexture(std::string name);
+	std::shared_ptr<GunRigMetadata> getGunRigMetadata(std::string name);
 private:
 	ResourceManager() {}
 	std::map<std::string, std::shared_ptr<AssimpModel>> m_models;

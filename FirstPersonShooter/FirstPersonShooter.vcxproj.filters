@@ -164,6 +164,9 @@
     <Filter Include="Assets\GunRig\FN">
       <UniqueIdentifier>{88b7a2ad-ae80-4154-9828-1b0c95bd2f3d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\GunRig\smg">
+      <UniqueIdentifier>{54ede239-0330-4e07-8db4-44b013c49004}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -491,6 +494,12 @@
     <Image Include="Assets\GunRig\FN\material_diffuse.png">
       <Filter>Assets\GunRig\FN</Filter>
     </Image>
+    <Image Include="Assets\GunRig\smg\armColor.png">
+      <Filter>Assets\GunRig\smg</Filter>
+    </Image>
+    <Image Include="Assets\GunRig\smg\Material_457_baseColor.png">
+      <Filter>Assets\GunRig\smg</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -517,6 +526,12 @@
     </None>
     <None Include="Assets\GunRig\FN\FN_gun.gltf">
       <Filter>Assets\GunRig\FN</Filter>
+    </None>
+    <None Include="Assets\GunRig\smg\smg.gltf">
+      <Filter>Assets\GunRig\smg</Filter>
+    </None>
+    <None Include="Assets\GunRig\smg\smg_gun.gltf">
+      <Filter>Assets\GunRig\smg</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -548,6 +563,9 @@
     </Text>
     <Text Include="Assets\GunRig\FN\FN.txt">
       <Filter>Assets\GunRig\FN</Filter>
+    </Text>
+    <Text Include="Assets\GunRig\smg\smg.txt">
+      <Filter>Assets\GunRig\smg</Filter>
     </Text>
   </ItemGroup>
 </Project>
