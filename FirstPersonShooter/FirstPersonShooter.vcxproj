@@ -267,6 +267,8 @@
     <Image Include="Assets\Enemy\Zombie\world_war_zombie_diffuse.png" />
     <Image Include="Assets\GunRig\AK\ak74m_baseColor.png" />
     <Image Include="Assets\GunRig\AK\armColor.png" />
+    <Image Include="Assets\GunRig\FN\armColor.png" />
+    <Image Include="Assets\GunRig\FN\material_diffuse.png" />
     <Image Include="Assets\LockScreenLogo.scale-200.png" />
     <Image Include="Assets\Other\bullet\bullet.jpg" />
     <Image Include="Assets\Other\crosshair\crosshair.png" />
@@ -435,6 +437,12 @@
     <None Include="Assets\GunRig\AK\ak_gun.gltf">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
     </None>
+    <None Include="Assets\GunRig\FN\FN.gltf">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+    </None>
+    <None Include="Assets\GunRig\FN\FN_gun.gltf">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+    </None>
     <None Include="Assets\Other\bullet\bullet.mtl" />
     <None Include="packages.config" />
   </ItemGroup>
@@ -449,6 +457,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Assets\GunRig\AK\ak.txt" />
+    <Text Include="Assets\GunRig\FN\FN.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

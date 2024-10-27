@@ -8,10 +8,7 @@ class GunRig : public Drawable
 {
 
 public:
-	GunRig(std::shared_ptr<AnimatedAssimpModel> hands, std::shared_ptr<AnimatedAssimpModel> gun,
-		DirectX::XMFLOAT3 gunOffset, 
-		DirectX::XMFLOAT3 barrelOffset, 
-		DirectX::XMFLOAT3 rigOffset = {0.f, 0.f, 0.f});
+	GunRig(std::string gunName);
 	static DirectX::XMFLOAT3 CalculateBulletOrientation(DirectX::XMFLOAT3 yawPitchRoll);
 	DirectX::XMVECTOR CalculateBulletDirection(DirectX::XMVECTOR cameraAt);
 	void Update(float dt);

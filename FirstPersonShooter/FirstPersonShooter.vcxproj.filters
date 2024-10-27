@@ -485,6 +485,12 @@
     <Image Include="Assets\Other\crosshair\crosshair.png">
       <Filter>Assets\Other\crosshair</Filter>
     </Image>
+    <Image Include="Assets\GunRig\FN\armColor.png">
+      <Filter>Assets\GunRig\FN</Filter>
+    </Image>
+    <Image Include="Assets\GunRig\FN\material_diffuse.png">
+      <Filter>Assets\GunRig\FN</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -505,6 +511,12 @@
     </None>
     <None Include="Assets\Other\bullet\bullet.obj">
       <Filter>Assets\Other\bullet</Filter>
+    </None>
+    <None Include="Assets\GunRig\FN\FN.gltf">
+      <Filter>Assets\GunRig\FN</Filter>
+    </None>
+    <None Include="Assets\GunRig\FN\FN_gun.gltf">
+      <Filter>Assets\GunRig\FN</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -533,6 +545,9 @@
   <ItemGroup>
     <Text Include="Assets\GunRig\AK\ak.txt">
       <Filter>Assets\GunRig\AK</Filter>
+    </Text>
+    <Text Include="Assets\GunRig\FN\FN.txt">
+      <Filter>Assets\GunRig\FN</Filter>
     </Text>
   </ItemGroup>
 </Project>

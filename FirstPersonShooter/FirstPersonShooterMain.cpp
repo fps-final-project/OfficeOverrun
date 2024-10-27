@@ -21,9 +21,13 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	// Register to be notified if the Device is lost or recreated
 	m_deviceResources->RegisterDeviceNotify(this);
 
-	ResourceManager::Instance.loadAnimatedModel("Assets\\GunRig\\AK\\ak.gltf", m_deviceResources);
 	ResourceManager::Instance.loadAnimatedModel("Assets\\Enemy\\Zombie\\zombie_war.gltf", m_deviceResources);
+
+	ResourceManager::Instance.loadAnimatedModel("Assets\\GunRig\\AK\\ak.gltf", m_deviceResources);
 	ResourceManager::Instance.loadAnimatedModel("Assets\\GunRig\\AK\\ak_gun.gltf", m_deviceResources);
+
+	ResourceManager::Instance.loadAnimatedModel("Assets\\GunRig\\FN\\FN.gltf", m_deviceResources);
+	ResourceManager::Instance.loadAnimatedModel("Assets\\GunRig\\FN\\FN_gun.gltf", m_deviceResources);
 
 	ResourceManager::Instance.loadTexture("Assets\\Other\\crosshair\\crosshair.png", m_deviceResources);
 
@@ -31,6 +35,7 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	ResourceHelper::addWallModel("Assets\\Other\\wall\\brickwall.jpg", m_deviceResources);
 
 	ResourceManager::Instance.loadGunRigMetadata("Assets\\GunRig\\AK\\ak.txt");
+	ResourceManager::Instance.loadGunRigMetadata("Assets\\GunRig\\FN\\FN.txt");
 
 
 	m_spriteRenderer = std::make_unique<SpriteRenderer>(m_deviceResources->GetD3DDeviceContext());

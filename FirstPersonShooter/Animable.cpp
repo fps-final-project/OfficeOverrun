@@ -13,6 +13,7 @@ void Animable::setAnimation(std::string name, float speed, bool wrap)
 	{
 		m_animator.playAnimation(this->m_animatedModel->m_animations[name], speed, wrap);
 	}
+	else m_animator.playAnimation(nullptr);
 }
 
 void Animable::setFallbackAnimation(std::string name)
