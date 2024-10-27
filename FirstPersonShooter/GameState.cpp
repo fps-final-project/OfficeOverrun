@@ -151,4 +151,9 @@ void GameState::setupActionHandlers()
 		[](InputState newState, InputState oldState) {	return newState.second.D3 && oldState.second.D3; },
 		Action::WEAPON3
 	);
+
+	m_inputHandler->AddActionHandler(
+		[](InputState newState, InputState oldState) {	return newState.second.D4 && oldState.second.D4; },
+		Action::WEAPON4
+	);
 }

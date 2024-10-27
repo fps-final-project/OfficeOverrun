@@ -167,6 +167,9 @@
     <Filter Include="Assets\GunRig\smg">
       <UniqueIdentifier>{54ede239-0330-4e07-8db4-44b013c49004}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\GunRig\sniper">
+      <UniqueIdentifier>{d6ccbe41-c732-439c-94bd-2e1fdb7f0c25}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -500,6 +503,12 @@
     <Image Include="Assets\GunRig\smg\Material_457_baseColor.png">
       <Filter>Assets\GunRig\smg</Filter>
     </Image>
+    <Image Include="Assets\GunRig\sniper\armColor.png">
+      <Filter>Assets\GunRig\sniper</Filter>
+    </Image>
+    <Image Include="Assets\GunRig\sniper\Atlas_00001.png">
+      <Filter>Assets\GunRig\sniper</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -532,6 +541,12 @@
     </None>
     <None Include="Assets\GunRig\smg\smg_gun.gltf">
       <Filter>Assets\GunRig\smg</Filter>
+    </None>
+    <None Include="Assets\GunRig\sniper\sniper.gltf">
+      <Filter>Assets\GunRig\sniper</Filter>
+    </None>
+    <None Include="Assets\GunRig\sniper\sniper_gun.gltf">
+      <Filter>Assets\GunRig\sniper</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -566,6 +581,9 @@
     </Text>
     <Text Include="Assets\GunRig\smg\smg.txt">
       <Filter>Assets\GunRig\smg</Filter>
+    </Text>
+    <Text Include="Assets\GunRig\sniper\sniper.txt">
+      <Filter>Assets\GunRig\sniper</Filter>
     </Text>
   </ItemGroup>
 </Project>

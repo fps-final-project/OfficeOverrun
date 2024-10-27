@@ -33,8 +33,8 @@ void GunRig::Update(float dt)
 
 void GunRig::Reload()
 {
-	this->m_hands->setAnimation("reload1");
-	this->m_gun->setAnimation("reload1");
+	this->m_hands->setAnimation("reload_full");
+	this->m_gun->setAnimation("reload_full");
 }
 
 void GunRig::Shoot()

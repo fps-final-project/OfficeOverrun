@@ -100,6 +100,11 @@ void ActionHandler::HandleActions(Player* player, World* world, Camera* camera)
 			player->getGunRig()->ChangeGun("smg");
 			break;
 		}
+		case Action::WEAPON4:
+		{
+			player->getGunRig()->ChangeGun("sniper");
+			break;
+		}
 
 		}
 		}

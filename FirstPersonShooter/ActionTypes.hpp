@@ -11,5 +11,6 @@ enum class Action
 	JUMP,
 	WEAPON1,
 	WEAPON2,
-	WEAPON3
+	WEAPON3,
+	WEAPON4
 };

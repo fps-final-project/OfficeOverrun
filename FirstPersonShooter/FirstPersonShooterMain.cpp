@@ -32,6 +32,9 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	ResourceManager::Instance.loadAnimatedModel("Assets\\GunRig\\smg\\smg.gltf", m_deviceResources);
 	ResourceManager::Instance.loadAnimatedModel("Assets\\GunRig\\smg\\smg_gun.gltf", m_deviceResources);
 
+	ResourceManager::Instance.loadAnimatedModel("Assets\\GunRig\\sniper\\sniper.gltf", m_deviceResources);
+	ResourceManager::Instance.loadAnimatedModel("Assets\\GunRig\\sniper\\sniper_gun.gltf", m_deviceResources);
+
 	ResourceManager::Instance.loadTexture("Assets\\Other\\crosshair\\crosshair.png", m_deviceResources);
 
 	ResourceManager::Instance.loadModel("Assets\\Other\\bullet\\bullet.obj", m_deviceResources);
@@ -40,6 +43,7 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	ResourceManager::Instance.loadGunRigMetadata("Assets\\GunRig\\AK\\ak.txt");
 	ResourceManager::Instance.loadGunRigMetadata("Assets\\GunRig\\FN\\FN.txt");
 	ResourceManager::Instance.loadGunRigMetadata("Assets\\GunRig\\smg\\smg.txt");
+	ResourceManager::Instance.loadGunRigMetadata("Assets\\GunRig\\sniper\\sniper.txt");
 
 
 	m_spriteRenderer = std::make_unique<SpriteRenderer>(m_deviceResources->GetD3DDeviceContext());
