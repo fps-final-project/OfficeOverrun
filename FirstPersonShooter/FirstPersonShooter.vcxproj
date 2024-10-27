@@ -267,11 +267,8 @@
     <Image Include="Assets\Enemy\Zombie\world_war_zombie_diffuse.png" />
     <Image Include="Assets\GunRig\AK\ak74m_baseColor.png" />
     <Image Include="Assets\GunRig\AK\armColor.png" />
-    <Image Include="Assets\GunRig\FN\armColor.png" />
     <Image Include="Assets\GunRig\FN\material_diffuse.png" />
-    <Image Include="Assets\GunRig\smg\armColor.png" />
     <Image Include="Assets\GunRig\smg\Material_457_baseColor.png" />
-    <Image Include="Assets\GunRig\sniper\armColor.png" />
     <Image Include="Assets\GunRig\sniper\Atlas_00001.png" />
     <Image Include="Assets\LockScreenLogo.scale-200.png" />
     <Image Include="Assets\Other\bullet\bullet.jpg" />

@@ -491,20 +491,11 @@
     <Image Include="Assets\Other\crosshair\crosshair.png">
       <Filter>Assets\Other\crosshair</Filter>
     </Image>
-    <Image Include="Assets\GunRig\FN\armColor.png">
-      <Filter>Assets\GunRig\FN</Filter>
-    </Image>
     <Image Include="Assets\GunRig\FN\material_diffuse.png">
       <Filter>Assets\GunRig\FN</Filter>
     </Image>
-    <Image Include="Assets\GunRig\smg\armColor.png">
-      <Filter>Assets\GunRig\smg</Filter>
-    </Image>
     <Image Include="Assets\GunRig\smg\Material_457_baseColor.png">
       <Filter>Assets\GunRig\smg</Filter>
-    </Image>
-    <Image Include="Assets\GunRig\sniper\armColor.png">
-      <Filter>Assets\GunRig\sniper</Filter>
     </Image>
     <Image Include="Assets\GunRig\sniper\Atlas_00001.png">
       <Filter>Assets\GunRig\sniper</Filter>
