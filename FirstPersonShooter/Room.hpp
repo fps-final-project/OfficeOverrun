@@ -2,28 +2,29 @@
 #include "Drawable.hpp"
 #include <DirectXMath.h>
 #include "RoomCollision.hpp"
+#include "RoomLinkData.hpp"
+#include "Entity.hpp"
 
 
-struct RoomLinkData
-{
-	int roomId;
-	DirectX::XMFLOAT3 pos;
-	DirectX::XMFLOAT3 size;
-	bool alongX;
-};
 
 class Room : public Drawable
 {
 	DirectX::XMFLOAT3 pos;
 	DirectX::XMFLOAT3 size;
 	std::vector<RoomLinkData> m_links;
+	std::unique_ptr<Entity> m_roomWalls;
 	static const float wallOffset;
-	void renderWall(std::shared_ptr<AssimpModel> model, std::shared_ptr<ModelRenderer> modelRenderer, 
-		DirectX::XMFLOAT3 position, DirectX::XMFLOAT3 size, DirectX::XMFLOAT3 rotation, bool alongX);
+
 public:
 	Room(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 size, const std::vector<RoomLinkData>& links = {});
+	void setModel(Mesh mesh);
 	RoomCollision checkCollision(DirectX::XMFLOAT3 entityPos) const;
 	bool insideRoom(DirectX::XMFLOAT3 pos) const;
+
+	inline DirectX::XMFLOAT3 getPosition() { return pos; }
+	inline DirectX::XMFLOAT3 getSize() { return size; }
+	inline std::vector<RoomLinkData> getLinks() { return m_links; }
+
 	std::vector<int> getAdjacentRooms();
 	virtual void Render(std::shared_ptr<RenderMaster> renderMaster) override;
 };

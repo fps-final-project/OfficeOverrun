@@ -2,6 +2,21 @@
 #include "World.h"
 #include "ctime"
 
+void World::UpdateVisibleRooms()
+{
+	m_visibleRooms.clear();
+	m_visibleRooms.insert(m_currentRoomIndex);
+
+	for (auto roomIdx : m_rooms[m_currentRoomIndex].getAdjacentRooms())
+	{
+		m_visibleRooms.insert(roomIdx);
+		for (auto nextRoomIdx : m_rooms[roomIdx].getAdjacentRooms())
+		{
+			m_visibleRooms.insert(nextRoomIdx);
+		}
+	}
+}
+
 void World::Update(float dt)
 {
 	// maybe parallelism?
@@ -57,6 +72,7 @@ void World::UpdateCurrentRoom(DirectX::XMFLOAT3 playerPos)
 		if (m_rooms[neighbour].insideRoom(playerPos))
 		{
 			m_currentRoomIndex = neighbour;
+			this->UpdateVisibleRooms();
 			break;
 		}
 	}
@@ -90,10 +106,9 @@ RenderQueue World::CreateRenderQueue()
 		queue.Push(RenderData(RendererType::ANIMATED, (Drawable*)(entity.second.get())));
 	}
 
-	queue.Push(RenderData(RendererType::MODEL, (Drawable*)&m_rooms[m_currentRoomIndex]));
-	for (const auto& entity : m_rooms[m_currentRoomIndex].getAdjacentRooms())
+	for (int room : m_visibleRooms)
 	{
-		queue.Push(RenderData(RendererType::MODEL, (Drawable*)&m_rooms[entity]));
+		queue.Push(RenderData(RendererType::MODEL, (Drawable*)&m_rooms[room]));
 	}
 
 	return queue;
