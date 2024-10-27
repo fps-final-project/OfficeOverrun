@@ -33,8 +33,8 @@ void GunRig::Update(float dt)
 
 void GunRig::Reload()
 {
-	this->m_hands->setAnimation("reload_full");
-	this->m_gun->setAnimation("reload_full");
+	this->m_hands->setAnimation("reload1");
+	this->m_gun->setAnimation("reload1");
 }
 
 void GunRig::Shoot()
@@ -48,23 +48,25 @@ void GunRig::ChangeGun(const std::string& name)
 {
 	std::shared_ptr<GunRigMetadata> data = ResourceManager::Instance.getGunRigMetadata(name);
 
-	m_gunOffset = data->gunOffset;
-	m_barrelOffset = data->barrelOffset;
-	m_rigOffset = data->rigOffset;
-	m_name = data->name;
+	if (data != nullptr && name != m_name)
+	{
+		m_gunOffset = data->gunOffset;
+		m_barrelOffset = data->barrelOffset;
+		m_rigOffset = data->rigOffset;
+		m_name = data->name;
 
-	m_hands->setModel(ResourceManager::Instance.getAnimatedModel(data->name));
-	m_gun->setModel(ResourceManager::Instance.getAnimatedModel(data->name + "_gun"));
+		m_hands->setModel(ResourceManager::Instance.getAnimatedModel(data->name));
+		m_gun->setModel(ResourceManager::Instance.getAnimatedModel(data->name + "_gun"));
 
-	m_hands->setFallbackAnimation("idle");
-	m_gun->setFallbackAnimation("idle");
+		m_hands->setFallbackAnimation("idle");
+		m_gun->setFallbackAnimation("idle");
 
-	// if there is no draw anmiation it does nothing
-	m_hands->setAnimation("draw");
-	m_gun->setAnimation("draw");
-
-	this->Update(0);
+		// if there is no draw anmiation it does nothing
+		m_hands->setAnimation("draw");
+		m_gun->setAnimation("draw");
+	}
 }
+
 
 void GunRig::Render(std::shared_ptr<RenderMaster> renderMaster)
 {

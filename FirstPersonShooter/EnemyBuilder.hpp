@@ -8,12 +8,13 @@ public:
 	EnemyBuilder& WithNewEnemy(std::shared_ptr<AnimatedAssimpModel> model);
 	EnemyBuilder& WithMaxHealth(int maxHealth);
 	EnemyBuilder& WithDamage(int health);
+	EnemyBuilder& WithSpeed(float speed);
 	EnemyBuilder& WithPosition(DirectX::XMFLOAT3 pos);
 	EnemyBuilder& WithRotation(DirectX::XMFLOAT3 rot);
 	EnemyBuilder& WithVelocity(DirectX::XMFLOAT3 vel);
 	EnemyBuilder& WithSize(DirectX::XMFLOAT3 size);
 	EnemyBuilder& WithFallbackAnimation(std::string animationName);
-	Enemy* Build();
+	std::shared_ptr<Enemy>& Build();
 private:
 	std::shared_ptr<Enemy> m_enemy;
 };

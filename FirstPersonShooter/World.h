@@ -1,29 +1,45 @@
 #pragma once
 #include <vector>
 #include <queue>
+#include "Object.hpp"
+#include "Enemy.hpp"
 #include "AnimatedEntity.hpp" 
 #include "Entity.hpp" 
 #include "Room.hpp" 
 #include "RenderQueue.hpp"
 #include "LightingData.hpp"
+#include <map>
+
+struct GUIDComparer
+{
+	bool operator()(const GUID& Left, const GUID& Right) const
+	{
+		return memcmp(&Left, &Right, sizeof(Right)) < 0;
+	}
+};
 
 
 class World
 {
 public:
 	void Update(float dt);
-	std::vector<Hittable> GetEntities();
+	//std::vector<Hittable> GetEntities();
 	void DeleteEntity(const GUID& entity);
 
-	std::vector<AnimatedEntity> m_animatedEntities;
-	std::vector<Entity> m_entities;
+	std::map<GUID, std::shared_ptr<AnimatedEntity>, GUIDComparer> m_animatedEntities;
+	std::map<GUID, std::shared_ptr<Entity>, GUIDComparer> m_entities;
+	std::map<GUID, std::shared_ptr<Enemy>, GUIDComparer> m_enemies;
+	
 	std::vector<Room> m_rooms;
 	int m_currentRoomIndex;
+	Room& GetCurrentRoom() { return m_rooms[m_currentRoomIndex]; };
 
-	Room& getCurrentRoom() { return m_rooms[m_currentRoomIndex]; };
-	void updateCurrentRoom(DirectX::XMFLOAT3 playerPos);
+	void AddObject(std::shared_ptr<Object>& object);
+	void AddEnemy(std::shared_ptr<Enemy>& enemy);
 
-	LightingData getLightingData();
+	void UpdateCurrentRoom(DirectX::XMFLOAT3 playerPos);
+	void UpdateEnemies(DirectX::XMFLOAT3 playerPos);
 
-	RenderQueue createRenderQueue();
+	LightingData GetLightingData();
+	RenderQueue CreateRenderQueue();
 };

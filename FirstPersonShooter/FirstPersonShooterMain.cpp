@@ -21,29 +21,34 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	// Register to be notified if the Device is lost or recreated
 	m_deviceResources->RegisterDeviceNotify(this);
 
+	bool load_only_ak = false;
+
 	ResourceManager::Instance.loadAnimatedModel("Assets\\Enemy\\Zombie\\zombie_war.gltf", m_deviceResources);
 
 	ResourceManager::Instance.loadAnimatedModel("Assets\\GunRig\\AK\\ak.gltf", m_deviceResources);
 	ResourceManager::Instance.loadAnimatedModel("Assets\\GunRig\\AK\\ak_gun.gltf", m_deviceResources);
+	ResourceManager::Instance.loadGunRigMetadata("Assets\\GunRig\\AK\\ak.txt");
 
-	ResourceManager::Instance.loadAnimatedModel("Assets\\GunRig\\FN\\FN.gltf", m_deviceResources);
-	ResourceManager::Instance.loadAnimatedModel("Assets\\GunRig\\FN\\FN_gun.gltf", m_deviceResources);
+	if (!load_only_ak)
+	{
+		ResourceManager::Instance.loadAnimatedModel("Assets\\GunRig\\FN\\FN.gltf", m_deviceResources);
+		ResourceManager::Instance.loadAnimatedModel("Assets\\GunRig\\FN\\FN_gun.gltf", m_deviceResources);
+		ResourceManager::Instance.loadGunRigMetadata("Assets\\GunRig\\FN\\FN.txt");
 
-	ResourceManager::Instance.loadAnimatedModel("Assets\\GunRig\\smg\\smg.gltf", m_deviceResources);
-	ResourceManager::Instance.loadAnimatedModel("Assets\\GunRig\\smg\\smg_gun.gltf", m_deviceResources);
+		ResourceManager::Instance.loadAnimatedModel("Assets\\GunRig\\smg\\smg.gltf", m_deviceResources);
+		ResourceManager::Instance.loadAnimatedModel("Assets\\GunRig\\smg\\smg_gun.gltf", m_deviceResources);
+		ResourceManager::Instance.loadGunRigMetadata("Assets\\GunRig\\smg\\smg.txt");
 
-	ResourceManager::Instance.loadAnimatedModel("Assets\\GunRig\\sniper\\sniper.gltf", m_deviceResources);
-	ResourceManager::Instance.loadAnimatedModel("Assets\\GunRig\\sniper\\sniper_gun.gltf", m_deviceResources);
+		ResourceManager::Instance.loadAnimatedModel("Assets\\GunRig\\sniper\\sniper.gltf", m_deviceResources);
+		ResourceManager::Instance.loadAnimatedModel("Assets\\GunRig\\sniper\\sniper_gun.gltf", m_deviceResources);
+		ResourceManager::Instance.loadGunRigMetadata("Assets\\GunRig\\sniper\\sniper.txt");
+	}
 
 	ResourceManager::Instance.loadTexture("Assets\\Other\\crosshair\\crosshair.png", m_deviceResources);
 
 	ResourceManager::Instance.loadModel("Assets\\Other\\bullet\\bullet.obj", m_deviceResources);
 	ResourceHelper::addWallModel("Assets\\Other\\wall\\brickwall.jpg", m_deviceResources);
 
-	ResourceManager::Instance.loadGunRigMetadata("Assets\\GunRig\\AK\\ak.txt");
-	ResourceManager::Instance.loadGunRigMetadata("Assets\\GunRig\\FN\\FN.txt");
-	ResourceManager::Instance.loadGunRigMetadata("Assets\\GunRig\\smg\\smg.txt");
-	ResourceManager::Instance.loadGunRigMetadata("Assets\\GunRig\\sniper\\sniper.txt");
 
 
 	m_spriteRenderer = std::make_unique<SpriteRenderer>(m_deviceResources->GetD3DDeviceContext());
@@ -110,15 +115,15 @@ bool FirstPersonShooterMain::Render()
 	// Render the scene objects.
 	// TODO: Replace this with your app's content rendering functions.
 
-	m_renderMaster->setLighting(m_gameState->m_world->getLightingData());
+	m_renderMaster->setLighting(m_gameState->m_world->GetLightingData());
 	m_renderMaster->setupShaders(
 		m_gameState->m_camera->getProjectionMatrix(), 
 		m_gameState->m_camera->getViewMatrix(), 
 		m_gameState->m_camera->getPosition());
 
-	auto queue = m_gameState->m_world->createRenderQueue();
-	queue.push(RenderData(RendererType::ANIMATED, (Drawable*)m_gameState->m_player.get()));
-	GUID entityToHit = queue.drawAllAndClear(m_renderMaster);
+	auto queue = m_gameState->m_world->CreateRenderQueue();
+	queue.Push(RenderData(RendererType::ANIMATED, (Drawable*)m_gameState->m_player.get()));
+	GUID entityToHit = queue.DrawAllAndClear(m_renderMaster);
 	m_gameState->m_actionHandler->SetLastHitEntity(entityToHit);
 
 	m_spriteRenderer->BeginRendering(context, viewport);

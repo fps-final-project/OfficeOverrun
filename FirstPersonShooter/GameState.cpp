@@ -29,29 +29,17 @@ GameState::GameState(
 	EnemyBuilder enemyBuilder{};
 	ObjectBuilder objectBuilder{};
 
-	/*auto zombie = enemyBuilder
+	auto zombie = enemyBuilder
 		.WithNewEnemy(ResourceManager::Instance.getAnimatedModel("zombie_war"))
 		.WithMaxHealth(100)
 		.WithDamage(10)
+		.WithSpeed(0.01f)
 		.WithPosition({ 3.f, 0.f, 2.f })
 		.WithRotation({ 0.f, 0.f, 0.f })
 		.WithVelocity({ 0.f, 0.f, 0.f })
 		.WithSize({ 0.8f, 0.8f, 0.8f })
 		.WithFallbackAnimation("idle")
-		.Build();*/
-
-	
-	auto new_rig = enemyBuilder
-		.WithNewEnemy(ResourceManager::Instance.getAnimatedModel("ak_gun"))
-		.WithMaxHealth(100)
-		.WithDamage(10)
-		.WithPosition({ 5.f, 1.f, 2.f })
-		.WithRotation({ 0.f, 0.f, 0.f })
-		.WithVelocity({ 0.f, 0.f, 0.f })
-		.WithSize({ 1.f, 1.f, 1.f })
-		.WithFallbackAnimation("reload2")
 		.Build();
-
 
 
 	//m_world->m_rooms.push_back(Room(XMFLOAT3(-1.f, -1.f, -2.f), XMFLOAT3(4.f, 4.f, 6.f)));
@@ -59,8 +47,7 @@ GameState::GameState(
 	m_world->m_rooms = MapGeneratorAdapter().GenerateRooms();
 	//m_world->m_currentRoomIndex = 0;
 
-	//m_world->m_animatedEntities.push_back((AnimatedEntity)*zombie);
-	m_world->m_animatedEntities.push_back((AnimatedEntity)*new_rig);
+	m_world->AddEnemy(zombie);
 
 	this->setupActionHandlers();
 
@@ -80,10 +67,11 @@ void GameState::HandleInput()
 void GameState::Update(float dt)
 {
 	m_player->Update(dt);
-	m_world->updateCurrentRoom(m_player->getPostition());
+	m_world->UpdateCurrentRoom(m_player->getPostition());
+	m_world->UpdateEnemies(m_player->getPostition());
 	m_world->Update(dt);
 
-	m_player->handleRoomCollision(m_world->getCurrentRoom().checkCollision(m_player->getPostition()));
+	m_player->handleRoomCollision(m_world->GetCurrentRoom().checkCollision(m_player->getPostition()));
 
 	m_camera->setPosition(m_player->getPostition());
 	m_player->getGunRig()->RotateAndOffset(m_camera->getYawPitchRoll(), m_player->getPostition(), dt);
@@ -91,7 +79,7 @@ void GameState::Update(float dt)
 
 	//TODO: Collision handling
 
-	auto collisions = m_collisionDetector->GetCollisions(m_world->GetEntities());
+	//auto collisions = m_collisionDetector->GetCollisions(m_world->GetEntities());
 
 }
 

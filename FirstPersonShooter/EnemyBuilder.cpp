@@ -21,6 +21,12 @@ EnemyBuilder& EnemyBuilder::WithDamage(int health)
 	return *this;
 }
 
+EnemyBuilder& EnemyBuilder::WithSpeed(float speed)
+{
+	m_enemy->speed = speed;
+	return *this;
+}
+
 EnemyBuilder& EnemyBuilder::WithPosition(DirectX::XMFLOAT3 pos)
 {
 	m_enemy->position = pos;
@@ -52,7 +58,7 @@ EnemyBuilder& EnemyBuilder::WithFallbackAnimation(std::string animationName)
 
 }
 
-Enemy* EnemyBuilder::Build()
+std::shared_ptr<Enemy>& EnemyBuilder::Build()
 {
-    return m_enemy.get();
+    return m_enemy;
 }
