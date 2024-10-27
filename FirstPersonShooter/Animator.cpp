@@ -9,8 +9,8 @@ Animator::Animator()
 Animator::Animator(std::shared_ptr<Animation> animation, std::shared_ptr<Animation> fallback, bool wrap)
     : m_wrapAnimation(wrap), m_currentTime(0.f), m_currentAnimation(animation), m_fallbackAnimation(fallback), m_animationSpeedMultiplier(1.f)
 {
-	m_finalBoneMatrices.reserve(150);
-	for (int i = 0; i < 150; i++)
+	m_finalBoneMatrices.reserve(100);
+	for (int i = 0; i < 100; i++)
 	{
 		m_finalBoneMatrices.push_back(DirectX::XMMatrixIdentity());
 	}
@@ -80,31 +80,6 @@ void Animator::calculateTransform(const Joint& data, const std::map<std::string,
 
 	for (int i = 0; i < data.children.size(); i++)
 		calculateTransform(data.children[i], boneInfoMap, globalTransfomation);
-}
-
-std::vector<DirectX::XMMATRIX> Animator::getFinalTransformationMatricies(const std::vector<FinalTransformData>& data) const
-{
-    std::vector<DirectX::XMMATRIX> result;
-    for (const auto& transformData : data)
-    {
-        DirectX::XMMATRIX transform = DirectX::XMMatrixSet(
-            0.0f, 0.0f, 0.0f, 0.0f,
-            0.0f, 0.0f, 0.0f, 0.0f,
-            0.0f, 0.0f, 0.0f, 0.0f,
-            0.0f, 0.0f, 0.0f, 0.0f 
-        );
-
-        for (int i = 0; i < MAX_BONE_INFLUENCE; i++)
-        {
-            if (transformData.boneIds[i] == -1) continue;
-
-            transform += transformData.weights[i] * m_finalBoneMatrices[transformData.boneIds[i]];
-        }
-
-        result.push_back(transform);
-    }
-
-    return result;
 }
 
 DirectX::XMMATRIX Animator::getJointTransform(const Joint& data, float animationTime)

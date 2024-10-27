@@ -8,5 +8,9 @@ enum class Action
 	WALK_BACKWARD,
 	WALK_LEFT,
 	WALK_RIGHT,
-	JUMP	
+	JUMP,
+	WEAPON1,
+	WEAPON2,
+	WEAPON3,
+	WEAPON4
 };

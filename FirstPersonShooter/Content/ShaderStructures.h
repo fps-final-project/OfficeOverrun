@@ -52,7 +52,17 @@ struct LightingConstantBuffer
 
 struct AnimatedVertexData : public VertexData
 {
-	int finalTransformId;
+	int boneIds[MAX_BONE_INFLUENCE];
+	float weights[MAX_BONE_INFLUENCE];
+
+	AnimatedVertexData()
+	{
+		for (int i = 0; i < MAX_BONE_INFLUENCE; i++)
+		{
+			this->boneIds[i] = -1;
+			this->weights[i] = 0.0f;
+		}
+	}
 };
 
 struct AnimationConstantBuffer 

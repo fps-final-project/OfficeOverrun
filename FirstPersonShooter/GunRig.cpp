@@ -1,16 +1,14 @@
 #include "pch.h"
 #include "GunRig.h"
-#include <cmath>
+#include <cmath>]
+#include "ResourceManager.h"
 
-GunRig::GunRig(std::shared_ptr<AnimatedAssimpModel> hands, std::shared_ptr<AnimatedAssimpModel> gun, DirectX::XMFLOAT3 gunOffset, DirectX::XMFLOAT3 barrelOffset)
-	: m_gunOffset(gunOffset), m_initialBarrelOffset(barrelOffset), m_barrelOffset(barrelOffset)
+GunRig::GunRig(std::string gunName)
 {
-	// idea - they can be shared with world.entites
-	m_hands = std::make_shared<AnimatedEntity>(hands, XMFLOAT3(0.f, 0.f, 0.f), XMFLOAT3(1.f, 1.f, 1.f), XMFLOAT3(0.f, DirectX::XM_PI, 0.f));
-	m_gun = std::make_shared<AnimatedEntity>(gun, gunOffset, XMFLOAT3(1.f, 1.f, 1.f), XMFLOAT3(0.f, DirectX::XM_PI, 0.f));
+	m_hands = std::make_shared<AnimatedEntity>(ResourceManager::Instance.getAnimatedModel(gunName));
+	m_gun = std::make_shared<AnimatedEntity>(ResourceManager::Instance.getAnimatedModel(gunName + "_gun"));
 
-	m_hands->setFallbackAnimation("FP_idle_pose");
-	m_gun->setFallbackAnimation("GUN_idle_pose");
+	this->ChangeGun(gunName);
 }
 
 DirectX::XMFLOAT3 GunRig::CalculateBulletOrientation(DirectX::XMFLOAT3 yawPitchRoll)
@@ -35,16 +33,40 @@ void GunRig::Update(float dt)
 
 void GunRig::Reload()
 {
-	this->m_hands->setAnimation("FP_reload");
-	this->m_gun->setAnimation("GUN_reload");
+	this->m_hands->setAnimation("reload1");
+	this->m_gun->setAnimation("reload1");
 }
 
 void GunRig::Shoot()
 {
 	const float speedup = 1.6f;
-	this->m_hands->setAnimation("FP_fire", speedup);
-	this->m_gun->setAnimation("GUN_fire", speedup);
+	this->m_hands->setAnimation("shoot", speedup);
+	this->m_gun->setAnimation("shoot", speedup);
 }
+
+void GunRig::ChangeGun(const std::string& name)
+{
+	std::shared_ptr<GunRigMetadata> data = ResourceManager::Instance.getGunRigMetadata(name);
+
+	if (data != nullptr && name != m_name)
+	{
+		m_gunOffset = data->gunOffset;
+		m_barrelOffset = data->barrelOffset;
+		m_rigOffset = data->rigOffset;
+		m_name = data->name;
+
+		m_hands->setModel(ResourceManager::Instance.getAnimatedModel(data->name));
+		m_gun->setModel(ResourceManager::Instance.getAnimatedModel(data->name + "_gun"));
+
+		m_hands->setFallbackAnimation("idle");
+		m_gun->setFallbackAnimation("idle");
+
+		// if there is no draw anmiation it does nothing
+		m_hands->setAnimation("draw");
+		m_gun->setAnimation("draw");
+	}
+}
+
 
 void GunRig::Render(std::shared_ptr<RenderMaster> renderMaster)
 {
@@ -59,6 +81,8 @@ DirectX::XMFLOAT3 GunRig::GetBarrelOffset()
 
 void GunRig::RotateAndOffset(DirectX::XMFLOAT3 yawPitchRoll, DirectX::XMFLOAT3 playerPos, float dt)
 {
+	DirectX::XMVECTOR rig_offset = DirectX::XMLoadFloat3(&m_rigOffset);
+
 	DirectX::XMFLOAT3 actualRotation = { -yawPitchRoll.y, yawPitchRoll.x + XM_PI, 0 };
 	this->m_gun->setRotation(actualRotation);
 	this->m_hands->setRotation(actualRotation);
@@ -66,14 +90,22 @@ void GunRig::RotateAndOffset(DirectX::XMFLOAT3 yawPitchRoll, DirectX::XMFLOAT3 p
 	DirectX::XMVECTOR new_offset = DirectX::XMLoadFloat3(&m_gunOffset);
 	auto rotationMatrix = DirectX::XMMatrixRotationRollPitchYaw(actualRotation.x, actualRotation.y, 0);
 	new_offset = DirectX::XMVector3Transform(new_offset, rotationMatrix);
-	new_offset = DirectX::XMVectorAdd(new_offset, { playerPos.x, playerPos.y, playerPos.z, 0.f });
+	rig_offset = DirectX::XMVector3Transform(rig_offset, rotationMatrix);
+
+	auto rigPos = DirectX::XMVectorAdd(DirectX::XMLoadFloat3(&playerPos), rig_offset);
+	new_offset = DirectX::XMVectorAdd(new_offset, rigPos);
 
 
 	DirectX::XMFLOAT3 new_offset_f3;
 	DirectX::XMStoreFloat3(&new_offset_f3, new_offset);
 
 	this->m_gun->setPosition(new_offset_f3);
-	this->m_hands->setPosition(playerPos);
+
+	DirectX::XMFLOAT3 rig_offset_f3;
+	DirectX::XMStoreFloat3(&rig_offset_f3, rigPos);
+
+
+	this->m_hands->setPosition(rig_offset_f3);
 
 	// set up the barrel offset
 	DirectX::XMVECTOR newBarrelOffset = DirectX::XMLoadFloat3(&m_initialBarrelOffset);

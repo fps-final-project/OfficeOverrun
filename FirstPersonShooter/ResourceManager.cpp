@@ -55,3 +55,49 @@ void ResourceManager::loadTexture(const std::string& path,
 			deviceResources
 		))));
 }
+
+void ResourceManager::loadGunRigMetadata(const std::string& path)
+{
+	auto data = std::make_shared<GunRigMetadata>(GunRigMetadata::loadFromFile(path));
+	m_gunRigMetadata.insert(std::make_pair(data->name, data));
+}
+
+std::shared_ptr<AssimpModel> ResourceManager::getModel(std::string name)
+{
+	if (m_models.find(name) != m_models.end())
+	{
+		return m_models[name];
+	}
+
+	return nullptr;
+}
+
+std::shared_ptr<AnimatedAssimpModel> ResourceManager::getAnimatedModel(std::string name)
+{
+	if (m_animatedModels.find(name) != m_animatedModels.end())
+	{
+		return m_animatedModels[name];
+	}
+
+	return nullptr;
+}
+
+std::shared_ptr<Texture> ResourceManager::getTexture(std::string name)
+{
+	if (m_textures.find(name) != m_textures.end())
+	{
+		return m_textures[name];
+	}
+	
+	return nullptr;
+}
+
+std::shared_ptr<GunRigMetadata> ResourceManager::getGunRigMetadata(std::string name)
+{
+	if (m_gunRigMetadata.find(name) != m_gunRigMetadata.end())
+	{
+		return m_gunRigMetadata[name];
+	}
+
+	return nullptr;
+}
