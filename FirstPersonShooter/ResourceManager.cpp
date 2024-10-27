@@ -55,3 +55,9 @@ void ResourceManager::loadTexture(const std::string& path,
 			deviceResources
 		))));
 }
+
+void ResourceManager::loadGunRigMetadata(const std::string& path)
+{
+	auto data = std::make_shared<GunRigMetadata>(GunRigMetadata::loadFromFile(path));
+	m_gunRigMetadata.insert(std::make_pair(data->name, data));
+}

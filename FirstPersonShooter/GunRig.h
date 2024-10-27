@@ -17,6 +17,7 @@ public:
 	void Update(float dt);
 	void Reload();
 	void Shoot();
+	void ChangeGun(const std::string& name);
 	bool IsIdle() { return m_hands->isIdle(); }
 	virtual void Render(std::shared_ptr<RenderMaster> renderMaster);
 	DirectX::XMFLOAT3 GetBarrelOffset();
@@ -24,5 +25,6 @@ public:
 private:
 	DirectX::XMFLOAT3 m_rigOffset, m_gunOffset, m_initialBarrelOffset, m_barrelOffset;
 	std::shared_ptr<AnimatedEntity> m_hands, m_gun;
+	std::string m_name;
 
 };

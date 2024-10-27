@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "GunRig.h"
-#include <cmath>
+#include <cmath>]
+#include "ResourceManager.h"
 
 GunRig::GunRig(std::shared_ptr<AnimatedAssimpModel> hands, std::shared_ptr<AnimatedAssimpModel> gun,
 	DirectX::XMFLOAT3 gunOffset, DirectX::XMFLOAT3 barrelOffset, DirectX::XMFLOAT3 rigOffset)
@@ -10,8 +11,8 @@ GunRig::GunRig(std::shared_ptr<AnimatedAssimpModel> hands, std::shared_ptr<Anima
 	m_hands = std::make_shared<AnimatedEntity>(hands, XMFLOAT3(0.f, -1.369078, -0.125759), XMFLOAT3(1.f, 1.f, 1.f), XMFLOAT3(0.f, DirectX::XM_PI, 0.f));
 	m_gun = std::make_shared<AnimatedEntity>(gun, gunOffset, XMFLOAT3(1.f, 1.f, 1.f), XMFLOAT3(0.f, DirectX::XM_PI, 0.f));
 
-	m_hands->setFallbackAnimation("AK/idle");
-	m_gun->setFallbackAnimation("AK/idle");
+	m_hands->setFallbackAnimation("idle");
+	m_gun->setFallbackAnimation("idle");
 }
 
 DirectX::XMFLOAT3 GunRig::CalculateBulletOrientation(DirectX::XMFLOAT3 yawPitchRoll)
@@ -36,15 +37,34 @@ void GunRig::Update(float dt)
 
 void GunRig::Reload()
 {
-	this->m_hands->setAnimation("AK/reload2");
-	this->m_gun->setAnimation("AK/reload2");
+	this->m_hands->setAnimation("reload1");
+	this->m_gun->setAnimation("reload1");
 }
 
 void GunRig::Shoot()
 {
 	const float speedup = 1.6f;
-	this->m_hands->setAnimation("AK/shoot", speedup);
-	this->m_gun->setAnimation("AK/shoot", speedup);
+	this->m_hands->setAnimation("shoot", speedup);
+	this->m_gun->setAnimation("shoot", speedup);
+}
+
+void GunRig::ChangeGun(const std::string& name)
+{
+	std::shared_ptr<GunRigMetadata> data = ResourceManager::Instance.getGunRigMetadata(name);
+
+	this->m_gunOffset = data->gunOffset;
+	this->m_barrelOffset = data->barrelOffset;
+	this->m_rigOffset = data->rigOffset;
+
+	m_hands->setModel(ResourceManager::Instance.getAnimatedModel(data->name));
+	m_gun->setModel(ResourceManager::Instance.getAnimatedModel(data->name + "_gun"));
+
+	m_hands->setFallbackAnimation("idle");
+	m_gun->setFallbackAnimation("idle");
+
+	// if there is no draw anmiation it does nothing
+	m_hands->setAnimation("draw");
+	m_gun->setAnimation("draw");
 }
 
 void GunRig::Render(std::shared_ptr<RenderMaster> renderMaster)

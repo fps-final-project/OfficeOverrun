@@ -288,6 +288,7 @@
     <ClInclude Include="GeneratedRoom.h" />
     <ClInclude Include="Graph.h" />
     <ClInclude Include="GunRig.h" />
+    <ClInclude Include="GunRigMetadata.hpp" />
     <ClInclude Include="MapGeneratorAdapter.h" />
     <ClInclude Include="LightingData.hpp" />
     <ClInclude Include="MapGeneratorMapper.h" />
@@ -365,6 +366,7 @@
     <ClCompile Include="GeneratedRoom.cpp" />
     <ClCompile Include="Graph.cpp" />
     <ClCompile Include="GunRig.cpp" />
+    <ClCompile Include="GunRigMetadata.cpp" />
     <ClCompile Include="Hittable.cpp" />
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="MapGeneratorAdapter.cpp" />
@@ -444,6 +446,9 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
       <FileType>Document</FileType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Assets\GunRig\AK\ak.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

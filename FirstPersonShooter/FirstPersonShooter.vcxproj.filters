@@ -161,6 +161,9 @@
     <Filter Include="Assets\Other\crosshair">
       <UniqueIdentifier>{32ed6e74-9ad3-4e59-b9b2-762ba37a6b74}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\GunRig\FN">
+      <UniqueIdentifier>{88b7a2ad-ae80-4154-9828-1b0c95bd2f3d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -278,6 +281,9 @@
     </ClCompile>
     <ClCompile Include="MappingHelpers.cpp">
       <Filter>WorldGeneratorAdapter\Mapper</Filter>
+    </ClCompile>
+    <ClCompile Include="GunRigMetadata.cpp">
+      <Filter>Content\Entity\GunRig</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -450,6 +456,9 @@
     <ClInclude Include="MappingHelpers.h">
       <Filter>WorldGeneratorAdapter\Mapper</Filter>
     </ClInclude>
+    <ClInclude Include="GunRigMetadata.hpp">
+      <Filter>Content\Entity\GunRig</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\StoreLogo.png">
@@ -520,5 +529,10 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="FirstPersonShooter.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Assets\GunRig\AK\ak.txt">
+      <Filter>Assets\GunRig\AK</Filter>
+    </Text>
   </ItemGroup>
 </Project>

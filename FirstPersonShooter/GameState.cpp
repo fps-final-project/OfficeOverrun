@@ -137,4 +137,14 @@ void GameState::setupActionHandlers()
 		Action::JUMP
 	);
 
+	m_inputHandler->AddActionHandler(
+		[](InputState newState, InputState oldState) {	return newState.second.D1 && oldState.second.D1; },
+		Action::WEAPON1
+	);
+
+	m_inputHandler->AddActionHandler(
+		[](InputState newState, InputState oldState) {	return newState.second.D2 && oldState.second.D2; },
+		Action::WEAPON2
+	);
+
 }

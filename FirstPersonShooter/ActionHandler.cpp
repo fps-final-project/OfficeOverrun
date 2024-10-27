@@ -85,6 +85,16 @@ void ActionHandler::HandleActions(Player* player, World* world, Camera* camera)
 			player->jump();
 			break;
 		}
+		case Action::WEAPON1:
+		{
+			player->getGunRig()->ChangeGun("ak");
+			break;
+		}
+		case Action::WEAPON2:
+		{
+			player->getGunRig()->ChangeGun("FN");
+			break;
+		}
 
 		}
 		}
