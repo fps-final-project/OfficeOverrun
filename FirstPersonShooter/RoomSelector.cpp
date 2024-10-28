@@ -9,12 +9,12 @@ void WorldGenerator::RoomSelector::RemoveUpDownEdges()
 	for (int i = 0; i < H.nodes.size(); i++)
 	{
 		Node<GeneratedRoom>& v = H.nodes[i];
-		for (auto& k : v.neighbours)
+		for (int j = 0; j < H.nodes.size(); j++)
 		{
-			Node<GeneratedRoom>& u = H.nodes[k];
-			if (v.value->IsAbove(*u.value))
+			Node<GeneratedRoom>& u = H.nodes[j];
+			if (H.HasEdge(i,j) && v.value->IsAbove(*u.value))
 			{
-				H.DeleteEdge(k, i);
+				H.DeleteEdge(i, j);
 			}
 		}
 	}
