@@ -11,10 +11,10 @@ namespace WorldGenerator
 	public:
 		std::vector<Node<T>> nodes;
 
-
 		Graph(std::vector<T>& values);
-
 		Graph() = default;
+
+		void DeleteEdge(int from, int to);
 	};
 
 	template<typename T>
@@ -25,5 +25,10 @@ namespace WorldGenerator
 		{
 			nodes.push_back(Node<T>(&val));
 		}
+	}
+	template<typename T>
+	inline void Graph<T>::DeleteEdge(int from, int to)
+	{
+
 	}
 }

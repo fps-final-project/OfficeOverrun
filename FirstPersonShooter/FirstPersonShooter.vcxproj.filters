@@ -161,6 +161,9 @@
     <Filter Include="WorldGeneratorAdapter\Mapper">
       <UniqueIdentifier>{214de76f-0ded-4ce0-961f-ae52db94260f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="WorldGenerator\RoomLayout\RooomSelector">
+      <UniqueIdentifier>{97ad2e10-ce1f-429c-8771-5c5bdf50c841}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -255,9 +258,6 @@
     <ClCompile Include="GeneratedRoom.cpp">
       <Filter>WorldGenerator\RoomLayout\Model</Filter>
     </ClCompile>
-    <ClCompile Include="Graph.cpp">
-      <Filter>WorldGenerator\Common\Graph</Filter>
-    </ClCompile>
     <ClCompile Include="RNG.cpp">
       <Filter>WorldGenerator\Common</Filter>
     </ClCompile>
@@ -278,6 +278,9 @@
     </ClCompile>
     <ClCompile Include="MappingHelpers.cpp">
       <Filter>WorldGeneratorAdapter\Mapper</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomSelector.cpp">
+      <Filter>WorldGenerator\RoomLayout\RooomSelector</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -449,6 +452,12 @@
     </ClInclude>
     <ClInclude Include="MappingHelpers.h">
       <Filter>WorldGeneratorAdapter\Mapper</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomSelector.h">
+      <Filter>WorldGenerator\RoomLayout\RooomSelector</Filter>
+    </ClInclude>
+    <ClInclude Include="NotImplementedExecption.h">
+      <Filter>WorldGenerator\Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

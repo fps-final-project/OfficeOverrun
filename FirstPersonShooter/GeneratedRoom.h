@@ -17,6 +17,8 @@ namespace WorldGenerator
 		std::vector<RoomLink> links; // links to other rooms
 
 		bool IsAdjacent(GeneratedRoom room);
+		bool IsAbove(GeneratedRoom room);
+		bool IsBelow(GeneratedRoom room);
 		std::tuple<Vector3, Vector3> ComputeBorders(GeneratedRoom room); // Returns pos and size
 	};
 }

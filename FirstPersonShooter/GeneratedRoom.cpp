@@ -20,6 +20,16 @@ bool GeneratedRoom::IsAdjacent(GeneratedRoom room)
         return false;
 }
 
+bool WorldGenerator::GeneratedRoom::IsAbove(GeneratedRoom room)
+{
+    return pos.z > room.pos.z;
+}
+
+bool WorldGenerator::GeneratedRoom::IsBelow(GeneratedRoom room)
+{
+    return pos.z < room.pos.z;
+}
+
 // Returns pos and size turple
 std::tuple<Vector3, Vector3> GeneratedRoom::ComputeBorders(GeneratedRoom room)
 {
