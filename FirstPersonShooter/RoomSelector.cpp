@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "RoomSelector.h"
 #include "NotImplementedExecption.h"
+#include <cmath>
 
 using namespace WorldGenerator;
 
@@ -20,7 +21,22 @@ void WorldGenerator::RoomSelector::RemoveUpDownEdges()
 	}
 }
 
+
+WorldGenerator::RoomSelector::RoomSelector(RoomSelectorArgs args)
+{
+	H = args.initialGraph;
+	s = args.startVertex;
+	N = std::floor(H.nodes.size() * args.roomDensity);
+	P = std::floor(N * args.pathLengthCoeff);
+	e_c = args.edgeDensityCoeff;
+}
+
 Graph<GeneratedRoom> WorldGenerator::RoomSelector::SelectRooms()
 {
+	// Step 1
+	RemoveUpDownEdges();
+
+	// Step 2
+
 	throw NotImplemented();
 }

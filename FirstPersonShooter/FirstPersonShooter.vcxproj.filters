@@ -459,6 +459,9 @@
     <ClInclude Include="NotImplementedExecption.h">
       <Filter>WorldGenerator\Common</Filter>
     </ClInclude>
+    <ClInclude Include="RoomSelectorArgs.h">
+      <Filter>WorldGenerator\RoomLayout\RooomSelector</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\StoreLogo.png">

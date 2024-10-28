@@ -30,6 +30,11 @@ bool WorldGenerator::GeneratedRoom::IsBelow(GeneratedRoom room)
     return pos.z < room.pos.z;
 }
 
+bool WorldGenerator::GeneratedRoom::IsZeroFloor()
+{
+    return pos.z == 0;
+}
+
 // Returns pos and size turple
 std::tuple<Vector3, Vector3> GeneratedRoom::ComputeBorders(GeneratedRoom room)
 {

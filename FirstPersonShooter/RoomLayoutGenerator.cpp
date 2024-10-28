@@ -3,6 +3,8 @@
 #include "Utils.h"
 #include "BinaryRoom.h"
 #include "RoomLink.h"
+#include "RoomSelector.h"
+#include <algorithm>
 
 using namespace WorldGenerator;
 
@@ -19,7 +21,7 @@ RoomLayout& RoomLayoutGenerator::Generate()
 	GenerateAdGraph();
 
 	// Step 3
-	
+	SelectRooms();
 
 	// Step X - after graph operations
 	GenerateRoomLinks();
@@ -51,6 +53,17 @@ void RoomLayoutGenerator::GenerateAdGraph()
 
 void WorldGenerator::RoomLayoutGenerator::SelectRooms()
 {
+	// Setup selector args
+	RoomSelectorArgs args(adGraph);
+	auto is_on_the_0_floor = [](Node<GeneratedRoom> node) { return node.value->IsZeroFloor(); };
+	args.startVertex = std::distance(adGraph.nodes.begin(), 
+		std::find_if(adGraph.nodes.begin(), adGraph.nodes.end(), is_on_the_0_floor)); // First index of room on zero floor
+	args.roomDensity = config.roomDensity;
+	args.pathLengthCoeff = config.pathLengthCoeff;
+	args.edgeDensityCoeff = config.edgeDensityCoeff;
+
+	RoomSelector selector(args);
+	selector.SelectRooms();
 }
 
 // The method removes some edges, spoils graph structure
