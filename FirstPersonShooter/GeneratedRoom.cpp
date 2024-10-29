@@ -30,6 +30,11 @@ bool WorldGenerator::GeneratedRoom::IsBelow(GeneratedRoom room)
     return pos.z < room.pos.z;
 }
 
+bool WorldGenerator::GeneratedRoom::IsSameLevel(GeneratedRoom room)
+{
+    return pos.z == room.pos.z;
+}
+
 bool WorldGenerator::GeneratedRoom::IsZeroFloor()
 {
     return pos.z == 0;

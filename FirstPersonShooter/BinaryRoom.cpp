@@ -16,7 +16,7 @@ void BinaryRoom::Split(RoomLayout& layout)
 		return;
 	}
 
-	int cutType = Utils::RandIntInRange(0,2);
+	int cutType = RngUtils::RandIntInRange(0,2);
 
 	if (cutType == 2)
 		SplitVertical(layout);
@@ -45,7 +45,7 @@ void BinaryRoom::Split2D(RoomLayout& layout, int cutType)
 		inDepth = true;
 	}
 
-	int cutOffset = Utils::RandIntInRange(RoomLayoutConfig::minRoom2DSize, (inDepth ? width : depth) - RoomLayoutConfig::minRoom2DSize);
+	int cutOffset = RngUtils::RandIntInRange(RoomLayoutConfig::minRoom2DSize, (inDepth ? width : depth) - RoomLayoutConfig::minRoom2DSize);
 
 	leftRoom = new BinaryRoom(x, y, z, inDepth ? cutOffset : width, inDepth ? depth : cutOffset, height);
 	rightRoom = new BinaryRoom(inDepth ? x + cutOffset : x, inDepth ? y : y + cutOffset, z, inDepth ? width - cutOffset : width, inDepth ? depth : depth - cutOffset, height);
@@ -59,11 +59,11 @@ void BinaryRoom::SplitVertical(RoomLayout& layout)
 	// Valid force random 2D
 	if (height <= RoomLayoutConfig::maxRoomHeight)
 	{
-		Split2D(layout, Utils::RandIntInRange(0,1));
+		Split2D(layout, RngUtils::RandIntInRange(0,1));
 		return;
 	}
 
-	int cutOffset = Utils::RandIntInRange(RoomLayoutConfig::minRoomHeight, height - RoomLayoutConfig::minRoomHeight);
+	int cutOffset = RngUtils::RandIntInRange(RoomLayoutConfig::minRoomHeight, height - RoomLayoutConfig::minRoomHeight);
 
 	leftRoom = new BinaryRoom(x, y, z, width, depth, cutOffset);
 	rightRoom = new BinaryRoom(x, y, z + cutOffset, width, depth, height - cutOffset);

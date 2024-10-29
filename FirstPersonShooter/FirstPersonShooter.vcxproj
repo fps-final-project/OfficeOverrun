@@ -307,6 +307,7 @@
     <ClInclude Include="RenderQueue.hpp" />
     <ClInclude Include="ResourceHelper.hpp" />
     <ClInclude Include="RNG.h" />
+    <ClInclude Include="RngUtils.h" />
     <ClInclude Include="Room.hpp" />
     <ClInclude Include="RoomCollision.hpp" />
     <ClInclude Include="RoomLayout.h" />
@@ -394,6 +395,7 @@
     <ClCompile Include="RenderQueue.cpp" />
     <ClCompile Include="ResourceHelper.cpp" />
     <ClCompile Include="RNG.cpp" />
+    <ClCompile Include="RngUtils.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="RoomLayoutGenerator.cpp" />
     <ClCompile Include="RoomLink.cpp" />

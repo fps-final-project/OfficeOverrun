@@ -2,6 +2,7 @@
 
 #include "RoomLayout.h"
 #include "Utils.h"
+#include "RngUtils.h"
 #include "RoomLayoutConfig.h"
 namespace WorldGenerator
 {

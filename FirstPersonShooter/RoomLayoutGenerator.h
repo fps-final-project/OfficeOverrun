@@ -17,6 +17,7 @@ namespace WorldGenerator
 		void GenerateAdGraph();
 		void SelectRooms();
 		void GenerateRoomLinks();
+		void UpdateLayoutWithAdGraph();
 	public:
 		RoomLayoutGenerator(RoomLayoutConfig);
 		RoomLayout& Generate();

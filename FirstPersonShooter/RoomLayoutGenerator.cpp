@@ -26,6 +26,9 @@ RoomLayout& RoomLayoutGenerator::Generate()
 	// Step X - after graph operations
 	GenerateRoomLinks();
 
+	// Step X + 1
+	UpdateLayoutWithAdGraph();
+
 	return layout;
 }
 
@@ -63,7 +66,7 @@ void WorldGenerator::RoomLayoutGenerator::SelectRooms()
 	args.edgeDensityCoeff = config.edgeDensityCoeff;
 
 	RoomSelector selector(args);
-	selector.SelectRooms();
+	adGraph = selector.SelectRooms();
 }
 
 // The method removes some edges, spoils graph structure
@@ -91,4 +94,14 @@ void RoomLayoutGenerator::GenerateRoomLinks()
 			neighbour.value->links.push_back(inLink);
 		}
 	}
+}
+
+void WorldGenerator::RoomLayoutGenerator::UpdateLayoutWithAdGraph()
+{
+	std::vector<GeneratedRoom> newRooms;
+	for (int i = 0; i < adGraph.Size(); i++)
+	{
+		newRooms.push_back(*adGraph[i].value);
+	}
+	layout.rooms = newRooms;
 }

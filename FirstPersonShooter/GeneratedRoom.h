@@ -19,6 +19,7 @@ namespace WorldGenerator
 		bool IsAdjacent(GeneratedRoom room);
 		bool IsAbove(GeneratedRoom room);
 		bool IsBelow(GeneratedRoom room);
+		bool IsSameLevel(GeneratedRoom room);
 		bool IsZeroFloor();
 		std::tuple<Vector3, Vector3> ComputeBorders(GeneratedRoom room); // Returns pos and size
 	};

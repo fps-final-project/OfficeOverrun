@@ -282,6 +282,9 @@
     <ClCompile Include="RoomSelector.cpp">
       <Filter>WorldGenerator\RoomLayout\RooomSelector</Filter>
     </ClCompile>
+    <ClCompile Include="RngUtils.cpp">
+      <Filter>WorldGenerator\Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
@@ -461,6 +464,9 @@
     </ClInclude>
     <ClInclude Include="RoomSelectorArgs.h">
       <Filter>WorldGenerator\RoomLayout\RooomSelector</Filter>
+    </ClInclude>
+    <ClInclude Include="RngUtils.h">
+      <Filter>WorldGenerator\Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

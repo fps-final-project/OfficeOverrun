@@ -6,7 +6,7 @@
 RoomLayoutConfig MapGeneratorAdapter::MakeDefaultLayoutConfig()
 {
 	RoomLayoutConfig config;
-	config.mapSize = Vector3(30, 30, 12);
+	config.mapSize = Vector3(20, 20, 16);
 	config.roomDensity = 0.75;
 	config.pathLengthCoeff = 0.6;
 	config.edgeDensityCoeff = 0.5;

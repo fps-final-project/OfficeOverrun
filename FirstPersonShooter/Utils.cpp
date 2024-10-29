@@ -4,16 +4,6 @@
 
 using namespace WorldGenerator;
 
-int Utils::RandIntInRange(int min, int max)
-{
-    return min + rand() % (max - min + 1);
-}
-
-bool Utils::RandBool()
-{
-    return rand() % 2 == 1;
-}
-
 bool Utils::LinesIntersect1D(int s1, int e1, int s2, int e2)
 {
     return (s1 <= s2 && e1 >= s2) || (s2 <= s1 && e2 >= s1);
