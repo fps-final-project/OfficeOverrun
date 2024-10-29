@@ -39,9 +39,8 @@ void GunRig::Reload()
 
 void GunRig::Shoot()
 {
-	const float speedup = 1.6f;
-	this->m_hands->setAnimation("shoot", speedup);
-	this->m_gun->setAnimation("shoot", speedup);
+	this->m_hands->setAnimation("shoot", m_shootingAnimationSpeedup, false);
+	this->m_gun->setAnimation("shoot", m_shootingAnimationSpeedup, false);
 }
 
 void GunRig::ChangeGun(const std::string& name)
@@ -54,6 +53,7 @@ void GunRig::ChangeGun(const std::string& name)
 		m_barrelOffset = data->barrelOffset;
 		m_rigOffset = data->rigOffset;
 		m_name = data->name;
+		m_shootingAnimationSpeedup = data->shootingAnimationSpeedup;
 
 		m_hands->setModel(ResourceManager::Instance.getAnimatedModel(data->name));
 		m_gun->setModel(ResourceManager::Instance.getAnimatedModel(data->name + "_gun"));

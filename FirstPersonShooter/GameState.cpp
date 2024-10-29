@@ -100,7 +100,7 @@ void GameState::CreateWindowSizeDependentResources()
 void GameState::setupActionHandlers()
 {
 	m_inputHandler->AddActionHandler(
-		[](InputState newState, InputState oldState) {	return newState.first.leftButton && !oldState.first.leftButton; },
+		[](InputState newState, InputState oldState) {	return newState.first.leftButton; },
 		Action::SHOOT
 	);
 

@@ -8,6 +8,8 @@ GunRigMetadata GunRigMetadata::loadFromFile(const std::string& path)
     std::ifstream file(path, std::ios::in);
 
     file >> metadata.name;
+    file >> metadata.shootingAnimationSpeedup;
+    
 
     file >> metadata.gunOffset.x;
     file >> metadata.gunOffset.y;
