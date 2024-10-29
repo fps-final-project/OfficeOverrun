@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Texture.h"
+#include "AudioFile.hpp"
 #include "AssimpModel.h"
 #include "AnimatedAssimpModel.h"
 #include "GunRigMetadata.hpp"
@@ -29,15 +30,20 @@ public:
 		const std::string& nameOverride = "");
 
 	void loadGunRigMetadata(const std::string& path);
+	void loadAudioFile(const std::string& path, const std::shared_ptr<DX::DeviceResources>& deviceResources, const std::string& nameOverride = "");
 
 	std::shared_ptr<AssimpModel> getModel(std::string name);
 	std::shared_ptr<AnimatedAssimpModel> getAnimatedModel(std::string name);
 	std::shared_ptr<Texture> getTexture(std::string name);
 	std::shared_ptr<GunRigMetadata> getGunRigMetadata(std::string name);
+	std::shared_ptr<AudioFile> getAudioFile(std::string name);
+
+	
 private:
 	ResourceManager() {}
 	std::map<std::string, std::shared_ptr<AssimpModel>> m_models;
 	std::map<std::string, std::shared_ptr<AnimatedAssimpModel>> m_animatedModels;
 	std::map<std::string, std::shared_ptr<Texture>> m_textures;
 	std::map<std::string, std::shared_ptr<GunRigMetadata>> m_gunRigMetadata;
+	std::map<std::string, std::shared_ptr<AudioFile>> m_audioFiles;
 };
