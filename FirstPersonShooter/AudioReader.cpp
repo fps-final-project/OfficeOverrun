@@ -48,11 +48,11 @@ AudioFile AudioReader::ReadWAVFile(std::string path)
     hr = ReadChunkData(hFile, &wfx, dwChunkSize, dwChunkPosition);
 
     hr = FindChunk(hFile, fourccDATA, dwChunkSize, dwChunkPosition);
-    BYTE* pDataBuffer = new BYTE[dwChunkSize];
-    hr = ReadChunkData(hFile, pDataBuffer, dwChunkSize, dwChunkPosition);
+	std::shared_ptr<BYTE> pDataBuffer(new BYTE[dwChunkSize]);
+    hr = ReadChunkData(hFile, pDataBuffer.get(), dwChunkSize, dwChunkPosition);
 
     buffer.AudioBytes = dwChunkSize;  //size of the audio buffer in bytes
-    buffer.pAudioData = pDataBuffer;  //buffer containing audio data
+    buffer.pAudioData = pDataBuffer.get();  //buffer containing audio data
     buffer.Flags = XAUDIO2_END_OF_STREAM; // tell the source voice not to expect any data after this buffer
     buffer.PlayBegin = 0;
 	buffer.PlayLength = 0;
@@ -60,7 +60,7 @@ AudioFile AudioReader::ReadWAVFile(std::string path)
 	buffer.LoopLength = 0;
 	buffer.LoopCount = XAUDIO2_LOOP_INFINITE;
 
-	return { wfx, buffer };
+	return { wfx, buffer, pDataBuffer, nullptr };
 }
 
 HRESULT AudioReader::FindChunk(HANDLE hFile, DWORD fourcc, DWORD& dwChunkSize, DWORD& dwChunkDataPosition)

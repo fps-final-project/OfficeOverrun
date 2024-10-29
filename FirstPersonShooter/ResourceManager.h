@@ -30,7 +30,7 @@ public:
 		const std::string& nameOverride = "");
 
 	void loadGunRigMetadata(const std::string& path);
-	void loadAudioFile(const std::string& path, const std::string& nameOverride = "");
+	void loadAudioFile(const std::string& path, const std::shared_ptr<DX::DeviceResources>& deviceResources, const std::string& nameOverride = "");
 
 	std::shared_ptr<AssimpModel> getModel(std::string name);
 	std::shared_ptr<AnimatedAssimpModel> getAnimatedModel(std::string name);

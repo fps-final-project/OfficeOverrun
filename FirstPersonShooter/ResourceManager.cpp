@@ -57,13 +57,29 @@ void ResourceManager::loadTexture(const std::string& path,
 		))));
 }
 
-void ResourceManager::loadAudioFile(const std::string& path, const std::string& nameOverride)
+void ResourceManager::loadAudioFile(
+	const std::string& path, 
+	const std::shared_ptr<DX::DeviceResources>& deviceResources, 
+	const std::string& nameOverride
+)
 {
 	std::string name = nameOverride.empty() ? std::filesystem::path(path).stem().string() : nameOverride;
 
+	AudioFile audioFile = AudioReader::ReadWAVFile(path);
+
+	DX::ThrowIfFailed(
+		deviceResources
+		->GetXAudio()
+		->CreateSourceVoice(
+			&audioFile.pXAudio2SourceVoice,
+			(WAVEFORMATEX*)(&audioFile.wfx)
+		));
+
+	DX::ThrowIfFailed(audioFile.pXAudio2SourceVoice->SubmitSourceBuffer(&audioFile.buffer));
+
 	this->m_audioFiles.insert(std::make_pair(
 		name,
-		std::make_shared<AudioFile>(AudioReader::ReadWAVFile(path))));
+		std::make_shared<AudioFile>(audioFile)));
 }
 
 void ResourceManager::loadGunRigMetadata(const std::string& path)
