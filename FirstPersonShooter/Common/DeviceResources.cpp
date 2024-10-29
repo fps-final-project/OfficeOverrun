@@ -380,6 +380,14 @@ void DX::DeviceResources::CreateWindowSizeDependentResources()
 			)
 		);
 
+	DX::ThrowIfFailed(
+		XAudio2Create(m_xaudio.GetAddressOf(), 0, XAUDIO2_DEFAULT_PROCESSOR)
+	);
+
+	DX::ThrowIfFailed(
+		m_xaudio->CreateMasteringVoice(m_masteringVoice.GetAddressOf())
+	);
+
 	// Create a depth stencil view for use with 3D rendering if needed.
 	CD3D11_TEXTURE2D_DESC1 depthStencilDesc(
 		DXGI_FORMAT_D24_UNORM_S8_UINT, 

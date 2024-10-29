@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include <xaudio2.h>
 
 namespace DX
 {
@@ -81,6 +82,10 @@ namespace DX
 		// DirectWrite drawing components.
 		Microsoft::WRL::ComPtr<IDWriteFactory3>		m_dwriteFactory;
 		Microsoft::WRL::ComPtr<IWICImagingFactory2>	m_wicFactory;
+
+		// Audio control
+		Microsoft::WRL::ComPtr<IXAudio2>	m_xaudio;
+		Microsoft::WRL::ComPtr<IXAudio2MasteringVoice> m_masteringVoice;
 
 		// Cached reference to the Window.
 		Platform::Agile<Windows::UI::Core::CoreWindow> m_window;
