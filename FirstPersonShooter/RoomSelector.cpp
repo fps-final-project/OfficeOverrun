@@ -26,6 +26,11 @@ Graph<GeneratedRoom> WorldGenerator::RoomSelector::SelectRooms()
 	// Step 3
 	ConstructGFromPath(path);
 
+	// Step 4
+	RemoveDownUpEdges();
+
+	// Step 5
+
 	return G;
 }
 
@@ -46,7 +51,35 @@ void WorldGenerator::RoomSelector::RemoveUpDownEdges()
 	}
 }
 
-void WorldGenerator::RoomSelector::RandomDfs(int v, std::vector<bool>& visited, std::vector<int> &path, int tr_f)
+
+void WorldGenerator::RoomSelector::RemoveDownUpEdges()
+{
+	for (int i = 0; i < H.Size(); i++)
+	{
+		Node<GeneratedRoom>& v = H[i];
+		for (int j = 0; j < H.Size(); j++)
+		{
+			Node<GeneratedRoom>& u = H[j];
+			if (H.HasEdge(i, j) && v.value->IsBelow(*u.value))
+			{
+				H.DeleteEdge(i, j);
+			}
+		}
+	}
+}
+
+std::vector<int> WorldGenerator::RoomSelector::GenerateRandomPath()
+{
+	int n = H.Size();
+	std::vector<bool> visited(n);
+	std::vector<int> path;
+
+	RandomDfs(s, visited, path, 1);
+
+	return path;
+}
+
+void WorldGenerator::RoomSelector::RandomDfs(int v, std::vector<bool>& visited, std::vector<int>& path, int tr_f)
 {
 	visited[v] = true;
 	path.push_back(v);
@@ -76,26 +109,17 @@ void WorldGenerator::RoomSelector::RandomDfs(int v, std::vector<bool>& visited, 
 			}
 		}
 
-		RandomDfs(u, visited, path, up? 1 : tr_f + 1);
+		RandomDfs(u, visited, path, up ? 1 : tr_f + 1);
 		return;
 	}
 	return;
 }
 
-std::vector<int> WorldGenerator::RoomSelector::GenerateRandomPath()
-{
-	int n = H.Size();
-	std::vector<bool> visited(n);
-	std::vector<int> path;
-
-	RandomDfs(s, visited, path, 1);
-
-	return path;
-}
 
 void WorldGenerator::RoomSelector::ConstructGFromPath(std::vector<int> P)
 {
 	G = Graph<GeneratedRoom>(H.Size());
+	H_G_map = std::vector<int>(H.Size(), -1);
 	
 	for (int i = 0; i < P.size(); i++)
 	{
@@ -107,5 +131,16 @@ void WorldGenerator::RoomSelector::ConstructGFromPath(std::vector<int> P)
 			G.AddUndirectedEdge(i - 1, i);
 
 		G_H_map.push_back(v);
+		H_G_map[v] = i;
+	}
+}
+
+std::vector<int> WorldGenerator::RoomSelector::ComputeNeighbourhood()
+{
+	std::vector<int> N_G;
+	for (int i = 0; i < G.Size(); i++)
+	{
+		int v = G_H_map[i];
+
 	}
 }
