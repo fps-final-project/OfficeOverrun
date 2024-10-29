@@ -287,6 +287,7 @@
   <ItemGroup>
     <ClInclude Include="ActionHandler.hpp" />
     <ClInclude Include="ActionTypes.hpp" />
+    <ClInclude Include="AudioReader.h" />
     <ClInclude Include="BinaryRoom.h" />
     <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="EnemyBuilder.hpp" />
@@ -360,6 +361,7 @@
     <ClCompile Include="Animator.cpp" />
     <ClCompile Include="App.cpp" />
     <ClCompile Include="AssimpModelLoader.cpp" />
+    <ClCompile Include="AudioReader.cpp" />
     <ClCompile Include="BinaryRoom.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CollisionDetector.cpp" />
