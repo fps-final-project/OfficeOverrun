@@ -287,7 +287,8 @@
   <ItemGroup>
     <ClInclude Include="ActionHandler.hpp" />
     <ClInclude Include="ActionTypes.hpp" />
-    <ClInclude Include="AudioReader.h" />
+    <ClInclude Include="AudioFile.hpp" />
+    <ClInclude Include="AudioReader.hpp" />
     <ClInclude Include="BinaryRoom.h" />
     <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="EnemyBuilder.hpp" />
@@ -493,6 +494,12 @@
     <Text Include="Assets\GunRig\FN\FN.txt" />
     <Text Include="Assets\GunRig\smg\smg.txt" />
     <Text Include="Assets\GunRig\sniper\sniper.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Audio\dark-horror-background-252905.wav">
+      <FileType>Document</FileType>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -53,6 +53,9 @@ namespace DX
 		IWICImagingFactory2*		GetWicImagingFactory() const			{ return m_wicFactory.Get(); }
 		D2D1::Matrix3x2F			GetOrientationTransform2D() const		{ return m_orientationTransform2D; }
 
+		// Audio Accessors
+		IXAudio2*					GetXAudio() const						{ return m_xaudio.Get(); }
+
 	private:
 		void CreateDeviceIndependentResources();
 		void CreateDeviceResources();
@@ -85,7 +88,7 @@ namespace DX
 
 		// Audio control
 		Microsoft::WRL::ComPtr<IXAudio2>	m_xaudio;
-		Microsoft::WRL::ComPtr<IXAudio2MasteringVoice> m_masteringVoice;
+		IXAudio2MasteringVoice* m_masteringVoice;
 
 		// Cached reference to the Window.
 		Platform::Agile<Windows::UI::Core::CoreWindow> m_window;

@@ -1,4 +1,7 @@
-#include "AudioReader.h"
+#include "pch.h"
+#include "AudioReader.hpp"
+#include <fileapi.h>
+#include <string>
 
 #ifdef _XBOX //Big-Endian
 #define fourccRIFF 'RIFF'
@@ -17,6 +20,48 @@
 #define fourccXWMA 'AMWX'
 #define fourccDPDS 'sdpd'
 #endif
+
+AudioFile AudioReader::ReadWAVFile(std::string path)
+{
+
+	HRESULT hr = S_OK;
+
+	HANDLE hFile = CreateFile2(std::wstring(path.begin(), path.end()).c_str(), GENERIC_READ, FILE_SHARE_READ, OPEN_EXISTING, NULL);
+
+    DWORD dwChunkSize;
+    DWORD dwChunkPosition;
+
+    WAVEFORMATEXTENSIBLE wfx;
+    XAUDIO2_BUFFER buffer;
+
+    if (INVALID_HANDLE_VALUE == hFile)
+        hr = HRESULT_FROM_WIN32(GetLastError());
+
+    if (INVALID_SET_FILE_POINTER == SetFilePointer(hFile, 0, NULL, FILE_BEGIN))
+        hr = HRESULT_FROM_WIN32(GetLastError());
+
+    hr = FindChunk(hFile, fourccRIFF, dwChunkSize, dwChunkPosition);
+    DWORD filetype;
+    hr = ReadChunkData(hFile, &filetype, sizeof(DWORD), dwChunkPosition);
+
+    hr = FindChunk(hFile, fourccFMT, dwChunkSize, dwChunkPosition);
+    hr = ReadChunkData(hFile, &wfx, dwChunkSize, dwChunkPosition);
+
+    hr = FindChunk(hFile, fourccDATA, dwChunkSize, dwChunkPosition);
+    BYTE* pDataBuffer = new BYTE[dwChunkSize];
+    hr = ReadChunkData(hFile, pDataBuffer, dwChunkSize, dwChunkPosition);
+
+    buffer.AudioBytes = dwChunkSize;  //size of the audio buffer in bytes
+    buffer.pAudioData = pDataBuffer;  //buffer containing audio data
+    buffer.Flags = XAUDIO2_END_OF_STREAM; // tell the source voice not to expect any data after this buffer
+    buffer.PlayBegin = 0;
+	buffer.PlayLength = 0;
+	buffer.LoopBegin = 0;
+	buffer.LoopLength = 0;
+	buffer.LoopCount = XAUDIO2_LOOP_INFINITE;
+
+	return { wfx, buffer };
+}
 
 HRESULT AudioReader::FindChunk(HANDLE hFile, DWORD fourcc, DWORD& dwChunkSize, DWORD& dwChunkDataPosition)
 {

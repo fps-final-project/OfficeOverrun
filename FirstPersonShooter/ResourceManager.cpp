@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "ResourceManager.h"
 
+#include "AudioReader.hpp"
 #include "AssimpModelLoader.h"
 #include "TextureFactory.h"
 #include <filesystem>
@@ -56,6 +57,15 @@ void ResourceManager::loadTexture(const std::string& path,
 		))));
 }
 
+void ResourceManager::loadAudioFile(const std::string& path, const std::string& nameOverride)
+{
+	std::string name = nameOverride.empty() ? std::filesystem::path(path).stem().string() : nameOverride;
+
+	this->m_audioFiles.insert(std::make_pair(
+		name,
+		std::make_shared<AudioFile>(AudioReader::ReadWAVFile(path))));
+}
+
 void ResourceManager::loadGunRigMetadata(const std::string& path)
 {
 	auto data = std::make_shared<GunRigMetadata>(GunRigMetadata::loadFromFile(path));
@@ -97,6 +107,16 @@ std::shared_ptr<GunRigMetadata> ResourceManager::getGunRigMetadata(std::string n
 	if (m_gunRigMetadata.find(name) != m_gunRigMetadata.end())
 	{
 		return m_gunRigMetadata[name];
+	}
+
+	return nullptr;
+}
+
+std::shared_ptr<AudioFile> ResourceManager::getAudioFile(std::string name)
+{
+	if (m_audioFiles.find(name) != m_audioFiles.end())
+	{
+		return m_audioFiles[name];
 	}
 
 	return nullptr;

@@ -50,6 +50,19 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	ResourceHelper::addWallModel("Assets\\Other\\wall\\brickwall.jpg", m_deviceResources);
 
 
+	ResourceManager::Instance.loadAudioFile("Assets\\Audio\\dark-horror-background-252905.wav", "music");
+
+	IXAudio2SourceVoice* m_pXAudio2SourceVoice{};
+
+	auto audioFile = ResourceManager::Instance.getAudioFile("music");
+
+	DX::ThrowIfFailed(deviceResources
+		->GetXAudio()
+		->CreateSourceVoice(
+			&m_pXAudio2SourceVoice, 
+			(WAVEFORMATEX*)(&audioFile->wfx)
+		));
+
 
 	m_spriteRenderer = std::make_unique<SpriteRenderer>(m_deviceResources->GetD3DDeviceContext());
 	m_fpsTextRenderer = std::unique_ptr<SampleFpsTextRenderer>(new SampleFpsTextRenderer(m_deviceResources));
@@ -60,6 +73,10 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	m_gameState = std::make_unique<GameState>(keyboard, mouse, deviceResources);
 
 	m_mouse->SetMode(DirectX::Mouse::MODE_RELATIVE);
+
+	DX::ThrowIfFailed(m_pXAudio2SourceVoice->SubmitSourceBuffer(&audioFile->buffer));
+
+	DX::ThrowIfFailed(m_pXAudio2SourceVoice->Start(0));
 }
 
 FirstPersonShooterMain::~FirstPersonShooterMain()

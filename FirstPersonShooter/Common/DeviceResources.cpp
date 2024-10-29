@@ -385,7 +385,7 @@ void DX::DeviceResources::CreateWindowSizeDependentResources()
 	);
 
 	DX::ThrowIfFailed(
-		m_xaudio->CreateMasteringVoice(m_masteringVoice.GetAddressOf())
+		m_xaudio->CreateMasteringVoice(&m_masteringVoice)
 	);
 
 	// Create a depth stencil view for use with 3D rendering if needed.
