@@ -23,5 +23,6 @@ private:
 	DirectX::XMFLOAT3 m_rigOffset, m_gunOffset, m_initialBarrelOffset, m_barrelOffset;
 	std::shared_ptr<AnimatedEntity> m_hands, m_gun;
 	std::string m_name;
+	float m_shootingAnimationSpeedup;
 
 };
