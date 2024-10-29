@@ -137,6 +137,9 @@
     <Filter Include="WorldGeneratorAdapter\Mapper">
       <UniqueIdentifier>{214de76f-0ded-4ce0-961f-ae52db94260f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Audio">
+      <UniqueIdentifier>{822331e8-fedb-40db-898e-79e556e4d761}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Assets\GunRig">
       <UniqueIdentifier>{9fc70142-bf4f-476d-bae9-198f1768cde9}</UniqueIdentifier>
     </Filter>
@@ -287,9 +290,6 @@
     </ClCompile>
     <ClCompile Include="MappingHelpers.cpp">
       <Filter>WorldGeneratorAdapter\Mapper</Filter>
-    </ClCompile>
-    <ClCompile Include="GunRigMetadata.cpp">
-      <Filter>Content\Entity\GunRig</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -461,9 +461,6 @@
     </ClInclude>
     <ClInclude Include="MappingHelpers.h">
       <Filter>WorldGeneratorAdapter\Mapper</Filter>
-    </ClInclude>
-    <ClInclude Include="GunRigMetadata.hpp">
-      <Filter>Content\Entity\GunRig</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

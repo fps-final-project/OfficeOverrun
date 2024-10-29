@@ -287,6 +287,8 @@
   <ItemGroup>
     <ClInclude Include="ActionHandler.hpp" />
     <ClInclude Include="ActionTypes.hpp" />
+    <ClInclude Include="AudioFile.hpp" />
+    <ClInclude Include="AudioReader.hpp" />
     <ClInclude Include="BinaryRoom.h" />
     <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="EnemyBuilder.hpp" />
@@ -360,6 +362,7 @@
     <ClCompile Include="Animator.cpp" />
     <ClCompile Include="App.cpp" />
     <ClCompile Include="AssimpModelLoader.cpp" />
+    <ClCompile Include="AudioReader.cpp" />
     <ClCompile Include="BinaryRoom.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CollisionDetector.cpp" />
@@ -491,6 +494,12 @@
     <Text Include="Assets\GunRig\FN\FN.txt" />
     <Text Include="Assets\GunRig\smg\smg.txt" />
     <Text Include="Assets\GunRig\sniper\sniper.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Audio\dark-horror-background-252905.wav">
+      <FileType>Document</FileType>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
