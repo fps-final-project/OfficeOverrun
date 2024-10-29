@@ -10,7 +10,7 @@ WorldGenerator::RoomSelector::RoomSelector(RoomSelectorArgs args)
 {
 	H = args.initialGraph;
 	s = args.startVertex;
-	N = std::floor(H.nodes.size() * args.roomDensity);
+	N = std::floor(H.Size() * args.roomDensity);
 	P = std::floor(N * args.pathLengthCoeff);
 	e_c = args.edgeDensityCoeff;
 }
@@ -32,12 +32,12 @@ Graph<GeneratedRoom> WorldGenerator::RoomSelector::SelectRooms()
 
 void WorldGenerator::RoomSelector::RemoveUpDownEdges()
 {
-	for (int i = 0; i < H.nodes.size(); i++)
+	for (int i = 0; i < H.Size(); i++)
 	{
-		Node<GeneratedRoom>& v = H.nodes[i];
-		for (int j = 0; j < H.nodes.size(); j++)
+		Node<GeneratedRoom>& v = H[i];
+		for (int j = 0; j < H.Size(); j++)
 		{
-			Node<GeneratedRoom>& u = H.nodes[j];
+			Node<GeneratedRoom>& u = H[j];
 			if (H.HasEdge(i,j) && v.value->IsAbove(*u.value))
 			{
 				H.DeleteEdge(i, j);
@@ -62,14 +62,14 @@ void WorldGenerator::RoomSelector::RandomDfs(int v, std::vector<bool>& visited, 
 		if (visited[u] == true)
 			continue;
 
-		bool up = H.nodes[v].value->IsBelow(*H.nodes[u].value);
+		bool up = H[v].value->IsBelow(*H[u].value);
 
 		// If below the minimal room number on the floor, try to find floor on the same floor
 		if (up && tr_f < MIN_F)
 		{
 			for (int j = i + 1; j < neighbours.size(); j++)
 			{
-				if (!visited[neighbours[j]] && H.nodes[v].value->IsSameLevel(*H.nodes[neighbours[j]].value))
+				if (!visited[neighbours[j]] && H[v].value->IsSameLevel(*H[neighbours[j]].value))
 				{
 					u = neighbours[j];
 				}
@@ -84,7 +84,7 @@ void WorldGenerator::RoomSelector::RandomDfs(int v, std::vector<bool>& visited, 
 
 std::vector<int> WorldGenerator::RoomSelector::GenerateRandomPath()
 {
-	int n = H.nodes.size();
+	int n = H.Size();
 	std::vector<bool> visited(n);
 	std::vector<int> path;
 

@@ -41,12 +41,12 @@ void RoomLayoutGenerator::GenerateRooms()
 void RoomLayoutGenerator::GenerateAdGraph()
 {
 	adGraph = Graph<GeneratedRoom>(layout.rooms);
-	for (int i = 0; i < adGraph.nodes.size(); i++)
+	for (int i = 0; i < adGraph.Size(); i++)
 	{
-		Node<GeneratedRoom>& node = adGraph.nodes[i];
-		for (int j = i + 1; j < adGraph.nodes.size(); j++)
+		Node<GeneratedRoom>& node = adGraph[i];
+		for (int j = i + 1; j < adGraph.Size(); j++)
 		{
-			if (node.value->IsAdjacent(*adGraph.nodes[j].value))
+			if (node.value->IsAdjacent(*adGraph[j].value))
 			{
 				adGraph.AddUndirectedEdge(i, j);
 			}
@@ -72,13 +72,13 @@ void WorldGenerator::RoomLayoutGenerator::SelectRooms()
 // The method removes some edges, spoils graph structure
 void RoomLayoutGenerator::GenerateRoomLinks()
 {
-	int n = adGraph.nodes.size();
+	int n = adGraph.Size();
 	for (int i = 0; i < n; i++) 
 	{
-		Node<GeneratedRoom>& node = adGraph.nodes[i];
+		Node<GeneratedRoom>& node = adGraph[i];
 		for (int j = i + 1; j < n; j++)
 		{
-			Node<GeneratedRoom>& neighbour = adGraph.nodes[j];
+			Node<GeneratedRoom>& neighbour = adGraph[j];
 			if (!adGraph.HasEdge(i,j))
 				continue;
 			auto border = node.value->ComputeBorders(*neighbour.value);
