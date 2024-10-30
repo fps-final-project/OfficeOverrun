@@ -28,6 +28,7 @@ namespace WorldGenerator
 		void AddEdge(int from, int to);
 		void AddUndirectedEdge(int from, int to);
 		std::vector<int> GetNeighbours(int v);
+		std::vector<int> GetIngoingNeighbours(int v);
 		void DeleteEdge(int from, int to);
 
 		Node<T> operator [](int i) const;
@@ -110,6 +111,17 @@ namespace WorldGenerator
 		for (int i = 0; i < adMatrix[v].size(); i++)
 		{
 			if (adMatrix[v][i] == 1)
+				neighbours.push_back(i);
+		}
+		return neighbours;
+	}
+	template<typename T>
+	inline std::vector<int> Graph<T>::GetIngoingNeighbours(int v)
+	{
+		std::vector<int> neighbours;
+		for (int i = 0; i < adMatrix[v].size(); i++)
+		{
+			if (adMatrix[i][v] == 1)
 				neighbours.push_back(i);
 		}
 		return neighbours;

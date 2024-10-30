@@ -14,6 +14,7 @@ namespace WorldGenerator
 		Graph<GeneratedRoom> G; // generated graph
 		std::vector<int> G_H_map; // maps G vertices to H vertices
 		std::vector<int> H_G_map; // maps H vertices to G vertices
+		std::vector<int> neigh_G; // H[G] subgraph neighbourhood
 		int s; // start vertex
 		int N; // desired number of rooms in the level
 		int P; // maximum length from s to e
@@ -22,10 +23,13 @@ namespace WorldGenerator
 
 		void RemoveUpDownEdges();
 		std::vector<int> GenerateRandomPath();
-		void ConstructGFromPath(std::vector<int> P);
 		void RandomDfs(int v, std::vector<bool>& visited, std::vector<int>& path, int tr_f);
+		void ConstructGFromPath(std::vector<int> P);
+		void AddHVertexToG(int v);
 		void RemoveDownUpEdges();
-		std::vector<int> ComputeNeighbourhood();
+		void AddSpareVertices();
+		void ComputeNeighbourhood();
+		void UpdateNeighbourhood(int v);
 	public:
 
 		RoomSelector(RoomSelectorArgs args);

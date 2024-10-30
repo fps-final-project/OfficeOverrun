@@ -3,6 +3,7 @@
 #include "NotImplementedExecption.h"
 #include <cmath>
 #include <RngUtils.h>
+#include <algorithm>
 
 using namespace WorldGenerator;
 
@@ -29,7 +30,8 @@ Graph<GeneratedRoom> WorldGenerator::RoomSelector::SelectRooms()
 	// Step 4
 	RemoveDownUpEdges();
 
-	// Step 5
+	// Steps 5-6
+	AddSpareVertices();
 
 	return G;
 }
@@ -50,7 +52,6 @@ void WorldGenerator::RoomSelector::RemoveUpDownEdges()
 		}
 	}
 }
-
 
 void WorldGenerator::RoomSelector::RemoveDownUpEdges()
 {
@@ -115,7 +116,6 @@ void WorldGenerator::RoomSelector::RandomDfs(int v, std::vector<bool>& visited, 
 	return;
 }
 
-
 void WorldGenerator::RoomSelector::ConstructGFromPath(std::vector<int> P)
 {
 	G = Graph<GeneratedRoom>(H.Size());
@@ -123,24 +123,68 @@ void WorldGenerator::RoomSelector::ConstructGFromPath(std::vector<int> P)
 	
 	for (int i = 0; i < P.size(); i++)
 	{
-		int v = P[i];
-		auto node = H[v];
-		G.AddNode(node);
+		AddHVertexToG(P[i]);
 
 		if (i > 0)
 			G.AddUndirectedEdge(i - 1, i);
-
-		G_H_map.push_back(v);
-		H_G_map[v] = i;
 	}
 }
 
-std::vector<int> WorldGenerator::RoomSelector::ComputeNeighbourhood()
+void WorldGenerator::RoomSelector::AddHVertexToG(int v)
 {
-	std::vector<int> N_G;
+	int i = G.Size();
+	
+	auto node = H[v];
+	G.AddNode(node);
+	G_H_map.push_back(v);
+	H_G_map[v] = i;
+}
+
+void WorldGenerator::RoomSelector::AddSpareVertices()
+{
+	ComputeNeighbourhood();
+	while (G.Size() < N)
+	{
+		if (neigh_G.size() == 0)
+			return; // sometimes if rooms are on many different levels some rooms may become unreachable
+
+		int v = RngUtils::SelectRandomElement(neigh_G);
+		AddHVertexToG(v);
+
+		std::vector<int> connected = H.GetIngoingNeighbours(v);
+		auto is_in_G = [&](int w) { return H_G_map[w] > 0; };
+		int u = *std::find_if(connected.begin(), connected.end(), is_in_G);
+		G.AddUndirectedEdge(H_G_map[u], H_G_map[v]);
+
+		UpdateNeighbourhood(v);
+	}
+}
+
+void WorldGenerator::RoomSelector::ComputeNeighbourhood()
+{
 	for (int i = 0; i < G.Size(); i++)
 	{
 		int v = G_H_map[i];
+		for (int u : H.GetNeighbours(v))
+		{
+			// u is in not in G and not already in neigh_G
+			if (H_G_map[u] == -1 && std::find(neigh_G.begin(), neigh_G.end(), u) == neigh_G.end())
+			{
+				neigh_G.push_back(u);
+			}
+		}
+	}
+}
 
+void WorldGenerator::RoomSelector::UpdateNeighbourhood(int v) // v is vertex in H
+{
+	neigh_G.erase(std::remove(neigh_G.begin(), neigh_G.end(), v), neigh_G.end());
+	for (int u : H.GetNeighbours(v))
+	{
+		// u is in not in G and not already in neigh_G
+		if (H_G_map[u] == -1 && std::find(neigh_G.begin(), neigh_G.end(), u) == neigh_G.end())
+		{
+			neigh_G.push_back(u);
+		}
 	}
 }
