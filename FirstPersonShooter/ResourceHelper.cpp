@@ -3,10 +3,11 @@
 #include "ResourceManager.h"
 #include "MeshFactory.h"
 
+const float ResourceHelper::wallOffset = 0.1f;
 
 void ResourceHelper::generateWall(std::vector<VertexData>& vertexData, std::vector<unsigned short>& indicies,
 	std::vector<RoomLinkData> links,
-	DirectX::XMFLOAT3 bottomLeft, DirectX::XMFLOAT3 topRight, DirectX::XMFLOAT3 normal, bool alongX)
+	DirectX::XMFLOAT3 bottomLeft, DirectX::XMFLOAT3 topRight, DirectX::XMFLOAT3 normal, DirectX::XMFLOAT3 wallOffset3f, bool alongX)
 {
 	// check if there is a door on that particular wall
 	RoomLinkData* data = nullptr;
@@ -63,18 +64,23 @@ void ResourceHelper::generateWall(std::vector<VertexData>& vertexData, std::vect
 		{
 			// if there is a door and it overlaps with current tile - dont draw the tile
 			DirectX::XMFLOAT3 tilePos = { bottomLeft.x + tileStep.x * stepH, bottomLeft.y + tileStep.y * stepY, bottomLeft.z + tileStep.z * stepH };
+
 			if (overlapsDoor(tilePos, { tilePos.x + tileStep.x, tilePos.y + tileStep.y, tilePos.z + tileStep.z }))
 				continue;
 
+			tilePos = { tilePos.x + wallOffset3f.x, tilePos.y, tilePos.z + wallOffset3f.z };
+
 			// add wall 
-			ResourceHelper::generateWallTile(vertexData, indicies, tilePos, tileStep, normal, stepH, stepY, nStepsH + 1, nStepsY + 1);
+			ResourceHelper::generateWallTile(vertexData, indicies, tilePos, tileStep, 
+				normal, stepH, stepY, nStepsH + 1, nStepsY + 1,
+				(stepH == 0) * wallOffset, (stepH == nStepsH) * wallOffset, alongX);
 		}
 	}
 }
 
-void ResourceHelper::generateWallTile(std::vector<VertexData>& vertexData, std::vector<unsigned short>& indicies, 
+void ResourceHelper::generateWallTile(std::vector<VertexData>& vertexData, std::vector<unsigned short>& indicies,
 	DirectX::XMFLOAT3 bottomLeft, DirectX::XMFLOAT3 tileStep, DirectX::XMFLOAT3 normal,
-	int stepH, int stepY, int nStepH, int nStepY)
+	int stepH, int stepY, int nStepH, int nStepY, float leftOffset, float rightOffset, bool alongX)
 {
 	int nVerticies = vertexData.size();
 	/*VertexData(DirectX::XMFLOAT3(0.f, 0.f, 0.f), DirectX::XMFLOAT2(0.f, 0.f), DirectX::XMFLOAT3(0.f, 0.f, 1.f)),
@@ -82,16 +88,19 @@ void ResourceHelper::generateWallTile(std::vector<VertexData>& vertexData, std::
 		VertexData(DirectX::XMFLOAT3(1.f, 1.f, 0.f), DirectX::XMFLOAT2(1.f, 1.f), DirectX::XMFLOAT3(0.f, 0.f, 1.f)),
 		VertexData(DirectX::XMFLOAT3(0.f, 1.f, 0.f), DirectX::XMFLOAT2(0.f, 1.f), DirectX::XMFLOAT3(0.f, 0.f, 1.f))*/
 
+	DirectX::XMFLOAT3 leftOffset3f = { alongX * leftOffset, 0, !alongX * leftOffset };
+	DirectX::XMFLOAT3 rightOffset3f = { alongX * rightOffset, 0, !alongX * rightOffset};
 
 
 
-	vertexData.push_back(VertexData(bottomLeft, DirectX::XMFLOAT2((float)stepH / nStepH, (float)stepY / nStepY), normal));
-	vertexData.push_back(VertexData({ bottomLeft.x + tileStep.x, bottomLeft.y, bottomLeft.z + tileStep.z },
-		DirectX::XMFLOAT2((float)(stepH + 1)/ nStepH, (float)stepY / nStepY), normal));
-	vertexData.push_back(VertexData({ bottomLeft.x + tileStep.x, bottomLeft.y + tileStep.y, bottomLeft.z + tileStep.z },
-		DirectX::XMFLOAT2((float)(stepH + 1)/ nStepH, (float)(stepY + 1) / nStepY), normal));
-	vertexData.push_back(VertexData({ bottomLeft.x, bottomLeft.y + tileStep.y, bottomLeft.z },
-		DirectX::XMFLOAT2((float)stepH / nStepH, (float)(stepY + 1) / nStepY), normal));
+	vertexData.push_back(VertexData({ bottomLeft.x + leftOffset3f.x, bottomLeft.y, bottomLeft.z + leftOffset3f.z },
+		DirectX::XMFLOAT2((float)(stepH + leftOffset) / nStepH, (float)stepY / nStepY), normal));
+	vertexData.push_back(VertexData({ bottomLeft.x + tileStep.x - rightOffset3f.x, bottomLeft.y, bottomLeft.z + tileStep.z - rightOffset3f.z },
+		DirectX::XMFLOAT2((float)(stepH + 1 - rightOffset)/ nStepH, (float)stepY / nStepY), normal));
+	vertexData.push_back(VertexData({ bottomLeft.x + tileStep.x - rightOffset3f.x, bottomLeft.y + tileStep.y, bottomLeft.z + tileStep.z - rightOffset3f.z },
+		DirectX::XMFLOAT2((float)(stepH + 1 - rightOffset)/ nStepH, (float)(stepY + 1) / nStepY), normal));
+	vertexData.push_back(VertexData({ bottomLeft.x + leftOffset3f.x, bottomLeft.y + tileStep.y, bottomLeft.z + leftOffset3f.z},
+		DirectX::XMFLOAT2((float)(stepH + leftOffset) / nStepH, (float)(stepY + 1) / nStepY), normal));
 
 	indicies.push_back(nVerticies);
 	indicies.push_back(nVerticies + 1);
@@ -140,27 +149,47 @@ void ResourceHelper::addQuad(const std::string& texturePath, std::string texture
 
 }
 
+void ResourceHelper::generateDoorFrame(std::vector<VertexData>& vertexData, std::vector<unsigned short>& indicies, 
+	DirectX::XMFLOAT3 bottomLeft, DirectX::XMFLOAT3 offset, int stepH, int stepY, int nStepH, int nStepY)
+{
+	// left frame
+	
+	vertexData.push_back(VertexData({ bottomLeft.x, bottomLeft.y, bottomLeft.z },
+		DirectX::XMFLOAT2((float)(stepH + leftOffset) / nStepH, (float)stepY / nStepY), normal));
+	vertexData.push_back(VertexData({ bottomLeft.x + tileStep.x - rightOffset3f.x, bottomLeft.y, bottomLeft.z + tileStep.z - rightOffset3f.z },
+		DirectX::XMFLOAT2((float)(stepH + 1 - rightOffset)/ nStepH, (float)stepY / nStepY), normal));
+	vertexData.push_back(VertexData({ bottomLeft.x + tileStep.x - rightOffset3f.x, bottomLeft.y + tileStep.y, bottomLeft.z + tileStep.z - rightOffset3f.z },
+		DirectX::XMFLOAT2((float)(stepH + 1 - rightOffset)/ nStepH, (float)(stepY + 1) / nStepY), normal));
+	vertexData.push_back(VertexData({ bottomLeft.x + leftOffset3f.x, bottomLeft.y + tileStep.y, bottomLeft.z + leftOffset3f.z},
+		DirectX::XMFLOAT2((float)(stepH + leftOffset) / nStepH, (float)(stepY + 1) / nStepY), normal));
+
+
+
+}
+
 Mesh ResourceHelper::generateRoomModel(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 size,
 	std::vector<RoomLinkData> links,
 	const std::string& texturePath, const std::shared_ptr<DX::DeviceResources>& deviceResources)
 {
+	
+
 	std::vector<VertexData> vertexData;
 	std::vector<unsigned short> indicies;
 
 	ResourceHelper::generateWall(vertexData, indicies, links,
-		{ pos.x, pos.y, pos.z }, { pos.x + size.x, pos.y + size.y, pos.z }, { 0.f, 0.f, 1.f }, true);
+		{ pos.x, pos.y, pos.z }, { pos.x + size.x, pos.y + size.y, pos.z }, { 0.f, 0.f, 1.f }, {0, 0, wallOffset}, true);
 
 	// left wall
 	ResourceHelper::generateWall(vertexData, indicies, links,
-		{ pos.x, pos.y, pos.z + size.z }, { pos.x, pos.y + size.y, pos.z }, { 1.f, 0.f, 0.f }, false);
+		{ pos.x, pos.y, pos.z + size.z }, { pos.x, pos.y + size.y, pos.z }, { 1.f, 0.f, 0.f }, {wallOffset, 0, 0}, false);
 
 	// back wall
 	ResourceHelper::generateWall(vertexData, indicies, links,
-		{ pos.x + size.x, pos.y, pos.z + size.z }, { pos.x, pos.y + size.y, pos.z + size.z }, { 0.f, 0.f, -1.f }, true);
+		{ pos.x + size.x, pos.y, pos.z + size.z }, { pos.x, pos.y + size.y, pos.z + size.z }, { 0.f, 0.f, -1.f }, {0, 0, -wallOffset}, true);
 
 	// right wall
 	ResourceHelper::generateWall(vertexData, indicies, links,
-		{ pos.x + size.x, pos.y, pos.z }, { pos.x + size.x, pos.y + size.y, pos.z + size.z }, { -1.f, 0.f, 0.f }, false);
+		{ pos.x + size.x, pos.y, pos.z }, { pos.x + size.x, pos.y + size.y, pos.z + size.z }, { -1.f, 0.f, 0.f }, {-wallOffset, 0, 0}, false);
 
 	return MeshFactory<VertexData>::createMesh(vertexData, indicies, { ResourceManager::Instance.getTexture(texturePath) }, deviceResources);
 	

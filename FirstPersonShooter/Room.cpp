@@ -24,17 +24,7 @@ RoomCollision Room::checkCollision(DirectX::XMFLOAT3 entityPos) const
 	// 0 - x, 1 - y, 2 - z
 
 	RoomCollision result;
-	if (entityPos.x < this->pos.x + wallOffset)
-	{
-		result.collision[0] = true;
-		result.correction[0] = this->pos.x + wallOffset;
-	}
-	else if (entityPos.x > this->pos.x + this->size.x - wallOffset)
-	{
-		result.collision[0] = true;
-		result.correction[0] = this->pos.x + this->size.x - wallOffset;
-	}
-
+	
 	const float playerHeight = 1.f;
 	if (entityPos.y < this->pos.y + playerHeight)
 	{
@@ -48,6 +38,17 @@ RoomCollision Room::checkCollision(DirectX::XMFLOAT3 entityPos) const
 		result.correction[1] = this->pos.y + this->size.y - playerHeight;
 	}
 
+	if (entityPos.x < this->pos.x + wallOffset)
+	{
+		result.collision[0] = true;
+		result.correction[0] = this->pos.x + wallOffset;
+	}
+	else if (entityPos.x > this->pos.x + this->size.x - wallOffset)
+	{
+		result.collision[0] = true;
+		result.correction[0] = this->pos.x + this->size.x - wallOffset;
+	}
+	
 	if (entityPos.z < this->pos.z + wallOffset)
 	{
 		result.collision[2] = true;
@@ -96,11 +97,14 @@ void Room::Render(std::shared_ptr<RenderMaster> renderMaster)
 	auto floorModel = ResourceManager::Instance.getModel("floor");
 	auto renderer = renderMaster->getModelRenderer();
 
+	// walls
 	renderer->Render(*m_roomWalls);
-	// bottom wall
+
+	// floor 
 	renderer->Render(Entity(floorModel, { pos.x, pos.y, pos.z + size.z }, { size.x, size.z, 1.f }, { -DirectX::XM_PIDIV2, 0.f, 0.f }));
+
+	// ceiling
 	renderer->Render(Entity(ceilingModel, { pos.x, pos.y + size.y, pos.z}, { size.x, size.z, 1.f }, { DirectX::XM_PIDIV2, 0.f, 0.f }));
-	//renderer->Render(Entity(model, { pos.x + size.x, pos.y, pos.z }, { size.z, size.y, 1.f }, {0.f, -DirectX::XM_PIDIV2, 0.f}));
 }
 
 std::vector<int> Room::getAdjacentRooms()
