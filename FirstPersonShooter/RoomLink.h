@@ -23,5 +23,6 @@ namespace WorldGenerator
 		RoomLink(const Vector3& pos, const Orientation& orientation);
 
 		static RoomLink MakeRoomLink(Vector3 pos, Vector3 size);
+		static bool ValidBorderForRoomLink(Vector3 size);
 	};
 }
