@@ -42,7 +42,11 @@ float4 main(PixelShaderInput input) : SV_TARGET
         float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);
         float3 specular = (specularStrength * spec * lightColor);
 
-        final_light += (ambient + diffuse + specular);
+        // attenuation (light is dimmer the farther the object is from the light)
+        float distance = length(light_pos[i] - input.model_pos);
+        float attenuation = 1.0 / (1.0 + 0.09f * distance + 0.032f * (distance * distance));
+
+        final_light += (ambient + diffuse + specular) * attenuation;
     }
     
     return float4(final_light, 0.f) * my_texture.Sample(my_sampler, input.texture_pos);
