@@ -119,11 +119,13 @@ bool FirstPersonShooterMain::Render()
 	// Render the scene objects.
 	// TODO: Replace this with your app's content rendering functions.
 
-	m_renderMaster->setLighting(m_gameState->m_world->GetLightingData());
+	m_renderMaster->setLighting(m_gameState->m_world->GetLightingData(), m_gameState->m_camera->getAt());
 	m_renderMaster->setupShaders(
 		m_gameState->m_camera->getProjectionMatrix(), 
 		m_gameState->m_camera->getViewMatrix(), 
 		m_gameState->m_camera->getPosition());
+
+	m_gameState->m_camera->getAt();
 
 	auto queue = m_gameState->m_world->CreateRenderQueue();
 	queue.Push(RenderData(RendererType::ANIMATED, (Drawable*)m_gameState->m_player.get()));

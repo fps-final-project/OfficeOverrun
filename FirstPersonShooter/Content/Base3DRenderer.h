@@ -189,6 +189,12 @@ public:
 		DirectX::XMStoreFloat3(&m_PSConstantBufferData.camera_pos, DirectX::XMLoadFloat3(&pos));
 	}
 
+	void setFlashlight(const DirectX::XMFLOAT3& direction, const float cutoff)
+	{
+		m_PSConstantBufferData.flashlight_dir = direction;
+		m_PSConstantBufferData.flashlight_cutoffAngle = cutoff;
+	}
+
 	void SetClockwiseCulling()
 	{
 		ID3D11Device* device = m_deviceResources->GetD3DDevice();
