@@ -92,12 +92,14 @@ bool Room::insideRoom(DirectX::XMFLOAT3 pos) const
 
 void Room::Render(std::shared_ptr<RenderMaster> renderMaster)
 {
-	auto model = ResourceManager::Instance.getModel("wall");
+	auto ceilingModel = ResourceManager::Instance.getModel("wall");
+	auto floorModel = ResourceManager::Instance.getModel("floor");
 	auto renderer = renderMaster->getModelRenderer();
 
 	renderer->Render(*m_roomWalls);
 	// bottom wall
-	renderer->Render(Entity(model, { pos.x, pos.y, pos.z + size.z }, { size.x, size.z, 1.f }, { -DirectX::XM_PIDIV2, 0.f, 0.f }));
+	renderer->Render(Entity(floorModel, { pos.x, pos.y, pos.z + size.z }, { size.x, size.z, 1.f }, { -DirectX::XM_PIDIV2, 0.f, 0.f }));
+	renderer->Render(Entity(ceilingModel, { pos.x, pos.y + size.y, pos.z}, { size.x, size.z, 1.f }, { DirectX::XM_PIDIV2, 0.f, 0.f }));
 	//renderer->Render(Entity(model, { pos.x + size.x, pos.y, pos.z }, { size.z, size.y, 1.f }, {0.f, -DirectX::XM_PIDIV2, 0.f}));
 }
 

@@ -291,6 +291,8 @@
     <ClCompile Include="MappingHelpers.cpp">
       <Filter>WorldGeneratorAdapter\Mapper</Filter>
     </ClCompile>
+    <ClCompile Include="AudioReader.cpp" />
+    <ClCompile Include="GunRigMetadata.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
@@ -462,6 +464,10 @@
     <ClInclude Include="MappingHelpers.h">
       <Filter>WorldGeneratorAdapter\Mapper</Filter>
     </ClInclude>
+    <ClInclude Include="AudioFile.hpp" />
+    <ClInclude Include="AudioReader.hpp" />
+    <ClInclude Include="GunRigMetadata.hpp" />
+    <ClInclude Include="RoomLinkData.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\StoreLogo.png">
@@ -496,6 +502,12 @@
     </Image>
     <Image Include="Assets\GunRig\sniper\Atlas_00001.png">
       <Filter>Assets\GunRig\sniper</Filter>
+    </Image>
+    <Image Include="Assets\Other\wall\wall.jpg">
+      <Filter>Assets\Other\wall</Filter>
+    </Image>
+    <Image Include="Assets\Other\wall\floor.jpg">
+      <Filter>Assets\Other\wall</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
@@ -536,6 +548,7 @@
     <None Include="Assets\GunRig\sniper\sniper_gun.gltf">
       <Filter>Assets\GunRig\sniper</Filter>
     </None>
+    <None Include="Assets\Audio\dark-horror-background-252905.wav" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Content\SamplePixelShader.hlsl">

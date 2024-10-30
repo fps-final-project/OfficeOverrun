@@ -18,7 +18,7 @@ class ResourceHelper
 		DirectX::XMFLOAT3 bottomLeft, DirectX::XMFLOAT3 tileStep, DirectX::XMFLOAT3 normal, 
 		int stepH, int stepY, int nStepH, int nStepY);
 public:
-	static void addWallModel(const std::string& texturePath, const std::shared_ptr<DX::DeviceResources>& deviceResources);
+	static void addQuad(const std::string& texturePath, std::string textureName, std::string modelName, int nSubdivs, const std::shared_ptr<DX::DeviceResources>& deviceResources);
 	static Mesh generateRoomModel(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 size,
 	std::vector<RoomLinkData> links, const std::string& texturePath,
 		const std::shared_ptr<DX::DeviceResources>& deviceResources);

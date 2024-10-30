@@ -277,6 +277,8 @@
     <Image Include="Assets\Other\bullet\bullet.jpg" />
     <Image Include="Assets\Other\crosshair\crosshair.png" />
     <Image Include="Assets\Other\wall\brickwall.jpg" />
+    <Image Include="Assets\Other\wall\floor.jpg" />
+    <Image Include="Assets\Other\wall\wall.jpg" />
     <Image Include="Assets\SplashScreen.scale-200.png" />
     <Image Include="Assets\Square150x150Logo.scale-200.png" />
     <Image Include="Assets\Square44x44Logo.scale-200.png" />

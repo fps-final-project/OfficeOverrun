@@ -101,30 +101,46 @@ void ResourceHelper::generateWallTile(std::vector<VertexData>& vertexData, std::
 	indicies.push_back(nVerticies);
 }
 
-void ResourceHelper::addWallModel(const std::string& texturePath, const std::shared_ptr<DX::DeviceResources>& deviceResources)
+void ResourceHelper::addQuad(const std::string& texturePath, std::string textureName, std::string modelName, int nSubdivs, const std::shared_ptr<DX::DeviceResources>& deviceResources)
 {
-	std::vector<VertexData> verticies = {
-		VertexData(DirectX::XMFLOAT3(0.f, 0.f, 0.f), DirectX::XMFLOAT2(0.f, 0.f), DirectX::XMFLOAT3(0.f, 0.f, 1.f)),
-		VertexData(DirectX::XMFLOAT3(1.f, 0.f, 0.f), DirectX::XMFLOAT2(1.f, 0.f), DirectX::XMFLOAT3(0.f, 0.f, 1.f)),
-		VertexData(DirectX::XMFLOAT3(1.f, 1.f, 0.f), DirectX::XMFLOAT2(1.f, 1.f), DirectX::XMFLOAT3(0.f, 0.f, 1.f)),
-		VertexData(DirectX::XMFLOAT3(0.f, 1.f, 0.f), DirectX::XMFLOAT2(0.f, 1.f), DirectX::XMFLOAT3(0.f, 0.f, 1.f))
-	};
+	std::vector<VertexData> verticies;
+	std::vector<unsigned short> indicies;
 
-	std::vector<unsigned short> indicies = {
-		0, 1, 2,
-		2, 3, 0
-	};
 
-	ResourceManager::Instance.loadTexture(texturePath, deviceResources, "wall");
+	float nSubdivsf = nSubdivs;
+	for (int i = 0; i < nSubdivs; i++)
+	{
+		for (int j = 0; j < nSubdivs; j++)
+		{
+			int nVerticiesCurr = verticies.size();
+			verticies.push_back(VertexData(DirectX::XMFLOAT3(i / nSubdivsf, j / nSubdivsf, 0.f), 
+				DirectX::XMFLOAT2(0, 0),DirectX::XMFLOAT3(0.f, 0.f, 1.f)));
+			verticies.push_back(VertexData(DirectX::XMFLOAT3((i + 1) / nSubdivsf, j / nSubdivsf, 0.f),
+				DirectX::XMFLOAT2(1, 0), DirectX::XMFLOAT3(0.f, 0.f, 1.f)));
+			verticies.push_back(VertexData(DirectX::XMFLOAT3((i + 1) / nSubdivsf, (j + 1) / nSubdivsf, 0.f),
+				DirectX::XMFLOAT2(1, 1), DirectX::XMFLOAT3(0.f, 0.f, 1.f)));
+			verticies.push_back(VertexData(DirectX::XMFLOAT3(i / nSubdivsf, (j + 1) / nSubdivsf, 0.f),
+				DirectX::XMFLOAT2(0, 1), DirectX::XMFLOAT3(0.f, 0.f, 1.f)));
+
+			indicies.push_back(nVerticiesCurr);
+			indicies.push_back(nVerticiesCurr + 1);
+			indicies.push_back(nVerticiesCurr + 2);
+			indicies.push_back(nVerticiesCurr + 2);
+			indicies.push_back(nVerticiesCurr + 3);
+			indicies.push_back(nVerticiesCurr);
+		}
+	}
+
+	ResourceManager::Instance.loadTexture(texturePath, deviceResources, textureName);
 	AssimpModel model;
 	model.meshes.push_back(MeshFactory<VertexData>::createMesh(verticies, indicies,
-		{ ResourceManager::Instance.getTexture("wall") }, deviceResources));
+		{ ResourceManager::Instance.getTexture(textureName)}, deviceResources));
 
-	ResourceManager::Instance.addModel(model, "wall");
+	ResourceManager::Instance.addModel(model, modelName);
 
 }
 
-Mesh ResourceHelper::generateRoomModel(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 size, 
+Mesh ResourceHelper::generateRoomModel(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 size,
 	std::vector<RoomLinkData> links,
 	const std::string& texturePath, const std::shared_ptr<DX::DeviceResources>& deviceResources)
 {
