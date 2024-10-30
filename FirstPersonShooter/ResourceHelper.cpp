@@ -67,13 +67,14 @@ void ResourceHelper::generateWall(std::vector<VertexData>& vertexData, std::vect
 				continue;
 
 			// add wall 
-			ResourceHelper::generateWallTile(vertexData, indicies, tilePos, tileStep, normal);
+			ResourceHelper::generateWallTile(vertexData, indicies, tilePos, tileStep, normal, stepH, stepY, nStepsH + 1, nStepsY + 1);
 		}
 	}
 }
 
 void ResourceHelper::generateWallTile(std::vector<VertexData>& vertexData, std::vector<unsigned short>& indicies, 
-	DirectX::XMFLOAT3 bottomLeft, DirectX::XMFLOAT3 tileStep, DirectX::XMFLOAT3 normal)
+	DirectX::XMFLOAT3 bottomLeft, DirectX::XMFLOAT3 tileStep, DirectX::XMFLOAT3 normal,
+	int stepH, int stepY, int nStepH, int nStepY)
 {
 	int nVerticies = vertexData.size();
 	/*VertexData(DirectX::XMFLOAT3(0.f, 0.f, 0.f), DirectX::XMFLOAT2(0.f, 0.f), DirectX::XMFLOAT3(0.f, 0.f, 1.f)),
@@ -82,13 +83,15 @@ void ResourceHelper::generateWallTile(std::vector<VertexData>& vertexData, std::
 		VertexData(DirectX::XMFLOAT3(0.f, 1.f, 0.f), DirectX::XMFLOAT2(0.f, 1.f), DirectX::XMFLOAT3(0.f, 0.f, 1.f))*/
 
 
-	vertexData.push_back(VertexData(bottomLeft, DirectX::XMFLOAT2(0.f, 0.f), normal));
+
+
+	vertexData.push_back(VertexData(bottomLeft, DirectX::XMFLOAT2((float)stepH / nStepH, (float)stepY / nStepY), normal));
 	vertexData.push_back(VertexData({ bottomLeft.x + tileStep.x, bottomLeft.y, bottomLeft.z + tileStep.z },
-		DirectX::XMFLOAT2(1.f, 0.f), normal));
+		DirectX::XMFLOAT2((float)(stepH + 1)/ nStepH, (float)stepY / nStepY), normal));
 	vertexData.push_back(VertexData({ bottomLeft.x + tileStep.x, bottomLeft.y + tileStep.y, bottomLeft.z + tileStep.z },
-		DirectX::XMFLOAT2(1.f, 1.f), normal));
+		DirectX::XMFLOAT2((float)(stepH + 1)/ nStepH, (float)(stepY + 1) / nStepY), normal));
 	vertexData.push_back(VertexData({ bottomLeft.x, bottomLeft.y + tileStep.y, bottomLeft.z },
-		DirectX::XMFLOAT2(0.f, 1.f), normal));
+		DirectX::XMFLOAT2((float)stepH / nStepH, (float)(stepY + 1) / nStepY), normal));
 
 	indicies.push_back(nVerticies);
 	indicies.push_back(nVerticies + 1);
