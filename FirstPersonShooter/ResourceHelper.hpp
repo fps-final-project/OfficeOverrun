@@ -19,7 +19,7 @@ class ResourceHelper
 		DirectX::XMFLOAT3 bottomLeft, DirectX::XMFLOAT3 tileStep, DirectX::XMFLOAT3 normal, 
 		int stepH, int stepY, int nStepH, int nStepY, float leftOffset, float rightOffset, bool alongX);
 	static void generateDoorFrame(std::vector<VertexData>& vertexData, std::vector<unsigned short>& indicies,
-		DirectX::XMFLOAT3 bottomLeft, DirectX::XMFLOAT3 size, DirectX::XMFLOAT3 offset, int stepH, int stepY, int nStepH, int nStepY);
+		DirectX::XMFLOAT3 bottomLeft, DirectX::XMFLOAT3 size, DirectX::XMFLOAT3 wallNormal, int stepH, int stepY, int nStepH, int nStepY);
 public:
 	static void addQuad(const std::string& texturePath, std::string textureName, std::string modelName, int nSubdivs, const std::shared_ptr<DX::DeviceResources>& deviceResources);
 	static Mesh generateRoomModel(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 size,

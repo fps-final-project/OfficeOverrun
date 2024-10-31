@@ -69,7 +69,7 @@ void ResourceHelper::generateWall(std::vector<VertexData>& vertexData, std::vect
 			{
 				if (stepY == 0)
 					ResourceHelper::generateDoorFrame(vertexData, indicies, tilePos, data->size,
-						{ -normal.x * wallOffset, 0, -normal.z * wallOffset }, stepH, stepY, nStepsH + 1, nStepsY + 1);
+						normal, stepH, stepY, nStepsH + 1, nStepsY + 1);
 			}
 			else
 			{
@@ -156,43 +156,69 @@ void ResourceHelper::addQuad(const std::string& texturePath, std::string texture
 }
 
 void ResourceHelper::generateDoorFrame(std::vector<VertexData>& vertexData, std::vector<unsigned short>& indicies,
-	DirectX::XMFLOAT3 bottomLeft, DirectX::XMFLOAT3 size, DirectX::XMFLOAT3 offset, int stepH, int stepY, int nStepH, int nStepY)
+	DirectX::XMFLOAT3 bottomLeft, DirectX::XMFLOAT3 size, DirectX::XMFLOAT3 wallNormal, int stepH, int stepY, int nStepH, int nStepY)
 {
+	DirectX::XMFLOAT3 offset = { -wallNormal.x * wallOffset, 0, -wallNormal.z * wallOffset };
+	DirectX::XMFLOAT3 frameNormal = { wallNormal.z, 0, wallNormal.x };
+
 	int nVerticies = vertexData.size();
+
+	auto nonzero = [](float a, float b) {
+		return b == 0 ? a : b;
+		};
+
+	float direction = nonzero(wallNormal.x, wallNormal.z);
+	size = { size.x * direction, size.y, size.z * direction };
 	// left frame
 
 	vertexData.push_back(VertexData({ bottomLeft.x, bottomLeft.y, bottomLeft.z },
-		DirectX::XMFLOAT2((float)stepH / nStepH, (float)stepY / nStepY), { 1, 0, 0 }));
+		DirectX::XMFLOAT2((float)stepH / nStepH, (float)stepY / nStepY), frameNormal));
 	vertexData.push_back(VertexData({ bottomLeft.x + offset.x, bottomLeft.y, bottomLeft.z + offset.z },
-		DirectX::XMFLOAT2((float)(stepH + max(offset.x, offset.z)) / nStepH, (float)stepY / nStepY), { 1, 0, 0 }));
+		DirectX::XMFLOAT2((float)(stepH + nonzero(offset.x, offset.z)) / nStepH, (float)stepY / nStepY), frameNormal));
 	vertexData.push_back(VertexData({ bottomLeft.x + offset.x, bottomLeft.y + size.y, bottomLeft.z + offset.z },
-		DirectX::XMFLOAT2((float)(stepH + max(offset.x, offset.z)) / nStepH, (float)(stepY + size.y) / nStepY), { 1, 0, 0 }));
+		DirectX::XMFLOAT2((float)(stepH + nonzero(offset.x, offset.z)) / nStepH, (float)(stepY + size.y) / nStepY), frameNormal));
 	vertexData.push_back(VertexData({ bottomLeft.x, bottomLeft.y + size.y, bottomLeft.z },
-		DirectX::XMFLOAT2((float)stepH / nStepH, (float)(stepY + size.y) / nStepY), { 1, 0, 0 }));
+		DirectX::XMFLOAT2((float)stepH / nStepH, (float)(stepY + size.y) / nStepY), frameNormal));
 
 	// right frame
 
+	frameNormal = { -frameNormal.x, 0, -frameNormal.z };
+
+
 	vertexData.push_back(VertexData({ bottomLeft.x + size.x + offset.x, bottomLeft.y, bottomLeft.z + size.z + offset.z },
-		DirectX::XMFLOAT2((float)(stepH + max(size.x, size.z) - max(offset.x, offset.z)) / nStepH, (float)stepY / nStepY), { -1, 0, 0 }));
+		DirectX::XMFLOAT2((float)(stepH + nonzero(size.x, size.z) - nonzero(offset.x, offset.z)) / nStepH, (float)stepY / nStepY), frameNormal));
 	vertexData.push_back(VertexData({ bottomLeft.x + size.x, bottomLeft.y, bottomLeft.z + size.z },
-		DirectX::XMFLOAT2((float)(stepH + max(size.x, size.z)) / nStepH, (float)stepY / nStepY), { -1, 0, 0 }));
+		DirectX::XMFLOAT2((float)(stepH + nonzero(size.x, size.z)) / nStepH, (float)stepY / nStepY), frameNormal));
 	vertexData.push_back(VertexData({ bottomLeft.x + size.x, bottomLeft.y + size.y, bottomLeft.z + size.z },
-		DirectX::XMFLOAT2((float)(stepH + max(offset.x, offset.z)) / nStepH, (float)(stepY + size.y) / nStepY), { -1, 0, 0 }));
+		DirectX::XMFLOAT2((float)(stepH + nonzero(offset.x, offset.z)) / nStepH, (float)(stepY + size.y) / nStepY), frameNormal));
 	vertexData.push_back(VertexData({ bottomLeft.x + size.x + offset.x, bottomLeft.y + size.y, bottomLeft.z + size.z + offset.z },
-		DirectX::XMFLOAT2((float)(stepH + max(size.x, size.z) - max(offset.x, offset.z)) / nStepH, (float)(stepY + size.y) / nStepY), { -1, 0, 0 }));
+		DirectX::XMFLOAT2((float)(stepH + nonzero(size.x, size.z) - nonzero(offset.x, offset.z)) / nStepH, (float)(stepY + size.y) / nStepY), frameNormal));
 
 	for (int i = 0; i < 2; i++)
 	{
-		indicies.push_back(nVerticies);
-		indicies.push_back(nVerticies + 1);
-		indicies.push_back(nVerticies + 2);
-		indicies.push_back(nVerticies + 2);
-		indicies.push_back(nVerticies + 3);
-		indicies.push_back(nVerticies);
+		if (nonzero(wallNormal.x, wallNormal.z) > 0)
+		{
+
+			indicies.push_back(nVerticies);
+			indicies.push_back(nVerticies + 1);
+			indicies.push_back(nVerticies + 2);
+			indicies.push_back(nVerticies + 2);
+			indicies.push_back(nVerticies + 3);
+			indicies.push_back(nVerticies);
+		}
+		else
+		{
+			indicies.push_back(nVerticies);
+			indicies.push_back(nVerticies + 3);
+			indicies.push_back(nVerticies + 2);
+			indicies.push_back(nVerticies + 2);
+			indicies.push_back(nVerticies + 1);
+			indicies.push_back(nVerticies);
+		}
 
 		nVerticies += 4;
-	}
 
+	}
 }
 
 Mesh ResourceHelper::generateRoomModel(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 size,

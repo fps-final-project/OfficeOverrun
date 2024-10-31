@@ -173,6 +173,9 @@
     <Filter Include="Assets\GunRig\sniper">
       <UniqueIdentifier>{d6ccbe41-c732-439c-94bd-2e1fdb7f0c25}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Content\RoomModelGenerator">
+      <UniqueIdentifier>{f0f28225-0827-46e2-b9d9-466de74d841b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -293,6 +296,9 @@
     </ClCompile>
     <ClCompile Include="AudioReader.cpp" />
     <ClCompile Include="GunRigMetadata.cpp" />
+    <ClCompile Include="RoomModelGenerator.cpp">
+      <Filter>Content\RoomModelGenerator</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
@@ -468,6 +474,9 @@
     <ClInclude Include="AudioReader.hpp" />
     <ClInclude Include="GunRigMetadata.hpp" />
     <ClInclude Include="RoomLinkData.hpp" />
+    <ClInclude Include="RoomModelGenerator.h">
+      <Filter>Content\RoomModelGenerator</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\StoreLogo.png">

@@ -37,7 +37,7 @@ RoomCollision Room::checkCollision(DirectX::XMFLOAT3 entityPos) const
 		result.collision[1] = true;
 		result.correction[1] = this->pos.y + this->size.y - playerHeight;
 	}
-
+	
 	if (entityPos.x < this->pos.x + wallOffset)
 	{
 		result.collision[0] = true;
