@@ -87,7 +87,7 @@ void WorldGenerator::RoomSelector::RandomDfs(int v, std::vector<bool>& visited, 
 {
 	visited[v] = true;
 	path.push_back(v);
-	if (path.size() == N)
+	if (path.size() == P)
 		return;
 
 	auto neighbours = H.GetNeighbours(v);
@@ -101,7 +101,7 @@ void WorldGenerator::RoomSelector::RandomDfs(int v, std::vector<bool>& visited, 
 
 		bool up = H[v].value->IsBelow(*H[u].value);
 
-		// If below the minimal room number on the floor, try to find floor on the same floor
+		// If below the minimal room number on the floor, try to find room on the same floor
 		if (up && tr_f < MIN_F)
 		{
 			for (int j = i + 1; j < neighbours.size(); j++)
