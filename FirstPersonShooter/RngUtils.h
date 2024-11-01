@@ -11,6 +11,7 @@ namespace WorldGenerator
 	public:
 		static int RandIntInRange(int min, int max); // includes <min,max> (inclusive)
 		static bool RandBool();
+		static bool RandBinWithProbabilty(float probability);
 		template<typename T>
 		static std::vector<T> ShuffleVector(std::vector<T> input);
 		template<typename T>

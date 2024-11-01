@@ -15,7 +15,9 @@ namespace WorldGenerator
 		std::vector<int> G_H_map; // maps G vertices to H vertices
 		std::vector<int> H_G_map; // maps H vertices to G vertices
 		std::vector<int> neigh_G; // H[G] subgraph neighbourhood
-		int s; // start vertex
+		int s; // start vertex in H
+		int s_G; // start vertex in G
+		int t_G; // target vertex in G
 		int N; // desired number of rooms in the level
 		int P; // maximum length from s to e
 		float e_c; // edge probability coeff
@@ -30,6 +32,7 @@ namespace WorldGenerator
 		void AddSpareVertices();
 		void ComputeNeighbourhood();
 		void UpdateNeighbourhood(int v);
+		void AddEdgesAtRandom();
 	public:
 
 		RoomSelector(RoomSelectorArgs args);

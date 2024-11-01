@@ -33,6 +33,9 @@ Graph<GeneratedRoom> WorldGenerator::RoomSelector::SelectRooms()
 	// Steps 5-6
 	AddSpareVertices();
 
+	// Step 7
+	AddEdgesAtRandom();
+
 	return G;
 }
 
@@ -128,6 +131,8 @@ void WorldGenerator::RoomSelector::ConstructGFromPath(std::vector<int> P)
 		if (i > 0)
 			G.AddUndirectedEdge(i - 1, i);
 	}
+	s_G = 0;
+	t_G = G.Size() - 1;
 }
 
 void WorldGenerator::RoomSelector::AddHVertexToG(int v)
@@ -185,6 +190,33 @@ void WorldGenerator::RoomSelector::UpdateNeighbourhood(int v) // v is vertex in 
 		if (H_G_map[u] == -1 && std::find(neigh_G.begin(), neigh_G.end(), u) == neigh_G.end())
 		{
 			neigh_G.push_back(u);
+		}
+	}
+}
+
+void WorldGenerator::RoomSelector::AddEdgesAtRandom()
+{
+	for (int v_H = 0; v_H < H.Size(); v_H++)
+	{
+		int v_G = H_G_map[v_H];
+		if (v_G == -1) // skip if v not in G
+			continue;
+		std::vector<int> neighbours = H.GetNeighbours(v_H);
+		for (int u_H : neighbours)
+		{
+			int u_G = H_G_map[u_H];
+			if (u_H == -1) // skip if u not in G
+				continue;
+			if (u_G <= v_G) // iterate through edge only once
+				continue; 
+			if (G.HasEdge(u_G, v_G)) // skip if edge already exists
+				continue;
+
+			bool shouldAddEdge = RngUtils::RandBinWithProbabilty(e_c);
+			if (shouldAddEdge)
+			{
+				G.AddUndirectedEdge(v_G, u_G);
+			}
 		}
 	}
 }
