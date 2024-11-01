@@ -20,6 +20,17 @@ bool GeneratedRoom::IsAdjacent(GeneratedRoom room)
         return false;
 }
 
+bool WorldGenerator::GeneratedRoom::ValidRoomLink(GeneratedRoom room)
+{
+    if (!IsAdjacent(room))
+        return false;
+    auto border = ComputeBorders(room);
+    if (!RoomLink::ValidBorderForRoomLink(std::get<1>(border)))
+        return false;
+    else
+        return true;
+}
+
 bool WorldGenerator::GeneratedRoom::IsAbove(GeneratedRoom room)
 {
     return pos.z > room.pos.z;

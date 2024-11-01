@@ -46,7 +46,7 @@ void RoomLayoutGenerator::GenerateAdGraph()
 		Node<GeneratedRoom>& node = adGraph[i];
 		for (int j = i + 1; j < adGraph.Size(); j++)
 		{
-			if (node.value->IsAdjacent(*adGraph[j].value))
+			if (node.value->ValidRoomLink(*adGraph[j].value))
 			{
 				adGraph.AddUndirectedEdge(i, j);
 			}
@@ -82,8 +82,6 @@ void RoomLayoutGenerator::GenerateRoomLinks()
 			if (!adGraph.HasEdge(i,j))
 				continue;
 			auto border = node.value->ComputeBorders(*neighbour.value);
-			if (!RoomLink::ValidBorderForRoomLink)
-				continue;
 			RoomLink link = RoomLink::MakeRoomLink(std::get<0>(border), std::get<1>(border));
 
 			RoomLink outLink = link;
