@@ -60,7 +60,7 @@ void RoomLayoutGenerator::GenerateRoomLinks()
 			if (!node.IsConnectedTo(&neighbour))
 				continue;
 			auto border = node.value->ComputeBorders(*neighbour.value);
-			if (!RoomLink::ValidBorderForRoomLink)
+			if (!RoomLink::ValidBorderForRoomLink(std::get<1>(border)))
 				continue;
 			RoomLink link = RoomLink::MakeRoomLink(std::get<0>(border), std::get<1>(border));
 

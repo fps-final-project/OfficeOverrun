@@ -27,10 +27,18 @@ void RenderMaster::setupShaders(DirectX::XMFLOAT4X4 projectionMatrix, DirectX::X
 	m_currentRenderer = RendererType::ANIMATED;
 }
 
-void RenderMaster::setLighting(const LightingData& data)
+void RenderMaster::setLighting(const LightingData& data, const DirectX::XMVECTOR& flashlight_dir)
 {
+	const float cutoff = sqrt(3) / 2;
+
+	DirectX::XMFLOAT3 flashlight_dir_f3;
+	DirectX::XMStoreFloat3(&flashlight_dir_f3, flashlight_dir);
+
 	m_modelRenderer->setLighting(data);
 	m_animatedRenderer->setLighting(data);
+
+	m_modelRenderer->setFlashlight(flashlight_dir_f3, cutoff);
+	m_animatedRenderer->setFlashlight(flashlight_dir_f3, cutoff);
 }
 
 std::shared_ptr<AnimatedModelRenderer> RenderMaster::getAnimatedRenderer()

@@ -6,6 +6,7 @@
 #include "EnemyBuilder.hpp"
 #include "ObjectBuilder.hpp"
 #include "MapGeneratorAdapter.h"
+#include "RoomModelGenerator.h"
 
 GameState::GameState(
 	std::shared_ptr<DirectX::Keyboard> keyboard,
@@ -49,7 +50,7 @@ GameState::GameState(
 	for (auto& room : m_world->m_rooms)
 	{
 		room.setModel(
-			ResourceHelper::generateRoomModel(
+			RoomModelGenerator::generateRoomModel(
 				room.getPosition(), room.getSize(), room.getLinks(),
 				"wall", m_deviceResources));
 	}

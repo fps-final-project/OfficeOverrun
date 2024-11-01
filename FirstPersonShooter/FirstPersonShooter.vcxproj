@@ -277,6 +277,8 @@
     <Image Include="Assets\Other\bullet\bullet.jpg" />
     <Image Include="Assets\Other\crosshair\crosshair.png" />
     <Image Include="Assets\Other\wall\brickwall.jpg" />
+    <Image Include="Assets\Other\wall\floor.jpg" />
+    <Image Include="Assets\Other\wall\wall.jpg" />
     <Image Include="Assets\SplashScreen.scale-200.png" />
     <Image Include="Assets\Square150x150Logo.scale-200.png" />
     <Image Include="Assets\Square44x44Logo.scale-200.png" />
@@ -317,6 +319,7 @@
     <ClInclude Include="RoomLayoutGenerator.h" />
     <ClInclude Include="RoomLink.h" />
     <ClInclude Include="RoomLinkData.hpp" />
+    <ClInclude Include="RoomModelGenerator.h" />
     <ClInclude Include="SpriteRenderer.hpp" />
     <ClInclude Include="Animable.hpp" />
     <ClInclude Include="AnimatedAssimpModel.h" />
@@ -402,6 +405,7 @@
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="RoomLayoutGenerator.cpp" />
     <ClCompile Include="RoomLink.cpp" />
+    <ClCompile Include="RoomModelGenerator.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="SimpleCollisionDetector.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
