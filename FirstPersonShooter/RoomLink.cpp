@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "RoomLink.h"
-#include "Utils.h"
+#include "RngUtils.h"
 
 using namespace WorldGenerator;
 
@@ -15,9 +15,9 @@ RoomLink RoomLink::MakeRoomLink(Vector3 pos, Vector3 size)
     Orientation orientation = (size.x == 0) ? YZ : ((size.y == 0)? XZ : XY);
 
     Vector3 linkPos = Vector3(
-        pos.x + (size.x > 0 ? Utils::RandIntInRange(1, size.x - 2) : 0),
-        pos.y + (size.y > 0 ? Utils::RandIntInRange(1, size.y - 2) : 0),
-        pos.z + (size.z > 0 ? Utils::RandIntInRange(1, size.z - 2) : 0)
+        pos.x + (size.x > 0 ? RngUtils::RandIntInRange(1, size.x - 2) : 0),
+        pos.y + (size.y > 0 ? RngUtils::RandIntInRange(1, size.y - 2) : 0),
+        pos.z + (size.z > 0 ? RngUtils::RandIntInRange(1, size.z - 2) : 0)
     );
 
     return RoomLink(linkPos, orientation);

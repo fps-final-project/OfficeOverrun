@@ -15,7 +15,9 @@ namespace WorldGenerator
 		Graph<GeneratedRoom> adGraph; // room adjacency graph
 		void GenerateRooms();
 		void GenerateAdGraph();
+		void SelectRooms();
 		void GenerateRoomLinks();
+		void UpdateLayoutWithAdGraph();
 	public:
 		RoomLayoutGenerator(RoomLayoutConfig);
 		RoomLayout& Generate();

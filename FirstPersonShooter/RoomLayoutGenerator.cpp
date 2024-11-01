@@ -3,6 +3,8 @@
 #include "Utils.h"
 #include "BinaryRoom.h"
 #include "RoomLink.h"
+#include "RoomSelector.h"
+#include <algorithm>
 
 using namespace WorldGenerator;
 
@@ -18,8 +20,14 @@ RoomLayout& RoomLayoutGenerator::Generate()
 	// Step 2
 	GenerateAdGraph();
 
+	// Step 3
+	SelectRooms();
+
 	// Step X - after graph operations
 	GenerateRoomLinks();
+
+	// Step X + 1
+	UpdateLayoutWithAdGraph();
 
 	return layout;
 }
@@ -33,35 +41,47 @@ void RoomLayoutGenerator::GenerateRooms()
 void RoomLayoutGenerator::GenerateAdGraph()
 {
 	adGraph = Graph<GeneratedRoom>(layout.rooms);
-	for (int i = 0; i < adGraph.nodes.size(); i++)
+	for (int i = 0; i < adGraph.Size(); i++)
 	{
-		Node<GeneratedRoom>& node = adGraph.nodes[i];
-		for (int j = i + 1; j < adGraph.nodes.size(); j++)
+		Node<GeneratedRoom>& node = adGraph[i];
+		for (int j = i + 1; j < adGraph.Size(); j++)
 		{
-			if (node.value->IsAdjacent(*adGraph.nodes[j].value))
+			if (node.value->ValidRoomLink(*adGraph[j].value))
 			{
-				node.neighbours.push_back(&adGraph.nodes[j]);
-				adGraph.nodes[j].neighbours.push_back(&node);
+				adGraph.AddUndirectedEdge(i, j);
 			}
 		}
 	}
 }
 
+void WorldGenerator::RoomLayoutGenerator::SelectRooms()
+{
+	// Setup selector args
+	RoomSelectorArgs args(adGraph);
+	auto is_on_the_0_floor = [](Node<GeneratedRoom> node) { return node.value->IsZeroFloor(); };
+	args.startVertex = std::distance(adGraph.nodes.begin(), 
+		std::find_if(adGraph.nodes.begin(), adGraph.nodes.end(), is_on_the_0_floor)); // First index of room on zero floor
+	args.roomDensity = config.roomDensity;
+	args.pathLengthCoeff = config.pathLengthCoeff;
+	args.edgeDensityCoeff = config.edgeDensityCoeff;
+
+	RoomSelector selector(args);
+	adGraph = selector.SelectRooms();
+}
+
 // The method removes some edges, spoils graph structure
 void RoomLayoutGenerator::GenerateRoomLinks()
 {
-	int n = adGraph.nodes.size();
+	int n = adGraph.Size();
 	for (int i = 0; i < n; i++) 
 	{
-		Node<GeneratedRoom>& node = adGraph.nodes[i];
+		Node<GeneratedRoom>& node = adGraph[i];
 		for (int j = i + 1; j < n; j++)
 		{
-			Node<GeneratedRoom>& neighbour = adGraph.nodes[j];
-			if (!node.IsConnectedTo(&neighbour))
+			Node<GeneratedRoom>& neighbour = adGraph[j];
+			if (!adGraph.HasEdge(i,j))
 				continue;
 			auto border = node.value->ComputeBorders(*neighbour.value);
-			if (!RoomLink::ValidBorderForRoomLink(std::get<1>(border)))
-				continue;
 			RoomLink link = RoomLink::MakeRoomLink(std::get<0>(border), std::get<1>(border));
 
 			RoomLink outLink = link;
@@ -74,4 +94,14 @@ void RoomLayoutGenerator::GenerateRoomLinks()
 			neighbour.value->links.push_back(inLink);
 		}
 	}
+}
+
+void WorldGenerator::RoomLayoutGenerator::UpdateLayoutWithAdGraph()
+{
+	std::vector<GeneratedRoom> newRooms;
+	for (int i = 0; i < adGraph.Size(); i++)
+	{
+		newRooms.push_back(*adGraph[i].value);
+	}
+	layout.rooms = newRooms;
 }

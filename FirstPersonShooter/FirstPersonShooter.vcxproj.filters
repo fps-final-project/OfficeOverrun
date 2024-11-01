@@ -176,6 +176,9 @@
     <Filter Include="Content\RoomModelGenerator">
       <UniqueIdentifier>{f0f28225-0827-46e2-b9d9-466de74d841b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="WorldGenerator\RoomLayout\RooomSelector">
+      <UniqueIdentifier>{97ad2e10-ce1f-429c-8771-5c5bdf50c841}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -270,9 +273,6 @@
     <ClCompile Include="GeneratedRoom.cpp">
       <Filter>WorldGenerator\RoomLayout\Model</Filter>
     </ClCompile>
-    <ClCompile Include="Graph.cpp">
-      <Filter>WorldGenerator\Common\Graph</Filter>
-    </ClCompile>
     <ClCompile Include="RNG.cpp">
       <Filter>WorldGenerator\Common</Filter>
     </ClCompile>
@@ -300,6 +300,12 @@
     </ClCompile>
     <ClCompile Include="GunRigMetadata.cpp">
       <Filter>Content\Entity\GunRig</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomSelector.cpp">
+      <Filter>WorldGenerator\RoomLayout\RooomSelector</Filter>
+    </ClCompile>
+    <ClCompile Include="RngUtils.cpp">
+      <Filter>WorldGenerator\Common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -471,6 +477,18 @@
     </ClInclude>
     <ClInclude Include="MappingHelpers.h">
       <Filter>WorldGeneratorAdapter\Mapper</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomSelector.h">
+      <Filter>WorldGenerator\RoomLayout\RooomSelector</Filter>
+    </ClInclude>
+    <ClInclude Include="NotImplementedExecption.h">
+      <Filter>WorldGenerator\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomSelectorArgs.h">
+      <Filter>WorldGenerator\RoomLayout\RooomSelector</Filter>
+    </ClInclude>
+    <ClInclude Include="RngUtils.h">
+      <Filter>WorldGenerator\Common</Filter>
     </ClInclude>
     <ClInclude Include="AudioFile.hpp" />
     <ClInclude Include="AudioReader.hpp" />
