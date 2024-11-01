@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "GameState.hpp"
 #include "ResourceManager.h"
+#include "ResourceHelper.hpp"
 #include "SimpleCollisionDetector.hpp"
 #include "EnemyBuilder.hpp"
 #include "ObjectBuilder.hpp"
@@ -33,6 +34,7 @@ GameState::GameState(
 		.WithNewEnemy(ResourceManager::Instance.getAnimatedModel("zombie_war"))
 		.WithMaxHealth(100)
 		.WithDamage(10)
+		.WithSpeed(0.01f)
 		.WithPosition({ 3.f, 0.f, 2.f })
 		.WithRotation({ 0.f, 0.f, 0.f })
 		.WithVelocity({ 0.f, 0.f, 0.f })
@@ -40,22 +42,21 @@ GameState::GameState(
 		.WithFallbackAnimation("idle")
 		.Build();
 
-	auto ak = 
-		objectBuilder
-		.WithNewObject(ResourceManager::Instance.getModel("AK47NoSubdiv_cw"))
-		.WithPosition({ 1.f, -1.f, -1.f })
-		.WithSize({ 0.2f, 0.2f, 0.2f })
-		.Build();
-
-
 
 	//m_world->m_rooms.push_back(Room(XMFLOAT3(-1.f, -1.f, -2.f), XMFLOAT3(4.f, 4.f, 6.f)));
 	// generating rooms using WorldGenerator
 	m_world->m_rooms = MapGeneratorAdapter().GenerateRooms();
+	for (auto& room : m_world->m_rooms)
+	{
+		room.setModel(
+			ResourceHelper::generateRoomModel(
+				room.getPosition(), room.getSize(), room.getLinks(),
+				"wall", m_deviceResources));
+	}
+	m_world->UpdateVisibleRooms();
 	//m_world->m_currentRoomIndex = 0;
 
-	m_world->m_entities.push_back((Entity)*ak);
-	m_world->m_animatedEntities.push_back((AnimatedEntity)*zombie);
+	m_world->AddEnemy(zombie);
 
 	this->setupActionHandlers();
 
@@ -75,10 +76,11 @@ void GameState::HandleInput()
 void GameState::Update(float dt)
 {
 	m_player->Update(dt);
-	m_world->updateCurrentRoom(m_player->getPostition());
+	m_world->UpdateCurrentRoom(m_player->getPostition());
+	m_world->UpdateEnemies(m_player->getPostition());
 	m_world->Update(dt);
 
-	m_player->handleRoomCollision(m_world->getCurrentRoom().checkCollision(m_player->getPostition()));
+	m_player->handleRoomCollision(m_world->GetCurrentRoom().checkCollision(m_player->getPostition()));
 
 	m_camera->setPosition(m_player->getPostition());
 	m_player->getGunRig()->RotateAndOffset(m_camera->getYawPitchRoll(), m_player->getPostition(), dt);
@@ -86,7 +88,7 @@ void GameState::Update(float dt)
 
 	//TODO: Collision handling
 
-	auto collisions = m_collisionDetector->GetCollisions(m_world->GetEntities());
+	//auto collisions = m_collisionDetector->GetCollisions(m_world->GetEntities());
 
 }
 
@@ -98,7 +100,7 @@ void GameState::CreateWindowSizeDependentResources()
 void GameState::setupActionHandlers()
 {
 	m_inputHandler->AddActionHandler(
-		[](InputState newState, InputState oldState) {	return newState.first.leftButton && !oldState.first.leftButton; },
+		[](InputState newState, InputState oldState) {	return newState.first.leftButton; },
 		Action::SHOOT
 	);
 
@@ -132,4 +134,23 @@ void GameState::setupActionHandlers()
 		Action::JUMP
 	);
 
+	m_inputHandler->AddActionHandler(
+		[](InputState newState, InputState oldState) {	return newState.second.D1 && oldState.second.D1; },
+		Action::WEAPON1
+	);
+
+	m_inputHandler->AddActionHandler(
+		[](InputState newState, InputState oldState) {	return newState.second.D2 && oldState.second.D2; },
+		Action::WEAPON2
+	);
+
+	m_inputHandler->AddActionHandler(
+		[](InputState newState, InputState oldState) {	return newState.second.D3 && oldState.second.D3; },
+		Action::WEAPON3
+	);
+
+	m_inputHandler->AddActionHandler(
+		[](InputState newState, InputState oldState) {	return newState.second.D4 && oldState.second.D4; },
+		Action::WEAPON4
+	);
 }

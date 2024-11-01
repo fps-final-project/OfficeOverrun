@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include <xaudio2.h>
 
 namespace DX
 {
@@ -52,6 +53,9 @@ namespace DX
 		IWICImagingFactory2*		GetWicImagingFactory() const			{ return m_wicFactory.Get(); }
 		D2D1::Matrix3x2F			GetOrientationTransform2D() const		{ return m_orientationTransform2D; }
 
+		// Audio Accessors
+		IXAudio2*					GetXAudio() const						{ return m_xaudio.Get(); }
+
 	private:
 		void CreateDeviceIndependentResources();
 		void CreateDeviceResources();
@@ -81,6 +85,10 @@ namespace DX
 		// DirectWrite drawing components.
 		Microsoft::WRL::ComPtr<IDWriteFactory3>		m_dwriteFactory;
 		Microsoft::WRL::ComPtr<IWICImagingFactory2>	m_wicFactory;
+
+		// Audio control
+		Microsoft::WRL::ComPtr<IXAudio2>	m_xaudio;
+		IXAudio2MasteringVoice* m_masteringVoice;
 
 		// Cached reference to the Window.
 		Platform::Agile<Windows::UI::Core::CoreWindow> m_window;

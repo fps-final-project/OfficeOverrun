@@ -82,6 +82,8 @@ void RoomLayoutGenerator::GenerateRoomLinks()
 			if (!adGraph.HasEdge(i,j))
 				continue;
 			auto border = node.value->ComputeBorders(*neighbour.value);
+			if (!RoomLink::ValidBorderForRoomLink)
+				continue;
 			RoomLink link = RoomLink::MakeRoomLink(std::get<0>(border), std::get<1>(border));
 
 			RoomLink outLink = link;

@@ -9,12 +9,12 @@
 #include "BoneInfo.h"
 #include "MeshFactory.h"
 
-class AssimpModel;
-class AnimatedAssimpModel;
-class FinalTransformData;
-class Joint;
-class Mesh;
-class Texture;
+struct AssimpModel;
+struct AnimatedAssimpModel;
+struct FinalTransformData;
+struct Joint;
+struct Mesh;
+struct Texture;
 
 class AssimpModelLoader
 {
@@ -28,15 +28,15 @@ public:
 	static DirectX::XMFLOAT3 aiToDirectFloat3(aiVector3D v);
 	static DirectX::XMFLOAT4 aiToDirectFloat4(aiQuaternion q);
 private:
+	static std::map<std::string, std::shared_ptr<Texture>> m_textureCache;
 	AssimpModelLoader(std::shared_ptr<DX::DeviceResources> deviceResources) : m_deviceResources(deviceResources), m_boneCounter(0) {};
 
-	std::vector<std::shared_ptr<Texture>> m_texturesLoaded;
 	std::map<std::string, BoneInfo> m_BoneInfoMap;
 	int m_boneCounter;
 	std::shared_ptr<DX::DeviceResources> m_deviceResources;
 	std::string m_directory;
 
-	std::vector<FinalTransformData> ExtractBoneWeightForVerticies(std::vector<AnimatedVertexData>& verticies, aiMesh* mesh, const aiScene* scene);
+	void ExtractBoneWeightForVerticies(std::vector<AnimatedVertexData>& verticies, aiMesh* mesh, const aiScene* scene);
 	void createAnimations(AnimatedAssimpModel& outModel, const aiScene* scene);
 	void loadJointHierarchy(Joint& joint, aiNode* src);
 

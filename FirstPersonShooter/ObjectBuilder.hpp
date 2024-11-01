@@ -10,7 +10,7 @@ public:
 	ObjectBuilder& WithVelocity(DirectX::XMFLOAT3 vel);
 	ObjectBuilder& WithSize(DirectX::XMFLOAT3 size);
 	ObjectBuilder& WithPickable(bool pickable);
-	Object* Build();
+	std::shared_ptr<Object>& Build();
 private:
 	std::shared_ptr<Object> m_object;
 };

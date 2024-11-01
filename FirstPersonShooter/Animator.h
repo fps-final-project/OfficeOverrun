@@ -13,8 +13,7 @@ public:
 	void calculateTransform(const Joint& data, const std::map<std::string, BoneInfo>& boneInfoMap, DirectX::XMMATRIX parentTransform);
 	bool isIdle() { return m_currentAnimation == m_fallbackAnimation; }
 
-	std::vector<DirectX::XMMATRIX> getFinalTransformationMatricies(const std::vector<FinalTransformData>& data) const;
-
+	std::vector<DirectX::XMMATRIX> m_finalBoneMatrices;
 	DirectX::XMMATRIX getJointTransform(const Joint& data, float animationTime);
 	int getIndex(float animationTime);
 
@@ -29,5 +28,4 @@ private:
 	DirectX::XMMATRIX interpolatePosition(const Joint& data, float animationTime);
 	DirectX::XMMATRIX interpolateRotation(const Joint& data, float animationTime);
 	DirectX::XMMATRIX interpolateScaling(const Joint& data, float animationTime);
-	std::vector<DirectX::XMMATRIX> m_finalBoneMatrices;
 };

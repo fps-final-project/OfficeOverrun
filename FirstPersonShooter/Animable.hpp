@@ -14,6 +14,7 @@ public:
 	virtual ~Animable() {}
 	// those 2 functions are code smells - think about how to call animator directly, is inheritance a good answer?
 	// maybe its good idk
+	inline void setModel(std::shared_ptr<AnimatedAssimpModel> animatedModel) { m_animatedModel = animatedModel; };
 	void setAnimation(std::string name, float speed = 1.f, bool wrap = false);
 	void setFallbackAnimation(std::string name);
 	virtual void Render(std::shared_ptr<RenderMaster> renderMaster) override;

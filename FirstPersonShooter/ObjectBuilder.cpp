@@ -38,7 +38,7 @@ ObjectBuilder& ObjectBuilder::WithPickable(bool pickable)
 	return *this;
 }
 
-Object* ObjectBuilder::Build()
+std::shared_ptr<Object>& ObjectBuilder::Build()
 {
-	return m_object.get();
+	return m_object;
 }

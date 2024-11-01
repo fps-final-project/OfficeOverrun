@@ -4,11 +4,7 @@
 
 Player::Player()
 	: m_position({0.f, 0.f, 0.f}), m_velocity({0.f, 0.f, 0.f}),
-	m_gunRig(std::make_unique<GunRig>(
-		ResourceManager::Instance.getAnimatedModel("myarms"),
-		ResourceManager::Instance.getAnimatedModel("mygun"),
-		XMFLOAT3(0.f, 0.f, 0.4572f),
-		XMFLOAT3(-0.118846, -0.106299, 0.55291)))
+		m_gunRig(std::make_unique<GunRig>("ak"))
 {
 }
 
