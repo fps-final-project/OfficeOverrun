@@ -295,9 +295,11 @@
       <Filter>WorldGeneratorAdapter\Mapper</Filter>
     </ClCompile>
     <ClCompile Include="AudioReader.cpp" />
-    <ClCompile Include="GunRigMetadata.cpp" />
     <ClCompile Include="RoomModelGenerator.cpp">
       <Filter>Content\RoomModelGenerator</Filter>
+    </ClCompile>
+    <ClCompile Include="GunRigMetadata.cpp">
+      <Filter>Content\Entity\GunRig</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -472,10 +474,14 @@
     </ClInclude>
     <ClInclude Include="AudioFile.hpp" />
     <ClInclude Include="AudioReader.hpp" />
-    <ClInclude Include="GunRigMetadata.hpp" />
-    <ClInclude Include="RoomLinkData.hpp" />
     <ClInclude Include="RoomModelGenerator.h">
       <Filter>Content\RoomModelGenerator</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomLinkData.hpp">
+      <Filter>Content\Entity\Room</Filter>
+    </ClInclude>
+    <ClInclude Include="GunRigMetadata.hpp">
+      <Filter>Content\Entity\GunRig</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
