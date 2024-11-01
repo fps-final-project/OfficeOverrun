@@ -5,6 +5,7 @@
 #include "MeshFactory.h"
 #include "ResourceManager.h"
 
+const float RoomModelGenerator::frameOffset = 0.1f;
 
 Mesh RoomModelGenerator::generateRoomModel(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 size, std::vector<RoomLinkData> links, const std::string& texturePath, const std::shared_ptr<DX::DeviceResources>& deviceResources)
 {
@@ -20,7 +21,7 @@ Mesh RoomModelGenerator::generateRoomModel(DirectX::XMFLOAT3 pos, DirectX::XMFLO
 	return MeshFactory<VertexData>::createMesh(verticies, indicies, { ResourceManager::Instance.getTexture(texturePath) }, deviceResources);
 }
 
-void RoomModelGenerator::generateWall(std::vector<VertexData>& allVerticies, std::vector<unsigned short>& allIndicies, 
+void RoomModelGenerator::generateWall(std::vector<VertexData>& allVerticies, std::vector<unsigned short>& allIndicies,
 	DirectX::XMFLOAT3 c1, DirectX::XMFLOAT3 c2, std::vector<RoomLinkData> links, float rotationAngle)
 {
 	std::vector<VertexData> verticies;
@@ -50,26 +51,36 @@ void RoomModelGenerator::generateWall(std::vector<VertexData>& allVerticies, std
 		for (int j = 0; j < H; j++)
 		{
 			if (doorStart.find(i) != doorStart.end() && j < 2)
-				continue;
-
-			generateTile(verticies, indicies, i, j, L + 1, H + 1, allVerticies.size());
+			{
+				if (j == 0)
+				{
+					generateDoorFrame(verticies, indicies, allVerticies.size(), i, L + 1, H + 1);
+				}
+			}
+			else
+			{
+				float startX = i == 0 ? frameOffset : i;
+				float sizeX = (i == 0 || i == L - 1) ? 1 - frameOffset : 1;
+				generateTile(verticies, indicies, startX, j, sizeX, L + 1, H + 1, allVerticies.size());
+			}
 		}
 	}
 
-	translateAndRotateVerticies(verticies, c1, rotationAngle);
+	translateAndRotateVerticies(verticies, { c1.x + !alongX * direction * frameOffset, c1.y, c1.z - alongX * direction * frameOffset },
+		rotationAngle);
 
 	allVerticies.insert(allVerticies.end(), verticies.begin(), verticies.end());
 	allIndicies.insert(allIndicies.end(), indicies.begin(), indicies.end());
 }
 
-void RoomModelGenerator::generateTile(std::vector<VertexData>& verticies, std::vector<unsigned short>& indicies, 
-	float x, float y, int L, int H, int indexOffset)
+void RoomModelGenerator::generateTile(std::vector<VertexData>& verticies, std::vector<unsigned short>& indicies,
+	float x, float y, float sizeX, int L, int H, int indexOffset)
 {
 	int nVerticies = verticies.size();
 
-	verticies.push_back(VertexData({ x, y, 0 }, { x / L, y / H}, {0, 0, 1}));
-	verticies.push_back(VertexData({ x + 1, y, 0 }, { (x + 1) / L, y / H }, { 0, 0, 1 }));
-	verticies.push_back(VertexData({ x + 1, y + 1, 0 }, { (x + 1) / L, (y + 1) / H }, { 0, 0, 1 }));
+	verticies.push_back(VertexData({ x, y, 0 }, { x / L, y / H }, { 0, 0, 1 }));
+	verticies.push_back(VertexData({ x + sizeX, y, 0 }, { (x + sizeX) / L, y / H }, { 0, 0, 1 }));
+	verticies.push_back(VertexData({ x + sizeX, y + 1, 0 }, { (x + sizeX) / L, (y + 1) / H }, { 0, 0, 1 }));
 	verticies.push_back(VertexData({ x, y + 1, 0 }, { x / L, (y + 1) / H }, { 0, 0, 1 }));
 
 	indicies.push_back(indexOffset + nVerticies);
@@ -81,11 +92,48 @@ void RoomModelGenerator::generateTile(std::vector<VertexData>& verticies, std::v
 
 }
 
+void RoomModelGenerator::generateDoorFrame(std::vector<VertexData>& verticies, std::vector<unsigned short>& indicies,
+	int indexOffset, float x, int L, int H)
+{
+	float nVerticies = verticies.size();
+
+	// left side
+	verticies.push_back(VertexData({ x, 0, 0 }, { x / L, 0 }, { 1, 0, 0 }));
+	verticies.push_back(VertexData({ x, 0, -frameOffset }, { (x - frameOffset) / L, 0 }, { 1, 0, 0 }));
+	verticies.push_back(VertexData({ x, 2, -frameOffset }, { (x - frameOffset) / L, (float)2 / H }, { 1, 0, 0 }));
+	verticies.push_back(VertexData({ x, 2, 0 }, { x / L, (float)2 / H }, { 1, 0, 0 }));
+
+	// right side
+	verticies.push_back(VertexData({ x + 1, 0, -frameOffset }, { (x + 1 - frameOffset) / L, 0 }, { -1, 0, 0 }));
+	verticies.push_back(VertexData({ x + 1, 0, 0 }, { (x + 1) / L, 0 }, { -1, 0, 0 }));
+	verticies.push_back(VertexData({ x + 1, 2, 0 }, { (x + 1) / L, (float)2 / H }, { -1, 0, 0 }));
+	verticies.push_back(VertexData({ x + 1, 2, -frameOffset }, { (x + 1 - frameOffset) / L, (float)2 / H }, { -1, 0, 0 }));
+
+	// top side
+	verticies.push_back(VertexData({ x, 2, -frameOffset }, { (x - frameOffset) / L, (float)2 / H  }, { 0, -1, 0 }));
+	verticies.push_back(VertexData({ x, 2, 0 }, { x / L, (float)2 / H }, { 0, -1, 0 }));
+	verticies.push_back(VertexData({ x + 1, 2, 0 }, { (x + 1) / L, (float)2 / H }, { 0, -1, 0 }));
+	verticies.push_back(VertexData({ x + 1, 2, -frameOffset }, { (x + 1 - frameOffset) / L, (float)2 / H }, { 0, -1, 0 }));
+
+	for (int i = 0; i < 2; i++)
+	{
+		indicies.push_back(indexOffset + nVerticies);
+		indicies.push_back(indexOffset + nVerticies + 1);
+		indicies.push_back(indexOffset + nVerticies + 2);
+		indicies.push_back(indexOffset + nVerticies + 2);
+		indicies.push_back(indexOffset + nVerticies + 3);
+		indicies.push_back(indexOffset + nVerticies);
+
+		nVerticies += 4;
+	}
+
+}
+
 void RoomModelGenerator::translateAndRotateVerticies(std::vector<VertexData>& verticies, DirectX::XMFLOAT3 translation, float angle)
 {
 	float cosAngle = cos(angle);
 	float sinAngle = sin(angle);
-	
+
 	std::transform(verticies.begin(), verticies.end(), verticies.begin(), [&](VertexData& data) {
 		data.pos = { data.pos.x * cosAngle - data.pos.z * sinAngle, data.pos.y, data.pos.z * cosAngle + data.pos.x * sinAngle };
 		data.pos = translate(data.pos, translation);

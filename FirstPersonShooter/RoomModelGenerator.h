@@ -7,6 +7,8 @@
 class RoomModelGenerator
 {
 public:
+	static const float frameOffset;
+
 	static Mesh generateRoomModel(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 size,
 		std::vector<RoomLinkData> links, const std::string& texturePath,
 		const std::shared_ptr<DX::DeviceResources>& deviceResources);
@@ -15,7 +17,10 @@ public:
 		DirectX::XMFLOAT3 c1, DirectX::XMFLOAT3 c2, std::vector<RoomLinkData> links, float rotationAngle);
 
 	static void generateTile(std::vector<VertexData>& verticies, std::vector<unsigned short>& indicies,
-		float x, float y, int L, int H, int indexOffset);
+		float x, float y, float sizeX, int L, int H, int indexOffset);
+
+	static void generateDoorFrame(std::vector<VertexData>& verticies, std::vector<unsigned short>& indicies, int indexOffset,
+		float x, int L, int H);
 
 	static void translateAndRotateVerticies(std::vector<VertexData>& verticies, DirectX::XMFLOAT3 translation, float angle);
 
