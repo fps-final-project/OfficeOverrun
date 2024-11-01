@@ -56,11 +56,6 @@ void RoomLayoutGenerator::GenerateRoomLinks()
 		Node<GeneratedRoom>& node = adGraph.nodes[i];
 		for (int j = i + 1; j < n; j++)
 		{
-			if (i == 7 && j == 10)
-			{
-				int a = 2*2;
-			}
-
 			Node<GeneratedRoom>& neighbour = adGraph.nodes[j];
 			if (!node.IsConnectedTo(&neighbour))
 				continue;
