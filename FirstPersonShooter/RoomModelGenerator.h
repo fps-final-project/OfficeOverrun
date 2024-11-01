@@ -7,11 +7,13 @@
 class RoomModelGenerator
 {
 public:
-	static const float frameOffset;
 
 	static Mesh generateRoomModel(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 size,
 		std::vector<RoomLinkData> links, const std::string& texturePath,
 		const std::shared_ptr<DX::DeviceResources>& deviceResources);
+
+private:
+	static const float frameOffset;
 
 	static void generateWall(std::vector<VertexData>& allVerticies, std::vector<unsigned short>& allIndicies, 
 		DirectX::XMFLOAT3 c1, DirectX::XMFLOAT3 c2, std::vector<RoomLinkData> links, float rotationAngle);
