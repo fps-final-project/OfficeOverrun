@@ -17,8 +17,8 @@ bool Utils::LinesIntersectByEnds1D(int s1, int e1, int s2, int e2)
 
 std::tuple<int,int> Utils::ComputeLinesIntersection1D(int s1, int e1, int s2, int e2)
 {
-    if (s1 <= s2 && e1 >= s2)
-        return std::tuple<int, int>(s2, e1 - s2);
-    else
-        return std::tuple<int, int>(s1, e2 - s1);
+    int l = max(s1, s2);
+    int r = min(e1, e2);
+    int len = r - l;
+    return std::tuple<int, int>(l, len < 0 ? 0 : len);
 }

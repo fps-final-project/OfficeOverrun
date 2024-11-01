@@ -173,6 +173,9 @@
     <Filter Include="Assets\GunRig\sniper">
       <UniqueIdentifier>{d6ccbe41-c732-439c-94bd-2e1fdb7f0c25}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Content\RoomModelGenerator">
+      <UniqueIdentifier>{f0f28225-0827-46e2-b9d9-466de74d841b}</UniqueIdentifier>
+    </Filter>
     <Filter Include="WorldGenerator\RoomLayout\RooomSelector">
       <UniqueIdentifier>{97ad2e10-ce1f-429c-8771-5c5bdf50c841}</UniqueIdentifier>
     </Filter>
@@ -290,6 +293,13 @@
     </ClCompile>
     <ClCompile Include="MappingHelpers.cpp">
       <Filter>WorldGeneratorAdapter\Mapper</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioReader.cpp" />
+    <ClCompile Include="RoomModelGenerator.cpp">
+      <Filter>Content\RoomModelGenerator</Filter>
+    </ClCompile>
+    <ClCompile Include="GunRigMetadata.cpp">
+      <Filter>Content\Entity\GunRig</Filter>
     </ClCompile>
     <ClCompile Include="RoomSelector.cpp">
       <Filter>WorldGenerator\RoomLayout\RooomSelector</Filter>
@@ -480,6 +490,17 @@
     <ClInclude Include="RngUtils.h">
       <Filter>WorldGenerator\Common</Filter>
     </ClInclude>
+    <ClInclude Include="AudioFile.hpp" />
+    <ClInclude Include="AudioReader.hpp" />
+    <ClInclude Include="RoomModelGenerator.h">
+      <Filter>Content\RoomModelGenerator</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomLinkData.hpp">
+      <Filter>Content\Entity\Room</Filter>
+    </ClInclude>
+    <ClInclude Include="GunRigMetadata.hpp">
+      <Filter>Content\Entity\GunRig</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\StoreLogo.png">
@@ -514,6 +535,12 @@
     </Image>
     <Image Include="Assets\GunRig\sniper\Atlas_00001.png">
       <Filter>Assets\GunRig\sniper</Filter>
+    </Image>
+    <Image Include="Assets\Other\wall\wall.jpg">
+      <Filter>Assets\Other\wall</Filter>
+    </Image>
+    <Image Include="Assets\Other\wall\floor.jpg">
+      <Filter>Assets\Other\wall</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
@@ -554,6 +581,7 @@
     <None Include="Assets\GunRig\sniper\sniper_gun.gltf">
       <Filter>Assets\GunRig\sniper</Filter>
     </None>
+    <None Include="Assets\Audio\dark-horror-background-252905.wav" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Content\SamplePixelShader.hlsl">

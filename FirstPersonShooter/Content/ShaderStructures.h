@@ -43,6 +43,8 @@ struct LightingConstantBuffer
 	static const int MAX_LIGHTS = 20;
 	int nlights;
 	DirectX::XMFLOAT3 camera_pos;
+	DirectX::XMFLOAT3 flashlight_dir;
+	float flashlight_cutoffAngle;
 	DirectX::XMFLOAT3 light_pos[MAX_LIGHTS];
 };
 

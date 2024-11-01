@@ -47,7 +47,8 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	ResourceManager::Instance.loadTexture("Assets\\Other\\crosshair\\crosshair.png", m_deviceResources);
 
 	ResourceManager::Instance.loadModel("Assets\\Other\\bullet\\bullet.obj", m_deviceResources);
-	ResourceHelper::addWallModel("Assets\\Other\\wall\\brickwall.jpg", m_deviceResources);
+	ResourceHelper::addQuad("Assets\\Other\\wall\\wall.jpg", "wall", "wall", 1, m_deviceResources);
+	ResourceHelper::addQuad("Assets\\Other\\wall\\floor.jpg", "floor", "floor", 2, m_deviceResources);
 
 
 	ResourceManager::Instance.loadAudioFile("Assets\\Audio\\dark-horror-background-252905.wav", m_deviceResources, "music");
@@ -119,11 +120,13 @@ bool FirstPersonShooterMain::Render()
 	// Render the scene objects.
 	// TODO: Replace this with your app's content rendering functions.
 
-	m_renderMaster->setLighting(m_gameState->m_world->GetLightingData());
+	m_renderMaster->setLighting(m_gameState->m_world->GetLightingData(), m_gameState->m_camera->getAt());
 	m_renderMaster->setupShaders(
 		m_gameState->m_camera->getProjectionMatrix(), 
 		m_gameState->m_camera->getViewMatrix(), 
 		m_gameState->m_camera->getPosition());
+
+	m_gameState->m_camera->getAt();
 
 	auto queue = m_gameState->m_world->CreateRenderQueue();
 	queue.Push(RenderData(RendererType::ANIMATED, (Drawable*)m_gameState->m_player.get()));
