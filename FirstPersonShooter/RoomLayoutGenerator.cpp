@@ -34,8 +34,11 @@ RoomLayout& RoomLayoutGenerator::Generate()
 
 void RoomLayoutGenerator::GenerateRooms()
 {
-	BinaryRoom rootRoom = BinaryRoom::GenerateRootRoom(layout.mapSize);
-	rootRoom.Split(layout);
+	for (int h = 0; h <= config.mapSize.z - RoomLayoutConfig::roomHeight; h += RoomLayoutConfig::roomHeight)
+	{
+		BinaryRoom rootRoom = BinaryRoom(0, 0, h, layout.mapSize.x, layout.mapSize.y, RoomLayoutConfig::roomHeight);
+		rootRoom.Split(layout);
+	}
 }
 
 void RoomLayoutGenerator::GenerateAdGraph()

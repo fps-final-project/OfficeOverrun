@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "RoomLink.h"
 #include "RngUtils.h"
+#include "RoomLayoutConfig.h"
 
 using namespace WorldGenerator;
 
@@ -17,7 +18,7 @@ RoomLink RoomLink::MakeRoomLink(Vector3 pos, Vector3 size)
     Vector3 linkPos = Vector3(
         pos.x + (size.x > 0 ? RngUtils::RandIntInRange(1, size.x - 2) : 0),
         pos.y + (size.y > 0 ? RngUtils::RandIntInRange(1, size.y - 2) : 0),
-        pos.z + (size.z > 0 ? RngUtils::RandIntInRange(1, size.z - 2) : 0)
+        orientation == XY ? pos.z + size.z : pos.z
     );
 
     return RoomLink(linkPos, orientation);
@@ -29,6 +30,6 @@ bool WorldGenerator::RoomLink::ValidBorderForRoomLink(Vector3 size)
         return size.y >= 3;
     else if (size.y == 0)
         return size.x >= 3;
-    else // undefined for down-up link for now
-        return true;
+    else // vertical roomlinks
+        return min(size.x, size.y) >= RoomLayoutConfig::verticalRoomLinkWidth + 2 && max(size.x, size.y) >= RoomLayoutConfig::verticalRoomLinkLength + 2;
 }
