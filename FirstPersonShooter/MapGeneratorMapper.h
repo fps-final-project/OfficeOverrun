@@ -49,7 +49,10 @@ RoomLinkData MapGeneratorMapper::Map(RoomLink obj)
 	RoomLinkData data;
 	data.pos = MapGeneratorMapper::Map<Vector3, DirectX::XMFLOAT3>(MappingHelpers::PositionToGameOrientation(obj.pos));
 	data.alongX = obj.orientation == Orientation::XZ;
+	data.stairs = obj.orientation == Orientation::XY;
 	data.size = obj.orientation == Orientation::XZ ? DirectX::XMFLOAT3(1, 2, 0) : DirectX::XMFLOAT3(0, 2, 1);
+	if (data.stairs)
+		data.size = DirectX::XMFLOAT3(2, 0, 5);
 	data.roomId = obj.linkedRoomIdx;
 	return data;
 }

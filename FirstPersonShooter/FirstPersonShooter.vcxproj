@@ -354,6 +354,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SimpleCollisionDetector.hpp" />
+    <ClInclude Include="Stairs.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureFactory.h" />
     <ClInclude Include="Utils.h" />
@@ -414,6 +415,7 @@
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="SimpleCollisionDetector.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="Stairs.cpp" />
     <ClCompile Include="TextureFactory.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="World.cpp" />

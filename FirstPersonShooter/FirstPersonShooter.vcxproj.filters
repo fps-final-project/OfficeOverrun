@@ -294,7 +294,6 @@
     <ClCompile Include="MappingHelpers.cpp">
       <Filter>WorldGeneratorAdapter\Mapper</Filter>
     </ClCompile>
-    <ClCompile Include="AudioReader.cpp" />
     <ClCompile Include="RoomModelGenerator.cpp">
       <Filter>Content\RoomModelGenerator</Filter>
     </ClCompile>
@@ -306,6 +305,12 @@
     </ClCompile>
     <ClCompile Include="RngUtils.cpp">
       <Filter>WorldGenerator\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioReader.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Stairs.cpp">
+      <Filter>Content\Entity\Room</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -490,8 +495,6 @@
     <ClInclude Include="RngUtils.h">
       <Filter>WorldGenerator\Common</Filter>
     </ClInclude>
-    <ClInclude Include="AudioFile.hpp" />
-    <ClInclude Include="AudioReader.hpp" />
     <ClInclude Include="RoomModelGenerator.h">
       <Filter>Content\RoomModelGenerator</Filter>
     </ClInclude>
@@ -500,6 +503,15 @@
     </ClInclude>
     <ClInclude Include="GunRigMetadata.hpp">
       <Filter>Content\Entity\GunRig</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioReader.hpp">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioFile.hpp">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Stairs.h">
+      <Filter>Content\Entity\Room</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

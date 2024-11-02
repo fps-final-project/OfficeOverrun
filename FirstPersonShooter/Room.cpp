@@ -3,6 +3,7 @@
 #include "ResourceManager.h"
 #include "Entity.hpp"
 #include "MeshFactory.h"
+#include "Stairs.h"
 
 const float Room::wallOffset = 0.5f;
 
@@ -32,11 +33,11 @@ RoomCollision Room::checkCollision(DirectX::XMFLOAT3 entityPos) const
 		result.correction[1] = this->pos.y + playerHeight;
 		result.isOnGround = true;
 	}
-	else if (entityPos.y > this->pos.y + this->size.y - playerHeight)
-	{
-		result.collision[1] = true;
-		result.correction[1] = this->pos.y + this->size.y - playerHeight;
-	}
+	//else if (entityPos.y > this->pos.y + this->size.y - playerHeight)
+	//{
+	//	result.collision[1] = true;
+	//	result.correction[1] = this->pos.y + this->size.y - playerHeight;
+	//}
 	
 	if (entityPos.x < this->pos.x + wallOffset)
 	{
@@ -62,6 +63,12 @@ RoomCollision Room::checkCollision(DirectX::XMFLOAT3 entityPos) const
 
 	for (auto link : m_links)
 	{
+		if (link.stairs)
+		{
+			Stairs::AddStairsCollision(result, link.pos, { link.pos.x + link.size.x, link.pos.y + link.size.y, link.pos.z + link.size.z }, entityPos);
+			continue;
+		}
+
 		if (link.alongX)
 		{
 			if (result.collision[2] && std::abs(entityPos.z - link.pos.z) < wallOffset && entityPos.x > link.pos.x && entityPos.x < link.pos.x + link.size.x)

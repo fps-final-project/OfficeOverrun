@@ -7,4 +7,5 @@ struct RoomLinkData
 	DirectX::XMFLOAT3 pos;
 	DirectX::XMFLOAT3 size;
 	bool alongX;
+	bool stairs;
 };

@@ -64,7 +64,7 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 
 	m_mouse->SetMode(DirectX::Mouse::MODE_RELATIVE);
 
-	DX::ThrowIfFailed(ResourceManager::Instance.getAudioFile("music")->pXAudio2SourceVoice->Start(0));
+	//DX::ThrowIfFailed(ResourceManager::Instance.getAudioFile("music")->pXAudio2SourceVoice->Start(0));
 }
 
 FirstPersonShooterMain::~FirstPersonShooterMain()
