@@ -24,7 +24,7 @@ namespace WorldGenerator
 		int Size();
 		void AddNode(Node<T> value);
 		void AddNodes(std::vector<Node<T>> values);
-		bool HasEdge(int from, int to);
+		virtual bool HasEdge(int from, int to);
 		void AddEdge(int from, int to);
 		void AddUndirectedEdge(int from, int to);
 		std::vector<int> GetNeighbours(int v);

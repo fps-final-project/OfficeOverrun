@@ -21,6 +21,7 @@ namespace WorldGenerator
 		int N; // desired number of rooms in the level
 		int P; // maximum length from s to e
 		float e_c; // edge probability coeff
+		const int MAX_EDGE_WEIGHT = 100; // maximum edge weight used in random path algorithm
 		const int MIN_F = 2; // in pathfinding if possible traverse at least number of rooms before going up
 
 		void RemoveUpDownEdges();

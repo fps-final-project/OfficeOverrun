@@ -1,0 +1,58 @@
+#include "Graph.h"
+
+#pragma once
+
+namespace WorldGenerator
+{
+	struct WeightedEdge
+	{
+		int from;
+		int to;
+		int weight;
+	};
+
+	template <typename T>
+	class WeightedGraph : Graph<T>
+	{
+	public:
+		WeightedGraph(Graph<T> graph);
+		
+		bool HasEdge(int from, int to);
+		void SetEdge(WeightedEdge e);
+		std::vector<WeightedEdge> GetAllEdges();
+		std::vector<WeightedEdge> GetOutgoingEdges(int v);
+	};
+	template<typename T>
+	inline WeightedGraph<T>::WeightedGraph(Graph<T> graph) : Graph<T>(graph)
+	{
+	}
+	template<typename T>
+	inline bool WeightedGraph<T>::HasEdge(int from, int to)
+	{
+		return adMatrix[from][to] > 0;
+	}
+	template<typename T>
+	inline void WeightedGraph<T>::SetEdge(WeightedEdge e)
+	{
+		adMatrix[e.from][e.to] = e.weight;
+	}
+	template<typename T>
+	inline std::vector<WeightedEdge> WeightedGraph<T>::GetAllEdges()
+	{
+		std::vector<WeightedEdge> edges;
+		for(int v = 0; v < Size(); v++)
+			for (int u = 0; u < Size(); u++)
+				if (adMatrix[v][u] > 0)
+					edges.push_back(WeightedEdge(v, u, adMatrix[v][u]));
+		return edges;
+	}
+	template<typename T>
+	inline std::vector<WeightedEdge> WeightedGraph<T>::GetOutgoingEdges(int v)
+	{
+		std::vector<WeightedEdge> edges;
+		for (int u = 0; u < Size(); u++)
+			if (adMatrix[v][u] > 0)
+				edges.push_back(WeightedEdge(v, u, adMatrix[v][u]));
+		return edges;
+	}
+}

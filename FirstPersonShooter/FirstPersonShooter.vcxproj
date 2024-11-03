@@ -358,6 +358,7 @@
     <ClInclude Include="TextureFactory.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Vector3.h" />
+    <ClInclude Include="WeightedGraph.h" />
     <ClInclude Include="World.h" />
     <ClInclude Include="MapGenerator.h" />
   </ItemGroup>

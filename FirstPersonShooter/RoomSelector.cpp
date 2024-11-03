@@ -4,6 +4,7 @@
 #include <cmath>
 #include <RngUtils.h>
 #include <algorithm>
+#include <WeightedGraph.h>
 
 using namespace WorldGenerator;
 
@@ -74,13 +75,18 @@ void WorldGenerator::RoomSelector::RemoveDownUpEdges()
 
 std::vector<int> WorldGenerator::RoomSelector::GenerateRandomPath()
 {
-	int n = H.Size();
-	std::vector<bool> visited(n);
-	std::vector<int> path;
+	// Construct weighted graph form H
+	WeightedGraph<GeneratedRoom> H_w(H);
 
-	RandomDfs(s, visited, path, 1);
+	// Set random weights
+	for (WeightedEdge e : H_w.GetAllEdges())
+	{
+		e.weight = RngUtils::RandIntInRange(1, MAX_EDGE_WEIGHT);
+		H_w.SetEdge(e);
+	}
 
-	return path;
+
+	return std::vector<int>();
 }
 
 void WorldGenerator::RoomSelector::RandomDfs(int v, std::vector<bool>& visited, std::vector<int>& path, int tr_f)
