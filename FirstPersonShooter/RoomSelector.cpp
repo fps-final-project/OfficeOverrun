@@ -98,11 +98,6 @@ std::vector<int> WorldGenerator::RoomSelector::GenerateRandomPath()
 	return std::vector<int>();
 }
 
-std::vector<int> WorldGenerator::RoomSelector::FindDistancesFromStart(WeightedGraph<GeneratedRoom> H_w)
-{
-	return std::vector<int>();
-}
-
 void WorldGenerator::RoomSelector::RandomDfs(int v, std::vector<bool>& visited, std::vector<int>& path, int tr_f)
 {
 	visited[v] = true;

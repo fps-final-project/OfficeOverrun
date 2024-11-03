@@ -21,7 +21,7 @@ RoomLayout& RoomLayoutGenerator::Generate()
 	GenerateAdGraph();
 
 	// Step 3
-	SelectRooms();
+	//SelectRooms();
 
 	// Step X - after graph operations
 	GenerateRoomLinks();
@@ -34,9 +34,9 @@ RoomLayout& RoomLayoutGenerator::Generate()
 
 void RoomLayoutGenerator::GenerateRooms()
 {
-	for (int h = 0; h <= config.mapSize.z - RoomLayoutConfig::roomHeight; h += RoomLayoutConfig::roomHeight)
+	for (int floor = 0; floor < config.mapSize.z; floor++ )
 	{
-		BinaryRoom rootRoom = BinaryRoom(0, 0, h, layout.mapSize.x, layout.mapSize.y, RoomLayoutConfig::roomHeight);
+		BinaryRoom rootRoom = BinaryRoom(0, 0, floor, layout.mapSize.x, layout.mapSize.y, 1);
 		rootRoom.Split(layout);
 	}
 }

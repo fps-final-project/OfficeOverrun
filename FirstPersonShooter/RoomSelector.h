@@ -27,7 +27,6 @@ namespace WorldGenerator
 
 		void RemoveUpDownEdges();
 		std::vector<int> GenerateRandomPath();
-		std::vector<int> FindDistancesFromStart(WeightedGraph<GeneratedRoom> H_w);
 		void RandomDfs(int v, std::vector<bool>& visited, std::vector<int>& path, int tr_f);
 		void ConstructGFromPath(std::vector<int> P);
 		void AddHVertexToG(int v);

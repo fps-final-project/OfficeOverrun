@@ -9,6 +9,11 @@ namespace WorldGenerator
 		int from;
 		int to;
 		int weight;
+
+		WeightedEdge(int from, int to, int weight)
+			: from(from), to(to), weight(weight)
+		{
+		}
 	};
 
 	template <typename T>
