@@ -16,6 +16,7 @@ namespace WorldGenerator
 		std::vector<int> H_G_map; // maps H vertices to G vertices
 		std::vector<int> neigh_G; // H[G] subgraph neighbourhood
 		int s; // start vertex in H
+		int floors;
 		int s_G; // start vertex in G
 		int t_G; // target vertex in G
 		int N; // desired number of rooms in the level
@@ -26,6 +27,7 @@ namespace WorldGenerator
 
 		void RemoveUpDownEdges();
 		std::vector<int> GenerateRandomPath();
+		std::vector<int> FindDistancesFromStart(WeightedGraph<GeneratedRoom> H_w);
 		void RandomDfs(int v, std::vector<bool>& visited, std::vector<int>& path, int tr_f);
 		void ConstructGFromPath(std::vector<int> P);
 		void AddHVertexToG(int v);

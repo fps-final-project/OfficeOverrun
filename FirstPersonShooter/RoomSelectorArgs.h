@@ -11,6 +11,7 @@ namespace WorldGenerator
 		float roomDensity;
 		float pathLengthCoeff;
 		float edgeDensityCoeff;
+		int floorCount;
 
 		RoomSelectorArgs(Graph<GeneratedRoom> initialGraph) : initialGraph(initialGraph)
 		{

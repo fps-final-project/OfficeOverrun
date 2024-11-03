@@ -30,6 +30,7 @@ namespace WorldGenerator
 		std::vector<int> GetNeighbours(int v);
 		std::vector<int> GetIngoingNeighbours(int v);
 		void DeleteEdge(int from, int to);
+		std::vector<Node<T>> GetNodes();
 
 		Node<T> operator [](int i) const;
 		Node<T>& operator [](int i);
@@ -130,6 +131,11 @@ namespace WorldGenerator
 	inline void Graph<T>::DeleteEdge(int from, int to)
 	{
 		adMatrix[from][to] = 0;
+	}
+	template<typename T>
+	inline std::vector<Node<T>> Graph<T>::GetNodes()
+	{
+		return nodes;
 	}
 	template<typename T>
 	inline Node<T> Graph<T>::operator[](int i) const

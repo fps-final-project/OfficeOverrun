@@ -14,6 +14,7 @@ WorldGenerator::RoomSelector::RoomSelector(RoomSelectorArgs args)
 	s = args.startVertex;
 	N = std::floor(H.Size() * args.roomDensity);
 	P = std::floor(N * args.pathLengthCoeff);
+	floors = args.floorCount;
 	e_c = args.edgeDensityCoeff;
 }
 
@@ -75,8 +76,16 @@ void WorldGenerator::RoomSelector::RemoveDownUpEdges()
 
 std::vector<int> WorldGenerator::RoomSelector::GenerateRandomPath()
 {
+	std::vector<int> P; // desired path
 	// Construct weighted graph form H
 	WeightedGraph<GeneratedRoom> H_w(H);
+
+	// For all floors
+	int s;
+	for (int floor = 0; floor < floors; floor++)
+	{
+
+	}
 
 	// Set random weights
 	for (WeightedEdge e : H_w.GetAllEdges())
@@ -86,6 +95,11 @@ std::vector<int> WorldGenerator::RoomSelector::GenerateRandomPath()
 	}
 
 
+	return std::vector<int>();
+}
+
+std::vector<int> WorldGenerator::RoomSelector::FindDistancesFromStart(WeightedGraph<GeneratedRoom> H_w)
+{
 	return std::vector<int>();
 }
 

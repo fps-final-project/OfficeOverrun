@@ -67,6 +67,7 @@ void WorldGenerator::RoomLayoutGenerator::SelectRooms()
 	args.roomDensity = config.roomDensity;
 	args.pathLengthCoeff = config.pathLengthCoeff;
 	args.edgeDensityCoeff = config.edgeDensityCoeff;
+	args.floorCount = config.mapSize.z / config.roomHeight;
 
 	RoomSelector selector(args);
 	adGraph = selector.SelectRooms();
