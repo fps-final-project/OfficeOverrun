@@ -22,7 +22,6 @@ namespace WorldGenerator
 	public:
 		WeightedGraph(Graph<T> graph);
 		
-		bool HasEdge(int from, int to);
 		void SetEdge(WeightedEdge e);
 		std::vector<WeightedEdge> GetAllEdges();
 		std::vector<WeightedEdge> GetOutgoingEdges(int v);
@@ -30,11 +29,6 @@ namespace WorldGenerator
 	template<typename T>
 	inline WeightedGraph<T>::WeightedGraph(Graph<T> graph) : Graph<T>(graph)
 	{
-	}
-	template<typename T>
-	inline bool WeightedGraph<T>::HasEdge(int from, int to)
-	{
-		return adMatrix[from][to] > 0;
 	}
 	template<typename T>
 	inline void WeightedGraph<T>::SetEdge(WeightedEdge e)

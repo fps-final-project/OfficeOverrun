@@ -501,6 +501,13 @@
     <ClInclude Include="GunRigMetadata.hpp">
       <Filter>Content\Entity\GunRig</Filter>
     </ClInclude>
+    <ClInclude Include="WeightedGraph.h" />
+    <ClInclude Include="GraphUtils.h">
+      <Filter>WorldGenerator\Common\Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="PathFinding.h">
+      <Filter>WorldGenerator\Common\Graph</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\StoreLogo.png">

@@ -21,7 +21,7 @@ RoomLayout& RoomLayoutGenerator::Generate()
 	GenerateAdGraph();
 
 	// Step 3
-	//SelectRooms();
+	SelectRooms();
 
 	// Step X - after graph operations
 	GenerateRoomLinks();
@@ -67,7 +67,7 @@ void WorldGenerator::RoomLayoutGenerator::SelectRooms()
 	args.roomDensity = config.roomDensity;
 	args.pathLengthCoeff = config.pathLengthCoeff;
 	args.edgeDensityCoeff = config.edgeDensityCoeff;
-	args.floorCount = config.mapSize.z / config.roomHeight;
+	args.floorCount = config.mapSize.z;
 
 	RoomSelector selector(args);
 	adGraph = selector.SelectRooms();

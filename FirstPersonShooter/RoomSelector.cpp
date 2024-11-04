@@ -5,6 +5,8 @@
 #include <RngUtils.h>
 #include <algorithm>
 #include <WeightedGraph.h>
+#include <utility>
+#include "GraphUtils.h"
 
 using namespace WorldGenerator;
 
@@ -77,23 +79,33 @@ void WorldGenerator::RoomSelector::RemoveDownUpEdges()
 std::vector<int> WorldGenerator::RoomSelector::GenerateRandomPath()
 {
 	std::vector<int> P; // desired path
-	// Construct weighted graph form H
-	WeightedGraph<GeneratedRoom> H_w(H);
+	P.push_back(s);
 
 	// For all floors
-	int s;
-	for (int floor = 0; floor < floors; floor++)
+	for (int z = 0; z < floors; z++)
 	{
+		std::vector<int> z_vertices = H.GetVerticesIf([&](GeneratedRoom room) {return room.pos.z == z; });
 
+		// Get induced graph for the floor
+		auto pair = GraphUtils::GenerateInducedGraph(H, z_vertices);
+		Graph<GeneratedRoom> H_z = pair.first;
+		std::vector<int> map = pair.second;
+
+		// Construct weighted graph form H
+		WeightedGraph<GeneratedRoom> H_w(H);
+
+		// Set random weights
+		for (WeightedEdge e : H_w.GetAllEdges())
+		{
+			e.weight = RngUtils::RandIntInRange(1, MAX_EDGE_WEIGHT);
+			H_w.SetEdge(e);
+		}
+
+		// Select the start as last element on the path
+		int s_floor = P[P.size() - 1];
+
+		
 	}
-
-	// Set random weights
-	for (WeightedEdge e : H_w.GetAllEdges())
-	{
-		e.weight = RngUtils::RandIntInRange(1, MAX_EDGE_WEIGHT);
-		H_w.SetEdge(e);
-	}
-
 
 	return std::vector<int>();
 }
@@ -152,12 +164,10 @@ void WorldGenerator::RoomSelector::ConstructGFromPath(std::vector<int> P)
 
 void WorldGenerator::RoomSelector::AddHVertexToG(int v)
 {
-	int i = G.Size();
-	
 	auto node = H[v];
 	G.AddNode(node);
 	G_H_map.push_back(v);
-	H_G_map[v] = i;
+	H_G_map[v] = G.Size() - 1;
 }
 
 void WorldGenerator::RoomSelector::AddSpareVertices()
