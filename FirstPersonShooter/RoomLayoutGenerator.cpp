@@ -27,7 +27,7 @@ RoomLayout& RoomLayoutGenerator::Generate()
 	GenerateRoomLinks();
 
 	// Step X + 1
-	UpdateLayoutWithAdGraph();
+	GenerateLayoutFromAdGraph();
 
 	return layout;
 }
@@ -100,7 +100,7 @@ void RoomLayoutGenerator::GenerateRoomLinks()
 	}
 }
 
-void WorldGenerator::RoomLayoutGenerator::UpdateLayoutWithAdGraph()
+void WorldGenerator::RoomLayoutGenerator::GenerateLayoutFromAdGraph()
 {
 	std::vector<GeneratedRoom> newRooms;
 	for (int i = 0; i < adGraph.Size(); i++)
