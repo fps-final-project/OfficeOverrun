@@ -305,7 +305,6 @@
     <ClInclude Include="MapGeneratorMapper.h" />
     <ClInclude Include="MappingHelpers.h" />
     <ClInclude Include="Node.h" />
-    <ClInclude Include="NotImplementedExecption.h" />
     <ClInclude Include="Object.hpp" />
     <ClInclude Include="ObjectBuilder.hpp" />
     <ClInclude Include="PathFinding.h" />
@@ -384,6 +383,7 @@
     <ClCompile Include="Content\SampleFpsTextRenderer.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GeneratedRoom.cpp" />
+    <ClCompile Include="GraphUtils.cpp" />
     <ClCompile Include="GunRig.cpp" />
     <ClCompile Include="GunRigMetadata.cpp" />
     <ClCompile Include="Hittable.cpp" />

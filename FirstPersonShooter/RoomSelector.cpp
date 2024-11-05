@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "RoomSelector.h"
-#include "NotImplementedExecption.h"
 #include <cmath>
 #include <RngUtils.h>
 #include <algorithm>
@@ -77,38 +76,78 @@ void WorldGenerator::RoomSelector::RemoveDownUpEdges()
 	}
 }
 
+// Returns index of the first neighbour above the vertex v or -1 if no such exists
+int WorldGenerator::RoomSelector::FindNeigbourAbove(Graph<GeneratedRoom>& graph, int v)
+{
+	std::vector<int> neighbours = graph.GetNeighbours(v);
+	auto it = std::find_if(neighbours.begin(), neighbours.end(), [&](int u)
+		{
+			return graph[u].value->IsAbove(*graph[v].value);
+		}
+	);
+	return it != neighbours.end() ? *it : -1;
+}
+
+// Selects random vertex with a neighbour above except s
+int WorldGenerator::RoomSelector::SelectVertexWithNeighbourAbove(Graph<GeneratedRoom>& graph, std::vector<int> vertices, int s)
+{
+	std::vector<int> valid_vertices;
+	std::copy_if(vertices.begin(), vertices.end(), std::back_inserter(valid_vertices), [&](int v)
+		{return v != s && FindNeigbourAbove(graph, v) >= 0; }
+	);
+
+	return RngUtils::SelectRandomElement(valid_vertices);
+}
+
+void WorldGenerator::RoomSelector::UpdatePathWithFloor(std::vector<int>& P, int z)
+{
+	// Select start vertex on the floor
+	int s_floor = P[P.size() - 1];
+	// Select other vertices on the z-floor
+	std::vector<int> z_vertices = H.GetVerticesIf([&](GeneratedRoom room) {return room.pos.z == z; });
+	// Select the target vertex on the floor that has a neigbhour above except the s_floor
+	int t_floor = SelectVertexWithNeighbourAbove(H, z_vertices, s_floor);
+
+	// Get induced graph for the floor
+	auto pair = GraphUtils::GenerateInducedGraph(H, z_vertices);
+	Graph<GeneratedRoom> H_z = pair.first;
+	std::vector<int> map = pair.second;
+
+	// Construct weighted graph form H
+	WeightedGraph<GeneratedRoom> H_w(H_z);
+
+	// Set random weights
+	for (WeightedEdge e : H_w.GetAllEdges())
+	{
+		e.weight = RngUtils::RandIntInRange(1, MAX_EDGE_WEIGHT);
+		H_w.SetEdge(e);
+	}
+
+	// Select the start and target vertices in H_w
+	int s_floor_H_w = GraphUtils::FindValueIndexInMap(map, s_floor);
+	int t_floor_H_w = GraphUtils::FindValueIndexInMap(map, t_floor);
+
+	// Find shotest s-t path in H_w
+	auto s_t_p = PathFinding::FindShortestPathDijkstra(H_w, s_floor_H_w, t_floor_H_w);
+	std::transform(s_t_p.begin() + 1, s_t_p.end(), std::back_inserter(P), [&](int v)
+		{ return map[v]; }
+	);
+
+	// Add room above t to P
+	s_floor = FindNeigbourAbove(H, t_floor);
+	P.push_back(s_floor);
+}
+
 std::vector<int> WorldGenerator::RoomSelector::GenerateRandomPath()
 {
 	std::vector<int> P; // desired path
 	P.push_back(s);
 
 	// For all floors
-	for (int z = 0; z < floors; z++)
-	{
-		std::vector<int> z_vertices = H.GetVerticesIf([&](GeneratedRoom room) {return room.pos.z == z; });
+	for (int z = 0; z < floors - 1; z++)
+		UpdatePathWithFloor(P, z);
 
-		// Get induced graph for the floor
-		auto pair = GraphUtils::GenerateInducedGraph(H, z_vertices);
-		Graph<GeneratedRoom> H_z = pair.first;
-		std::vector<int> map = pair.second;
-
-		// Construct weighted graph form H
-		WeightedGraph<GeneratedRoom> H_w(H);
-
-		// Set random weights
-		for (WeightedEdge e : H_w.GetAllEdges())
-		{
-			e.weight = RngUtils::RandIntInRange(1, MAX_EDGE_WEIGHT);
-			H_w.SetEdge(e);
-		}
-
-		// Select the start as last element on the path
-		int s_floor = P[P.size() - 1];
-		
-		auto pt = PathFinding::FindShortestPathDijkstra(H_w, 0, 6);
-	}
-
-	return std::vector<int>();
+	return P;
 }
 
 void WorldGenerator::RoomSelector::RandomDfs(int v, std::vector<bool>& visited, std::vector<int>& path, int tr_f)

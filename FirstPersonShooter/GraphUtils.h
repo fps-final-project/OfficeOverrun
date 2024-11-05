@@ -11,6 +11,7 @@ namespace WorldGenerator
 		// Returns pair of graph induced with vertices and vector mapping new graph vertices to G vertices
 		template<typename T>
 		static std::pair<Graph<T>, std::vector<int>> GenerateInducedGraph(Graph<T> G, std::vector<int> vertices);
+		static int FindValueIndexInMap(std::vector<int> map, int value);
 	};
 
 	template<typename T>

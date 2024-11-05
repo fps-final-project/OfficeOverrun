@@ -35,7 +35,6 @@ namespace WorldGenerator
 		dist[s] = 0;
 		// Initialize visited vector
 		std::vector<bool> vis(G.Size());
-		vis[s] = true;
 		// Initialize came_from
 		std::vector<int> came_from(G.Size(), -1);
 		
