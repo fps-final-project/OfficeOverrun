@@ -197,8 +197,11 @@ void WorldGenerator::RoomSelector::AddHVertexToG(int v)
 void WorldGenerator::RoomSelector::AddSpareVertices()
 {
 	int G_N = RngUtils::RandIntInRange(max(N, G.Size()), H.Size()); // desired number of rooms in the level
-	ComputeNeighbourhood();
-	while (G.Size() < N)
+	
+	// H[G] subgraph neighbourhood
+	std::vector<int> neigh_G = ComputeNeighbourhood();
+	
+	while (G.Size() < G_N)
 	{
 		if (neigh_G.size() == 0)
 			return; // sometimes if rooms are on many different levels some rooms may become unreachable
@@ -211,12 +214,13 @@ void WorldGenerator::RoomSelector::AddSpareVertices()
 		int u = *std::find_if(connected.begin(), connected.end(), is_in_G);
 		G.AddUndirectedEdge(H_G_map[u], H_G_map[v]);
 
-		UpdateNeighbourhood(v);
+		UpdateNeighbourhood(neigh_G, v);
 	}
 }
 
-void WorldGenerator::RoomSelector::ComputeNeighbourhood()
+std::vector<int> WorldGenerator::RoomSelector::ComputeNeighbourhood()
 {
+	std::vector<int> neigh_G;
 	for (int i = 0; i < G.Size(); i++)
 	{
 		int v = G_H_map[i];
@@ -229,9 +233,11 @@ void WorldGenerator::RoomSelector::ComputeNeighbourhood()
 			}
 		}
 	}
+	
+	return neigh_G;
 }
 
-void WorldGenerator::RoomSelector::UpdateNeighbourhood(int v) // v is vertex in H
+void WorldGenerator::RoomSelector::UpdateNeighbourhood(std::vector<int> &neigh_G, int v) // v is vertex in H
 {
 	neigh_G.erase(std::remove(neigh_G.begin(), neigh_G.end(), v), neigh_G.end());
 	for (int u : H.GetNeighbours(v))

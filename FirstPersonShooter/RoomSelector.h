@@ -14,7 +14,6 @@ namespace WorldGenerator
 		Graph<GeneratedRoom> G; // generated graph
 		std::vector<int> G_H_map; // maps G vertices to H vertices
 		std::vector<int> H_G_map; // maps H vertices to G vertices
-		std::vector<int> neigh_G; // H[G] subgraph neighbourhood
 		int s; // start vertex in H
 		int floors;
 		int s_G; // start vertex in G
@@ -31,8 +30,8 @@ namespace WorldGenerator
 		void AddHVertexToG(int v);
 		void RemoveDownUpEdges();
 		void AddSpareVertices();
-		void ComputeNeighbourhood();
-		void UpdateNeighbourhood(int v);
+		std::vector<int> ComputeNeighbourhood();
+		void UpdateNeighbourhood(std::vector<int> &neigh_G, int v);
 		void AddEdgesAtRandom();
 	public:
 
