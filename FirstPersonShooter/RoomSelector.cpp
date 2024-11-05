@@ -14,7 +14,6 @@ WorldGenerator::RoomSelector::RoomSelector(RoomSelectorArgs args)
 {
 	H = args.initialGraph;
 	s = args.startVertex;
-	N = std::floor(H.Size() * args.roomDensity);
 	P = std::floor(N * args.pathLengthCoeff);
 	floors = args.floorCount;
 	e_c = args.edgeDensityCoeff;
@@ -77,7 +76,7 @@ void WorldGenerator::RoomSelector::RemoveDownUpEdges()
 }
 
 // Returns index of the first neighbour above the vertex v or -1 if no such exists
-int WorldGenerator::RoomSelector::FindNeigbourAbove(Graph<GeneratedRoom>& graph, int v)
+int WorldGenerator::RoomSelector::FindNeighbourAbove(Graph<GeneratedRoom>& graph, int v)
 {
 	std::vector<int> neighbours = graph.GetNeighbours(v);
 	auto it = std::find_if(neighbours.begin(), neighbours.end(), [&](int u)
@@ -89,14 +88,33 @@ int WorldGenerator::RoomSelector::FindNeigbourAbove(Graph<GeneratedRoom>& graph,
 }
 
 // Selects random vertex with a neighbour above except s
+// ISSUE: it will tend to find diagonal vertex always
 int WorldGenerator::RoomSelector::SelectVertexWithNeighbourAbove(Graph<GeneratedRoom>& graph, std::vector<int> vertices, int s)
 {
 	std::vector<int> valid_vertices;
 	std::copy_if(vertices.begin(), vertices.end(), std::back_inserter(valid_vertices), [&](int v)
-		{return v != s && FindNeigbourAbove(graph, v) >= 0; }
+		{return v != s && FindNeighbourAbove(graph, v) >= 0; }
 	);
 
-	return RngUtils::SelectRandomElement(valid_vertices);
+	// If no way up just take the furthest vertex
+	if (valid_vertices.empty())
+		valid_vertices = vertices;
+	// Compute distances from s to all vertices
+	std::vector<int> dist = PathFinding::ComputeGraphDistances(graph, s);
+
+	// Find max distance
+	int max_dist = dist[*std::max_element(valid_vertices.begin(), valid_vertices.end(),
+		[&dist](int a, int b) 
+		{ return dist[a] < dist[b]; }
+	)];
+
+	// Select vertices with max distance from s
+	std::vector<int> max_dist_valid_vertices;
+	std::copy_if(valid_vertices.begin(), valid_vertices.end(), std::back_inserter(max_dist_valid_vertices),
+		[&dist, max_dist](int v) { return dist[v] == max_dist; });
+
+	// Select random vertex amongst the valid ones with max distance
+	return RngUtils::SelectRandomElement(max_dist_valid_vertices);
 }
 
 void WorldGenerator::RoomSelector::UpdatePathWithFloor(std::vector<int>& P, int z)
@@ -104,7 +122,9 @@ void WorldGenerator::RoomSelector::UpdatePathWithFloor(std::vector<int>& P, int 
 	// Select start vertex on the floor
 	int s_floor = P[P.size() - 1];
 	// Select other vertices on the z-floor
-	std::vector<int> z_vertices = H.GetVerticesIf([&](GeneratedRoom room) {return room.pos.z == z; });
+	std::vector<int> z_vertices = H.GetVerticesIf([&](GeneratedRoom room) 
+		{return room.pos.z == z; }
+	);
 	// Select the target vertex on the floor that has a neigbhour above except the s_floor
 	int t_floor = SelectVertexWithNeighbourAbove(H, z_vertices, s_floor);
 
@@ -134,8 +154,9 @@ void WorldGenerator::RoomSelector::UpdatePathWithFloor(std::vector<int>& P, int 
 	);
 
 	// Add room above t to P
-	s_floor = FindNeigbourAbove(H, t_floor);
-	P.push_back(s_floor);
+	s_floor = FindNeighbourAbove(H, t_floor);
+	if(s_floor != -1) // if exists 
+		P.push_back(s_floor);
 }
 
 std::vector<int> WorldGenerator::RoomSelector::GenerateRandomPath()
@@ -144,7 +165,7 @@ std::vector<int> WorldGenerator::RoomSelector::GenerateRandomPath()
 	P.push_back(s);
 
 	// For all floors
-	for (int z = 0; z < floors - 1; z++)
+	for (int z = 0; z < floors; z++)
 		UpdatePathWithFloor(P, z);
 
 	return P;
@@ -212,6 +233,7 @@ void WorldGenerator::RoomSelector::AddHVertexToG(int v)
 
 void WorldGenerator::RoomSelector::AddSpareVertices()
 {
+	int N = RngUtils::RandIntInRange(G.Size(), H.Size()); // desired number of rooms in the level
 	ComputeNeighbourhood();
 	while (G.Size() < N)
 	{

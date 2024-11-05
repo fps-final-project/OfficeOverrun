@@ -1,6 +1,7 @@
 #include "Graph.h"
 #include "WeightedGraph.h"
 #include <limits.h>
+#include<queue>
 
 #pragma once
 
@@ -12,8 +13,14 @@ namespace WorldGenerator
 		static int DijkstraFindMinDistance(std::vector<int>& dist, std::vector<bool>& vis);
 	public:
 		// Uses dijkstra algorithm to find shortest path, returns the shortest path, algorithm https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-greedy-algo-7/
+		// Dijkstra for adjacency graph with no priority queue: O(n^2) time complexity
+		// https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-greedy-algo-7/
 		template <typename T>
-		static std::vector<int> FindShortestPathDijkstra(WeightedGraph<T> G, int s, int t);
+		static std::vector<int> FindShortestPathDijkstra(WeightedGraph<T> &G, int s, int t);
+
+		// Computes distances from G for each vertex with BFS
+		template <typename T>
+		static std::vector<int> ComputeGraphDistances(Graph<T> &G, int s);
 	};
 
 	inline int PathFinding::DijkstraFindMinDistance(std::vector<int>& dist, std::vector<bool>& vis)
@@ -28,7 +35,7 @@ namespace WorldGenerator
 	}
 
 	template<typename T>
-	inline std::vector<int> PathFinding::FindShortestPathDijkstra(WeightedGraph<T> G, int s, int t)
+	inline std::vector<int> PathFinding::FindShortestPathDijkstra(WeightedGraph<T> &G, int s, int t)
 	{
 		// Initialize distance vector
 		std::vector<int> dist(G.Size(), INT_MAX);
@@ -68,5 +75,31 @@ namespace WorldGenerator
 			cur = came_from[cur];
 		}
 		return path;
+	}
+	template<typename T>
+	inline std::vector<int> PathFinding::ComputeGraphDistances(Graph<T> &G, int s)
+	{
+		// Distances vector
+		std::vector<int> dist(G.Size(), -1);
+		dist[s] = 0;
+
+		std::queue<int> queue;
+		queue.push(s);
+
+
+		while (!queue.empty())
+		{
+			int u = queue.front();
+			queue.pop();
+			for (int v : G.GetNeighbours(u))
+			{
+				if (dist[v] == -1)
+				{
+					dist[v] = dist[u] + 1;
+					queue.push(v);
+				}
+			}
+		}
+		return dist;
 	}
 }

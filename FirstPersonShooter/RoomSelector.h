@@ -19,14 +19,13 @@ namespace WorldGenerator
 		int floors;
 		int s_G; // start vertex in G
 		int t_G; // target vertex in G
-		int N; // desired number of rooms in the level
 		int P; // maximum length from s to e
 		float e_c; // edge probability coeff
 		const int MAX_EDGE_WEIGHT = 1000; // maximum edge weight used in random path algorithm
 		const int MIN_F = 2; // in pathfinding if possible traverse at least number of rooms before going up
 
 		void RemoveUpDownEdges();
-		static int FindNeigbourAbove(Graph<GeneratedRoom>& graph, int v);
+		static int FindNeighbourAbove(Graph<GeneratedRoom>& graph, int v);
 		static int SelectVertexWithNeighbourAbove(Graph<GeneratedRoom>& graph, std::vector<int> vertices, int s);
 		void UpdatePathWithFloor(std::vector<int>& P, int z);
 		std::vector<int> GenerateRandomPath();
