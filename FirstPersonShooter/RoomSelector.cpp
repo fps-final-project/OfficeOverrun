@@ -7,6 +7,7 @@
 #include <WeightedGraph.h>
 #include <utility>
 #include "GraphUtils.h"
+#include "PathFinding.h"
 
 using namespace WorldGenerator;
 
@@ -103,8 +104,8 @@ std::vector<int> WorldGenerator::RoomSelector::GenerateRandomPath()
 
 		// Select the start as last element on the path
 		int s_floor = P[P.size() - 1];
-
 		
+		auto pt = PathFinding::FindShortestPathDijkstra(H_w, 0, 6);
 	}
 
 	return std::vector<int>();

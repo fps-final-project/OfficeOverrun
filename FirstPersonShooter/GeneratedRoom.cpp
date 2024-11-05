@@ -25,7 +25,7 @@ bool WorldGenerator::GeneratedRoom::ValidRoomLink(GeneratedRoom room)
     if (!IsAdjacent(room))
         return false;
     auto border = ComputeBorders(room);
-    if (!RoomLink::ValidBorderForRoomLink(std::get<1>(border)))
+    if (!RoomLink::ValidSizeForRoomLink(std::get<1>(border)))
         return false;
     else
         return true;

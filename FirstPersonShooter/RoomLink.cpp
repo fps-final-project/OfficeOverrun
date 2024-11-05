@@ -24,7 +24,7 @@ RoomLink RoomLink::MakeRoomLink(Vector3 pos, Vector3 size)
     return RoomLink(linkPos, orientation);
 }
 
-bool WorldGenerator::RoomLink::ValidBorderForRoomLink(Vector3 size)
+bool WorldGenerator::RoomLink::ValidSizeForRoomLink(Vector3 size)
 {
     if (size.x == 0)
         return size.y >= 3;

@@ -9,11 +9,11 @@ namespace WorldGenerator
 	class PathFinding
 	{
 	private:
-		int DijkstraFindMinDistance(std::vector<int>& dist, std::vector<bool>& vis);
+		static int DijkstraFindMinDistance(std::vector<int>& dist, std::vector<bool>& vis);
 	public:
 		// Uses dijkstra algorithm to find shortest path, returns the shortest path, algorithm https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-greedy-algo-7/
 		template <typename T>
-		static std::vector<int> FindShortestPathsDijkstra(WeightedGraph<T> G, int s, int t);
+		static std::vector<int> FindShortestPathDijkstra(WeightedGraph<T> G, int s, int t);
 	};
 
 	inline int PathFinding::DijkstraFindMinDistance(std::vector<int>& dist, std::vector<bool>& vis)
@@ -28,7 +28,7 @@ namespace WorldGenerator
 	}
 
 	template<typename T>
-	inline std::vector<int> PathFinding::FindShortestPathsDijkstra(WeightedGraph<T> G, int s, int t)
+	inline std::vector<int> PathFinding::FindShortestPathDijkstra(WeightedGraph<T> G, int s, int t)
 	{
 		// Initialize distance vector
 		std::vector<int> dist(G.Size(), INT_MAX);
@@ -58,7 +58,7 @@ namespace WorldGenerator
 		
 		// If unreachable
 		if(dist[t] == INT_MAX)
-			return std::vector<int>().push_back(-1);
+			return std::vector<int>();
 		
 		// Retrieve s-t path
 		std::vector<int> path;

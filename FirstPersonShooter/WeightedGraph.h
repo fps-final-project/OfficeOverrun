@@ -17,7 +17,7 @@ namespace WorldGenerator
 	};
 
 	template <typename T>
-	class WeightedGraph : Graph<T>
+	class WeightedGraph : public Graph<T>
 	{
 	public:
 		WeightedGraph(Graph<T> graph);
