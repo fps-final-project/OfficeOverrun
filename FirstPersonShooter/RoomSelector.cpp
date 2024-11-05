@@ -14,7 +14,7 @@ WorldGenerator::RoomSelector::RoomSelector(RoomSelectorArgs args)
 {
 	H = args.initialGraph;
 	s = args.startVertex;
-	P = std::floor(N * args.pathLengthCoeff);
+	N = std::floor(H.Size() * args.roomDensity);
 	floors = args.floorCount;
 	e_c = args.edgeDensityCoeff;
 }
@@ -171,42 +171,6 @@ std::vector<int> WorldGenerator::RoomSelector::GenerateRandomPath()
 	return P;
 }
 
-void WorldGenerator::RoomSelector::RandomDfs(int v, std::vector<bool>& visited, std::vector<int>& path, int tr_f)
-{
-	visited[v] = true;
-	path.push_back(v);
-	if (path.size() == P)
-		return;
-
-	auto neighbours = H.GetNeighbours(v);
-	neighbours = RngUtils::ShuffleVector<int>(neighbours);
-
-	for (int i = 0; i < neighbours.size(); i++)
-	{
-		int u = neighbours[i];
-		if (visited[u] == true)
-			continue;
-
-		bool up = H[v].value->IsBelow(*H[u].value);
-
-		// If below the minimal room number on the floor, try to find room on the same floor
-		if (up && tr_f < MIN_F)
-		{
-			for (int j = i + 1; j < neighbours.size(); j++)
-			{
-				if (!visited[neighbours[j]] && H[v].value->IsSameLevel(*H[neighbours[j]].value))
-				{
-					u = neighbours[j];
-				}
-			}
-		}
-
-		RandomDfs(u, visited, path, up ? 1 : tr_f + 1);
-		return;
-	}
-	return;
-}
-
 void WorldGenerator::RoomSelector::ConstructGFromPath(std::vector<int> P)
 {
 	G = Graph<GeneratedRoom>(H.Size());
@@ -220,7 +184,6 @@ void WorldGenerator::RoomSelector::ConstructGFromPath(std::vector<int> P)
 			G.AddUndirectedEdge(i - 1, i);
 	}
 	s_G = 0;
-	t_G = G.Size() - 1;
 }
 
 void WorldGenerator::RoomSelector::AddHVertexToG(int v)
@@ -233,7 +196,7 @@ void WorldGenerator::RoomSelector::AddHVertexToG(int v)
 
 void WorldGenerator::RoomSelector::AddSpareVertices()
 {
-	int N = RngUtils::RandIntInRange(G.Size(), H.Size()); // desired number of rooms in the level
+	int G_N = RngUtils::RandIntInRange(max(N, G.Size()), H.Size()); // desired number of rooms in the level
 	ComputeNeighbourhood();
 	while (G.Size() < N)
 	{

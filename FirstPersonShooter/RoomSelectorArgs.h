@@ -9,7 +9,6 @@ namespace WorldGenerator
 		Graph<GeneratedRoom> initialGraph;
 		int startVertex;
 		float roomDensity;
-		float pathLengthCoeff;
 		float edgeDensityCoeff;
 		int floorCount;
 

@@ -65,7 +65,6 @@ void WorldGenerator::RoomLayoutGenerator::SelectRooms()
 	args.startVertex = std::distance(adGraph.nodes.begin(), 
 		std::find_if(adGraph.nodes.begin(), adGraph.nodes.end(), is_on_the_0_floor)); // First index of room on zero floor
 	args.roomDensity = config.roomDensity;
-	args.pathLengthCoeff = config.pathLengthCoeff;
 	args.edgeDensityCoeff = config.edgeDensityCoeff;
 	args.floorCount = config.mapSize.z;
 
