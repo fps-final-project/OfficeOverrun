@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "RNG.h"
+#include "RNGEngine.h"
 #include <algorithm>
 #include <random> 
 
@@ -26,7 +26,7 @@ namespace WorldGenerator
 	template<typename T>
 	inline std::vector<T> RngUtils::ShuffleVector(std::vector<T> input)
 	{
-		unsigned seed = RNG::GetInstance()->GetSeed();
+		unsigned seed = RNGEngine::GetInstance()->GetSeed();
 		std::shuffle(input.begin(), input.end(), std::default_random_engine(seed));
 		return input;
 	}

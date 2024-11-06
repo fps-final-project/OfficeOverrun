@@ -313,7 +313,7 @@
     <ClInclude Include="RenderMaster.hpp" />
     <ClInclude Include="RenderQueue.hpp" />
     <ClInclude Include="ResourceHelper.hpp" />
-    <ClInclude Include="RNG.h" />
+    <ClInclude Include="RNGEngine.h" />
     <ClInclude Include="RngUtils.h" />
     <ClInclude Include="Room.hpp" />
     <ClInclude Include="RoomCollision.hpp" />
@@ -407,7 +407,7 @@
     <ClCompile Include="RenderMaster.cpp" />
     <ClCompile Include="RenderQueue.cpp" />
     <ClCompile Include="ResourceHelper.cpp" />
-    <ClCompile Include="RNG.cpp" />
+    <ClCompile Include="RNGEngine.cpp" />
     <ClCompile Include="RngUtils.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="RoomLayoutGenerator.cpp" />
