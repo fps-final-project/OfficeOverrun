@@ -5,7 +5,10 @@ using namespace WorldGenerator;
 
 class MappingHelpers
 {
-public:
+private:
+	static int FloorToHeight(int floor);
 	static Vector3 PositionToGameOrientation(Vector3 v);
+public:
+	static Vector3 MapVector(Vector3 v);
 };
 

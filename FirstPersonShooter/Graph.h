@@ -1,6 +1,7 @@
 #pragma once
 
 #include <vector>
+#include <functional>
 #include "Node.h"
 
 namespace WorldGenerator
@@ -13,7 +14,7 @@ namespace WorldGenerator
 		void InitGraph(std::vector<T>& values, int maxSize);
 		int maxSize;
 	public:
-		std::vector<Node<T>> nodes;
+		std::vector<Node<T>> nodes; // TODO: delete Node class as it was mistake
 		std::vector<std::vector<int>> adMatrix;
 
 		Graph(int maxSize);
@@ -24,12 +25,13 @@ namespace WorldGenerator
 		int Size();
 		void AddNode(Node<T> value);
 		void AddNodes(std::vector<Node<T>> values);
-		bool HasEdge(int from, int to);
+		virtual bool HasEdge(int from, int to);
 		void AddEdge(int from, int to);
 		void AddUndirectedEdge(int from, int to);
 		std::vector<int> GetNeighbours(int v);
 		std::vector<int> GetIngoingNeighbours(int v);
 		void DeleteEdge(int from, int to);
+		std::vector<int> GetVerticesIf(std::function<bool(T)> predicate);
 
 		Node<T> operator [](int i) const;
 		Node<T>& operator [](int i);
@@ -91,7 +93,7 @@ namespace WorldGenerator
 	template<typename T>
 	inline bool Graph<T>::HasEdge(int from, int to)
 	{
-		return adMatrix[from][to] == 1;
+		return adMatrix[from][to] > 0;
 	}
 	template<typename T>
 	inline void Graph<T>::AddEdge(int from, int to)
@@ -110,7 +112,7 @@ namespace WorldGenerator
 		std::vector<int> neighbours;
 		for (int i = 0; i < adMatrix[v].size(); i++)
 		{
-			if (adMatrix[v][i] == 1)
+			if (adMatrix[v][i] > 0)
 				neighbours.push_back(i);
 		}
 		return neighbours;
@@ -121,7 +123,7 @@ namespace WorldGenerator
 		std::vector<int> neighbours;
 		for (int i = 0; i < adMatrix[v].size(); i++)
 		{
-			if (adMatrix[i][v] == 1)
+			if (adMatrix[i][v] > 0)
 				neighbours.push_back(i);
 		}
 		return neighbours;
@@ -130,6 +132,16 @@ namespace WorldGenerator
 	inline void Graph<T>::DeleteEdge(int from, int to)
 	{
 		adMatrix[from][to] = 0;
+	}
+	template<typename T>
+	inline std::vector<int> Graph<T>::GetVerticesIf(std::function<bool(T)> predicate)
+	{
+		std::vector<int> valid_vs;
+		for (int v = 0; v < Size(); v++)
+			if (predicate(*nodes[v].value))
+				valid_vs.push_back(v);
+
+		return valid_vs;
 	}
 	template<typename T>
 	inline Node<T> Graph<T>::operator[](int i) const

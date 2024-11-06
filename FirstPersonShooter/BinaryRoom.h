@@ -20,7 +20,6 @@ namespace WorldGenerator
 		void Split2D(RoomLayout& layout, int cutType);
 		void SplitVertical(RoomLayout& layout);
 		BinaryRoom(int x, int y, int z, int width, int depth, int height);
-		static BinaryRoom GenerateRootRoom(Vector3 size);
 	private:
 		GeneratedRoom MakeRoom();
 	};
