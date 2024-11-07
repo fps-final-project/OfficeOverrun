@@ -1,7 +1,7 @@
 #pragma once
 #include "AnimatedEntity.hpp"
 #include <memory> 
-
+#include "AudioFile.hpp"
 
 
 class GunRig : public Drawable
@@ -22,6 +22,7 @@ public:
 private:
 	DirectX::XMFLOAT3 m_rigOffset, m_gunOffset, m_initialBarrelOffset, m_barrelOffset;
 	std::shared_ptr<AnimatedEntity> m_hands, m_gun;
+	std::shared_ptr<AudioFile> m_gunSound, m_reloadSound;
 	std::string m_name;
 	float m_shootingAnimationSpeedup;
 
