@@ -14,24 +14,24 @@ namespace WorldGenerator
 		Graph<GeneratedRoom> G; // generated graph
 		std::vector<int> G_H_map; // maps G vertices to H vertices
 		std::vector<int> H_G_map; // maps H vertices to G vertices
-		std::vector<int> neigh_G; // H[G] subgraph neighbourhood
 		int s; // start vertex in H
+		int floors;
 		int s_G; // start vertex in G
-		int t_G; // target vertex in G
-		int N; // desired number of rooms in the level
-		int P; // maximum length from s to e
+		int N; // minimal number of rooms in the level
 		float e_c; // edge probability coeff
-		const int MIN_F = 2; // in pathfinding if possible traverse at least number of rooms before going up
+		const int MAX_EDGE_WEIGHT = 1000; // maximum edge weight used in random path algorithm
 
 		void RemoveUpDownEdges();
+		static int FindNeighbourAbove(Graph<GeneratedRoom>& graph, int v);
+		static int SelectVertexWithNeighbourAbove(Graph<GeneratedRoom>& graph, std::vector<int> vertices, int s);
+		void UpdatePathWithFloor(std::vector<int>& P, int z);
 		std::vector<int> GenerateRandomPath();
-		void RandomDfs(int v, std::vector<bool>& visited, std::vector<int>& path, int tr_f);
 		void ConstructGFromPath(std::vector<int> P);
 		void AddHVertexToG(int v);
 		void RemoveDownUpEdges();
 		void AddSpareVertices();
-		void ComputeNeighbourhood();
-		void UpdateNeighbourhood(int v);
+		std::vector<int> ComputeNeighbourhood();
+		void UpdateNeighbourhood(std::vector<int> &neigh_G, int v);
 		void AddEdgesAtRandom();
 	public:
 

@@ -7,8 +7,9 @@
 
 const float RoomModelGenerator::frameOffset = 0.1f;
 
-Mesh RoomModelGenerator::generateRoomModel(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 size, std::vector<RoomLinkData> links, const std::string& texturePath, const std::shared_ptr<DX::DeviceResources>& deviceResources)
+Model RoomModelGenerator::generateRoomModel(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 size, std::vector<RoomLinkData> links, const std::shared_ptr<DX::DeviceResources>& deviceResources)
 {
+	Model model;
 	std::vector<VertexData> verticies;
 	std::vector<unsigned short> indicies;
 
@@ -16,9 +17,19 @@ Mesh RoomModelGenerator::generateRoomModel(DirectX::XMFLOAT3 pos, DirectX::XMFLO
 	generateWall(verticies, indicies, { pos.x, pos.y, pos.z + size.z }, { pos.x, pos.y + size.y, pos.z }, links, 3 * DirectX::XM_PIDIV2);
 	generateWall(verticies, indicies, { pos.x + size.x, pos.y, pos.z + size.z }, { pos.x, pos.y + size.y, pos.z + size.z }, links, DirectX::XM_PI);
 	generateWall(verticies, indicies, { pos.x + size.x, pos.y, pos.z }, { pos.x + size.x, pos.y + size.y, pos.z + size.z }, links, DirectX::XM_PIDIV2);
+	generateFloor(verticies, indicies, { pos.x, pos.y + size.y, pos.z }, { pos.x + size.x, pos.y + size.y, pos.z + size.z }, links, true);
+
+	model.meshes.push_back(MeshFactory<VertexData>::createMesh(verticies, indicies, { ResourceManager::Instance.getTexture("wall")}, deviceResources));
+
+	verticies.clear();
+	indicies.clear();
+	
+	generateFloor(verticies, indicies, { pos.x, pos.y, pos.z }, { pos.x + size.x, pos.y, pos.z + size.z }, links, false);
+	model.meshes.push_back(MeshFactory<VertexData>::createMesh(verticies, indicies, { ResourceManager::Instance.getTexture("floor")}, deviceResources));
 
 
-	return MeshFactory<VertexData>::createMesh(verticies, indicies, { ResourceManager::Instance.getTexture(texturePath) }, deviceResources);
+
+	return model;
 }
 
 void RoomModelGenerator::generateWall(std::vector<VertexData>& allVerticies, std::vector<unsigned short>& allIndicies,
@@ -155,4 +166,54 @@ int RoomModelGenerator::MapDoorPositionTo1D(DirectX::XMFLOAT3 pos, DirectX::XMFL
 
 	return max(std::abs(posTranslated.x), std::abs(posTranslated.z));
 
+}
+
+void RoomModelGenerator::generateFloor(std::vector<VertexData>& allVerticies, std::vector<unsigned short>& allIndicies, DirectX::XMFLOAT3 c1, DirectX::XMFLOAT3 c2, std::vector<RoomLinkData> links, bool isRoof)
+{
+	std::vector<VertexData> verticies;
+	std::vector<unsigned short> indicies;
+
+	int L = c2.x - c1.x, W = c2.z - c1.z;
+	int indexOffset = allVerticies.size();
+
+	int vertexWinding[6] = { 0, 1, 2, 2, 3, 0 };
+	if (!isRoof)
+	{
+		vertexWinding[1] = 3;
+		vertexWinding[4] = 1;
+	}
+
+
+	for (int x = 0; x < L; x++)
+	{
+		for (int z = 0; z < W; z++)
+		{
+			int nVerticies = verticies.size();
+			DirectX::XMFLOAT3 normal = { 0, (isRoof ? -1.f : 1.f), 0 };
+
+			int L_tex = isRoof ? L : 3;
+			int W_tex = isRoof ? W : 3;
+
+			float x_tex = x % L_tex;
+			float z_tex = z % W_tex;
+
+
+			verticies.push_back(VertexData({ (float)x, 0, (float)z }, { x_tex / L_tex, z_tex / W_tex }, normal));
+			verticies.push_back(VertexData({ (float)x + 1, 0, (float)z }, { (x_tex + 1) / L_tex, z_tex / W_tex }, normal));
+			verticies.push_back(VertexData({ (float)x + 1, 0, (float)z + 1 }, { (x_tex + 1) / L_tex, (z_tex + 1) / W_tex }, normal));
+			verticies.push_back(VertexData({ (float)x, 0, (float)z + 1 }, { x_tex / L_tex, (z_tex + 1) / W_tex }, normal));
+
+			for(int i = 0; i < 6; i++)
+				indicies.push_back(indexOffset + nVerticies + vertexWinding[i]);
+		}
+	}
+
+	std::transform(verticies.begin(), verticies.end(), verticies.begin(), [&](VertexData& data) {
+		data.pos = translate(data.pos, c1);
+		return data;
+		});
+
+
+	allVerticies.insert(allVerticies.end(), verticies.begin(), verticies.end());
+	allIndicies.insert(allIndicies.end(), indicies.begin(), indicies.end());
 }

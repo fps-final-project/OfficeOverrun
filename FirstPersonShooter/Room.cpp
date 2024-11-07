@@ -12,10 +12,8 @@ Room::Room(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 size, const std::vector<Room
 {
 }
 
-void Room::setModel(Mesh mesh)
+void Room::setModel(Model model)
 {
-	Model model;
-	model.meshes.push_back(mesh);
 	m_roomWalls = std::make_unique<Entity>(std::make_shared<Model>(model));
 }
 
@@ -65,7 +63,7 @@ RoomCollision Room::checkCollision(DirectX::XMFLOAT3 entityPos) const
 	{
 		if (link.stairs)
 		{
-			Stairs::AddStairsCollision(result, link.pos, { link.pos.x + link.size.x, link.pos.y + link.size.y, link.pos.z + link.size.z }, entityPos);
+			Stairs::AddStairsCollision(result, { link.pos.x, pos.y, link.pos.z }, { link.pos.x + link.size.x, link.pos.y + link.size.y, link.pos.z + link.size.z }, entityPos);
 			continue;
 		}
 
@@ -105,21 +103,15 @@ void Room::Render(std::shared_ptr<RenderMaster> renderMaster)
 	auto stairsModel = ResourceManager::Instance.getModel("stairs");
 	auto renderer = renderMaster->getModelRenderer();
 
-	// walls
+	// walls and floors
 	renderer->Render(*m_roomWalls);
-
-	// floor 
-	renderer->Render(Entity(floorModel, { pos.x, pos.y, pos.z + size.z }, { size.x, size.z, 1.f }, { -DirectX::XM_PIDIV2, 0.f, 0.f }));
-
-	// ceiling
-	renderer->Render(Entity(ceilingModel, { pos.x, pos.y + size.y, pos.z}, { size.x, size.z, 1.f }, { DirectX::XM_PIDIV2, 0.f, 0.f }));
 
 	// stairs
 	for (auto& link : m_links)
 	{
-		if (link.stairs)
+		if (link.stairs && pos.y < link.pos.y)
 		{
-			renderer->Render(Entity(stairsModel, { link.pos.x, link.pos.y - 1, link.pos.z + link.size.z }, { 5, 4, 2 }, { 0, DirectX::XM_PIDIV2, 0 }));
+			renderer->Render(Entity(stairsModel, { link.pos.x, pos.y, link.pos.z + link.size.z }, { 5, size.y, 2 }, { 0, DirectX::XM_PIDIV2, 0 }));
 		}
 	}
 }

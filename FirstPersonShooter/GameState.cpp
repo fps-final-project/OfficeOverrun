@@ -48,22 +48,12 @@ GameState::GameState(
 	// generating rooms using WorldGenerator
 	m_world->m_rooms = MapGeneratorAdapter().GenerateRooms();
 
-	// DEBUG - Adding sample stairs link
-	RoomLinkData data;
-	data.stairs = true;
-	data.pos = { 2, 1, 8 };
-	data.roomId = 0;
-	data.size = { 2, 4, 5 };
-	
-	m_world->m_rooms[7].m_links.push_back(data);
-
-
 	for (auto& room : m_world->m_rooms)
 	{
 		room.setModel(
 			RoomModelGenerator::generateRoomModel(
 				room.getPosition(), room.getSize(), room.getLinks(),
-				"wall", m_deviceResources));
+				m_deviceResources));
 	}
 	m_world->UpdateVisibleRooms();
 	//m_world->m_currentRoomIndex = 0;

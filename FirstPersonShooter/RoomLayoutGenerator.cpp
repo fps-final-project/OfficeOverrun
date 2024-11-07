@@ -27,15 +27,18 @@ RoomLayout& RoomLayoutGenerator::Generate()
 	GenerateRoomLinks();
 
 	// Step X + 1
-	UpdateLayoutWithAdGraph();
+	GenerateLayoutFromAdGraph();
 
 	return layout;
 }
 
 void RoomLayoutGenerator::GenerateRooms()
 {
-	BinaryRoom rootRoom = BinaryRoom::GenerateRootRoom(layout.mapSize);
-	rootRoom.Split(layout);
+	for (int floor = 0; floor < config.mapSize.z; floor++ )
+	{
+		BinaryRoom rootRoom = BinaryRoom(0, 0, floor, layout.mapSize.x, layout.mapSize.y, 1);
+		rootRoom.Split(layout);
+	}
 }
 
 void RoomLayoutGenerator::GenerateAdGraph()
@@ -62,8 +65,8 @@ void WorldGenerator::RoomLayoutGenerator::SelectRooms()
 	args.startVertex = std::distance(adGraph.nodes.begin(), 
 		std::find_if(adGraph.nodes.begin(), adGraph.nodes.end(), is_on_the_0_floor)); // First index of room on zero floor
 	args.roomDensity = config.roomDensity;
-	args.pathLengthCoeff = config.pathLengthCoeff;
 	args.edgeDensityCoeff = config.edgeDensityCoeff;
+	args.floorCount = config.mapSize.z;
 
 	RoomSelector selector(args);
 	adGraph = selector.SelectRooms();
@@ -96,7 +99,7 @@ void RoomLayoutGenerator::GenerateRoomLinks()
 	}
 }
 
-void WorldGenerator::RoomLayoutGenerator::UpdateLayoutWithAdGraph()
+void WorldGenerator::RoomLayoutGenerator::GenerateLayoutFromAdGraph()
 {
 	std::vector<GeneratedRoom> newRooms;
 	for (int i = 0; i < adGraph.Size(); i++)

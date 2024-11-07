@@ -179,6 +179,9 @@
     <Filter Include="WorldGenerator\RoomLayout\RooomSelector">
       <UniqueIdentifier>{97ad2e10-ce1f-429c-8771-5c5bdf50c841}</UniqueIdentifier>
     </Filter>
+    <Filter Include="WorldGenerator\Common\RNG">
+      <UniqueIdentifier>{019c11fa-7298-4158-9aea-65662fa33458}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Assets\Other\stairs">
       <UniqueIdentifier>{3cb61fc3-5875-48bb-963c-95f4f7cdd52e}</UniqueIdentifier>
     </Filter>
@@ -276,9 +279,6 @@
     <ClCompile Include="GeneratedRoom.cpp">
       <Filter>WorldGenerator\RoomLayout\Model</Filter>
     </ClCompile>
-    <ClCompile Include="RNG.cpp">
-      <Filter>WorldGenerator\Common</Filter>
-    </ClCompile>
     <ClCompile Include="RoomLayoutGenerator.cpp">
       <Filter>WorldGenerator\RoomLayout</Filter>
     </ClCompile>
@@ -306,8 +306,14 @@
     <ClCompile Include="RoomSelector.cpp">
       <Filter>WorldGenerator\RoomLayout\RooomSelector</Filter>
     </ClCompile>
+    <ClCompile Include="GraphUtils.cpp">
+      <Filter>WorldGenerator\Common\Graph</Filter>
+    </ClCompile>
+    <ClCompile Include="RNG.cpp">
+      <Filter>WorldGenerator\Common\RNG</Filter>
+    </ClCompile>
     <ClCompile Include="RngUtils.cpp">
-      <Filter>WorldGenerator\Common</Filter>
+      <Filter>WorldGenerator\Common\RNG</Filter>
     </ClCompile>
     <ClCompile Include="AudioReader.cpp">
       <Filter>Audio</Filter>
@@ -453,9 +459,6 @@
     <ClInclude Include="Node.h">
       <Filter>WorldGenerator\Common\Graph</Filter>
     </ClInclude>
-    <ClInclude Include="RNG.h">
-      <Filter>WorldGenerator\Common</Filter>
-    </ClInclude>
     <ClInclude Include="RoomLayout.h">
       <Filter>WorldGenerator\RoomLayout\Model</Filter>
     </ClInclude>
@@ -489,14 +492,8 @@
     <ClInclude Include="RoomSelector.h">
       <Filter>WorldGenerator\RoomLayout\RooomSelector</Filter>
     </ClInclude>
-    <ClInclude Include="NotImplementedExecption.h">
-      <Filter>WorldGenerator\Common</Filter>
-    </ClInclude>
     <ClInclude Include="RoomSelectorArgs.h">
       <Filter>WorldGenerator\RoomLayout\RooomSelector</Filter>
-    </ClInclude>
-    <ClInclude Include="RngUtils.h">
-      <Filter>WorldGenerator\Common</Filter>
     </ClInclude>
     <ClInclude Include="RoomModelGenerator.h">
       <Filter>Content\RoomModelGenerator</Filter>
@@ -505,7 +502,7 @@
       <Filter>Content\Entity\Room</Filter>
     </ClInclude>
     <ClInclude Include="GunRigMetadata.hpp">
-      <Filter>Content\Entity\GunRig</Filter>
+        <Filter>Content\Entity\GunRig</Filter>
     </ClInclude>
     <ClInclude Include="AudioReader.hpp">
       <Filter>Audio</Filter>
@@ -516,6 +513,22 @@
     <ClInclude Include="Stairs.h">
       <Filter>Content\Entity\Room</Filter>
     </ClInclude>
+    <ClInclude Include="GraphUtils.h">
+      <Filter>WorldGenerator\Common\Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="PathFinding.h">
+      <Filter>WorldGenerator\Common\Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="WeightedGraph.h">
+      <Filter>WorldGenerator\Common\Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="RNG.h">
+      <Filter>WorldGenerator\Common\RNG</Filter>
+    </ClInclude>
+    <ClInclude Include="RngUtils.h">
+      <Filter>WorldGenerator\Common\RNG</Filter>
+    </ClInclude>
+
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\StoreLogo.png">

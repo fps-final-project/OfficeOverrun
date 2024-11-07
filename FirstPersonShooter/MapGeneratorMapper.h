@@ -30,8 +30,8 @@ T2 MapGeneratorMapper::Map(T1 obj)
 template<>
 Room MapGeneratorMapper::Map(GeneratedRoom obj)
 {
-	DirectX::XMFLOAT3 pos = Map<Vector3, DirectX::XMFLOAT3>(MappingHelpers::PositionToGameOrientation(obj.pos));
-	DirectX::XMFLOAT3 size = Map<Vector3, DirectX::XMFLOAT3>(obj.size);
+	DirectX::XMFLOAT3 pos = Map<Vector3, DirectX::XMFLOAT3>(MappingHelpers::MapVector(obj.pos));
+	DirectX::XMFLOAT3 size = Map<Vector3, DirectX::XMFLOAT3>(MappingHelpers::MapVector(obj.size));
 
 
 	std::vector<RoomLinkData> links;
@@ -47,7 +47,7 @@ template<>
 RoomLinkData MapGeneratorMapper::Map(RoomLink obj)
 {
 	RoomLinkData data;
-	data.pos = MapGeneratorMapper::Map<Vector3, DirectX::XMFLOAT3>(MappingHelpers::PositionToGameOrientation(obj.pos));
+	data.pos = MapGeneratorMapper::Map<Vector3, DirectX::XMFLOAT3>(MappingHelpers::MapVector(obj.pos));
 	data.alongX = obj.orientation == Orientation::XZ;
 	data.stairs = obj.orientation == Orientation::XY;
 	data.size = obj.orientation == Orientation::XZ ? DirectX::XMFLOAT3(1, 2, 0) : DirectX::XMFLOAT3(0, 2, 1);
@@ -60,6 +60,6 @@ RoomLinkData MapGeneratorMapper::Map(RoomLink obj)
 template<>
 DirectX::XMFLOAT3 MapGeneratorMapper::Map(Vector3 obj)
 {
-	return DirectX::XMFLOAT3(obj.x, obj.z, obj.y);
+	return DirectX::XMFLOAT3(obj.x, obj.y, obj.z);
 }
 
