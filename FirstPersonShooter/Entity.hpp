@@ -8,7 +8,7 @@ using namespace DirectX;
 class Entity : public Drawable, public Hittable
 {
 public:
-	Entity(std::shared_ptr<AssimpModel> model,
+	Entity(std::shared_ptr<Model> model,
 		XMFLOAT3 position = DirectX::XMFLOAT3(0.f, 0.f, 0.f),
 		XMFLOAT3 size = DirectX::XMFLOAT3(1.f, 1.f, 1.f),
 		XMFLOAT3 rotation = DirectX::XMFLOAT3(0.f, 0.f, 0.f),
@@ -18,7 +18,7 @@ public:
 	virtual void Update(float dt);
 	friend class ModelRenderer;
 protected:
-	std::shared_ptr<AssimpModel> m_model;
+	std::shared_ptr<Model> m_model;
 	DirectX::XMMATRIX m_modelMatrix;
 
 	XMFLOAT3 position;

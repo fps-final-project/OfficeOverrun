@@ -6,7 +6,7 @@
 #include "Mesh.h"
 #include "Common/DeviceResources.h"
 
-struct AssimpModel
+struct Model
 {
 	std::vector<Mesh> meshes;
 };

@@ -166,7 +166,7 @@ public:
 		return 0;
 	}
 
-	void Render(const AssimpModel& m)
+	void Render(const Model& m)
 	{
 		for (const auto& m_mesh : m.meshes)
 		{

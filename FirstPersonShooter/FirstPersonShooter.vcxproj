@@ -276,6 +276,7 @@
     <Image Include="Assets\LockScreenLogo.scale-200.png" />
     <Image Include="Assets\Other\bullet\bullet.jpg" />
     <Image Include="Assets\Other\crosshair\crosshair.png" />
+    <Image Include="Assets\Other\stairs\floor.jpg" />
     <Image Include="Assets\Other\wall\brickwall.jpg" />
     <Image Include="Assets\Other\wall\floor.jpg" />
     <Image Include="Assets\Other\wall\wall.jpg" />
@@ -488,6 +489,9 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
     </None>
     <None Include="Assets\Other\bullet\bullet.mtl" />
+    <None Include="Assets\Other\stairs\stairs.gltf">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

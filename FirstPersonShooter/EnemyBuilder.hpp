@@ -5,7 +5,7 @@
 class EnemyBuilder
 {
 public:
-	EnemyBuilder& WithNewEnemy(std::shared_ptr<AnimatedAssimpModel> model);
+	EnemyBuilder& WithNewEnemy(std::shared_ptr<AnimatedModel> model);
 	EnemyBuilder& WithMaxHealth(int maxHealth);
 	EnemyBuilder& WithDamage(int health);
 	EnemyBuilder& WithSpeed(float speed);

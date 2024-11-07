@@ -9,8 +9,8 @@
 #include "BoneInfo.h"
 #include "MeshFactory.h"
 
-struct AssimpModel;
-struct AnimatedAssimpModel;
+struct Model;
+struct AnimatedModel;
 struct FinalTransformData;
 struct Joint;
 struct Mesh;
@@ -19,8 +19,8 @@ struct Texture;
 class AssimpModelLoader
 {
 public:
-	static AssimpModel createModelFromFile(const std::string& path, std::shared_ptr<DX::DeviceResources> deviceResources);
-	static AnimatedAssimpModel createAnimatedModelFromFile(const std::string& path, std::shared_ptr<DX::DeviceResources> deviceResources);
+	static Model createModelFromFile(const std::string& path, std::shared_ptr<DX::DeviceResources> deviceResources);
+	static AnimatedModel createAnimatedModelFromFile(const std::string& path, std::shared_ptr<DX::DeviceResources> deviceResources);
 
 	static void appendTextureToMesh(const std::string& path, Mesh& m, std::shared_ptr<DX::DeviceResources> deviceResources);
 
@@ -30,6 +30,7 @@ public:
 private:
 	static std::map<std::string, std::shared_ptr<Texture>> m_textureCache;
 	AssimpModelLoader(std::shared_ptr<DX::DeviceResources> deviceResources) : m_deviceResources(deviceResources), m_boneCounter(0) {};
+	void normalizePositions(std::vector<VertexData>& verticies);
 
 	std::map<std::string, BoneInfo> m_BoneInfoMap;
 	int m_boneCounter;
@@ -37,19 +38,20 @@ private:
 	std::string m_directory;
 
 	void ExtractBoneWeightForVerticies(std::vector<AnimatedVertexData>& verticies, aiMesh* mesh, const aiScene* scene);
-	void createAnimations(AnimatedAssimpModel& outModel, const aiScene* scene);
+	void createAnimations(AnimatedModel& outModel, const aiScene* scene);
 	void loadJointHierarchy(Joint& joint, aiNode* src);
 
-	AssimpModel createModel(const std::string& path);
-	void processNode(AssimpModel& outModel, aiNode* node, const aiScene* scene);
+	Model createModel(const std::string& path);
+	void processNode(Model& outModel, aiNode* node, const aiScene* scene);
 	Mesh processMesh(aiMesh* m_mesh, const aiScene* scene);
 	
-	AnimatedAssimpModel createAnimatedModel(const std::string& path);
-	void processAnimatedNode(AnimatedAssimpModel& outModel, aiNode* node, const aiScene* scene);
-	void processAnimatedMesh(AnimatedAssimpModel& outModel, aiMesh* m_mesh, const aiScene* scene);
+	AnimatedModel createAnimatedModel(const std::string& path);
+	void processAnimatedNode(AnimatedModel& outModel, aiNode* node, const aiScene* scene);
+	void processAnimatedMesh(AnimatedModel& outModel, aiMesh* m_mesh, const aiScene* scene);
 
 	void setBasicVertexData(VertexData& vertex, aiMesh* m_mesh, int idx);
 	std::vector<std::shared_ptr<Texture>> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName);
 	bool validateTextureName(std::string name);
+
 
 };

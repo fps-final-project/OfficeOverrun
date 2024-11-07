@@ -46,7 +46,8 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 
 	ResourceManager::Instance.loadTexture("Assets\\Other\\crosshair\\crosshair.png", m_deviceResources);
 
-	ResourceManager::Instance.loadModel("Assets\\Other\\bullet\\bullet.obj", m_deviceResources);
+	//ResourceManager::Instance.loadModel("Assets\\Other\\bullet\\bullet.obj", m_deviceResources);
+	ResourceManager::Instance.loadModel("Assets\\Other\\stairs\\stairs.gltf", m_deviceResources);
 	ResourceHelper::addQuad("Assets\\Other\\wall\\wall.jpg", "wall", "wall", 1, m_deviceResources);
 	ResourceHelper::addQuad("Assets\\Other\\wall\\floor.jpg", "floor", "floor", 2, m_deviceResources);
 

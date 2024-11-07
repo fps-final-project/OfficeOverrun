@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "ObjectBuilder.hpp"
 
-ObjectBuilder& ObjectBuilder::WithNewObject(std::shared_ptr<AssimpModel> model)
+ObjectBuilder& ObjectBuilder::WithNewObject(std::shared_ptr<Model> model)
 {
 	m_object.reset(new Object(model));
 	return *this;

@@ -6,6 +6,8 @@ void Stairs::AddStairsCollision(RoomCollision& collisionData, DirectX::XMFLOAT3 
 {
 	RoomCollision stairsCollision;
 
+	float sideOffset = 0.1f;
+
 	bool alongX = std::abs(c1.x - c2.x) > std::abs(c1.z - c2.z);
 	float length = alongX * std::abs(c1.x - c2.x) + !alongX * std::abs(c1.z - c2.z);
 	float slope = length / (c2.y - c1.y);
@@ -15,6 +17,12 @@ void Stairs::AddStairsCollision(RoomCollision& collisionData, DirectX::XMFLOAT3 
 	const float error = 0.2f;
 
 	float interruptX = 100.f, interruptZ = 100.f;
+
+	c1.x -= sideOffset;
+	c2.x += sideOffset;
+
+	c1.z -= sideOffset;
+	c2.z += sideOffset;
 
 	if (pos.y < thresholdHeight - error)
 	{

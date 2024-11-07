@@ -179,6 +179,9 @@
     <Filter Include="WorldGenerator\RoomLayout\RooomSelector">
       <UniqueIdentifier>{97ad2e10-ce1f-429c-8771-5c5bdf50c841}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\Other\stairs">
+      <UniqueIdentifier>{3cb61fc3-5875-48bb-963c-95f4f7cdd52e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -554,6 +557,9 @@
     <Image Include="Assets\Other\wall\floor.jpg">
       <Filter>Assets\Other\wall</Filter>
     </Image>
+    <Image Include="Assets\Other\stairs\floor.jpg">
+      <Filter>Assets\Other\stairs</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -594,6 +600,9 @@
       <Filter>Assets\GunRig\sniper</Filter>
     </None>
     <None Include="Assets\Audio\dark-horror-background-252905.wav" />
+    <None Include="Assets\Other\stairs\stairs.gltf">
+      <Filter>Assets\Other\stairs</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Content\SamplePixelShader.hlsl">

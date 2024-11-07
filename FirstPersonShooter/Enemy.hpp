@@ -4,7 +4,7 @@
 class Enemy : public AnimatedEntity
 {
 public:
-	Enemy(std::shared_ptr<AnimatedAssimpModel> model);
+	Enemy(std::shared_ptr<AnimatedModel> model);
 	void Move(XMFLOAT3 playerPosition);
 
 	friend class EnemyBuilder;

@@ -4,7 +4,7 @@
 class ObjectBuilder
 {
 public:
-	ObjectBuilder& WithNewObject(std::shared_ptr<AssimpModel> model);
+	ObjectBuilder& WithNewObject(std::shared_ptr<Model> model);
 	ObjectBuilder& WithPosition(DirectX::XMFLOAT3 pos);
 	ObjectBuilder& WithRotation(DirectX::XMFLOAT3 rot);
 	ObjectBuilder& WithVelocity(DirectX::XMFLOAT3 vel);

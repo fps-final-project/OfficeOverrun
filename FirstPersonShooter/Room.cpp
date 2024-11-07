@@ -14,9 +14,9 @@ Room::Room(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 size, const std::vector<Room
 
 void Room::setModel(Mesh mesh)
 {
-	AssimpModel model;
+	Model model;
 	model.meshes.push_back(mesh);
-	m_roomWalls = std::make_unique<Entity>(std::make_shared<AssimpModel>(model));
+	m_roomWalls = std::make_unique<Entity>(std::make_shared<Model>(model));
 }
 
 RoomCollision Room::checkCollision(DirectX::XMFLOAT3 entityPos) const
@@ -102,6 +102,7 @@ void Room::Render(std::shared_ptr<RenderMaster> renderMaster)
 {
 	auto ceilingModel = ResourceManager::Instance.getModel("wall");
 	auto floorModel = ResourceManager::Instance.getModel("floor");
+	auto stairsModel = ResourceManager::Instance.getModel("stairs");
 	auto renderer = renderMaster->getModelRenderer();
 
 	// walls
@@ -112,6 +113,15 @@ void Room::Render(std::shared_ptr<RenderMaster> renderMaster)
 
 	// ceiling
 	renderer->Render(Entity(ceilingModel, { pos.x, pos.y + size.y, pos.z}, { size.x, size.z, 1.f }, { DirectX::XM_PIDIV2, 0.f, 0.f }));
+
+	// stairs
+	for (auto& link : m_links)
+	{
+		if (link.stairs)
+		{
+			renderer->Render(Entity(stairsModel, { link.pos.x, link.pos.y - 1, link.pos.z + link.size.z }, { 5, 4, 2 }, { 0, DirectX::XM_PIDIV2, 0 }));
+		}
+	}
 }
 
 std::vector<int> Room::getAdjacentRooms()
