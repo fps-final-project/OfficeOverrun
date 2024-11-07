@@ -2,8 +2,22 @@
 #include "RoomLink.h"
 #include "RngUtils.h"
 #include "RoomLayoutConfig.h"
+#include "RngUtils.h"
 
 using namespace WorldGenerator;
+
+Orientation WorldGenerator::RoomLink::MakeOrientation(Vector3 size)
+{
+    if (size.x == 0)
+        return Orientation::YZ;
+    if (size.y == 0)
+        return Orientation::XZ;
+    if (size.x < RoomLayoutConfig::verticalRoomLinkLength + 2)
+        return Orientation::XYY;
+    if (size.y < RoomLayoutConfig::verticalRoomLinkLength + 2)
+        return Orientation::XYX;
+    return RngUtils::RandBool() ? Orientation::XYX : Orientation::XYY;
+}
 
 RoomLink::RoomLink(const Vector3& pos, const Orientation& orientation)
     : pos(pos), orientation(orientation)
@@ -13,14 +27,25 @@ RoomLink::RoomLink(const Vector3& pos, const Orientation& orientation)
 // TODO: play with rng
 RoomLink RoomLink::MakeRoomLink(Vector3 pos, Vector3 size)
 {
-    Orientation orientation = (size.x == 0) ? YZ : ((size.y == 0)? XZ : XY);
+    Orientation orientation = MakeOrientation(size);
 
-    Vector3 linkPos = Vector3(
-        pos.x + (size.x > 0 ? RngUtils::RandIntInRange(1, size.x - 2) : 0),
-        pos.y + (size.y > 0 ? RngUtils::RandIntInRange(1, size.y - 2) : 0),
-        orientation == XY ? pos.z + size.z : pos.z
-    );
-
+    Vector3 linkPos;
+    if (orientation == Orientation::XZ || orientation == Orientation::YZ)
+        linkPos = Vector3(
+            pos.x + (size.x > 0 ? RngUtils::RandIntInRange(1, size.x - 2) : 0),
+            pos.y + (size.y > 0 ? RngUtils::RandIntInRange(1, size.y - 2) : 0),
+            pos.z
+        );
+    else
+    {
+        int xSize = orientation == Orientation::XYX ? RoomLayoutConfig::verticalRoomLinkLength : RoomLayoutConfig::verticalRoomLinkWidth;
+        int ySize = orientation == Orientation::XYY ? RoomLayoutConfig::verticalRoomLinkLength : RoomLayoutConfig::verticalRoomLinkWidth;
+        linkPos = Vector3(
+            pos.x + RngUtils::RandIntInRange(1, size.x - (xSize + 1)),
+            pos.y + RngUtils::RandIntInRange(1, size.y - (ySize + 1)),
+            pos.z - 1
+        );
+    }
     return RoomLink(linkPos, orientation);
 }
 
