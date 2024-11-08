@@ -63,7 +63,23 @@ RoomCollision Room::checkCollision(DirectX::XMFLOAT3 entityPos) const
 	{
 		if (link.stairs)
 		{
-			Stairs::AddStairsCollision(result, { link.pos.x, pos.y, link.pos.z }, { link.pos.x + link.size.x, link.pos.y + link.size.y, link.pos.z + link.size.z }, entityPos);
+			float height = link.pos.y == pos.y ? pos.y : pos.y - 3;
+			if (height != pos.y)
+			{
+				int c = 2;
+			}
+
+			if (entityPos.x >= link.pos.x && entityPos.x <= link.pos.x + link.size.x &&
+				entityPos.z >= link.pos.z && entityPos.z <= link.pos.z + link.size.z)
+			{
+				result.collision[1] = false;
+				result.correction[1] = 0.f;
+				result.isOnGround = false;
+			}
+
+			Stairs::AddStairsCollision(result, { link.pos.x, height, link.pos.z }, { link.pos.x + link.size.x, height + link.size.y, link.pos.z + link.size.z }, entityPos);
+			// if player on stairs - dont collide with the floor
+
 			continue;
 		}
 
@@ -109,9 +125,16 @@ void Room::Render(std::shared_ptr<RenderMaster> renderMaster)
 	// stairs
 	for (auto& link : m_links)
 	{
-		if (link.stairs && pos.y < link.pos.y)
+		if (link.stairs && pos.y == link.pos.y)
 		{
-			renderer->Render(Entity(stairsModel, { link.pos.x, pos.y, link.pos.z + link.size.z }, { 5, size.y, 2 }, { 0, DirectX::XM_PIDIV2, 0 }));
+			if (link.orientation == OrientationData::XZX)
+			{
+				renderer->Render(Entity(stairsModel, { link.pos.x + link.size.x, pos.y, link.pos.z + link.size.z }, { 5, size.y, 2 }, { 0, DirectX::XM_PI, 0 }));
+			}
+			else
+			{
+				renderer->Render(Entity(stairsModel, { link.pos.x, pos.y, link.pos.z + link.size.z }, { 5, size.y, 2 }, { 0, DirectX::XM_PIDIV2, 0 }));
+			}
 		}
 	}
 }
