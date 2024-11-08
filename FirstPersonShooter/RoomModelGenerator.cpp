@@ -183,11 +183,35 @@ void RoomModelGenerator::generateFloor(std::vector<VertexData>& allVerticies, st
 		vertexWinding[4] = 1;
 	}
 
+	RoomLinkData* stairs = nullptr;
+
+	for (auto& link : links)
+	{
+		if (link.orientation == OrientationData::XZX || link.orientation == OrientationData::XZZ)
+		{
+			stairs = &link;
+		}
+	}
+
 
 	for (int x = 0; x < L; x++)
 	{
 		for (int z = 0; z < W; z++)
 		{
+			if (stairs && stairs->pos.y + stairs->size.y == c1.y)
+			{
+				int x_global = x + c1.x;
+				int z_global = z + c1.z;
+
+				if (x_global >= stairs->pos.x && x_global < stairs->pos.x + stairs->size.x &&
+					z_global >= stairs->pos.z && z_global < stairs->pos.z + stairs->size.z)
+				{
+					continue;
+				}
+			}
+
+
+
 			int nVerticies = verticies.size();
 			DirectX::XMFLOAT3 normal = { 0, (isRoof ? -1.f : 1.f), 0 };
 
