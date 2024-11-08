@@ -3,6 +3,7 @@
 #include "ResourceManager.h"
 #include "Entity.hpp"
 #include "MeshFactory.h"
+#include "Stairs.h"
 
 const float Room::wallOffset = 0.5f;
 
@@ -11,11 +12,9 @@ Room::Room(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 size, const std::vector<Room
 {
 }
 
-void Room::setModel(Mesh mesh)
+void Room::setModel(Model model)
 {
-	AssimpModel model;
-	model.meshes.push_back(mesh);
-	m_roomWalls = std::make_unique<Entity>(std::make_shared<AssimpModel>(model));
+	m_roomWalls = std::make_unique<Entity>(std::make_shared<Model>(model));
 }
 
 RoomCollision Room::checkCollision(DirectX::XMFLOAT3 entityPos) const
@@ -32,11 +31,11 @@ RoomCollision Room::checkCollision(DirectX::XMFLOAT3 entityPos) const
 		result.correction[1] = this->pos.y + playerHeight;
 		result.isOnGround = true;
 	}
-	else if (entityPos.y > this->pos.y + this->size.y - playerHeight)
-	{
-		result.collision[1] = true;
-		result.correction[1] = this->pos.y + this->size.y - playerHeight;
-	}
+	//else if (entityPos.y > this->pos.y + this->size.y - playerHeight)
+	//{
+	//	result.collision[1] = true;
+	//	result.correction[1] = this->pos.y + this->size.y - playerHeight;
+	//}
 	
 	if (entityPos.x < this->pos.x + wallOffset)
 	{
@@ -62,7 +61,32 @@ RoomCollision Room::checkCollision(DirectX::XMFLOAT3 entityPos) const
 
 	for (auto link : m_links)
 	{
-		if (link.alongX)
+		bool stairs = link.orientation == OrientationData::XZX || link.orientation == OrientationData::XZZ;
+		bool alongX = !stairs && link.orientation == OrientationData::XY;
+
+		if (stairs)
+		{
+			float height = link.pos.y == pos.y ? pos.y : pos.y - link.size.y;
+			if (height != pos.y)
+			{
+				int c = 2;
+			}
+
+			if (entityPos.x >= link.pos.x && entityPos.x <= link.pos.x + link.size.x &&
+				entityPos.z >= link.pos.z && entityPos.z <= link.pos.z + link.size.z)
+			{
+				result.collision[1] = false;
+				result.correction[1] = 0.f;
+				result.isOnGround = false;
+			}
+
+			Stairs::AddStairsCollision(result, { link.pos.x, height, link.pos.z }, { link.pos.x + link.size.x, height + link.size.y, link.pos.z + link.size.z }, entityPos);
+			// if player on stairs - dont collide with the floor
+
+			continue;
+		}
+
+		if (alongX)
 		{
 			if (result.collision[2] && std::abs(entityPos.z - link.pos.z) < wallOffset && entityPos.x > link.pos.x && entityPos.x < link.pos.x + link.size.x)
 			{
@@ -95,16 +119,28 @@ void Room::Render(std::shared_ptr<RenderMaster> renderMaster)
 {
 	auto ceilingModel = ResourceManager::Instance.getModel("wall");
 	auto floorModel = ResourceManager::Instance.getModel("floor");
+	auto stairsModel = ResourceManager::Instance.getModel("stairs");
 	auto renderer = renderMaster->getModelRenderer();
 
-	// walls
+	// walls and floors
 	renderer->Render(*m_roomWalls);
 
-	// floor 
-	renderer->Render(Entity(floorModel, { pos.x, pos.y, pos.z + size.z }, { size.x, size.z, 1.f }, { -DirectX::XM_PIDIV2, 0.f, 0.f }));
-
-	// ceiling
-	renderer->Render(Entity(ceilingModel, { pos.x, pos.y + size.y, pos.z}, { size.x, size.z, 1.f }, { DirectX::XM_PIDIV2, 0.f, 0.f }));
+	// stairs
+	for (auto& link : m_links)
+	{
+		bool stairs = link.orientation == OrientationData::XZX || link.orientation == OrientationData::XZZ;
+		if (stairs && pos.y == link.pos.y)
+		{
+			if (link.orientation == OrientationData::XZX)
+			{
+				renderer->Render(Entity(stairsModel, { link.pos.x + link.size.x, pos.y, link.pos.z + link.size.z }, { 5, size.y, 2 }, { 0, DirectX::XM_PI, 0 }));
+			}
+			else
+			{
+				renderer->Render(Entity(stairsModel, { link.pos.x, pos.y, link.pos.z + link.size.z }, { 5, size.y, 2 }, { 0, DirectX::XM_PIDIV2, 0 }));
+			}
+		}
+	}
 }
 
 std::vector<int> Room::getAdjacentRooms()

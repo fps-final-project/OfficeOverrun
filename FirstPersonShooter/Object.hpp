@@ -4,7 +4,7 @@
 class Object : public Entity
 {
 public:
-	Object(std::shared_ptr<AssimpModel> model);
+	Object(std::shared_ptr<Model> model);
 
 	friend class ObjectBuilder;
 private:

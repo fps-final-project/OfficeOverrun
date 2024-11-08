@@ -182,6 +182,9 @@
     <Filter Include="WorldGenerator\Common\RNG">
       <UniqueIdentifier>{019c11fa-7298-4158-9aea-65662fa33458}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\Other\stairs">
+      <UniqueIdentifier>{3cb61fc3-5875-48bb-963c-95f4f7cdd52e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -294,7 +297,6 @@
     <ClCompile Include="MappingHelpers.cpp">
       <Filter>WorldGeneratorAdapter\Mapper</Filter>
     </ClCompile>
-    <ClCompile Include="AudioReader.cpp" />
     <ClCompile Include="RoomModelGenerator.cpp">
       <Filter>Content\RoomModelGenerator</Filter>
     </ClCompile>
@@ -312,6 +314,12 @@
     </ClCompile>
     <ClCompile Include="RngUtils.cpp">
       <Filter>WorldGenerator\Common\RNG</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioReader.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Stairs.cpp">
+      <Filter>Content\Entity\Room</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -487,8 +495,6 @@
     <ClInclude Include="RoomSelectorArgs.h">
       <Filter>WorldGenerator\RoomLayout\RooomSelector</Filter>
     </ClInclude>
-    <ClInclude Include="AudioFile.hpp" />
-    <ClInclude Include="AudioReader.hpp" />
     <ClInclude Include="RoomModelGenerator.h">
       <Filter>Content\RoomModelGenerator</Filter>
     </ClInclude>
@@ -496,7 +502,16 @@
       <Filter>Content\Entity\Room</Filter>
     </ClInclude>
     <ClInclude Include="GunRigMetadata.hpp">
-      <Filter>Content\Entity\GunRig</Filter>
+        <Filter>Content\Entity\GunRig</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioReader.hpp">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioFile.hpp">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Stairs.h">
+      <Filter>Content\Entity\Room</Filter>
     </ClInclude>
     <ClInclude Include="GraphUtils.h">
       <Filter>WorldGenerator\Common\Graph</Filter>
@@ -513,6 +528,7 @@
     <ClInclude Include="RngUtils.h">
       <Filter>WorldGenerator\Common\RNG</Filter>
     </ClInclude>
+
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\StoreLogo.png">
@@ -554,6 +570,9 @@
     <Image Include="Assets\Other\wall\floor.jpg">
       <Filter>Assets\Other\wall</Filter>
     </Image>
+    <Image Include="Assets\Other\stairs\floor.jpg">
+      <Filter>Assets\Other\stairs</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
@@ -594,6 +613,9 @@
       <Filter>Assets\GunRig\sniper</Filter>
     </None>
     <None Include="Assets\Audio\dark-horror-background-252905.wav" />
+    <None Include="Assets\Other\stairs\stairs.gltf">
+      <Filter>Assets\Other\stairs</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Content\SamplePixelShader.hlsl">

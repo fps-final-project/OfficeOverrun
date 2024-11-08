@@ -7,7 +7,7 @@ using namespace DirectX;
 class AnimatedEntity : public Hittable, public Animable
 {
 public:
-	AnimatedEntity(std::shared_ptr<AnimatedAssimpModel> model, 
+	AnimatedEntity(std::shared_ptr<AnimatedModel> model, 
 		XMFLOAT3 position = DirectX::XMFLOAT3(0.f, 0.f, 0.f), 
 		XMFLOAT3 size = DirectX::XMFLOAT3(1.f, 1.f, 1.f), 
 		XMFLOAT3 rotation = DirectX::XMFLOAT3(0.f, 0.f, 0.f), 

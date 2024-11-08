@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "AnimatedEntity.hpp"
 
-AnimatedEntity::AnimatedEntity(std::shared_ptr<AnimatedAssimpModel> model, XMFLOAT3 position, XMFLOAT3 size, XMFLOAT3 rotation, XMFLOAT3 velocity)
+AnimatedEntity::AnimatedEntity(std::shared_ptr<AnimatedModel> model, XMFLOAT3 position, XMFLOAT3 size, XMFLOAT3 rotation, XMFLOAT3 velocity)
 	: Animable(model), Hittable(DirectX::BoundingBox()), position(position), rotation(rotation), velocity(velocity), size(size)
 {
 

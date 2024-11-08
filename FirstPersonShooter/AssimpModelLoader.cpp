@@ -10,17 +10,17 @@
 
 std::map<std::string, std::shared_ptr<Texture>> AssimpModelLoader::m_textureCache;
 
-#pragma region AssimpModel 
+#pragma region Model 
 
-AssimpModel AssimpModelLoader::createModelFromFile(const std::string& path, std::shared_ptr<DX::DeviceResources> deviceResources)
+Model AssimpModelLoader::createModelFromFile(const std::string& path, std::shared_ptr<DX::DeviceResources> deviceResources)
 {
 	AssimpModelLoader loader(deviceResources);
 	return loader.createModel(path);
 }
 
-AssimpModel AssimpModelLoader::createModel(const std::string& path)
+Model AssimpModelLoader::createModel(const std::string& path)
 {
-	AssimpModel model;
+	Model model;
 
 	Assimp::Importer importer;
 	const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
@@ -36,7 +36,7 @@ AssimpModel AssimpModelLoader::createModel(const std::string& path)
 	return model;
 }
 
-void AssimpModelLoader::processNode(AssimpModel& outModel, aiNode* node, const aiScene* scene)
+void AssimpModelLoader::processNode(Model& outModel, aiNode* node, const aiScene* scene)
 {
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
@@ -63,6 +63,8 @@ Mesh AssimpModelLoader::processMesh(aiMesh* m_mesh, const aiScene* scene)
 
 		vertexData.push_back(vertex);
 	}
+
+	normalizePositions(vertexData);
 	// process indices
 	for (unsigned int i = 0; i < m_mesh->mNumFaces; i++)
 	{
@@ -94,9 +96,9 @@ Mesh AssimpModelLoader::processMesh(aiMesh* m_mesh, const aiScene* scene)
 
 #pragma endregion
 
-#pragma region AnimatedAssimpModel
+#pragma region AnimatedModel
 
-AnimatedAssimpModel AssimpModelLoader::createAnimatedModelFromFile(const std::string& path, std::shared_ptr<DX::DeviceResources> deviceResources)
+AnimatedModel AssimpModelLoader::createAnimatedModelFromFile(const std::string& path, std::shared_ptr<DX::DeviceResources> deviceResources)
 {
 	AssimpModelLoader loader(deviceResources);
 	return loader.createAnimatedModel(path);
@@ -148,7 +150,7 @@ void AssimpModelLoader::ExtractBoneWeightForVerticies(
 	}
 }
 
-void AssimpModelLoader::createAnimations(AnimatedAssimpModel& outModel, const aiScene* scene)
+void AssimpModelLoader::createAnimations(AnimatedModel& outModel, const aiScene* scene)
 {
 	for (int i = 0; i < scene->mNumAnimations; i++)
 	{
@@ -217,9 +219,9 @@ void AssimpModelLoader::loadJointHierarchy(Joint& joint, aiNode* src)
 	}
 }
 
-AnimatedAssimpModel AssimpModelLoader::createAnimatedModel(const std::string& path)
+AnimatedModel AssimpModelLoader::createAnimatedModel(const std::string& path)
 {
-	AnimatedAssimpModel model;
+	AnimatedModel model;
 
 	Assimp::Importer importer;
 	const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
@@ -241,7 +243,7 @@ AnimatedAssimpModel AssimpModelLoader::createAnimatedModel(const std::string& pa
 	return model;
 }
 
-void AssimpModelLoader::processAnimatedNode(AnimatedAssimpModel& outModel, aiNode* node, const aiScene* scene)
+void AssimpModelLoader::processAnimatedNode(AnimatedModel& outModel, aiNode* node, const aiScene* scene)
 {
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
 	{
@@ -254,7 +256,7 @@ void AssimpModelLoader::processAnimatedNode(AnimatedAssimpModel& outModel, aiNod
 	}
 }
 
-void AssimpModelLoader::processAnimatedMesh(AnimatedAssimpModel& outModel, aiMesh* m_mesh, const aiScene* scene)
+void AssimpModelLoader::processAnimatedMesh(AnimatedModel& outModel, aiMesh* m_mesh, const aiScene* scene)
 {
 	std::vector<AnimatedVertexData> vertexData;
 	std::vector<unsigned short> indicies;
@@ -392,6 +394,34 @@ DirectX::XMFLOAT3 AssimpModelLoader::aiToDirectFloat3(aiVector3D v)
 DirectX::XMFLOAT4 AssimpModelLoader::aiToDirectFloat4(aiQuaternion q)
 {
 	return DirectX::XMFLOAT4(q.x, q.y, q.z, q.w);
+}
+
+void AssimpModelLoader::normalizePositions(std::vector<VertexData>& verticies)
+{
+	float max_x, max_y, max_z, min_x, min_y, min_z;
+
+	max_x = min_x = verticies[0].pos.x;
+	max_y = min_y = verticies[0].pos.y;
+	max_z = min_z = verticies[0].pos.z;
+
+
+	for (auto& v : verticies)
+	{
+		max_x = max(max_x, v.pos.x);
+		max_y = max(max_y, v.pos.y);
+		max_z = max(max_z, v.pos.z);
+
+		min_x = min(min_x, v.pos.x);
+		min_y = min(min_y, v.pos.y);
+		min_z = min(min_z, v.pos.z);
+	}
+
+	for (int i = 0; i < verticies.size(); i++)
+	{
+		verticies[i].pos.x = (verticies[i].pos.x - min_x) /  (max_x - min_x);
+		verticies[i].pos.y = (verticies[i].pos.y - min_y) /  (max_y - min_y);
+		verticies[i].pos.z = (verticies[i].pos.z - min_z) /  (max_z - min_z);
+	}
 }
 
 #pragma endregion

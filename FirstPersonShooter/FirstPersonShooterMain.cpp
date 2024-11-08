@@ -21,7 +21,7 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	// Register to be notified if the Device is lost or recreated
 	m_deviceResources->RegisterDeviceNotify(this);
 
-	bool load_only_ak = false;
+	bool load_only_ak = true;
 
 	ResourceManager::Instance.loadAnimatedModel("Assets\\Enemy\\Zombie\\zombie_war.gltf", m_deviceResources);
 
@@ -47,9 +47,10 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 
 	ResourceManager::Instance.loadTexture("Assets\\Other\\crosshair\\crosshair.png", m_deviceResources);
 
-	ResourceManager::Instance.loadModel("Assets\\Other\\bullet\\bullet.obj", m_deviceResources);
-	ResourceHelper::addQuad("Assets\\Other\\wall\\wall.jpg", "wall", "wall", 1, m_deviceResources);
-	ResourceHelper::addQuad("Assets\\Other\\wall\\floor.jpg", "floor", "floor", 2, m_deviceResources);
+	//ResourceManager::Instance.loadModel("Assets\\Other\\bullet\\bullet.obj", m_deviceResources);
+	ResourceManager::Instance.loadModel("Assets\\Other\\stairs\\stairs.gltf", m_deviceResources);
+	ResourceManager::Instance.loadTexture("Assets\\Other\\wall\\wall.jpg", m_deviceResources);
+	ResourceManager::Instance.loadTexture("Assets\\Other\\wall\\floor.jpg", m_deviceResources);
 
 
 	ResourceManager::Instance.loadAudioFile("Assets\\Audio\\dark-horror-background-252905.wav", XAUDIO2_LOOP_INFINITE, m_deviceResources, "music");

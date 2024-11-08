@@ -52,7 +52,7 @@ struct FinalTransformData
 	}
 };
 
-struct AnimatedAssimpModel : public AssimpModel
+struct AnimatedModel : public Model
 {
 	std::vector<FinalTransformData> m_transformData;
 	std::map<std::string, BoneInfo> m_BoneInfoMap;
