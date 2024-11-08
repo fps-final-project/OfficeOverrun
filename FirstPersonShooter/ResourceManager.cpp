@@ -59,13 +59,14 @@ void ResourceManager::loadTexture(const std::string& path,
 
 void ResourceManager::loadAudioFile(
 	const std::string& path, 
+	const UINT32 loop,
 	const std::shared_ptr<DX::DeviceResources>& deviceResources, 
 	const std::string& nameOverride
 )
 {
 	std::string name = nameOverride.empty() ? std::filesystem::path(path).stem().string() : nameOverride;
 
-	AudioFile audioFile = AudioReader::ReadWAVFile(path);
+	AudioFile audioFile = AudioReader::ReadWAVFile(path, loop);
 
 	DX::ThrowIfFailed(
 		deviceResources

@@ -6,7 +6,7 @@
 class AudioReader
 {
 public:
-	static AudioFile ReadWAVFile(std::string path);
+	static AudioFile ReadWAVFile(std::string path, const UINT32 loop);
 
 private:
 	static HRESULT FindChunk(HANDLE hFile, DWORD fourcc, DWORD& dwChunkSize, DWORD& dwChunkDataPosition);

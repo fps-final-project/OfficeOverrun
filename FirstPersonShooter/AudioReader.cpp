@@ -21,7 +21,7 @@
 #define fourccDPDS 'sdpd'
 #endif
 
-AudioFile AudioReader::ReadWAVFile(std::string path)
+AudioFile AudioReader::ReadWAVFile(std::string path, const UINT32 loop)
 {
 
 	HRESULT hr = S_OK;
@@ -58,7 +58,7 @@ AudioFile AudioReader::ReadWAVFile(std::string path)
 	buffer.PlayLength = 0;
 	buffer.LoopBegin = 0;
 	buffer.LoopLength = 0;
-	buffer.LoopCount = XAUDIO2_LOOP_INFINITE;
+	buffer.LoopCount = loop;
 
 	return { wfx, buffer, pDataBuffer, nullptr };
 }

@@ -16,9 +16,11 @@ public:
 	template<>
 	static Room Map(GeneratedRoom obj);
 	template<>
-	static RoomLinkData MapGeneratorMapper::Map(RoomLink obj);
+	static RoomLinkData Map(RoomLink obj);
 	template<>
 	static DirectX::XMFLOAT3 Map(Vector3 obj);
+	template<>
+	static OrientationData Map(Orientation obj);
 };
 
 template<class T1, class T2>
@@ -32,7 +34,6 @@ Room MapGeneratorMapper::Map(GeneratedRoom obj)
 {
 	DirectX::XMFLOAT3 pos = Map<Vector3, DirectX::XMFLOAT3>(MappingHelpers::MapVector(obj.pos));
 	DirectX::XMFLOAT3 size = Map<Vector3, DirectX::XMFLOAT3>(MappingHelpers::MapVector(obj.size));
-
 
 	std::vector<RoomLinkData> links;
 	for (auto link : obj.links)
@@ -49,10 +50,9 @@ RoomLinkData MapGeneratorMapper::Map(RoomLink obj)
 	RoomLinkData data;
 	data.pos = MapGeneratorMapper::Map<Vector3, DirectX::XMFLOAT3>(MappingHelpers::MapVector(obj.pos));
 	data.alongX = obj.orientation == Orientation::XZ;
-	data.stairs = obj.orientation == Orientation::XY;
-	data.size = obj.orientation == Orientation::XZ ? DirectX::XMFLOAT3(1, 2, 0) : DirectX::XMFLOAT3(0, 2, 1);
-	if (data.stairs)
-		data.size = DirectX::XMFLOAT3(2, 0, 5);
+	data.orientation = MapGeneratorMapper::Map<Orientation, OrientationData>(obj.orientation);
+	data.size = MappingHelpers::OrientationToSize(data.orientation);
+	data.stairs = obj.orientation == Orientation::XYX || obj.orientation == Orientation::XYY;
 	data.roomId = obj.linkedRoomIdx;
 	return data;
 }
@@ -61,5 +61,21 @@ template<>
 DirectX::XMFLOAT3 MapGeneratorMapper::Map(Vector3 obj)
 {
 	return DirectX::XMFLOAT3(obj.x, obj.y, obj.z);
+}
+
+template<>
+OrientationData MapGeneratorMapper::Map(Orientation obj)
+{
+	switch (obj)
+	{
+	case Orientation::XZ:
+		return OrientationData::XY;
+	case Orientation::YZ:
+		return OrientationData::ZY;
+	case Orientation::XYX:
+		return OrientationData::XZX;
+	default:
+		return OrientationData::XZZ;
+	}
 }
 
