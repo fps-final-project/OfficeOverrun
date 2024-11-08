@@ -28,7 +28,7 @@ GameState::GameState(
 	m_player = std::make_unique<Player>();
 	m_collisionDetector = std::make_unique<SimpleCollisionDetector>();
 
-	EnemyBuilder enemyBuilder{};
+	EnemyBuilder enemyBuilder{}, heliBuilder{};
 	ObjectBuilder objectBuilder{};
 
 	auto zombie = enemyBuilder
@@ -41,6 +41,18 @@ GameState::GameState(
 		.WithVelocity({ 0.f, 0.f, 0.f })
 		.WithSize({ 0.8f, 0.8f, 0.8f })
 		.WithFallbackAnimation("idle")
+		.Build();
+
+	auto heli = heliBuilder
+		.WithNewEnemy(ResourceManager::Instance.getAnimatedModel("heli"))
+		.WithMaxHealth(100)
+		.WithDamage(10)
+		.WithSpeed(0.f)
+		.WithPosition({ 10.f, 0.f, 10.f })
+		.WithRotation({ 0.f, 0.f, 0.f })
+		.WithVelocity({ 0.f, 0.f, 0.f })
+		.WithSize({ 2.f, 2.f, 2.f })
+		.WithFallbackAnimation("Idle")
 		.Build();
 
 
@@ -57,6 +69,9 @@ GameState::GameState(
 	}
 	m_world->UpdateVisibleRooms();
 	//m_world->m_currentRoomIndex = 0;
+
+
+	m_world->AddEnemy(heli);
 
 	m_world->AddEnemy(zombie);
 
