@@ -61,9 +61,12 @@ RoomCollision Room::checkCollision(DirectX::XMFLOAT3 entityPos) const
 
 	for (auto link : m_links)
 	{
-		if (link.stairs)
+		bool stairs = link.orientation == OrientationData::XZX || link.orientation == OrientationData::XZZ;
+		bool alongX = !stairs && link.orientation == OrientationData::XY;
+
+		if (stairs)
 		{
-			float height = link.pos.y == pos.y ? pos.y : pos.y - 3;
+			float height = link.pos.y == pos.y ? pos.y : pos.y - link.size.y;
 			if (height != pos.y)
 			{
 				int c = 2;
@@ -83,7 +86,7 @@ RoomCollision Room::checkCollision(DirectX::XMFLOAT3 entityPos) const
 			continue;
 		}
 
-		if (link.alongX)
+		if (alongX)
 		{
 			if (result.collision[2] && std::abs(entityPos.z - link.pos.z) < wallOffset && entityPos.x > link.pos.x && entityPos.x < link.pos.x + link.size.x)
 			{
@@ -125,7 +128,8 @@ void Room::Render(std::shared_ptr<RenderMaster> renderMaster)
 	// stairs
 	for (auto& link : m_links)
 	{
-		if (link.stairs && pos.y == link.pos.y)
+		bool stairs = link.orientation == OrientationData::XZX || link.orientation == OrientationData::XZZ;
+		if (stairs && pos.y == link.pos.y)
 		{
 			if (link.orientation == OrientationData::XZX)
 			{

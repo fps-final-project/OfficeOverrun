@@ -48,9 +48,12 @@ void RoomModelGenerator::generateWall(std::vector<VertexData>& allVerticies, std
 
 	for (auto& link : links)
 	{
-		if (link.alongX == alongX)
+		bool stairs = link.orientation == OrientationData::XZX || link.orientation == OrientationData::XZZ;
+		bool isLinkAlongX = !stairs && link.orientation == OrientationData::XY;
+
+		if (alongX == isLinkAlongX)
 		{
-			if ((link.alongX && link.pos.z == c1.z) || (!link.alongX && link.pos.x == c2.x))
+			if ((alongX && link.pos.z == c1.z) || (!alongX && link.pos.x == c2.x))
 			{
 				doorStart.insert(MapDoorPositionTo1D(link.pos, c1, c2, alongX, direction));
 			}
