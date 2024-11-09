@@ -42,7 +42,7 @@ void RoomModelGenerator::generateWall(std::vector<VertexData>& allVerticies, std
 	float direction = alongX ? (c1.x - c2.x) / std::abs(c1.x - c2.x) : (c1.z - c2.z) / std::abs(c1.z - c2.z);
 
 	int L = max(std::abs(c1.x - c2.x), std::abs(c1.z - c2.z));
-	int H = c2.y;
+	int H = c2.y - c1.y;
 
 	std::set<int> doorStart;
 
