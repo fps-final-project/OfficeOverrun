@@ -326,6 +326,7 @@
     <ClInclude Include="RoomSelectorArgs.h" />
     <ClInclude Include="RoomLinkData.hpp" />
     <ClInclude Include="RoomModelGenerator.h" />
+    <ClInclude Include="Skybox.h" />
     <ClInclude Include="SpriteRenderer.hpp" />
     <ClInclude Include="Animable.hpp" />
     <ClInclude Include="AnimatedAssimpModel.h" />
