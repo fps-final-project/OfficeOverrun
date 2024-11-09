@@ -109,6 +109,11 @@ void App::Run()
 			{
 				m_deviceResources->Present();
 			}
+
+			if (m_main->ShouldClose())
+			{
+				m_windowClosed = true;
+			}
 		}
 		else
 		{

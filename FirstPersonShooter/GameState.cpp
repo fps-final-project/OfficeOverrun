@@ -28,7 +28,7 @@ GameState::GameState(
 	m_player = std::make_unique<Player>();
 	m_collisionDetector = std::make_unique<SimpleCollisionDetector>();
 
-	EnemyBuilder enemyBuilder{}, heliBuilder{};
+	EnemyBuilder enemyBuilder{};
 	ObjectBuilder objectBuilder{};
 
 	auto zombie = enemyBuilder
@@ -43,36 +43,28 @@ GameState::GameState(
 		.WithFallbackAnimation("idle")
 		.Build();
 
-	auto heli = heliBuilder
-		.WithNewEnemy(ResourceManager::Instance.getAnimatedModel("heli"))
-		.WithMaxHealth(100)
-		.WithDamage(10)
-		.WithSpeed(0.f)
-		.WithPosition({ 10.f, 0.f, 10.f })
-		.WithRotation({ 0.f, 0.f, 0.f })
-		.WithVelocity({ 0.f, 0.f, 0.f })
-		.WithSize({ 2.f, 2.f, 2.f })
-		.WithFallbackAnimation("Idle")
-		.Build();
-
-
-	//m_world->m_rooms.push_back(Room(XMFLOAT3(-1.f, -1.f, -2.f), XMFLOAT3(4.f, 4.f, 6.f)));
 	// generating rooms using WorldGenerator
 	m_world->m_rooms = MapGeneratorAdapter().GenerateRooms();
 
-	for (auto& room : m_world->m_rooms)
+	for (int i = 0; i < m_world->m_rooms.size() - 1; i++)
 	{
+		auto& room = m_world->m_rooms[i];
 		room.setModel(
 			RoomModelGenerator::generateRoomModel(
 				room.getPosition(), room.getSize(), room.getLinks(),
 				m_deviceResources));
 	}
+
+	auto& lastRoom = m_world->m_rooms[m_world->m_rooms.size() - 1];
+	lastRoom.setModel(
+		RoomModelGenerator::generateRoof(
+			lastRoom.getPosition(), lastRoom.getSize(), lastRoom.getLinks(),
+			m_deviceResources));
+
+
 	m_world->UpdateVisibleRooms();
-	//m_world->m_currentRoomIndex = 0;
 
-
-	m_world->AddEnemy(heli);
-
+	m_world->AddHelicopter();
 	m_world->AddEnemy(zombie);
 
 	this->setupActionHandlers();
@@ -112,6 +104,11 @@ void GameState::Update(float dt)
 void GameState::CreateWindowSizeDependentResources()
 {
 	m_camera->CreateWindowSizeDependentResources(FOV);
+}
+
+bool GameState::GameFinished()
+{
+	return m_world->IsPlayerNearHelicopter(m_player->getPostition());
 }
 
 void GameState::setupActionHandlers()

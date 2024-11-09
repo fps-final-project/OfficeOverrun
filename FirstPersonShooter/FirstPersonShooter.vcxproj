@@ -266,7 +266,6 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Image Include="Assets\cube\brickwall.jpg" />
     <Image Include="Assets\Enemy\Zombie\world_war_zombie_diffuse.png" />
     <Image Include="Assets\GunRig\AK\ak74m_baseColor.png" />
     <Image Include="Assets\GunRig\AK\armColor.png" />
@@ -292,6 +291,8 @@
   <ItemGroup>
     <ClInclude Include="ActionHandler.hpp" />
     <ClInclude Include="ActionTypes.hpp" />
+    <ClInclude Include="AnimatedObject.hpp" />
+    <ClInclude Include="AnimatedObjectBuilder.hpp" />
     <ClInclude Include="AudioFile.hpp" />
     <ClInclude Include="AudioReader.hpp" />
     <ClInclude Include="BinaryRoom.h" />
@@ -373,6 +374,8 @@
     <ClCompile Include="Animable.cpp" />
     <ClCompile Include="AnimatedEntity.cpp" />
     <ClCompile Include="AnimatedModelRenderer.cpp" />
+    <ClCompile Include="AnimatedObject.cpp" />
+    <ClCompile Include="AnimatedObjectBuilder.cpp" />
     <ClCompile Include="Animator.cpp" />
     <ClCompile Include="App.cpp" />
     <ClCompile Include="AssimpModelLoader.cpp" />

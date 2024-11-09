@@ -157,9 +157,15 @@ bool FirstPersonShooterMain::Render()
 	m_spriteRenderer->EndRendering(context);
 
 	auto pos = m_gameState->m_player->getPostition();
-	m_fpsTextRenderer->Render(std::to_string(pos.x) + ", " +std::to_string(pos.y) + ", " + std::to_string(pos.z));
+	m_fpsTextRenderer->Render(std::to_string(m_timer.GetFramesPerSecond()));
+	//m_fpsTextRenderer->Render(std::to_string(pos.x) + ", " +std::to_string(pos.y) + ", " + std::to_string(pos.z));
 
 	return true;
+}
+
+bool FirstPersonShooter::FirstPersonShooterMain::ShouldClose()
+{
+	return m_gameState->GameFinished();
 }
 
 // Notifies renderers that device resources need to be released.

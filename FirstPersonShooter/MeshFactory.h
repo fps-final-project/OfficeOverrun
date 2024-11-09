@@ -3,7 +3,7 @@
 #include "pch.h" 
 #include <vector>
 #include "Common\DeviceResources.h"
-#include <Content/ShaderStructures.h>
+#include "Content/ShaderStructures.h"
 #include "Texture.h"
 #include "Mesh.h"
 #include "Common/DirectXHelper.h"

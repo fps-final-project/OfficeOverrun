@@ -185,6 +185,9 @@
     <Filter Include="Assets\Other\stairs">
       <UniqueIdentifier>{3cb61fc3-5875-48bb-963c-95f4f7cdd52e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Content\Skybox">
+      <UniqueIdentifier>{042c9ace-18a2-4932-a066-a8769c2027cb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -320,6 +323,15 @@
     </ClCompile>
     <ClCompile Include="Stairs.cpp">
       <Filter>Content\Entity\Room</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatedObjectBuilder.cpp">
+      <Filter>GameElements</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatedObject.cpp">
+      <Filter>GameElements</Filter>
+    </ClCompile>
+    <ClCompile Include="Skybox.cpp">
+      <Filter>Content\Skybox</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -502,7 +514,7 @@
       <Filter>Content\Entity\Room</Filter>
     </ClInclude>
     <ClInclude Include="GunRigMetadata.hpp">
-        <Filter>Content\Entity\GunRig</Filter>
+      <Filter>Content\Entity\GunRig</Filter>
     </ClInclude>
     <ClInclude Include="AudioReader.hpp">
       <Filter>Audio</Filter>
@@ -528,13 +540,18 @@
     <ClInclude Include="RngUtils.h">
       <Filter>WorldGenerator\Common\RNG</Filter>
     </ClInclude>
-
+    <ClInclude Include="AnimatedObjectBuilder.hpp">
+      <Filter>GameElements</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedObject.hpp">
+      <Filter>GameElements</Filter>
+    </ClInclude>
+    <ClInclude Include="Skybox.h">
+      <Filter>Content\Skybox</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\StoreLogo.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\cube\brickwall.jpg">
       <Filter>Assets</Filter>
     </Image>
     <Image Include="Assets\Enemy\Zombie\world_war_zombie_diffuse.png">
@@ -572,6 +589,12 @@
     </Image>
     <Image Include="Assets\Other\stairs\floor.jpg">
       <Filter>Assets\Other\stairs</Filter>
+    </Image>
+    <Image Include="Assets\Other\skybox\skybox.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Other\heli\Helicopter_albedo2.jpg">
+      <Filter>Assets</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
@@ -616,6 +639,12 @@
     <None Include="Assets\Other\stairs\stairs.gltf">
       <Filter>Assets\Other\stairs</Filter>
     </None>
+    <None Include="Assets\Other\heli\heli.gltf" />
+    <None Include="Assets\Audio\ak.wav" />
+    <None Include="Assets\Audio\FN.wav" />
+    <None Include="Assets\Audio\smg.wav" />
+    <None Include="Assets\Audio\sniper.wav" />
+    <None Include="Assets\Audio\reload.wav" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Content\SamplePixelShader.hlsl">

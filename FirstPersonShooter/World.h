@@ -2,6 +2,7 @@
 #include <vector>
 #include <queue>
 #include "Object.hpp"
+#include "AnimatedObject.hpp"
 #include "Enemy.hpp"
 #include "AnimatedEntity.hpp" 
 #include "Entity.hpp" 
@@ -23,6 +24,7 @@ struct GUIDComparer
 class World
 {
 	std::set<int> m_visibleRooms;
+	DirectX::XMFLOAT3 m_helicopterPos;
 public:
 	void Update(float dt);
 	//std::vector<Hittable> GetEntities();
@@ -38,7 +40,11 @@ public:
 	Room& GetCurrentRoom() { return m_rooms[m_currentRoomIndex]; };
 
 	void AddObject(std::shared_ptr<Object>& object);
+	void AddAnimatedObject(std::shared_ptr<AnimatedObject>& object);
 	void AddEnemy(std::shared_ptr<Enemy>& enemy);
+
+	void AddHelicopter();
+	bool IsPlayerNearHelicopter(DirectX::XMFLOAT3 playerPos);
 
 	void UpdateCurrentRoom(DirectX::XMFLOAT3 playerPos);
 	void UpdateEnemies(DirectX::XMFLOAT3 playerPos);

@@ -32,6 +32,18 @@ Model RoomModelGenerator::generateRoomModel(DirectX::XMFLOAT3 pos, DirectX::XMFL
 	return model;
 }
 
+Model RoomModelGenerator::generateRoof(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 size, std::vector<RoomLinkData> links, const std::shared_ptr<DX::DeviceResources>& deviceResources)
+{
+	Model model;
+	std::vector<VertexData> verticies;
+	std::vector<unsigned short> indicies;
+
+	generateFloor(verticies, indicies, { pos.x, pos.y, pos.z }, { pos.x + size.x, pos.y, pos.z + size.z }, links, false);
+	model.meshes.push_back(MeshFactory<VertexData>::createMesh(verticies, indicies, { ResourceManager::Instance.getTexture("floor") }, deviceResources));
+
+	return model;
+}
+
 void RoomModelGenerator::generateWall(std::vector<VertexData>& allVerticies, std::vector<unsigned short>& allIndicies,
 	DirectX::XMFLOAT3 c1, DirectX::XMFLOAT3 c2, std::vector<RoomLinkData> links, float rotationAngle)
 {

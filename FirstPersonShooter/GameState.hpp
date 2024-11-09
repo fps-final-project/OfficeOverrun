@@ -29,6 +29,8 @@ public:
 	void HandleInput();
 	void Update(float dt);
 	void CreateWindowSizeDependentResources();
+
+	bool GameFinished();
 private:
 	std::shared_ptr<DirectX::Keyboard> m_keyboard;
 	std::shared_ptr<DirectX::Mouse> m_mouse;
