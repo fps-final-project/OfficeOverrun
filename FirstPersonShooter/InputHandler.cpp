@@ -28,7 +28,7 @@ void InputHandler::RemoveActionHandler(Action action)
 			m_actions.begin(), 
 			m_actions.end(), 
 			[action](std::pair<std::function<bool(InputState, InputState)>, Action> pair) 
-			{ return pair.second == action; }
+			{ return pair.second.type == action.type; }
 		),
 		m_actions.end());
 }

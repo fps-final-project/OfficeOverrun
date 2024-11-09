@@ -211,9 +211,6 @@
     <ClCompile Include="World.cpp">
       <Filter>Content\World</Filter>
     </ClCompile>
-    <ClCompile Include="AnimatedEntity.cpp">
-      <Filter>Content\Entity</Filter>
-    </ClCompile>
     <ClCompile Include="Animable.cpp">
       <Filter>Content\Entity</Filter>
     </ClCompile>
@@ -244,7 +241,6 @@
     <ClCompile Include="GunRig.cpp">
       <Filter>Content\Entity\GunRig</Filter>
     </ClCompile>
-    <ClCompile Include="ActionHandler.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="RenderMaster.cpp">
       <Filter>Content\Renderer</Filter>
@@ -320,6 +316,12 @@
     </ClCompile>
     <ClCompile Include="Stairs.cpp">
       <Filter>Content\Entity\Room</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatedEntity.cpp">
+      <Filter>Events</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionHandler.cpp">
+      <Filter>Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -408,8 +410,6 @@
     <ClInclude Include="GunRig.h">
       <Filter>Content\Entity\GunRig</Filter>
     </ClInclude>
-    <ClInclude Include="ActionHandler.hpp" />
-    <ClInclude Include="ActionTypes.hpp" />
     <ClInclude Include="GameState.hpp" />
     <ClInclude Include="RendererType.hpp">
       <Filter>Content\Renderer</Filter>
@@ -502,7 +502,7 @@
       <Filter>Content\Entity\Room</Filter>
     </ClInclude>
     <ClInclude Include="GunRigMetadata.hpp">
-        <Filter>Content\Entity\GunRig</Filter>
+      <Filter>Content\Entity\GunRig</Filter>
     </ClInclude>
     <ClInclude Include="AudioReader.hpp">
       <Filter>Audio</Filter>
@@ -528,7 +528,12 @@
     <ClInclude Include="RngUtils.h">
       <Filter>WorldGenerator\Common\RNG</Filter>
     </ClInclude>
-
+    <ClInclude Include="ActionHandler.hpp">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionTypes.hpp">
+      <Filter>Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\StoreLogo.png">
@@ -616,6 +621,11 @@
     <None Include="Assets\Other\stairs\stairs.gltf">
       <Filter>Assets\Other\stairs</Filter>
     </None>
+    <None Include="Assets\Audio\ak.wav" />
+    <None Include="Assets\Audio\FN.wav" />
+    <None Include="Assets\Audio\smg.wav" />
+    <None Include="Assets\Audio\sniper.wav" />
+    <None Include="Assets\Audio\reload.wav" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Content\SamplePixelShader.hlsl">

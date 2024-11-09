@@ -80,9 +80,9 @@ void World::UpdateCurrentRoom(DirectX::XMFLOAT3 playerPos)
 
 void World::UpdateEnemies(DirectX::XMFLOAT3 playerPos)
 {
-	for (const auto& enemy : m_enemies)
+	for (const auto& [id, enemy] : m_enemies)
 	{
-		enemy.second->Move(playerPos);
+		enemy->Update(playerPos);
 	}
 }
 

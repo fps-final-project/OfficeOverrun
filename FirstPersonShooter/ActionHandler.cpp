@@ -19,99 +19,97 @@ void ActionHandler::HandleActions(Player* player, World* world, Camera* camera)
 	{
 		auto action = m_actionQueue->front();
 		m_actionQueue->pop();
-		switch (action)
+		switch (action.type)
 		{
-		case Action::SHOOT:
-		{
-			if (gunRig->IsIdle())
+			case ActionType::SHOOT:
 			{
-				gunRig->Shoot();
-				world->DeleteEntity(m_lastHitEntity);
+				if (gunRig->IsIdle())
+				{
+					gunRig->Shoot();
+					world->DeleteEntity(m_lastHitEntity);
+				}
+				break;
 			}
-			break;
-		}
-		case Action::RELOAD:
-		{
-			if (gunRig->IsIdle())
+			case ActionType::RELOAD:
 			{
-				gunRig->Reload();
+				if (gunRig->IsIdle())
+				{
+					gunRig->Reload();
+				}
+				break;
 			}
-			break;
-		}
-		case Action::WALK_FORWARD:
-		{
-			auto walkDirection = camera->getAt();
-			walkDirection.m128_f32[1] = 0.f;
-			DirectX::XMFLOAT3 normalizedAt;
-			DirectX::XMStoreFloat3(&normalizedAt, DirectX::XMVector3Normalize(walkDirection));
+			case ActionType::WALK_FORWARD:
+			{
+				auto walkDirection = camera->getAt();
+				walkDirection.m128_f32[1] = 0.f;
+				DirectX::XMFLOAT3 normalizedAt;
+				DirectX::XMStoreFloat3(&normalizedAt, DirectX::XMVector3Normalize(walkDirection));
 
-			new_acceleration = { new_acceleration.x + normalizedAt.x, new_acceleration.y, new_acceleration.z + normalizedAt.z };
-			break;
-		}
+				new_acceleration = { new_acceleration.x + normalizedAt.x, new_acceleration.y, new_acceleration.z + normalizedAt.z };
+				break;
+			}
 
-		case Action::WALK_BACKWARD:
-		{
-			auto walkDirection = camera->getAt();
-			walkDirection.m128_f32[1] = 0.f;
-			DirectX::XMFLOAT3 normalizedAt;
-			DirectX::XMStoreFloat3(&normalizedAt, DirectX::XMVector3Normalize(walkDirection));
+			case ActionType::WALK_BACKWARD:
+			{
+				auto walkDirection = camera->getAt();
+				walkDirection.m128_f32[1] = 0.f;
+				DirectX::XMFLOAT3 normalizedAt;
+				DirectX::XMStoreFloat3(&normalizedAt, DirectX::XMVector3Normalize(walkDirection));
 
-			new_acceleration = { new_acceleration.x - normalizedAt.x, new_acceleration.y, new_acceleration.z - normalizedAt.z };
-			break;
-		}
+				new_acceleration = { new_acceleration.x - normalizedAt.x, new_acceleration.y, new_acceleration.z - normalizedAt.z };
+				break;
+			}
 
-		case Action::WALK_LEFT:
-		{
-			auto walkDirection = camera->getAt();
-			walkDirection.m128_f32[1] = 0.f;
-			DirectX::XMFLOAT3 normalizedAt;
-			DirectX::XMStoreFloat3(&normalizedAt, DirectX::XMVector3Normalize(walkDirection));
+			case ActionType::WALK_LEFT:
+			{
+				auto walkDirection = camera->getAt();
+				walkDirection.m128_f32[1] = 0.f;
+				DirectX::XMFLOAT3 normalizedAt;
+				DirectX::XMStoreFloat3(&normalizedAt, DirectX::XMVector3Normalize(walkDirection));
 
-			new_acceleration = { new_acceleration.x + normalizedAt.z, new_acceleration.y, new_acceleration.z - normalizedAt.x };
-			break;
-		}
-		case Action::WALK_RIGHT:
-		{
-			auto walkDirection = camera->getAt();
-			walkDirection.m128_f32[1] = 0.f;
-			DirectX::XMFLOAT3 normalizedAt;
-			DirectX::XMStoreFloat3(&normalizedAt, DirectX::XMVector3Normalize(walkDirection));
+				new_acceleration = { new_acceleration.x + normalizedAt.z, new_acceleration.y, new_acceleration.z - normalizedAt.x };
+				break;
+			}
+			case ActionType::WALK_RIGHT:
+			{
+				auto walkDirection = camera->getAt();
+				walkDirection.m128_f32[1] = 0.f;
+				DirectX::XMFLOAT3 normalizedAt;
+				DirectX::XMStoreFloat3(&normalizedAt, DirectX::XMVector3Normalize(walkDirection));
 
-			new_acceleration = { new_acceleration.x - normalizedAt.z, new_acceleration.y, new_acceleration.z + normalizedAt.x };
-			break;
+				new_acceleration = { new_acceleration.x - normalizedAt.z, new_acceleration.y, new_acceleration.z + normalizedAt.x };
+				break;
+			}
+			case ActionType::JUMP:
+			{
+				player->jump();
+				break;
+			}
+			case ActionType::WEAPON1:
+			{
+				player->getGunRig()->ChangeGun("ak");
+				break;
+			}
+			case ActionType::WEAPON2:
+			{
+				player->getGunRig()->ChangeGun("FN");
+				break;
+			}
+			case ActionType::WEAPON3:
+			{
+				player->getGunRig()->ChangeGun("smg");
+				break;
+			}
+			case ActionType::WEAPON4:
+			{
+				player->getGunRig()->ChangeGun("sniper");
+				break;
+			}
 		}
-		case Action::JUMP:
-		{
-			player->jump();
-			break;
-		}
-		case Action::WEAPON1:
-		{
-			player->getGunRig()->ChangeGun("ak");
-			break;
-		}
-		case Action::WEAPON2:
-		{
-			player->getGunRig()->ChangeGun("FN");
-			break;
-		}
-		case Action::WEAPON3:
-		{
-			player->getGunRig()->ChangeGun("smg");
-			break;
-		}
-		case Action::WEAPON4:
-		{
-			player->getGunRig()->ChangeGun("sniper");
-			break;
-		}
-
-		}
-		}
+	}
 
 	auto normalized_acceleration = DirectX::XMVector3Normalize({ new_acceleration.x, new_acceleration.y, new_acceleration.z });
 	DirectX::XMFLOAT3 acc;
 	DirectX::XMStoreFloat3(&acc, normalized_acceleration);
 	player->setAcceleration({acc.x, -defaultGravity, acc.z});
-
 }

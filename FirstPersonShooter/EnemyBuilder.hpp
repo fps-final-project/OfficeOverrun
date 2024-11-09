@@ -12,6 +12,7 @@ public:
 	EnemyBuilder& WithPosition(DirectX::XMFLOAT3 pos);
 	EnemyBuilder& WithRotation(DirectX::XMFLOAT3 rot);
 	EnemyBuilder& WithVelocity(DirectX::XMFLOAT3 vel);
+	EnemyBuilder& WithAttackRadius(float radius);
 	EnemyBuilder& WithSize(DirectX::XMFLOAT3 size);
 	EnemyBuilder& WithFallbackAnimation(std::string animationName);
 	std::shared_ptr<Enemy>& Build();

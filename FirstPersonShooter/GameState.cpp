@@ -35,12 +35,13 @@ GameState::GameState(
 		.WithNewEnemy(ResourceManager::Instance.getAnimatedModel("zombie_war"))
 		.WithMaxHealth(100)
 		.WithDamage(10)
-		.WithSpeed(0.01f)
+		.WithSpeed(0.05f)
 		.WithPosition({ 3.f, 0.f, 2.f })
 		.WithRotation({ 0.f, 0.f, 0.f })
 		.WithVelocity({ 0.f, 0.f, 0.f })
 		.WithSize({ 0.8f, 0.8f, 0.8f })
-		.WithFallbackAnimation("idle")
+		.WithAttackRadius(0.7f)
+		.WithFallbackAnimation("run")
 		.Build();
 
 
@@ -103,56 +104,56 @@ void GameState::setupActionHandlers()
 {
 	m_inputHandler->AddActionHandler(
 		[](InputState newState, InputState oldState) {	return newState.first.leftButton; },
-		Action::SHOOT
+		Action(ActionType::SHOOT)
 	);
 
 	m_inputHandler->AddActionHandler(
 		[](InputState newState, InputState oldState) {	return newState.second.R && oldState.second.R; },
-		Action::RELOAD
+		Action(ActionType::RELOAD)
 	);
 
 	m_inputHandler->AddActionHandler(
 		[](InputState newState, InputState oldState) {	return newState.second.W && oldState.second.W; },
-		Action::WALK_FORWARD
+		Action(ActionType::WALK_FORWARD)
 	);
 
 	m_inputHandler->AddActionHandler(
 		[](InputState newState, InputState oldState) {	return newState.second.S && oldState.second.S; },
-		Action::WALK_BACKWARD
+		Action(ActionType::WALK_BACKWARD)
 	);
 
 	m_inputHandler->AddActionHandler(
 		[](InputState newState, InputState oldState) {	return newState.second.A && oldState.second.A; },
-		Action::WALK_LEFT
+		Action(ActionType::WALK_LEFT)
 	);
 
 	m_inputHandler->AddActionHandler(
 		[](InputState newState, InputState oldState) {	return newState.second.D && oldState.second.D; },
-		Action::WALK_RIGHT
+		Action(ActionType::WALK_RIGHT)
 	);
 
 	m_inputHandler->AddActionHandler(
 		[](InputState newState, InputState oldState) {	return newState.second.Space && oldState.second.Space; },
-		Action::JUMP
+		Action(ActionType::JUMP)
 	);
 
 	m_inputHandler->AddActionHandler(
 		[](InputState newState, InputState oldState) {	return newState.second.D1 && oldState.second.D1; },
-		Action::WEAPON1
+		Action(ActionType::WEAPON1)
 	);
 
 	m_inputHandler->AddActionHandler(
 		[](InputState newState, InputState oldState) {	return newState.second.D2 && oldState.second.D2; },
-		Action::WEAPON2
+		Action(ActionType::WEAPON2)
 	);
 
 	m_inputHandler->AddActionHandler(
 		[](InputState newState, InputState oldState) {	return newState.second.D3 && oldState.second.D3; },
-		Action::WEAPON3
+		Action(ActionType::WEAPON3)
 	);
 
 	m_inputHandler->AddActionHandler(
 		[](InputState newState, InputState oldState) {	return newState.second.D4 && oldState.second.D4; },
-		Action::WEAPON4
+		Action(ActionType::WEAPON4)
 	);
 }
