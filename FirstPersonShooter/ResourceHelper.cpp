@@ -41,3 +41,39 @@ void ResourceHelper::addQuad(const std::string& texturePath, std::string texture
 	ResourceManager::Instance.addModel(model, modelName);
 
 }
+
+void ResourceHelper::createSkyboxMesh(const std::string& texturePath, const std::shared_ptr<DX::DeviceResources>& deviceResources)
+{
+	// order: ft, bk, lf, rt, dn, up
+	int nTextures = 6;
+	std::vector<VertexData> verticies = {
+		// front face
+		VertexData({-1.f, -1.f, -1.f}, {0.f, 0.f}, {0.f, 0.f, 1.f}),
+		VertexData({1.f, -1.f, -1.f}, {1.f / nTextures, 0.f}, {0.f, 0.f, 1.f}),
+		VertexData({1.f, 1.f, -1.f}, {1.f / nTextures, 1.f }, {0.f, 0.f, 1.f}),
+		VertexData({-1.f, 1.f, -1.f}, {0.f, 1.f }, {0.f, 0.f, 1.f}),
+
+		// back face
+		VertexData({1.f, -1.f, 1.f}, {1.f / nTextures, 0.f}, {0.f, 0.f, -1.f}),
+		VertexData({-1.f, -1.f, 1.f}, {2.f / nTextures, 0.f}, {0.f, 0.f, -1.f}),
+		VertexData({-1.f, 1.f, 1.f}, {2.f / nTextures, 1.f}, {0.f, 0.f, -1.f}),
+		VertexData({-1.f, 1.f, 1.f}, {1.f / nTextures, 1.f}, {0.f, 0.f, -1.f}),
+
+		// left face
+		VertexData({1.f, -1.f, -1.f}, {2.f / nTextures, 0.f}, {1.f, 0.f, 0.f}),
+		VertexData({1.f, -1.f, 1.f}, {3.f / nTextures, 0.f}, {1.f, 0.f, 0.f}),
+		VertexData({1.f, 1.f, 1.f}, {3.f / nTextures, 1.f}, {1.f, 0.f, 0.f}),
+		VertexData({1.f, 1.f, -1.f}, {2.f / nTextures, 1.f}, {1.f, 0.f, 0.f}),
+
+		// right face
+		VertexData({1.f, -1.f, 1.f}, {3.f / nTextures, 0.f}, {-1.f, 0.f, 0.f}),
+		VertexData({1.f, -1.f, -1.f}, {4.f / nTextures, 0.f}, {-1.f, 0.f, 0.f}),
+		VertexData({1.f, 1.f, -1.f}, {4.f / nTextures, 1.f}, {-1.f, 0.f, 0.f}),
+		VertexData({1.f, 1.f, 1.f}, {3.f / nTextures, 1.f}, {-1.f, 0.f, 0.f}),
+
+		// down face
+		VertexData({1.f, -1.f, 1.f}, {3.f / nTextures, 0.f}, {-1.f, 0.f, 0.f}),
+
+	}
+
+}
