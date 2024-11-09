@@ -125,7 +125,7 @@ public:
 			);
 	}
 
-	void SetSencilBufferRefernceValue(UINT8 value)
+	void SetStencilBufferReferenceValue(UINT8 value)
 	{
 		m_deviceResources
 			->GetD3DDeviceContext()

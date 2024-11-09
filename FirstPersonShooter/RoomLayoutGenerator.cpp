@@ -39,6 +39,11 @@ void RoomLayoutGenerator::GenerateRooms()
 		BinaryRoom rootRoom = BinaryRoom(0, 0, floor, layout.mapSize.x, layout.mapSize.y, 1);
 		rootRoom.Split(layout);
 	}
+	// Add rooftop room
+	GeneratedRoom roof;
+	roof.pos = Vector3(0, 0, config.mapSize.z);
+	roof.size = Vector3(config.mapSize.x, config.mapSize.y, 1);
+	layout.rooms.push_back(roof);
 }
 
 void RoomLayoutGenerator::GenerateAdGraph()
