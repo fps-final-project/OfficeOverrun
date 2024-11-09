@@ -13,4 +13,5 @@ class ResourceHelper
 {
 public:
 	static void addQuad(const std::string& texturePath, std::string textureName, std::string modelName, int nSubdivs, const std::shared_ptr<DX::DeviceResources>& deviceResources);
+	static void createSkyboxMesh(const std::string& texturePath, const std::shared_ptr<DX::DeviceResources>& deviceResources);
 };

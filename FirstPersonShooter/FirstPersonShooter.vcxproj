@@ -276,6 +276,7 @@
     <Image Include="Assets\LockScreenLogo.scale-200.png" />
     <Image Include="Assets\Other\bullet\bullet.jpg" />
     <Image Include="Assets\Other\crosshair\crosshair.png" />
+    <Image Include="Assets\Other\skybox\skybox.png" />
     <Image Include="Assets\Other\heli\Helicopter_albedo2.jpg" />
     <Image Include="Assets\Other\stairs\floor.jpg" />
     <Image Include="Assets\Other\wall\brickwall.jpg" />
@@ -327,6 +328,7 @@
     <ClInclude Include="RoomSelectorArgs.h" />
     <ClInclude Include="RoomLinkData.hpp" />
     <ClInclude Include="RoomModelGenerator.h" />
+    <ClInclude Include="Skybox.h" />
     <ClInclude Include="SpriteRenderer.hpp" />
     <ClInclude Include="Animable.hpp" />
     <ClInclude Include="AnimatedAssimpModel.h" />
@@ -417,6 +419,7 @@
     <ClCompile Include="RoomLink.cpp" />
     <ClCompile Include="RoomModelGenerator.cpp" />
     <ClCompile Include="RoomSelector.cpp" />
+    <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="SimpleCollisionDetector.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
