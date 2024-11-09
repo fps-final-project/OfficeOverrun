@@ -43,22 +43,47 @@ void RenderMaster::setLighting(const LightingData& data, const DirectX::XMVECTOR
 
 std::shared_ptr<AnimatedModelRenderer> RenderMaster::getAnimatedRenderer()
 {
-	if (m_currentRenderer != RendererType::ANIMATED)
-	{
-		m_animatedRenderer->use();
-		m_currentRenderer = RendererType::ANIMATED;
-	}
+	this->SetRenderer(RendererType::ANIMATED);
 
 	return m_animatedRenderer;
 }
 
 std::shared_ptr<ModelRenderer> RenderMaster::getModelRenderer()
 {
-	if (m_currentRenderer != RendererType::MODEL)
-	{
-		m_modelRenderer->use();
-		m_currentRenderer = RendererType::MODEL;
-	}
+	this->SetRenderer(RendererType::MODEL);
 
 	return m_modelRenderer;
+}
+
+void RenderMaster::SetStencilBufferReferenceValue(UINT8 value)
+{
+	if(m_currentRenderer == RendererType::MODEL)
+		m_modelRenderer->SetStencilBufferReferenceValue(value);
+	if(m_currentRenderer == RendererType::ANIMATED)
+		m_animatedRenderer->SetStencilBufferReferenceValue(value);
+}
+
+void RenderMaster::SetRenderer(RendererType type)
+{
+	if (m_currentRenderer == type) return;
+	m_currentRenderer = type;
+	
+	if (type == RendererType::ANIMATED) m_animatedRenderer->use();
+	if (type == RendererType::MODEL) m_modelRenderer->use();
+}
+
+UINT8 RenderMaster::GetCurrentStencilValue()
+{
+	UINT8 val1 = m_modelRenderer->GetStencilBufferValue();
+	UINT8 val2 = m_animatedRenderer->GetStencilBufferValue();
+
+	return std::max<UINT8>(m_modelRenderer->GetStencilBufferValue(), m_animatedRenderer->GetStencilBufferValue());
+}
+
+void RenderMaster::ClearStencilBuffer()
+{
+	if (m_currentRenderer == RendererType::MODEL)
+		m_modelRenderer->ClearStencilBuffer();
+	if (m_currentRenderer == RendererType::ANIMATED)
+		m_animatedRenderer->ClearStencilBuffer();
 }
