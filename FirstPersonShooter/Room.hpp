@@ -11,13 +11,13 @@ class Room : public Drawable
 {
 	DirectX::XMFLOAT3 pos;
 	DirectX::XMFLOAT3 size;
-	std::vector<RoomLinkData> m_links;
 	std::unique_ptr<Entity> m_roomWalls;
 	static const float wallOffset;
 
 public:
+	std::vector<RoomLinkData> m_links;
 	Room(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 size, const std::vector<RoomLinkData>& links = {});
-	void setModel(Mesh mesh);
+	void setModel(Model model);
 	RoomCollision checkCollision(DirectX::XMFLOAT3 entityPos) const;
 	bool insideRoom(DirectX::XMFLOAT3 pos) const;
 

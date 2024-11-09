@@ -8,13 +8,16 @@ namespace WorldGenerator
 	enum Orientation {
 		YZ,
 		XZ,
-		XY
+		XYX, // X is length
+		XYY // Y is length
 	};
 
 	class GeneratedRoom;
 
 	class RoomLink
 	{
+	private:
+		static Orientation MakeOrientation(Vector3 size);
 	public:
 		int linkedRoomIdx; // index to linked room in room collection
 		Vector3 pos;

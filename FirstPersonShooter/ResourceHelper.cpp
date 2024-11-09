@@ -34,7 +34,7 @@ void ResourceHelper::addQuad(const std::string& texturePath, std::string texture
 	}
 
 	ResourceManager::Instance.loadTexture(texturePath, deviceResources, textureName);
-	AssimpModel model;
+	Model model;
 	model.meshes.push_back(MeshFactory<VertexData>::createMesh(verticies, indicies,
 		{ ResourceManager::Instance.getTexture(textureName) }, deviceResources));
 

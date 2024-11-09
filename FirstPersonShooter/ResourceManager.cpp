@@ -16,14 +16,14 @@ void ResourceManager::loadModel(const std::string& path,
 
 	this->m_models.insert(std::make_pair(
 		name,
-		std::make_shared<AssimpModel>(AssimpModelLoader::createModelFromFile(path, deviceResources))));
+		std::make_shared<Model>(AssimpModelLoader::createModelFromFile(path, deviceResources))));
 }
 
-void ResourceManager::addModel(AssimpModel& model, const std::string& name)
+void ResourceManager::addModel(Model& model, const std::string& name)
 {
 	this->m_models.insert(std::make_pair(
 		name,
-		std::make_shared<AssimpModel>(model)));
+		std::make_shared<Model>(model)));
 }
 
 void ResourceManager::loadAnimatedModel(const std::string& path, 
@@ -35,7 +35,7 @@ void ResourceManager::loadAnimatedModel(const std::string& path,
 
 	this->m_animatedModels.insert(std::make_pair(
 		name,
-		std::make_shared<AnimatedAssimpModel>(AssimpModelLoader::createAnimatedModelFromFile(path, deviceResources))));
+		std::make_shared<AnimatedModel>(AssimpModelLoader::createAnimatedModelFromFile(path, deviceResources))));
 
 	for (const auto& texturePath : missingTextures)
 	{
@@ -59,13 +59,14 @@ void ResourceManager::loadTexture(const std::string& path,
 
 void ResourceManager::loadAudioFile(
 	const std::string& path, 
+	const UINT32 loop,
 	const std::shared_ptr<DX::DeviceResources>& deviceResources, 
 	const std::string& nameOverride
 )
 {
 	std::string name = nameOverride.empty() ? std::filesystem::path(path).stem().string() : nameOverride;
 
-	AudioFile audioFile = AudioReader::ReadWAVFile(path);
+	AudioFile audioFile = AudioReader::ReadWAVFile(path, loop);
 
 	DX::ThrowIfFailed(
 		deviceResources
@@ -88,7 +89,7 @@ void ResourceManager::loadGunRigMetadata(const std::string& path)
 	m_gunRigMetadata.insert(std::make_pair(data->name, data));
 }
 
-std::shared_ptr<AssimpModel> ResourceManager::getModel(std::string name)
+std::shared_ptr<Model> ResourceManager::getModel(std::string name)
 {
 	if (m_models.find(name) != m_models.end())
 	{
@@ -98,7 +99,7 @@ std::shared_ptr<AssimpModel> ResourceManager::getModel(std::string name)
 	return nullptr;
 }
 
-std::shared_ptr<AnimatedAssimpModel> ResourceManager::getAnimatedModel(std::string name)
+std::shared_ptr<AnimatedModel> ResourceManager::getAnimatedModel(std::string name)
 {
 	if (m_animatedModels.find(name) != m_animatedModels.end())
 	{

@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "EnemyBuilder.hpp"
 
-EnemyBuilder& EnemyBuilder::WithNewEnemy(std::shared_ptr<AnimatedAssimpModel> model)
+EnemyBuilder& EnemyBuilder::WithNewEnemy(std::shared_ptr<AnimatedModel> model)
 {
 	m_enemy.reset();
 	m_enemy = std::make_shared<Enemy>(model);

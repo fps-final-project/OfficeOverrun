@@ -1,5 +1,5 @@
 #pragma once
-#include "Mesh.h"
+#include "AssimpModel.h"
 #include "RoomLinkData.hpp"
 #include <memory>
 #include "Common\DeviceResources.h"
@@ -8,8 +8,8 @@ class RoomModelGenerator
 {
 public:
 
-	static Mesh generateRoomModel(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 size,
-		std::vector<RoomLinkData> links, const std::string& texturePath,
+	static Model generateRoomModel(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 size,
+		std::vector<RoomLinkData> links,
 		const std::shared_ptr<DX::DeviceResources>& deviceResources);
 
 private:
@@ -28,5 +28,8 @@ private:
 
 	static DirectX::XMFLOAT3 translate(DirectX::XMFLOAT3 v1, DirectX::XMFLOAT3 v2);
 	static int MapDoorPositionTo1D(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 c1, DirectX::XMFLOAT3 c2, bool alongX, float direction);
+
+	static void generateFloor(std::vector<VertexData>& allVerticies, std::vector<unsigned short>& allIndicies,
+		DirectX::XMFLOAT3 c1, DirectX::XMFLOAT3 c2, std::vector<RoomLinkData> links, bool isRoof);
 
 };

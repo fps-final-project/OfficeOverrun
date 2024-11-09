@@ -1,12 +1,14 @@
 #include "pch.h"
 #include "GunRig.h"
-#include <cmath>]
+#include <cmath>
 #include "ResourceManager.h"
 
 GunRig::GunRig(std::string gunName)
 {
 	m_hands = std::make_shared<AnimatedEntity>(ResourceManager::Instance.getAnimatedModel(gunName));
 	m_gun = std::make_shared<AnimatedEntity>(ResourceManager::Instance.getAnimatedModel(gunName + "_gun"));
+	m_gunSound = ResourceManager::Instance.getAudioFile(gunName);
+	m_reloadSound = ResourceManager::Instance.getAudioFile("reload");
 
 	this->ChangeGun(gunName);
 }
@@ -35,12 +37,20 @@ void GunRig::Reload()
 {
 	this->m_hands->setAnimation("reload1");
 	this->m_gun->setAnimation("reload1");
+	this->m_reloadSound->pXAudio2SourceVoice->FlushSourceBuffers();
+	this->m_reloadSound->pXAudio2SourceVoice->Stop();
+	this->m_reloadSound->pXAudio2SourceVoice->SubmitSourceBuffer(&(this->m_reloadSound->buffer));
+	this->m_reloadSound->pXAudio2SourceVoice->Start();
 }
 
 void GunRig::Shoot()
 {
 	this->m_hands->setAnimation("shoot", m_shootingAnimationSpeedup, false);
 	this->m_gun->setAnimation("shoot", m_shootingAnimationSpeedup, false);
+	this->m_gunSound->pXAudio2SourceVoice->Stop();
+	this->m_gunSound->pXAudio2SourceVoice->FlushSourceBuffers();
+	this->m_gunSound->pXAudio2SourceVoice->SubmitSourceBuffer(&(this->m_gunSound->buffer));
+	this->m_gunSound->pXAudio2SourceVoice->Start();
 }
 
 void GunRig::ChangeGun(const std::string& name)
@@ -57,6 +67,7 @@ void GunRig::ChangeGun(const std::string& name)
 
 		m_hands->setModel(ResourceManager::Instance.getAnimatedModel(data->name));
 		m_gun->setModel(ResourceManager::Instance.getAnimatedModel(data->name + "_gun"));
+		m_gunSound = ResourceManager::Instance.getAudioFile(data->name);
 
 		m_hands->setFallbackAnimation("idle");
 		m_gun->setFallbackAnimation("idle");

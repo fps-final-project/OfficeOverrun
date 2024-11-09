@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Entity.hpp"
 
-Entity::Entity(std::shared_ptr<AssimpModel> model, XMFLOAT3 position, XMFLOAT3 size, XMFLOAT3 rotation, XMFLOAT3 velocity)
+Entity::Entity(std::shared_ptr<Model> model, XMFLOAT3 position, XMFLOAT3 size, XMFLOAT3 rotation, XMFLOAT3 velocity)
 	: Hittable(DirectX::BoundingBox(position, size)), m_model(model),
 	position(position), rotation(rotation), velocity(velocity),
 	size(size)
