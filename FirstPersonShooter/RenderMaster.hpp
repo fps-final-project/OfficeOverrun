@@ -19,6 +19,12 @@ public:
 	std::shared_ptr<AnimatedModelRenderer> getAnimatedRenderer();	
 	std::shared_ptr<ModelRenderer> getModelRenderer();
 
+	void SetRenderer(RendererType type);
+	UINT8 GetCurrentStencilValue();
+	void ClearStencilBuffer();
+	void SetStencilBufferReferenceValue(UINT8 value);
+	inline RendererType GetCurrentRenderType() { return m_currentRenderer; }
+
 private:
 	std::shared_ptr<AnimatedModelRenderer> m_animatedRenderer;
 	std::shared_ptr<ModelRenderer> m_modelRenderer;

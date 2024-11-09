@@ -17,6 +17,7 @@ namespace WorldGenerator
 		int s; // start vertex in H
 		int floors;
 		int s_G; // start vertex in G
+		int t_G; // target vertex in G
 		int N; // minimal number of rooms in the level
 		float e_c; // edge probability coeff
 		const int MAX_EDGE_WEIGHT = 1000; // maximum edge weight used in random path algorithm
@@ -30,6 +31,7 @@ namespace WorldGenerator
 		void AddHVertexToG(int v);
 		void RemoveDownUpEdges();
 		void AddSpareVertices();
+		void AddRooftopVertex();
 		std::vector<int> ComputeNeighbourhood();
 		void UpdateNeighbourhood(std::vector<int> &neigh_G, int v);
 		void AddEdgesAtRandom();
