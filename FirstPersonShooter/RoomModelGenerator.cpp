@@ -125,11 +125,11 @@ void RoomModelGenerator::generateDoorFrame(std::vector<VertexData>& verticies, s
 
 	// top side
 	verticies.push_back(VertexData({ x, 2, -frameOffset }, { (x - frameOffset) / L, (float)2 / H  }, { 0, -1, 0 }));
-	verticies.push_back(VertexData({ x, 2, 0 }, { x / L, (float)2 / H }, { 0, -1, 0 }));
-	verticies.push_back(VertexData({ x + 1, 2, 0 }, { (x + 1) / L, (float)2 / H }, { 0, -1, 0 }));
 	verticies.push_back(VertexData({ x + 1, 2, -frameOffset }, { (x + 1 - frameOffset) / L, (float)2 / H }, { 0, -1, 0 }));
+	verticies.push_back(VertexData({ x + 1, 2, 0 }, { (x + 1) / L, (float)2 / H }, { 0, -1, 0 }));
+	verticies.push_back(VertexData({ x, 2, 0 }, { x / L, (float)2 / H }, { 0, -1, 0 }));
 
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < 3; i++)
 	{
 		indicies.push_back(indexOffset + nVerticies);
 		indicies.push_back(indexOffset + nVerticies + 1);
