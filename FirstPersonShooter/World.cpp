@@ -13,6 +13,11 @@ void World::UpdateVisibleRooms()
 		for (auto nextRoomIdx : m_rooms[roomIdx].getAdjacentRooms())
 		{
 			m_visibleRooms.insert(nextRoomIdx);
+
+			/*for (auto nextNextRoomIdx : m_rooms[nextRoomIdx].getAdjacentRooms())
+			{
+				m_visibleRooms.insert(nextNextRoomIdx);
+			}*/
 		}
 	}
 }
