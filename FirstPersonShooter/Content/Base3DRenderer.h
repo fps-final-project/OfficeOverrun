@@ -266,6 +266,16 @@ public:
 		m_PSConstantBufferData.nlights = nlights;
 	}
 
+	void setFullyVisible()
+	{
+		m_PSConstantBufferData.fully_visible = true;
+	}
+
+	void clearFullyVisible()
+	{
+		m_PSConstantBufferData.fully_visible = false;
+	}
+
 protected:
 	// Cached pointer to device resources.
 	std::shared_ptr<DX::DeviceResources> m_deviceResources;

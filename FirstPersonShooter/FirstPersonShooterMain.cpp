@@ -5,6 +5,7 @@
 #include <Mouse.h>
 #include "ResourceManager.h"
 #include "ResourceHelper.hpp"
+#include "Skybox.h"
 
 using namespace FirstPersonShooter;
 using namespace Windows::Foundation;
@@ -47,6 +48,8 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 
 	ResourceManager::Instance.loadTexture("Assets\\Other\\crosshair\\crosshair.png", m_deviceResources);
 
+	ResourceHelper::createSkyboxMesh("Assets\\Other\\skybox\\skybox.png", m_deviceResources);
+
 	//ResourceManager::Instance.loadModel("Assets\\Other\\bullet\\bullet.obj", m_deviceResources);
 	ResourceManager::Instance.loadModel("Assets\\Other\\stairs\\stairs.gltf", m_deviceResources);
 	ResourceManager::Instance.loadTexture("Assets\\Other\\wall\\wall.jpg", m_deviceResources);
@@ -71,7 +74,7 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 
 	m_mouse->SetMode(DirectX::Mouse::MODE_RELATIVE);
 
-	DX::ThrowIfFailed(ResourceManager::Instance.getAudioFile("music")->pXAudio2SourceVoice->Start(0));
+	//DX::ThrowIfFailed(ResourceManager::Instance.getAudioFile("music")->pXAudio2SourceVoice->Start(0));
 }
 
 FirstPersonShooterMain::~FirstPersonShooterMain()
@@ -139,6 +142,8 @@ bool FirstPersonShooterMain::Render()
 	queue.Push(RenderData(RendererType::ANIMATED, (Drawable*)m_gameState->m_player.get()));
 	GUID entityToHit = queue.DrawAllAndClear(m_renderMaster);
 	m_gameState->m_actionHandler->SetLastHitEntity(entityToHit);
+
+	Skybox::RenderSkybox(m_gameState->m_camera->getPosition(), m_renderMaster);
 
 	m_spriteRenderer->BeginRendering(context, viewport);
 	Size outputSize = m_deviceResources->GetOutputSize();
