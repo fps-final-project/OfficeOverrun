@@ -16,11 +16,10 @@ RNGEngine* RNGEngine::GetInstance()
 
 void RNGEngine::SetSeed(unsigned int seed)
 {
-	this->seed = seed;
-	srand(seed);
+	this->generator.seed(seed);
 }
 
-unsigned int RNGEngine::GetSeed()
+std::mt19937 RNGEngine::GetGenerator()
 {
-	return this->seed;
+	return this->generator;
 }

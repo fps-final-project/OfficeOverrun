@@ -129,9 +129,7 @@ void WorldGenerator::RoomSelector::UpdatePathWithFloor(std::vector<int>& P, int 
 	int t_floor = SelectVertexWithNeighbourAbove(H, z_vertices, s_floor);
 
 	// Get induced graph for the floor
-	auto pair = GraphUtils::GenerateInducedGraph(H, z_vertices);
-	Graph<GeneratedRoom> H_z = pair.first;
-	std::vector<int> map = pair.second;
+	auto [H_z, map] = GraphUtils::GenerateInducedGraph(H, z_vertices);
 
 	// Construct weighted graph form H
 	WeightedGraph<GeneratedRoom> H_w(H_z);
@@ -268,7 +266,7 @@ void WorldGenerator::RoomSelector::AddEdgesAtRandom()
 			if (G.HasEdge(u_G, v_G)) // skip if edge already exists
 				continue;
 
-			bool shouldAddEdge = RngUtils::RandBinWithProbabilty(e_c);
+			bool shouldAddEdge = RngUtils::RandBoolWithProbabilty(e_c);
 			if (shouldAddEdge)
 			{
 				G.AddUndirectedEdge(v_G, u_G);

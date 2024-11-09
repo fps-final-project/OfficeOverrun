@@ -314,8 +314,8 @@
     <ClInclude Include="RenderMaster.hpp" />
     <ClInclude Include="RenderQueue.hpp" />
     <ClInclude Include="ResourceHelper.hpp" />
+    <ClInclude Include="RNG.h" />
     <ClInclude Include="RNGEngine.h" />
-    <ClInclude Include="RngUtils.h" />
     <ClInclude Include="Room.hpp" />
     <ClInclude Include="RoomCollision.hpp" />
     <ClInclude Include="RoomLayout.h" />
@@ -359,6 +359,7 @@
     <ClInclude Include="Stairs.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureFactory.h" />
+    <ClInclude Include="UniformRNG.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="WeightedGraph.h" />
@@ -409,8 +410,8 @@
     <ClCompile Include="RenderMaster.cpp" />
     <ClCompile Include="RenderQueue.cpp" />
     <ClCompile Include="ResourceHelper.cpp" />
+    <ClCompile Include="RNG.cpp" />
     <ClCompile Include="RNGEngine.cpp" />
-    <ClCompile Include="RngUtils.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="RoomLayoutGenerator.cpp" />
     <ClCompile Include="RoomLink.cpp" />
@@ -421,6 +422,7 @@
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Stairs.cpp" />
     <ClCompile Include="TextureFactory.cpp" />
+    <ClCompile Include="UniformRNG.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="World.cpp" />
     <ClCompile Include="MapGenerator.cpp" />

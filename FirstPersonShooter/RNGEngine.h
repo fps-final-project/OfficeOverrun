@@ -1,14 +1,15 @@
 #pragma once
 #include <time.h>
+#include <random>
 
 namespace WorldGenerator
 {
 	class RNGEngine
 	{
 	private:
-		unsigned int seed;
+		std::mt19937 generator;
 	protected:
-		RNGEngine() : seed(time(NULL))
+		RNGEngine() : generator(std::mt19937())
 		{
 		}
 		static RNGEngine* instance_;
@@ -21,6 +22,6 @@ namespace WorldGenerator
 
 		void SetSeed(unsigned int seed);
 
-		unsigned int GetSeed();
+		std::mt19937 GetGenerator();
 	};
 }
