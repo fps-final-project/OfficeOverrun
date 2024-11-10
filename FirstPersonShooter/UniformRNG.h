@@ -1,13 +1,17 @@
-#include "RNG.h"
+#include <vector>
+#include <random>
+
+#include "DistributionRNG.h"
 
 #pragma once
 
 namespace WorldGenerator
 {
-	class UniformRNG : public RNG
+	class UniformRNG : public DistributionRNG
 	{
-		// Inherited via RNG
+	public:
 		int RandIntInRange(int min, int max) override;
 	};
+
 }
 

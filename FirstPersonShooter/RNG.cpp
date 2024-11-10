@@ -3,13 +3,21 @@
 
 using namespace WorldGenerator;
 
-bool WorldGenerator::RNG::RandBool()
+bool RNG::RandBool()
 {
 	return RandBoolWithProbabilty(0.5);
 }
 
-bool WorldGenerator::RNG::RandBoolWithProbabilty(float probability)
+bool RNG::RandBoolWithProbabilty(double probability)
 {
+	std::mt19937 &generator = RNGEngine::GetInstance()->generator;
 	std::bernoulli_distribution distribution(probability);
+
 	return distribution(generator);
+}
+
+int RNG::RandIntInRange(int min, int max, Distribution distribution)
+{
+	auto rng = DistributionFactory::CreateRNG(distribution);
+	return rng->RandIntInRange(min, max);
 }

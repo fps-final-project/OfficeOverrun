@@ -18,8 +18,3 @@ void RNGEngine::SetSeed(unsigned int seed)
 {
 	this->generator.seed(seed);
 }
-
-std::mt19937 RNGEngine::GetGenerator()
-{
-	return this->generator;
-}

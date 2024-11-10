@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "RoomSelector.h"
 #include <cmath>
-#include <RngUtils.h>
+#include "RNG.h"
 #include <algorithm>
 #include <WeightedGraph.h>
 #include <utility>
@@ -114,7 +114,7 @@ int WorldGenerator::RoomSelector::SelectVertexWithNeighbourAbove(Graph<Generated
 		[&dist, max_dist](int v) { return dist[v] == max_dist; });
 
 	// Select random vertex amongst the valid ones with max distance
-	return RngUtils::SelectRandomElement(max_dist_valid_vertices);
+	return RNG::SelectRandomElement(max_dist_valid_vertices);
 }
 
 void WorldGenerator::RoomSelector::UpdatePathWithFloor(std::vector<int>& P, int z)
@@ -137,7 +137,7 @@ void WorldGenerator::RoomSelector::UpdatePathWithFloor(std::vector<int>& P, int 
 	// Set random weights
 	for (WeightedEdge e : H_w.GetAllEdges())
 	{
-		e.weight = RngUtils::RandIntInRange(1, MAX_EDGE_WEIGHT);
+		e.weight = RNG::RandIntInRange(1, MAX_EDGE_WEIGHT);
 		H_w.SetEdge(e);
 	}
 
@@ -194,7 +194,7 @@ void WorldGenerator::RoomSelector::AddHVertexToG(int v)
 
 void WorldGenerator::RoomSelector::AddSpareVertices()
 {
-	int G_N = RngUtils::RandIntInRange(max(N, G.Size()), H.Size()); // desired number of rooms in the level
+	int G_N = RNG::RandIntInRange(max(N, G.Size()), H.Size()); // desired number of rooms in the level
 	
 	// H[G] subgraph neighbourhood
 	std::vector<int> neigh_G = ComputeNeighbourhood();
@@ -204,7 +204,7 @@ void WorldGenerator::RoomSelector::AddSpareVertices()
 		if (neigh_G.size() == 0)
 			return; // sometimes if rooms are on many different levels some rooms may become unreachable
 
-		int v = RngUtils::SelectRandomElement(neigh_G);
+		int v = RNG::SelectRandomElement(neigh_G);
 		AddHVertexToG(v);
 
 		std::vector<int> connected = H.GetIngoingNeighbours(v);
@@ -266,7 +266,7 @@ void WorldGenerator::RoomSelector::AddEdgesAtRandom()
 			if (G.HasEdge(u_G, v_G)) // skip if edge already exists
 				continue;
 
-			bool shouldAddEdge = RngUtils::RandBoolWithProbabilty(e_c);
+			bool shouldAddEdge = RNG::RandBoolWithProbabilty(e_c);
 			if (shouldAddEdge)
 			{
 				G.AddUndirectedEdge(v_G, u_G);

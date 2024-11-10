@@ -293,6 +293,9 @@
     <ClInclude Include="AudioFile.hpp" />
     <ClInclude Include="AudioReader.hpp" />
     <ClInclude Include="BinaryRoom.h" />
+    <ClInclude Include="DistributionFactory.h" />
+    <ClInclude Include="DistributionRNG.h" />
+    <ClInclude Include="Distribution.h" />
     <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="EnemyBuilder.hpp" />
     <ClInclude Include="GameState.hpp" />
@@ -379,6 +382,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CollisionDetector.cpp" />
     <ClCompile Include="Common\DeviceResources.cpp" />
+    <ClCompile Include="DistributionFactory.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyBuilder.cpp" />
     <ClCompile Include="Entity.cpp" />

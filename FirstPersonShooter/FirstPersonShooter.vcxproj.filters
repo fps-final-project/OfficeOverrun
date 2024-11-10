@@ -185,6 +185,12 @@
     <Filter Include="Assets\Other\stairs">
       <UniqueIdentifier>{3cb61fc3-5875-48bb-963c-95f4f7cdd52e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="WorldGenerator\Common\RNG\Distributions">
+      <UniqueIdentifier>{e122a785-7e6d-4aa9-b93e-2fed520a1eec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WorldGenerator\Common\RNG\Distributions\DistributionFactory">
+      <UniqueIdentifier>{ae483419-dabb-4a61-ae3b-63cfdf07dd1d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -309,9 +315,6 @@
     <ClCompile Include="GraphUtils.cpp">
       <Filter>WorldGenerator\Common\Graph</Filter>
     </ClCompile>
-    <ClCompile Include="RngUtils.cpp">
-      <Filter>WorldGenerator\Common\RNG</Filter>
-    </ClCompile>
     <ClCompile Include="AudioReader.cpp">
       <Filter>Audio</Filter>
     </ClCompile>
@@ -323,6 +326,12 @@
     </ClCompile>
     <ClCompile Include="RNG.cpp">
       <Filter>WorldGenerator\Common\RNG</Filter>
+    </ClCompile>
+    <ClCompile Include="UniformRNG.cpp">
+      <Filter>WorldGenerator\Common\RNG\Distributions</Filter>
+    </ClCompile>
+    <ClCompile Include="DistributionFactory.cpp">
+      <Filter>WorldGenerator\Common\RNG\Distributions\DistributionFactory</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -525,14 +534,23 @@
     <ClInclude Include="WeightedGraph.h">
       <Filter>WorldGenerator\Common\Graph</Filter>
     </ClInclude>
-    <ClInclude Include="RngUtils.h">
-      <Filter>WorldGenerator\Common\RNG</Filter>
-    </ClInclude>
     <ClInclude Include="RNGEngine.h">
       <Filter>WorldGenerator\Common\RNG</Filter>
     </ClInclude>
     <ClInclude Include="RNG.h">
       <Filter>WorldGenerator\Common\RNG</Filter>
+    </ClInclude>
+    <ClInclude Include="UniformRNG.h">
+      <Filter>WorldGenerator\Common\RNG\Distributions</Filter>
+    </ClInclude>
+    <ClInclude Include="DistributionRNG.h">
+      <Filter>WorldGenerator\Common\RNG\Distributions\DistributionFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="DistributionFactory.h">
+      <Filter>WorldGenerator\Common\RNG\Distributions\DistributionFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="Distribution.h">
+      <Filter>WorldGenerator\Common\RNG\Distributions\DistributionFactory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
