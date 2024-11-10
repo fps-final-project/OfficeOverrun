@@ -21,6 +21,11 @@ void ActionHandler::HandleActions(Player* player, World* world, Camera* camera)
 		m_actionQueue->pop();
 		switch (action.type)
 		{
+			case ActionType::ATTACK:
+			{
+				player->takeDamage(action.args.attack.damage);
+				break;
+			}
 			case ActionType::SHOOT:
 			{
 				if (gunRig->IsIdle())

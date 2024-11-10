@@ -25,6 +25,6 @@ public:
 	inline DirectX::XMFLOAT3 getSize() { return size; }
 	inline std::vector<RoomLinkData> getLinks() { return m_links; }
 
-	std::vector<int> getAdjacentRooms();
+	std::vector<int> getAdjacentRooms() const;
 	virtual void Render(std::shared_ptr<RenderMaster> renderMaster) override;
 };

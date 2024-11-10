@@ -8,6 +8,7 @@
 #include "Room.hpp" 
 #include "RenderQueue.hpp"
 #include "LightingData.hpp"
+#include "ActionTypes.hpp"
 #include <map>
 #include <set>
 
@@ -41,7 +42,7 @@ public:
 	void AddEnemy(std::shared_ptr<Enemy>& enemy);
 
 	void UpdateCurrentRoom(DirectX::XMFLOAT3 playerPos);
-	void UpdateEnemies(DirectX::XMFLOAT3 playerPos);
+	void UpdateEnemies(const Room& room, DirectX::XMFLOAT3 playerPos, std::shared_ptr<std::queue<Action>>& actionQueue);
 
 	LightingData GetLightingData();
 	RenderQueue CreateRenderQueue();

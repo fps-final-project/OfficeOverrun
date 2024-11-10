@@ -2,6 +2,7 @@
 
 enum class ActionType
 {
+	NOACTION,
 	RELOAD,
 	SHOOT,
 	WALK_FORWARD,
@@ -28,7 +29,7 @@ union ActionArgs
 
 struct Action 
 {
-	Action(ActionType type) : type{type} {};
+	Action(ActionType type = ActionType::NOACTION, ActionArgs args = {}) : type{ type }, args{ args } {};
 
 	ActionArgs args;
 	ActionType type;
