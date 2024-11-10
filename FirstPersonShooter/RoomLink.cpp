@@ -1,8 +1,7 @@
 #include "pch.h"
 #include "RoomLink.h"
-#include "RngUtils.h"
 #include "RoomLayoutConfig.h"
-#include "RngUtils.h"
+#include "RNG.h"
 
 using namespace WorldGenerator;
 
@@ -16,7 +15,7 @@ Orientation WorldGenerator::RoomLink::MakeOrientation(Vector3 size)
         return Orientation::XYY;
     if (size.y < RoomLayoutConfig::verticalRoomLinkLength + 2)
         return Orientation::XYX;
-    return RngUtils::RandBool() ? Orientation::XYX : Orientation::XYY;
+    return RNG::RandBool() ? Orientation::XYX : Orientation::XYY;
 }
 
 RoomLink::RoomLink(const Vector3& pos, const Orientation& orientation)
@@ -32,8 +31,8 @@ RoomLink RoomLink::MakeRoomLink(Vector3 pos, Vector3 size)
     Vector3 linkPos;
     if (orientation == Orientation::XZ || orientation == Orientation::YZ)
         linkPos = Vector3(
-            pos.x + (size.x > 0 ? RngUtils::RandIntInRange(1, size.x - 2) : 0),
-            pos.y + (size.y > 0 ? RngUtils::RandIntInRange(1, size.y - 2) : 0),
+            pos.x + (size.x > 0 ? RNG::RandIntInRange(1, size.x - 2) : 0),
+            pos.y + (size.y > 0 ? RNG::RandIntInRange(1, size.y - 2) : 0),
             pos.z
         );
     else
@@ -41,8 +40,8 @@ RoomLink RoomLink::MakeRoomLink(Vector3 pos, Vector3 size)
         int xSize = orientation == Orientation::XYX ? RoomLayoutConfig::verticalRoomLinkLength : RoomLayoutConfig::verticalRoomLinkWidth;
         int ySize = orientation == Orientation::XYY ? RoomLayoutConfig::verticalRoomLinkLength : RoomLayoutConfig::verticalRoomLinkWidth;
         linkPos = Vector3(
-            pos.x + RngUtils::RandIntInRange(1, size.x - (xSize + 1)),
-            pos.y + RngUtils::RandIntInRange(1, size.y - (ySize + 1)),
+            pos.x + RNG::RandIntInRange(1, size.x - (xSize + 1)),
+            pos.y + RNG::RandIntInRange(1, size.y - (ySize + 1)),
             pos.z - 1
         );
     }

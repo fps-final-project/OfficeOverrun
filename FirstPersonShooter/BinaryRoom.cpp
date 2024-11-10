@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "BinaryRoom.h"
+#include "RNG.h"
 
 using namespace WorldGenerator;
 
@@ -16,7 +17,7 @@ void BinaryRoom::Split(RoomLayout& layout)
 		return;
 	}
 
-	Split2D(layout, RngUtils::RandIntInRange(0, 1));
+	Split2D(layout, RNG::RandIntInRange(0, 1));
 }
 
 void BinaryRoom::Split2D(RoomLayout& layout, int cutType)
@@ -33,7 +34,7 @@ void BinaryRoom::Split2D(RoomLayout& layout, int cutType)
 		inDepth = true;
 	}
 
-	int cutOffset = RngUtils::RandIntInRange(RoomLayoutConfig::minRoom2DSize, (inDepth ? width : depth) - RoomLayoutConfig::minRoom2DSize);
+	int cutOffset = RNG::RandIntInRange(RoomLayoutConfig::minRoom2DSize, (inDepth ? width : depth) - RoomLayoutConfig::minRoom2DSize);
 
 	leftRoom = new BinaryRoom(x, y, z, inDepth ? cutOffset : width, inDepth ? depth : cutOffset, height);
 	rightRoom = new BinaryRoom(inDepth ? x + cutOffset : x, inDepth ? y : y + cutOffset, z, inDepth ? width - cutOffset : width, inDepth ? depth : depth - cutOffset, height);
