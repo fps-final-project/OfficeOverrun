@@ -83,11 +83,17 @@ void World::UpdateCurrentRoom(DirectX::XMFLOAT3 playerPos)
 	}
 }
 
-void World::UpdateEnemies(DirectX::XMFLOAT3 playerPos)
+void World::UpdateEnemies(const Room& room,
+	DirectX::XMFLOAT3 playerPos, 
+	std::shared_ptr<std::queue<Action>>& actionQueue)
 {
-	for (const auto& enemy : m_enemies)
+	for (const auto& [_, enemy] : m_enemies)
 	{
-		enemy.second->Move(playerPos);
+		Action action = enemy->Update(room, m_rooms, playerPos);
+		if (action.type != ActionType::NOACTION)
+		{
+			actionQueue->push(action);
+		}
 	}
 }
 

@@ -111,7 +111,7 @@ RoomCollision Room::checkCollision(DirectX::XMFLOAT3 entityPos) const
 bool Room::insideRoom(DirectX::XMFLOAT3 pos) const
 {
 	return pos.x > this->pos.x && pos.x < this->pos.x + this->size.x &&
-		pos.y > this->pos.y && pos.y < this->pos.y + this->size.y &&
+		pos.y >= this->pos.y && pos.y <= this->pos.y + this->size.y &&
 		pos.z > this->pos.z && pos.z < this->pos.z + this->size.z;
 }
 
@@ -143,7 +143,7 @@ void Room::Render(std::shared_ptr<RenderMaster> renderMaster)
 	}
 }
 
-std::vector<int> Room::getAdjacentRooms()
+std::vector<int> Room::getAdjacentRooms() const
 {
 	std::vector<int> adjacentIds;
 	for (auto link : m_links)

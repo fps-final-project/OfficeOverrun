@@ -1,7 +1,8 @@
 #pragma once
 
-enum class Action
+enum class ActionType
 {
+	NOACTION,
 	RELOAD,
 	SHOOT,
 	WALK_FORWARD,
@@ -12,5 +13,24 @@ enum class Action
 	WEAPON1,
 	WEAPON2,
 	WEAPON3,
-	WEAPON4
+	WEAPON4,
+	ATTACK
+};
+
+struct AttackArgs
+{
+	int damage;
+};
+
+union ActionArgs 
+{
+	AttackArgs attack;
+};
+
+struct Action 
+{
+	Action(ActionType type = ActionType::NOACTION, ActionArgs args = {}) : type{ type }, args{ args } {};
+
+	ActionArgs args;
+	ActionType type;
 };

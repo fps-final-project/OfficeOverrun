@@ -29,3 +29,8 @@ void AnimatedEntity::setRotation(DirectX::XMFLOAT3 rot)
 {
 	this->rotation = rot;
 }
+
+void AnimatedEntity::setVelocity(DirectX::XMFLOAT3 vel)
+{
+	this->velocity = vel;
+}

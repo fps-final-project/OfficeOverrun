@@ -1,11 +1,13 @@
 #pragma once
 #include "AnimatedEntity.hpp"
+#include "ActionTypes.hpp"
+#include "Room.hpp"
 
 class Enemy : public AnimatedEntity
 {
 public:
 	Enemy(std::shared_ptr<AnimatedModel> model);
-	void Move(XMFLOAT3 playerPosition);
+	Action Update(const Room& room, const std::vector<Room>& rooms, XMFLOAT3 playerPosition);
 
 	friend class EnemyBuilder;
 private:
@@ -13,5 +15,6 @@ private:
 	int health;
 	int damage;
 	float speed;
+	float radius;
 };
 

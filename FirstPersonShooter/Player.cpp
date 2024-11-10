@@ -114,3 +114,8 @@ void Player::handleRoomCollision(const RoomCollision& collisionData)
 		this->m_position.z = collisionData.correction[2];
 	}
 }
+
+void Player::takeDamage(int damage)
+{
+	health -= damage;
+}
