@@ -17,6 +17,7 @@ public:
 
 	void setPosition(DirectX::XMFLOAT3 pos);
 	void setRotation(DirectX::XMFLOAT3 rot);
+	void setVelocity(DirectX::XMFLOAT3 vel);
 
 protected:
 	XMFLOAT3 position;

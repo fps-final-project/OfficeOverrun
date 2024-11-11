@@ -56,9 +56,12 @@ void World::Update(float dt)
 
 void World::DeleteEntity(const GUID& entityId)
 {
-	m_entities.erase(entityId);
-	m_animatedEntities.erase(entityId);
-	m_entities.erase(entityId);
+	if (m_enemies.find(entityId) != m_enemies.end())
+	{
+		m_enemies.erase(entityId);
+		m_entities.erase(entityId);
+		m_animatedEntities.erase(entityId);
+	}
 }
 
 void World::AddObject(std::shared_ptr<Object>& object)
@@ -104,7 +107,7 @@ void World::AddHelicopter()
 
 bool World::IsPlayerNearHelicopter(DirectX::XMFLOAT3 playerPos)
 {
-	float distanceThreshold = 4.f;
+	float distanceThreshold = 2.f;
 
 	return playerPos.y > m_helicopterPos.y &&
 		(playerPos.x - m_helicopterPos.x) * (playerPos.x - m_helicopterPos.x) +
@@ -124,11 +127,17 @@ void World::UpdateCurrentRoom(DirectX::XMFLOAT3 playerPos)
 	}
 }
 
-void World::UpdateEnemies(DirectX::XMFLOAT3 playerPos)
+void World::UpdateEnemies(const Room& room,
+	DirectX::XMFLOAT3 playerPos, 
+	std::shared_ptr<std::queue<Action>>& actionQueue)
 {
-	for (const auto& enemy : m_enemies)
+	for (const auto& [_, enemy] : m_enemies)
 	{
-		enemy.second->Move(playerPos);
+		Action action = enemy->Update(room, m_rooms, playerPos);
+		if (action.type != ActionType::NOACTION)
+		{
+			actionQueue->push(action);
+		}
 	}
 }
 

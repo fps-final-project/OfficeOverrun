@@ -45,6 +45,12 @@ EnemyBuilder& EnemyBuilder::WithVelocity(DirectX::XMFLOAT3 vel)
 	return *this;
 }
 
+EnemyBuilder& EnemyBuilder::WithAttackRadius(float radius)
+{
+	m_enemy->radius = radius;
+	return *this;
+}
+
 EnemyBuilder& EnemyBuilder::WithSize(DirectX::XMFLOAT3 size)
 {
 	m_enemy->size = size;
