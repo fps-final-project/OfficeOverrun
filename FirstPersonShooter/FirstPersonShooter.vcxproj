@@ -278,7 +278,7 @@
     <Image Include="Assets\Other\skybox\skybox.png" />
     <Image Include="Assets\Other\heli\Helicopter_albedo2.jpg" />
     <Image Include="Assets\Other\stairs\floor.jpg" />
-    <Image Include="Assets\Other\wall\brickwall.jpg" />
+    <Image Include="Assets\Other\wall\concrete.jpg" />
     <Image Include="Assets\Other\wall\floor.jpg" />
     <Image Include="Assets\Other\wall\wall.jpg" />
     <Image Include="Assets\SplashScreen.scale-200.png" />

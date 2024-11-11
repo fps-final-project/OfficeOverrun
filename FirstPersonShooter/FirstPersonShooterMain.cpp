@@ -55,6 +55,7 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	ResourceManager::Instance.loadModel("Assets\\Other\\stairs\\stairs.gltf", m_deviceResources);
 	ResourceManager::Instance.loadTexture("Assets\\Other\\wall\\wall.jpg", m_deviceResources);
 	ResourceManager::Instance.loadTexture("Assets\\Other\\wall\\floor.jpg", m_deviceResources);
+	ResourceManager::Instance.loadTexture("Assets\\Other\\wall\\concrete.jpg", m_deviceResources);
 
 
 	ResourceManager::Instance.loadAudioFile("Assets\\Audio\\dark-horror-background-252905.wav", XAUDIO2_LOOP_INFINITE, m_deviceResources, "music");
