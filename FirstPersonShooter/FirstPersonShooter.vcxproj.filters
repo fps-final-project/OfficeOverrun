@@ -185,6 +185,12 @@
     <Filter Include="Assets\Other\stairs">
       <UniqueIdentifier>{3cb61fc3-5875-48bb-963c-95f4f7cdd52e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Content\Skybox">
+      <UniqueIdentifier>{042c9ace-18a2-4932-a066-a8769c2027cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Other\heli">
+      <UniqueIdentifier>{11c86587-2862-402f-af4b-28acdf03102b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -210,6 +216,9 @@
     </ClCompile>
     <ClCompile Include="World.cpp">
       <Filter>Content\World</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatedEntity.cpp">
+      <Filter>Content\Entity</Filter>
     </ClCompile>
     <ClCompile Include="Animable.cpp">
       <Filter>Content\Entity</Filter>
@@ -241,6 +250,7 @@
     <ClCompile Include="GunRig.cpp">
       <Filter>Content\Entity\GunRig</Filter>
     </ClCompile>
+    <ClCompile Include="ActionHandler.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="RenderMaster.cpp">
       <Filter>Content\Renderer</Filter>
@@ -317,11 +327,14 @@
     <ClCompile Include="Stairs.cpp">
       <Filter>Content\Entity\Room</Filter>
     </ClCompile>
-    <ClCompile Include="AnimatedEntity.cpp">
-      <Filter>Events</Filter>
+    <ClCompile Include="AnimatedObjectBuilder.cpp">
+      <Filter>GameElements</Filter>
     </ClCompile>
-    <ClCompile Include="ActionHandler.cpp">
-      <Filter>Events</Filter>
+    <ClCompile Include="AnimatedObject.cpp">
+      <Filter>GameElements</Filter>
+    </ClCompile>
+    <ClCompile Include="Skybox.cpp">
+      <Filter>Content\Skybox</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -410,6 +423,8 @@
     <ClInclude Include="GunRig.h">
       <Filter>Content\Entity\GunRig</Filter>
     </ClInclude>
+    <ClInclude Include="ActionHandler.hpp" />
+    <ClInclude Include="ActionTypes.hpp" />
     <ClInclude Include="GameState.hpp" />
     <ClInclude Include="RendererType.hpp">
       <Filter>Content\Renderer</Filter>
@@ -528,18 +543,18 @@
     <ClInclude Include="RngUtils.h">
       <Filter>WorldGenerator\Common\RNG</Filter>
     </ClInclude>
-    <ClInclude Include="ActionHandler.hpp">
-      <Filter>Events</Filter>
+    <ClInclude Include="AnimatedObjectBuilder.hpp">
+      <Filter>GameElements</Filter>
     </ClInclude>
-    <ClInclude Include="ActionTypes.hpp">
-      <Filter>Events</Filter>
+    <ClInclude Include="AnimatedObject.hpp">
+      <Filter>GameElements</Filter>
+    </ClInclude>
+    <ClInclude Include="Skybox.h">
+      <Filter>Content\Skybox</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\StoreLogo.png">
-      <Filter>Assets</Filter>
-    </Image>
-    <Image Include="Assets\cube\brickwall.jpg">
       <Filter>Assets</Filter>
     </Image>
     <Image Include="Assets\Enemy\Zombie\world_war_zombie_diffuse.png">
@@ -550,9 +565,6 @@
     </Image>
     <Image Include="Assets\GunRig\AK\armColor.png">
       <Filter>Assets\GunRig\AK</Filter>
-    </Image>
-    <Image Include="Assets\Other\wall\brickwall.jpg">
-      <Filter>Assets\Other\wall</Filter>
     </Image>
     <Image Include="Assets\Other\bullet\bullet.jpg">
       <Filter>Assets\Other\bullet</Filter>
@@ -577,6 +589,15 @@
     </Image>
     <Image Include="Assets\Other\stairs\floor.jpg">
       <Filter>Assets\Other\stairs</Filter>
+    </Image>
+    <Image Include="Assets\Other\skybox\skybox.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Other\heli\Helicopter_albedo2.jpg">
+      <Filter>Assets\Other\heli</Filter>
+    </Image>
+    <Image Include="Assets\Other\wall\concrete.jpg">
+      <Filter>Assets\Other\wall</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
@@ -626,6 +647,9 @@
     <None Include="Assets\Audio\smg.wav" />
     <None Include="Assets\Audio\sniper.wav" />
     <None Include="Assets\Audio\reload.wav" />
+    <None Include="Assets\Other\heli\heli.gltf">
+      <Filter>Assets\Other\heli</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Content\SamplePixelShader.hlsl">

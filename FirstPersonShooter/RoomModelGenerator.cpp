@@ -32,6 +32,18 @@ Model RoomModelGenerator::generateRoomModel(DirectX::XMFLOAT3 pos, DirectX::XMFL
 	return model;
 }
 
+Model RoomModelGenerator::generateRoof(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 size, std::vector<RoomLinkData> links, const std::shared_ptr<DX::DeviceResources>& deviceResources)
+{
+	Model model;
+	std::vector<VertexData> verticies;
+	std::vector<unsigned short> indicies;
+
+	generateFloor(verticies, indicies, { pos.x, pos.y, pos.z }, { pos.x + size.x, pos.y, pos.z + size.z }, links, false);
+	model.meshes.push_back(MeshFactory<VertexData>::createMesh(verticies, indicies, { ResourceManager::Instance.getTexture("concrete") }, deviceResources));
+
+	return model;
+}
+
 void RoomModelGenerator::generateWall(std::vector<VertexData>& allVerticies, std::vector<unsigned short>& allIndicies,
 	DirectX::XMFLOAT3 c1, DirectX::XMFLOAT3 c2, std::vector<RoomLinkData> links, float rotationAngle)
 {
@@ -125,11 +137,11 @@ void RoomModelGenerator::generateDoorFrame(std::vector<VertexData>& verticies, s
 
 	// top side
 	verticies.push_back(VertexData({ x, 2, -frameOffset }, { (x - frameOffset) / L, (float)2 / H  }, { 0, -1, 0 }));
-	verticies.push_back(VertexData({ x, 2, 0 }, { x / L, (float)2 / H }, { 0, -1, 0 }));
-	verticies.push_back(VertexData({ x + 1, 2, 0 }, { (x + 1) / L, (float)2 / H }, { 0, -1, 0 }));
 	verticies.push_back(VertexData({ x + 1, 2, -frameOffset }, { (x + 1 - frameOffset) / L, (float)2 / H }, { 0, -1, 0 }));
+	verticies.push_back(VertexData({ x + 1, 2, 0 }, { (x + 1) / L, (float)2 / H }, { 0, -1, 0 }));
+	verticies.push_back(VertexData({ x, 2, 0 }, { x / L, (float)2 / H }, { 0, -1, 0 }));
 
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < 3; i++)
 	{
 		indicies.push_back(indexOffset + nVerticies);
 		indicies.push_back(indexOffset + nVerticies + 1);

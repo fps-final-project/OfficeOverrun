@@ -25,6 +25,7 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	bool load_only_ak = true;
 
 	ResourceManager::Instance.loadAnimatedModel("Assets\\Enemy\\Zombie\\zombie_war.gltf", m_deviceResources);
+	ResourceManager::Instance.loadAnimatedModel("Assets\\Other\\heli\\heli.gltf", m_deviceResources);
 
 	ResourceManager::Instance.loadAnimatedModel("Assets\\GunRig\\AK\\ak.gltf", m_deviceResources);
 	ResourceManager::Instance.loadAnimatedModel("Assets\\GunRig\\AK\\ak_gun.gltf", m_deviceResources);
@@ -54,6 +55,7 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	ResourceManager::Instance.loadModel("Assets\\Other\\stairs\\stairs.gltf", m_deviceResources);
 	ResourceManager::Instance.loadTexture("Assets\\Other\\wall\\wall.jpg", m_deviceResources);
 	ResourceManager::Instance.loadTexture("Assets\\Other\\wall\\floor.jpg", m_deviceResources);
+	ResourceManager::Instance.loadTexture("Assets\\Other\\wall\\concrete.jpg", m_deviceResources);
 
 
 	ResourceManager::Instance.loadAudioFile("Assets\\Audio\\dark-horror-background-252905.wav", XAUDIO2_LOOP_INFINITE, m_deviceResources, "music");
@@ -156,9 +158,15 @@ bool FirstPersonShooterMain::Render()
 	m_spriteRenderer->EndRendering(context);
 
 	auto pos = m_gameState->m_player->getPostition();
-	m_fpsTextRenderer->Render(std::to_string(pos.x) + ", " +std::to_string(pos.y) + ", " + std::to_string(pos.z));
+	m_fpsTextRenderer->Render(std::to_string(m_timer.GetFramesPerSecond()));
+	//m_fpsTextRenderer->Render(std::to_string(pos.x) + ", " +std::to_string(pos.y) + ", " + std::to_string(pos.z));
 
 	return true;
+}
+
+bool FirstPersonShooter::FirstPersonShooterMain::ShouldClose()
+{
+	return m_gameState->GameFinished();
 }
 
 // Notifies renderers that device resources need to be released.

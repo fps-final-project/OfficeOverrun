@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include <Hittable.hpp>
+#include "Hittable.hpp"
 
 class CollisionDetector
 {

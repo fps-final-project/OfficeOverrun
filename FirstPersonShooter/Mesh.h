@@ -2,7 +2,7 @@
 
 #include <d3d11.h>
 #include <vector>
-#include <Content/ShaderStructures.h>
+#include "Content/ShaderStructures.h"
 #include "Texture.h"
 
 struct Mesh

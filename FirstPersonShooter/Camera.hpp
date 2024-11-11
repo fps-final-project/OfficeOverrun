@@ -2,7 +2,7 @@
 
 #include "Common\DeviceResources.h"
 #include <memory>
-#include <Mouse.h>
+#include "Mouse.h"
 
 class Camera
 {
