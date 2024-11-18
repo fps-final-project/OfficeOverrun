@@ -227,7 +227,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Link>
       <AdditionalDependencies>assimp-vc143-mtd.lib;d2d1.lib; d3d11.lib; dxgi.lib; windowscodecs.lib; dwrite.lib; %(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Vendor\assimp\lib\x64;%(AdditionalLibraryDirectories);$(VCInstallDir)\lib\store\amd64;$(VCInstallDir)\lib\amd64</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Vendor\assimp\lib\x64;%(AdditionalLibraryDirectories);$(VCInstallDir)\lib\store\amd64;$(VCInstallDir)\lib\amd64;$(SolutionDir)FirstPersonShooter.WorldGeneration</AdditionalLibraryDirectories>
       <AdditionalOptions>/VERBOSE %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ClCompile>
@@ -295,38 +295,24 @@
     <ClInclude Include="AnimatedObjectBuilder.hpp" />
     <ClInclude Include="AudioFile.hpp" />
     <ClInclude Include="AudioReader.hpp" />
-    <ClInclude Include="BinaryRoom.h" />
     <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="EnemyBuilder.hpp" />
     <ClInclude Include="GameState.hpp" />
-    <ClInclude Include="GeneratedRoom.h" />
-    <ClInclude Include="Graph.h" />
-    <ClInclude Include="GraphUtils.h" />
     <ClInclude Include="GunRig.h" />
     <ClInclude Include="GunRigMetadata.hpp" />
     <ClInclude Include="MapGeneratorAdapter.h" />
     <ClInclude Include="LightingData.hpp" />
     <ClInclude Include="MapGeneratorMapper.h" />
     <ClInclude Include="MappingHelpers.h" />
-    <ClInclude Include="Node.h" />
     <ClInclude Include="Object.hpp" />
     <ClInclude Include="ObjectBuilder.hpp" />
-    <ClInclude Include="PathFinding.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RendererType.hpp" />
     <ClInclude Include="RenderMaster.hpp" />
     <ClInclude Include="RenderQueue.hpp" />
     <ClInclude Include="ResourceHelper.hpp" />
-    <ClInclude Include="RNG.h" />
-    <ClInclude Include="RngUtils.h" />
     <ClInclude Include="Room.hpp" />
     <ClInclude Include="RoomCollision.hpp" />
-    <ClInclude Include="RoomLayout.h" />
-    <ClInclude Include="RoomLayoutConfig.h" />
-    <ClInclude Include="RoomLayoutGenerator.h" />
-    <ClInclude Include="RoomLink.h" />
-    <ClInclude Include="RoomSelector.h" />
-    <ClInclude Include="RoomSelectorArgs.h" />
     <ClInclude Include="RoomLinkData.hpp" />
     <ClInclude Include="RoomModelGenerator.h" />
     <ClInclude Include="Skybox.h" />
@@ -363,11 +349,7 @@
     <ClInclude Include="Stairs.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureFactory.h" />
-    <ClInclude Include="Utils.h" />
-    <ClInclude Include="Vector3.h" />
-    <ClInclude Include="WeightedGraph.h" />
     <ClInclude Include="World.h" />
-    <ClInclude Include="MapGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ActionHandler.cpp" />
@@ -380,7 +362,6 @@
     <ClCompile Include="App.cpp" />
     <ClCompile Include="AssimpModelLoader.cpp" />
     <ClCompile Include="AudioReader.cpp" />
-    <ClCompile Include="BinaryRoom.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CollisionDetector.cpp" />
     <ClCompile Include="Common\DeviceResources.cpp" />
@@ -390,8 +371,6 @@
     <ClCompile Include="FirstPersonShooterMain.cpp" />
     <ClCompile Include="Content\SampleFpsTextRenderer.cpp" />
     <ClCompile Include="GameState.cpp" />
-    <ClCompile Include="GeneratedRoom.cpp" />
-    <ClCompile Include="GraphUtils.cpp" />
     <ClCompile Include="GunRig.cpp" />
     <ClCompile Include="GunRigMetadata.cpp" />
     <ClCompile Include="Hittable.cpp" />
@@ -415,22 +394,15 @@
     <ClCompile Include="RenderMaster.cpp" />
     <ClCompile Include="RenderQueue.cpp" />
     <ClCompile Include="ResourceHelper.cpp" />
-    <ClCompile Include="RNG.cpp" />
-    <ClCompile Include="RngUtils.cpp" />
     <ClCompile Include="Room.cpp" />
-    <ClCompile Include="RoomLayoutGenerator.cpp" />
-    <ClCompile Include="RoomLink.cpp" />
     <ClCompile Include="RoomModelGenerator.cpp" />
-    <ClCompile Include="RoomSelector.cpp" />
     <ClCompile Include="Skybox.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="SimpleCollisionDetector.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Stairs.cpp" />
     <ClCompile Include="TextureFactory.cpp" />
-    <ClCompile Include="Utils.cpp" />
     <ClCompile Include="World.cpp" />
-    <ClCompile Include="MapGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -558,6 +530,11 @@
       <FileType>Document</FileType>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FirstPersonShooter.WorldGeneration\FirstPersonShooter.WorldGeneration.vcxproj">
+      <Project>{cad5db3e-5668-4c00-a384-e3d7c9f2011e}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
