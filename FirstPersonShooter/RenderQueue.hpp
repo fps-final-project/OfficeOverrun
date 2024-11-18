@@ -4,7 +4,7 @@
 #include "RendererType.hpp"
 #include "Drawable.hpp"
 
-struct RenderData
+struct __declspec(dllexport) RenderData
 {
 	RendererType type;
 	Drawable* drawable;
@@ -20,7 +20,7 @@ public:
 	}
 };
 
-class RenderQueue
+class __declspec(dllexport) RenderQueue
 {
 public:
 	RenderQueue();

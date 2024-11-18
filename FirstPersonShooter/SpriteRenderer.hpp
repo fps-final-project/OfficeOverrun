@@ -17,7 +17,7 @@ struct PipelineState
 
 
 // wrapper for the SpriteBatch class 
-class SpriteRenderer 
+class __declspec(dllexport) SpriteRenderer
 {
 public:
 	SpriteRenderer(ID3D11DeviceContext3* context);

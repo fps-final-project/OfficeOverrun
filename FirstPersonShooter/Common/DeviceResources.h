@@ -11,7 +11,7 @@ namespace DX
 	};
 
 	// Controls all the DirectX device resources.
-	class DeviceResources
+	class __declspec(dllexport) DeviceResources
 	{
 	public:
 		DeviceResources();

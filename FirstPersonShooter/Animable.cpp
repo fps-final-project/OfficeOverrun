@@ -2,7 +2,7 @@
 #include "Animable.hpp"
 
 Animable::Animable(std::shared_ptr<AnimatedModel> animatedModel)
-	: m_animatedModel(animatedModel), m_model(DirectX::XMMatrixIdentity()), m_animator(Animator())
+	: m_animatedModel(animatedModel), m_animator(Animator())
 {
 
 }
@@ -22,10 +22,4 @@ void Animable::setFallbackAnimation(std::string name)
 	{
 		m_animator.setFallbackAnimation(this->m_animatedModel->m_animations[name]);
 	}
-}
-
-void Animable::Render(std::shared_ptr<RenderMaster> renderMaster)
-{
-	auto renderer = renderMaster->getAnimatedRenderer();
-	renderer->Render(*this);
 }

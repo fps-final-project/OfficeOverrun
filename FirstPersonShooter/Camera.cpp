@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "Camera.hpp"
-#include "..\Common\DirectXHelper.h"
+#include "Common\DirectXHelper.h"
 
 using namespace Windows::Foundation;
 

@@ -145,7 +145,8 @@ bool FirstPersonShooterMain::Render()
 	GUID entityToHit = queue.DrawAllAndClear(m_renderMaster);
 	m_gameState->m_actionHandler->SetLastHitEntity(entityToHit);
 
-	Skybox::RenderSkybox(m_gameState->m_camera->getPosition(), m_renderMaster);
+	Skybox::RenderSkybox(m_gameState->m_camera->getPosition(), 
+		m_renderMaster, ResourceManager::Instance.getModel("skybox"));
 
 	m_spriteRenderer->BeginRendering(context, viewport);
 	Size outputSize = m_deviceResources->GetOutputSize();
