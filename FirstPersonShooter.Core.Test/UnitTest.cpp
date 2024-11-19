@@ -1,19 +1,19 @@
 #include "pch.h"
 #include "CppUnitTest.h"
 
-#include "Mesh.h"
+#include "Player.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-namespace FirstPersonShooter_Rendering_Test
+namespace FirstPersonShooter_Core_Test
 {
     TEST_CLASS(UnitTest1)
     {
     public:
         TEST_METHOD(TestMethod1)
         {
-            Mesh mesh;
-            Assert::AreEqual(1, 1);
+            Player player;
+            Assert::AreEqual((int)player.getPostition().x, 0);
         }
     };
 }
