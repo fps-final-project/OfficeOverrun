@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "AnimatedModelRenderer.hpp"
-#include "Animable.hpp"
+#include "AnimatedAssimpModel.h"
 #include <vector>
 
 //const int AnimatedModelRenderer::nBuffers = 3;
@@ -48,28 +48,29 @@ void AnimatedModelRenderer::CreateDeviceDependentResources()
 		);
 	}
 
-	this->CreateDeviceDependentResources_internal(L"SkeletalVertexShader.cso", L"SkeletalPixelShader.cso", vertexDesc);
+	this->CreateDeviceDependentResources_internal(L"FirstPersonShooter_Rendering\\SkeletalVertexShader.cso",
+		L"FirstPersonShooter_Rendering\\SkeletalPixelShader.cso", vertexDesc);
 }
 
-void AnimatedModelRenderer::Render(const Animable& animable)
+void AnimatedModelRenderer::Render(const AnimatedModel& animatedModel, DirectX::XMFLOAT3 position, DirectX::XMFLOAT3 scale, DirectX::XMFLOAT3 rotation, const std::vector<DirectX::XMMATRIX>& finalBonesMatricies)
 {
 	if (!m_loadingComplete)
 	{
 		return;
 	}
 
-	DirectX::XMStoreFloat4x4(&m_VSConstantBufferData.model, DirectX::XMMatrixTranspose(animable.m_model));
-	auto det = DirectX::XMMatrixDeterminant(animable.m_model);
-	XMStoreFloat4x4(&m_VSConstantBufferData.inv_model, DirectX::XMMatrixTranspose(DirectX::XMMatrixInverse(&det, animable.m_model)));
+	auto modelMatrix = getModelMatrix(position, rotation, scale);
 
-	auto& boneMatricies = animable.m_animator.m_finalBoneMatrices;
+	DirectX::XMStoreFloat4x4(&m_VSConstantBufferData.model, DirectX::XMMatrixTranspose(modelMatrix));
+	auto det = DirectX::XMMatrixDeterminant(modelMatrix);
+	XMStoreFloat4x4(&m_VSConstantBufferData.inv_model, DirectX::XMMatrixTranspose(DirectX::XMMatrixInverse(&det, modelMatrix)));
 
-	for (int i = 0; i < boneMatricies.size(); i++)
+	for (int i = 0; i < finalBonesMatricies.size(); i++)
 	{
 		int bufferIdx = i / 50;
 		int poseIdx = i - bufferIdx * AnimationConstantBuffer::MAX_BONES;
 
-		DirectX::XMStoreFloat4x4(&m_AnimationTransformBufferData[bufferIdx].pose[poseIdx], DirectX::XMMatrixTranspose(boneMatricies[i]));
+		DirectX::XMStoreFloat4x4(&m_AnimationTransformBufferData[bufferIdx].pose[poseIdx], DirectX::XMMatrixTranspose(finalBonesMatricies[i]));
 	}
 
 	auto context = m_deviceResources->GetD3DDeviceContext();
@@ -96,5 +97,5 @@ void AnimatedModelRenderer::Render(const Animable& animable)
 		);
 
 	}
-	Base3DRenderer::Render(*animable.m_animatedModel);
+	Base3DRenderer::Render(animatedModel);
 }

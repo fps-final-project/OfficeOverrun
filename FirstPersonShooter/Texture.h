@@ -2,7 +2,7 @@
 
 #include <string>
 
-struct Texture
+struct __declspec(dllexport) Texture
 {
 	std::string type;
 	std::string path;

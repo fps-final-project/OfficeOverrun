@@ -6,7 +6,7 @@
 #include "LightingData.hpp"
 
 
-class RenderMaster
+class __declspec(dllexport) RenderMaster
 {
 public:
 	RenderMaster(const std::shared_ptr<DX::DeviceResources>& deviceResources);

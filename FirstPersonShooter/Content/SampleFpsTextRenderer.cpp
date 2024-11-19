@@ -1,7 +1,6 @@
 ﻿#include "pch.h"
 #include "SampleFpsTextRenderer.h"
-
-#include "Common/DirectXHelper.h"
+#include "..\Common\DirectXHelper.h"
 
 using namespace FirstPersonShooter;
 using namespace Microsoft::WRL;

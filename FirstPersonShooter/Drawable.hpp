@@ -1,7 +1,7 @@
 #pragma once
 #include "RenderMaster.hpp"
 
-class Drawable
+class __declspec(dllexport) Drawable
 {
 public:
 	GUID id;

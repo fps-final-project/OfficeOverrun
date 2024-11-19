@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Renderer">
+      <UniqueIdentifier>{59b077ae-eeb8-4b7b-83a8-4b8c03a3b0fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\Text">
+      <UniqueIdentifier>{3d0a2db1-0294-4e61-9b72-dacb5f39246a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\3D">
+      <UniqueIdentifier>{67f9e80b-0ee0-4e94-9fda-68027fbc7956}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\3D\Model">
+      <UniqueIdentifier>{b897b622-d38f-4fc5-9b5a-83a02601774d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\3D\AnimatedModel">
+      <UniqueIdentifier>{2048da5d-0b01-4ad7-8ecb-3a69aa3285c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\2D">
+      <UniqueIdentifier>{a5712d25-b497-4ee5-86fe-7f8c8a62a90d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Camera">
+      <UniqueIdentifier>{5ca3138e-8cc0-4106-b4d2-32b4cc99e376}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Mesh">
+      <UniqueIdentifier>{132cb48b-f432-492a-b935-85467a83826b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Model">
+      <UniqueIdentifier>{443b8325-ee0f-42fa-90ff-ffe175454a22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Model\Animation">
+      <UniqueIdentifier>{30f1fe26-f02a-45f3-b559-ba1e6868ee4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{2b37074a-de79-4493-929d-c07d2da3dd4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Sample">
+      <UniqueIdentifier>{2c0858aa-1f18-4cc8-82ec-6f9a7b6ea1a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\Skeletal">
+      <UniqueIdentifier>{bd124966-9501-4b48-8ee5-0c948d4f061b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders\HUD">
+      <UniqueIdentifier>{22c6e3b9-d07a-476f-a18d-8ed17336dc03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Skybox">
+      <UniqueIdentifier>{2b9bf21c-84c0-4e3f-9ab8-77f2c949f699}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Texture">
+      <UniqueIdentifier>{a2d561ce-edd9-4e86-b2da-21bb75c44d53}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="..\FirstPersonShooter\RenderMaster.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\RenderQueue.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\Content\SampleFpsTextRenderer.cpp">
+      <Filter>Renderer\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\ModelRenderer.cpp">
+      <Filter>Renderer\3D\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\AnimatedModelRenderer.cpp">
+      <Filter>Renderer\3D\AnimatedModel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\SpriteRenderer.cpp">
+      <Filter>Renderer\2D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\Camera.cpp">
+      <Filter>Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\AssimpModelLoader.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\Animator.cpp">
+      <Filter>Model\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\Skybox.cpp">
+      <Filter>Skybox</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\TextureFactory.cpp">
+      <Filter>Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\Common\DeviceResources.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="FirstPersonShooter.Rendering.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="..\FirstPersonShooter\RendererType.hpp">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\RenderMaster.hpp">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\RenderQueue.hpp">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\Content\SampleFpsTextRenderer.h">
+      <Filter>Renderer\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\Content\Base3DRenderer.h">
+      <Filter>Renderer\3D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\ModelRenderer.hpp">
+      <Filter>Renderer\3D\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\AnimatedModelRenderer.hpp">
+      <Filter>Renderer\3D\AnimatedModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\SpriteRenderer.hpp">
+      <Filter>Renderer\2D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\Camera.hpp">
+      <Filter>Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\Mesh.h">
+      <Filter>Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\MeshFactory.h">
+      <Filter>Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\AnimatedAssimpModel.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\AssimpModel.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\AssimpModelLoader.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\Animator.h">
+      <Filter>Model\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\BoneInfo.h">
+      <Filter>Model\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\LightingData.hpp">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\Content\ShaderStructures.h">
+      <Filter>Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\Skybox.h">
+      <Filter>Skybox</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\Texture.h">
+      <Filter>Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\TextureFactory.h">
+      <Filter>Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\Drawable.hpp" />
+    <ClInclude Include="..\FirstPersonShooter\Common\DeviceResources.h" />
+    <ClInclude Include="..\FirstPersonShooter\Common\DirectXHelper.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\FirstPersonShooter\Content\SamplePixelShader.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="..\FirstPersonShooter\Content\SampleVertexShader.hlsl">
+      <Filter>Shaders\Sample</Filter>
+    </FxCompile>
+    <FxCompile Include="..\FirstPersonShooter\SkeletalPixelShader.hlsl">
+      <Filter>Shaders\Skeletal</Filter>
+    </FxCompile>
+    <FxCompile Include="..\FirstPersonShooter\SkeletalVertexShader.hlsl">
+      <Filter>Shaders\Skeletal</Filter>
+    </FxCompile>
+    <FxCompile Include="..\FirstPersonShooter\HUDPixelShader.hlsl">
+      <Filter>Shaders\HUD</Filter>
+    </FxCompile>
+    <FxCompile Include="..\FirstPersonShooter\HUDVertexShader.hlsl">
+      <Filter>Shaders\HUD</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>

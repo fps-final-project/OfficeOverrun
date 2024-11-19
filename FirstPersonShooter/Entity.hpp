@@ -16,7 +16,6 @@ public:
 	virtual ~Entity() {}
 	virtual void Render(std::shared_ptr<RenderMaster> renderMaster) override;
 	virtual void Update(float dt);
-	friend class ModelRenderer;
 protected:
 	std::shared_ptr<Model> m_model;
 	DirectX::XMMATRIX m_modelMatrix;

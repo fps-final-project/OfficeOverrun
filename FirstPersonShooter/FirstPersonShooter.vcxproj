@@ -301,75 +301,45 @@
     <ClInclude Include="GunRig.h" />
     <ClInclude Include="GunRigMetadata.hpp" />
     <ClInclude Include="MapGeneratorAdapter.h" />
-    <ClInclude Include="LightingData.hpp" />
     <ClInclude Include="MapGeneratorMapper.h" />
     <ClInclude Include="MappingHelpers.h" />
     <ClInclude Include="Object.hpp" />
     <ClInclude Include="ObjectBuilder.hpp" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="RendererType.hpp" />
-    <ClInclude Include="RenderMaster.hpp" />
-    <ClInclude Include="RenderQueue.hpp" />
     <ClInclude Include="ResourceHelper.hpp" />
     <ClInclude Include="Room.hpp" />
     <ClInclude Include="RoomCollision.hpp" />
     <ClInclude Include="RoomLinkData.hpp" />
     <ClInclude Include="RoomModelGenerator.h" />
-    <ClInclude Include="Skybox.h" />
-    <ClInclude Include="SpriteRenderer.hpp" />
     <ClInclude Include="Animable.hpp" />
-    <ClInclude Include="AnimatedAssimpModel.h" />
     <ClInclude Include="AnimatedEntity.hpp" />
-    <ClInclude Include="AnimatedModelRenderer.hpp" />
-    <ClInclude Include="Animator.h" />
     <ClInclude Include="App.h" />
-    <ClInclude Include="AssimpModel.h" />
-    <ClInclude Include="AssimpModelLoader.h" />
-    <ClInclude Include="BoneInfo.h" />
-    <ClInclude Include="Camera.hpp" />
     <ClInclude Include="CollisionDetector.hpp" />
-    <ClInclude Include="Common\DeviceResources.h" />
-    <ClInclude Include="Drawable.hpp" />
     <ClInclude Include="Entity.hpp" />
     <ClInclude Include="FirstPersonShooterMain.h" />
-    <ClInclude Include="Common\DirectXHelper.h" />
     <ClInclude Include="Common\StepTimer.h" />
-    <ClInclude Include="Content\Base3DRenderer.h" />
-    <ClInclude Include="Content\SampleFpsTextRenderer.h" />
-    <ClInclude Include="Content\ShaderStructures.h" />
     <ClInclude Include="Hittable.hpp" />
     <ClInclude Include="InputHandler.hpp" />
-    <ClInclude Include="Mesh.h" />
-    <ClInclude Include="MeshFactory.h" />
-    <ClInclude Include="ModelRenderer.hpp" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SimpleCollisionDetector.hpp" />
     <ClInclude Include="Stairs.h" />
-    <ClInclude Include="Texture.h" />
-    <ClInclude Include="TextureFactory.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ActionHandler.cpp" />
     <ClCompile Include="Animable.cpp" />
     <ClCompile Include="AnimatedEntity.cpp" />
-    <ClCompile Include="AnimatedModelRenderer.cpp" />
     <ClCompile Include="AnimatedObject.cpp" />
     <ClCompile Include="AnimatedObjectBuilder.cpp" />
-    <ClCompile Include="Animator.cpp" />
     <ClCompile Include="App.cpp" />
-    <ClCompile Include="AssimpModelLoader.cpp" />
     <ClCompile Include="AudioReader.cpp" />
-    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CollisionDetector.cpp" />
-    <ClCompile Include="Common\DeviceResources.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyBuilder.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="FirstPersonShooterMain.cpp" />
-    <ClCompile Include="Content\SampleFpsTextRenderer.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GunRig.cpp" />
     <ClCompile Include="GunRigMetadata.cpp" />
@@ -377,7 +347,6 @@
     <ClCompile Include="InputHandler.cpp" />
     <ClCompile Include="MapGeneratorAdapter.cpp" />
     <ClCompile Include="MappingHelpers.cpp" />
-    <ClCompile Include="ModelRenderer.cpp" />
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="ObjectBuilder.cpp" />
     <ClCompile Include="pch.cpp">
@@ -391,47 +360,18 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="RenderMaster.cpp" />
-    <ClCompile Include="RenderQueue.cpp" />
     <ClCompile Include="ResourceHelper.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="RoomModelGenerator.cpp" />
-    <ClCompile Include="Skybox.cpp" />
-    <ClCompile Include="SpriteRenderer.cpp" />
     <ClCompile Include="SimpleCollisionDetector.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
     <ClCompile Include="Stairs.cpp" />
-    <ClCompile Include="TextureFactory.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="Content\SamplePixelShader.hlsl">
-      <ShaderType>Pixel</ShaderType>
-    </FxCompile>
-    <FxCompile Include="Content\SampleVertexShader.hlsl">
-      <ShaderType>Vertex</ShaderType>
-    </FxCompile>
-    <FxCompile Include="HUDPixelShader.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-    </FxCompile>
-    <FxCompile Include="HUDVertexShader.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
-    </FxCompile>
-    <FxCompile Include="SkeletalPixelShader.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-    </FxCompile>
-    <FxCompile Include="SkeletalVertexShader.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
-    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Enemy\Zombie\zombie_war.gltf">
@@ -532,6 +472,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FirstPersonShooter.Rendering\FirstPersonShooter.Rendering.vcxproj">
+      <Project>{a0f46924-38c3-48ec-8fa2-537b64c35c84}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\FirstPersonShooter.WorldGeneration\FirstPersonShooter.WorldGeneration.vcxproj">
       <Project>{cad5db3e-5668-4c00-a384-e3d7c9f2011e}</Project>
     </ProjectReference>

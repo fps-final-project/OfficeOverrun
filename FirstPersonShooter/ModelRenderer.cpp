@@ -22,18 +22,21 @@ void ModelRenderer::CreateDeviceDependentResources()
 		{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 5 * sizeof(float), D3D11_INPUT_PER_VERTEX_DATA, 0 }
 	};
 
-	this->CreateDeviceDependentResources_internal(L"SampleVertexShader.cso", L"SamplePixelShader.cso", vertexDesc);
+	this->CreateDeviceDependentResources_internal(L"FirstPersonShooter_Rendering\\SampleVertexShader.cso", L"FirstPersonShooter_Rendering\\SamplePixelShader.cso", vertexDesc);
 }
 
-void ModelRenderer::Render(const Entity& entity)
+void ModelRenderer::Render(const Model& model, DirectX::XMFLOAT3 position, DirectX::XMFLOAT3 scale, DirectX::XMFLOAT3 rotation)
 {
 	if (!m_loadingComplete)
 	{
 		return;
 	}
 
-	DirectX::XMStoreFloat4x4(&m_VSConstantBufferData.model, DirectX::XMMatrixTranspose(entity.m_modelMatrix));
-	auto det = DirectX::XMMatrixDeterminant(entity.m_modelMatrix);
-	XMStoreFloat4x4(&m_VSConstantBufferData.inv_model, DirectX::XMMatrixTranspose(DirectX::XMMatrixInverse(&det, entity.m_modelMatrix)));
-	Base3DRenderer::Render(*entity.m_model);
+	auto modelMatrix = getModelMatrix(position, rotation, scale);
+
+	DirectX::XMStoreFloat4x4(&m_VSConstantBufferData.model, DirectX::XMMatrixTranspose(modelMatrix));
+	auto det = DirectX::XMMatrixDeterminant(modelMatrix);
+	XMStoreFloat4x4(&m_VSConstantBufferData.inv_model, DirectX::XMMatrixTranspose(DirectX::XMMatrixInverse(&det, modelMatrix)));
+	Base3DRenderer::Render(model);
 }
+

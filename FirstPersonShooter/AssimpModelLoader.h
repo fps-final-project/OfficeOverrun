@@ -16,7 +16,7 @@ struct Joint;
 struct Mesh;
 struct Texture;
 
-class AssimpModelLoader
+class __declspec(dllexport) AssimpModelLoader
 {
 public:
 	static Model createModelFromFile(const std::string& path, std::shared_ptr<DX::DeviceResources> deviceResources);

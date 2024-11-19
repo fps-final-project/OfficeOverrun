@@ -11,18 +11,9 @@
     <Filter Include="Content">
       <UniqueIdentifier>26a3a00d-2dd0-4e7f-887f-279a615a634c</UniqueIdentifier>
     </Filter>
-    <ClInclude Include="Common\DirectXHelper.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <ClInclude Include="Common\StepTimer.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="Common\DeviceResources.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClCompile Include="Common\DeviceResources.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <Image Include="Assets\LockScreenLogo.scale-200.png">
       <Filter>Assets</Filter>
     </Image>
@@ -41,32 +32,8 @@
     <Image Include="Assets\Wide310x150Logo.scale-200.png">
       <Filter>Assets</Filter>
     </Image>
-    <Filter Include="Content\Mesh">
-      <UniqueIdentifier>{d1c951c0-9649-4246-87a3-ad071b9c8914}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Content\Model">
-      <UniqueIdentifier>{c9a8355d-d86f-4f93-b81b-6c3c0c293eee}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Content\Texture">
-      <UniqueIdentifier>{32632a9d-63ea-4bb1-8b4b-20dc8c08cf6b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Content\Shaders">
-      <UniqueIdentifier>{91f83ae6-6528-46d5-8659-0e7b5e5e88dd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Content\Shaders\Sample">
-      <UniqueIdentifier>{4df27147-602e-422c-819e-7da74eeae2a7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Content\Shaders\Skeletal">
-      <UniqueIdentifier>{8746d375-b1b7-41ea-a582-d5c5c8a5ede0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Content\Entity">
       <UniqueIdentifier>{675191b9-1eec-4ae2-9cc0-614336ab7477}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Content\Renderer">
-      <UniqueIdentifier>{8b6bdbd5-1633-4c5a-9e5b-4f0492959883}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Content\Model\Animation">
-      <UniqueIdentifier>{98242906-809f-419f-9852-136fea955114}</UniqueIdentifier>
     </Filter>
     <Filter Include="Content\ResourceManager">
       <UniqueIdentifier>{678fb081-8b14-47d5-9c1e-0dce2fc2b6a7}</UniqueIdentifier>
@@ -74,32 +41,11 @@
     <Filter Include="Content\World">
       <UniqueIdentifier>{844638fe-742d-40b3-a363-404e64ecbf35}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Content\Renderer\Text">
-      <UniqueIdentifier>{fdcb3503-2c14-433a-9d74-d1428de9dee9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Content\Renderer\3D">
-      <UniqueIdentifier>{3d875267-7ac7-4c78-a719-fc3bc7c10073}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Content\Renderer\3D\Model">
-      <UniqueIdentifier>{4b490eb8-7983-4313-8ade-c62312aadada}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Content\Renderer\3D\AnimatedModel">
-      <UniqueIdentifier>{7461cf45-36e2-4d4d-ba74-64f06c45a80b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Base">
       <UniqueIdentifier>{55808537-456c-4681-8aa2-a22854a1caaf}</UniqueIdentifier>
     </Filter>
     <Filter Include="Events">
       <UniqueIdentifier>{7fb1627b-d8e3-4f7c-b79f-509e91e0b17e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Content\Renderer\2D">
-      <UniqueIdentifier>{575c322f-ecaf-4bba-b36e-51ed15cfdff9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Content\Shaders\HUD">
-      <UniqueIdentifier>{9306adaf-1138-4e63-92af-88c00fb66e03}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Content\Camera">
-      <UniqueIdentifier>{70b64313-a96b-4eb3-85d5-35d3640126e1}</UniqueIdentifier>
     </Filter>
     <Filter Include="Content\Entity\GunRig">
       <UniqueIdentifier>{f5d3f666-f005-4e87-9563-2779be746441}</UniqueIdentifier>
@@ -112,24 +58,6 @@
     </Filter>
     <Filter Include="GameElements">
       <UniqueIdentifier>{c7913cd6-4577-4273-ae0a-bb2d03243413}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="WorldGenerator">
-      <UniqueIdentifier>{706e0f5a-fcd5-4407-89df-e0b2155075f6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="WorldGenerator\Common">
-      <UniqueIdentifier>{1f11af94-cf83-491c-a7a0-29039046eea7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="WorldGenerator\Common\Graph">
-      <UniqueIdentifier>{5fc7c998-0bda-4691-a0b7-0e3b9a471d9e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="WorldGenerator\RoomLayout">
-      <UniqueIdentifier>{d49c5293-81bd-467c-9bb7-b7cbac6c0020}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="WorldGenerator\RoomLayout\BSP">
-      <UniqueIdentifier>{a0a89133-5811-4fe9-985d-9190e3604b97}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="WorldGenerator\RoomLayout\Model">
-      <UniqueIdentifier>{89bcd098-54e1-4e4b-b75f-ef0b36be974d}</UniqueIdentifier>
     </Filter>
     <Filter Include="WorldGeneratorAdapter">
       <UniqueIdentifier>{774b7bab-b759-451c-94f5-63d310975a76}</UniqueIdentifier>
@@ -176,17 +104,8 @@
     <Filter Include="Content\RoomModelGenerator">
       <UniqueIdentifier>{f0f28225-0827-46e2-b9d9-466de74d841b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="WorldGenerator\RoomLayout\RooomSelector">
-      <UniqueIdentifier>{97ad2e10-ce1f-429c-8771-5c5bdf50c841}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="WorldGenerator\Common\RNG">
-      <UniqueIdentifier>{019c11fa-7298-4158-9aea-65662fa33458}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Assets\Other\stairs">
       <UniqueIdentifier>{3cb61fc3-5875-48bb-963c-95f4f7cdd52e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Content\Skybox">
-      <UniqueIdentifier>{042c9ace-18a2-4932-a066-a8769c2027cb}</UniqueIdentifier>
     </Filter>
     <Filter Include="Assets\Other\heli">
       <UniqueIdentifier>{11c86587-2862-402f-af4b-28acdf03102b}</UniqueIdentifier>
@@ -196,20 +115,11 @@
     <ClCompile Include="App.cpp" />
     <ClCompile Include="FirstPersonShooterMain.cpp" />
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="TextureFactory.cpp">
-      <Filter>Content\Texture</Filter>
-    </ClCompile>
-    <ClCompile Include="AssimpModelLoader.cpp">
-      <Filter>Content\Model</Filter>
-    </ClCompile>
     <ClCompile Include="Entity.cpp">
       <Filter>Content\Entity</Filter>
     </ClCompile>
     <ClCompile Include="Hittable.cpp">
       <Filter>Content\Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="Animator.cpp">
-      <Filter>Content\Model\Animation</Filter>
     </ClCompile>
     <ClCompile Include="ResourceManager.cpp">
       <Filter>Content\ResourceManager</Filter>
@@ -223,15 +133,6 @@
     <ClCompile Include="Animable.cpp">
       <Filter>Content\Entity</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Content\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="AnimatedModelRenderer.cpp">
-      <Filter>Content\Renderer\3D\AnimatedModel</Filter>
-    </ClCompile>
-    <ClCompile Include="ModelRenderer.cpp">
-      <Filter>Content\Renderer\3D\Model</Filter>
-    </ClCompile>
     <ClCompile Include="CollisionDetector.cpp">
       <Filter>Base</Filter>
     </ClCompile>
@@ -241,23 +142,11 @@
     <ClCompile Include="InputHandler.cpp">
       <Filter>Events</Filter>
     </ClCompile>
-    <ClCompile Include="SpriteRenderer.cpp">
-      <Filter>Content\Renderer\2D</Filter>
-    </ClCompile>
-    <ClCompile Include="Content\SampleFpsTextRenderer.cpp">
-      <Filter>Content\Renderer\Text</Filter>
-    </ClCompile>
     <ClCompile Include="GunRig.cpp">
       <Filter>Content\Entity\GunRig</Filter>
     </ClCompile>
     <ClCompile Include="ActionHandler.cpp" />
     <ClCompile Include="GameState.cpp" />
-    <ClCompile Include="RenderMaster.cpp">
-      <Filter>Content\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="RenderQueue.cpp">
-      <Filter>Content\Renderer</Filter>
-    </ClCompile>
     <ClCompile Include="ResourceHelper.cpp">
       <Filter>Content\ResourceManager</Filter>
     </ClCompile>
@@ -279,24 +168,6 @@
     <ClCompile Include="ObjectBuilder.cpp">
       <Filter>GameElements</Filter>
     </ClCompile>
-    <ClCompile Include="BinaryRoom.cpp">
-      <Filter>WorldGenerator\RoomLayout\BSP</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedRoom.cpp">
-      <Filter>WorldGenerator\RoomLayout\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="RoomLayoutGenerator.cpp">
-      <Filter>WorldGenerator\RoomLayout</Filter>
-    </ClCompile>
-    <ClCompile Include="RoomLink.cpp">
-      <Filter>WorldGenerator\RoomLayout\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="Utils.cpp">
-      <Filter>WorldGenerator\Common</Filter>
-    </ClCompile>
-    <ClCompile Include="MapGenerator.cpp">
-      <Filter>WorldGenerator</Filter>
-    </ClCompile>
     <ClCompile Include="MapGeneratorAdapter.cpp">
       <Filter>WorldGeneratorAdapter</Filter>
     </ClCompile>
@@ -308,18 +179,6 @@
     </ClCompile>
     <ClCompile Include="GunRigMetadata.cpp">
       <Filter>Content\Entity\GunRig</Filter>
-    </ClCompile>
-    <ClCompile Include="RoomSelector.cpp">
-      <Filter>WorldGenerator\RoomLayout\RooomSelector</Filter>
-    </ClCompile>
-    <ClCompile Include="GraphUtils.cpp">
-      <Filter>WorldGenerator\Common\Graph</Filter>
-    </ClCompile>
-    <ClCompile Include="RNG.cpp">
-      <Filter>WorldGenerator\Common\RNG</Filter>
-    </ClCompile>
-    <ClCompile Include="RngUtils.cpp">
-      <Filter>WorldGenerator\Common\RNG</Filter>
     </ClCompile>
     <ClCompile Include="AudioReader.cpp">
       <Filter>Audio</Filter>
@@ -333,38 +192,11 @@
     <ClCompile Include="AnimatedObject.cpp">
       <Filter>GameElements</Filter>
     </ClCompile>
-    <ClCompile Include="Skybox.cpp">
-      <Filter>Content\Skybox</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
     <ClInclude Include="FirstPersonShooterMain.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Mesh.h">
-      <Filter>Content\Mesh</Filter>
-    </ClInclude>
-    <ClInclude Include="MeshFactory.h">
-      <Filter>Content\Mesh</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>Content\Texture</Filter>
-    </ClInclude>
-    <ClInclude Include="TextureFactory.h">
-      <Filter>Content\Texture</Filter>
-    </ClInclude>
-    <ClInclude Include="AssimpModel.h">
-      <Filter>Content\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="AssimpModelLoader.h">
-      <Filter>Content\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimatedAssimpModel.h">
-      <Filter>Content\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Drawable.hpp">
-      <Filter>Content\Entity</Filter>
-    </ClInclude>
     <ClInclude Include="Entity.hpp">
       <Filter>Content\Entity</Filter>
     </ClInclude>
@@ -377,37 +209,13 @@
     <ClInclude Include="AnimatedEntity.hpp">
       <Filter>Content\Entity</Filter>
     </ClInclude>
-    <ClInclude Include="Content\ShaderStructures.h">
-      <Filter>Content\Shaders</Filter>
-    </ClInclude>
-    <ClInclude Include="BoneInfo.h">
-      <Filter>Content\Model\Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="Animator.h">
-      <Filter>Content\Model\Animation</Filter>
-    </ClInclude>
     <ClInclude Include="ResourceManager.h">
       <Filter>Content\ResourceManager</Filter>
     </ClInclude>
     <ClInclude Include="World.h">
       <Filter>Content\World</Filter>
     </ClInclude>
-    <ClInclude Include="Content\SampleFpsTextRenderer.h">
-      <Filter>Content\Renderer\Text</Filter>
-    </ClInclude>
-    <ClInclude Include="Content\Base3DRenderer.h">
-      <Filter>Content\Renderer\3D</Filter>
-    </ClInclude>
-    <ClInclude Include="ModelRenderer.hpp">
-      <Filter>Content\Renderer\3D\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimatedModelRenderer.hpp">
-      <Filter>Content\Renderer\3D\AnimatedModel</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h" />
-    <ClInclude Include="Camera.hpp">
-      <Filter>Content\Camera</Filter>
-    </ClInclude>
     <ClInclude Include="CollisionDetector.hpp">
       <Filter>Base</Filter>
     </ClInclude>
@@ -417,24 +225,12 @@
     <ClInclude Include="InputHandler.hpp">
       <Filter>Events</Filter>
     </ClInclude>
-    <ClInclude Include="SpriteRenderer.hpp">
-      <Filter>Content\Renderer\2D</Filter>
-    </ClInclude>
     <ClInclude Include="GunRig.h">
       <Filter>Content\Entity\GunRig</Filter>
     </ClInclude>
     <ClInclude Include="ActionHandler.hpp" />
     <ClInclude Include="ActionTypes.hpp" />
     <ClInclude Include="GameState.hpp" />
-    <ClInclude Include="RendererType.hpp">
-      <Filter>Content\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderMaster.hpp">
-      <Filter>Content\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderQueue.hpp">
-      <Filter>Content\Renderer</Filter>
-    </ClInclude>
     <ClInclude Include="ResourceHelper.hpp">
       <Filter>Content\ResourceManager</Filter>
     </ClInclude>
@@ -443,9 +239,6 @@
     </ClInclude>
     <ClInclude Include="Room.hpp">
       <Filter>Content\Entity\Room</Filter>
-    </ClInclude>
-    <ClInclude Include="LightingData.hpp">
-      <Filter>Content\Shaders</Filter>
     </ClInclude>
     <ClInclude Include="RoomCollision.hpp">
       <Filter>Content\Entity\Room</Filter>
@@ -462,39 +255,6 @@
     <ClInclude Include="ObjectBuilder.hpp">
       <Filter>GameElements</Filter>
     </ClInclude>
-    <ClInclude Include="BinaryRoom.h">
-      <Filter>WorldGenerator\RoomLayout\BSP</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneratedRoom.h">
-      <Filter>WorldGenerator\RoomLayout\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Graph.h">
-      <Filter>WorldGenerator\Common\Graph</Filter>
-    </ClInclude>
-    <ClInclude Include="Node.h">
-      <Filter>WorldGenerator\Common\Graph</Filter>
-    </ClInclude>
-    <ClInclude Include="RoomLayout.h">
-      <Filter>WorldGenerator\RoomLayout\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="RoomLayoutConfig.h">
-      <Filter>WorldGenerator\RoomLayout\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="RoomLink.h">
-      <Filter>WorldGenerator\RoomLayout\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="Utils.h">
-      <Filter>WorldGenerator\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector3.h">
-      <Filter>WorldGenerator\RoomLayout\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="RoomLayoutGenerator.h">
-      <Filter>WorldGenerator\RoomLayout</Filter>
-    </ClInclude>
-    <ClInclude Include="MapGenerator.h">
-      <Filter>WorldGenerator</Filter>
-    </ClInclude>
     <ClInclude Include="MapGeneratorAdapter.h">
       <Filter>WorldGeneratorAdapter</Filter>
     </ClInclude>
@@ -503,12 +263,6 @@
     </ClInclude>
     <ClInclude Include="MappingHelpers.h">
       <Filter>WorldGeneratorAdapter\Mapper</Filter>
-    </ClInclude>
-    <ClInclude Include="RoomSelector.h">
-      <Filter>WorldGenerator\RoomLayout\RooomSelector</Filter>
-    </ClInclude>
-    <ClInclude Include="RoomSelectorArgs.h">
-      <Filter>WorldGenerator\RoomLayout\RooomSelector</Filter>
     </ClInclude>
     <ClInclude Include="RoomModelGenerator.h">
       <Filter>Content\RoomModelGenerator</Filter>
@@ -528,29 +282,11 @@
     <ClInclude Include="Stairs.h">
       <Filter>Content\Entity\Room</Filter>
     </ClInclude>
-    <ClInclude Include="GraphUtils.h">
-      <Filter>WorldGenerator\Common\Graph</Filter>
-    </ClInclude>
-    <ClInclude Include="PathFinding.h">
-      <Filter>WorldGenerator\Common\Graph</Filter>
-    </ClInclude>
-    <ClInclude Include="WeightedGraph.h">
-      <Filter>WorldGenerator\Common\Graph</Filter>
-    </ClInclude>
-    <ClInclude Include="RNG.h">
-      <Filter>WorldGenerator\Common\RNG</Filter>
-    </ClInclude>
-    <ClInclude Include="RngUtils.h">
-      <Filter>WorldGenerator\Common\RNG</Filter>
-    </ClInclude>
     <ClInclude Include="AnimatedObjectBuilder.hpp">
       <Filter>GameElements</Filter>
     </ClInclude>
     <ClInclude Include="AnimatedObject.hpp">
       <Filter>GameElements</Filter>
-    </ClInclude>
-    <ClInclude Include="Skybox.h">
-      <Filter>Content\Skybox</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -650,26 +386,6 @@
     <None Include="Assets\Other\heli\heli.gltf">
       <Filter>Assets\Other\heli</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="Content\SamplePixelShader.hlsl">
-      <Filter>Content\Shaders\Sample</Filter>
-    </FxCompile>
-    <FxCompile Include="Content\SampleVertexShader.hlsl">
-      <Filter>Content\Shaders\Sample</Filter>
-    </FxCompile>
-    <FxCompile Include="SkeletalVertexShader.hlsl">
-      <Filter>Content\Shaders\Skeletal</Filter>
-    </FxCompile>
-    <FxCompile Include="SkeletalPixelShader.hlsl">
-      <Filter>Content\Shaders\Skeletal</Filter>
-    </FxCompile>
-    <FxCompile Include="HUDVertexShader.hlsl">
-      <Filter>Content\Shaders\HUD</Filter>
-    </FxCompile>
-    <FxCompile Include="HUDPixelShader.hlsl">
-      <Filter>Content\Shaders\HUD</Filter>
-    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="FirstPersonShooter.rc" />

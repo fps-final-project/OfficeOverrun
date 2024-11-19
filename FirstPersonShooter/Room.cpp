@@ -123,7 +123,7 @@ void Room::Render(std::shared_ptr<RenderMaster> renderMaster)
 	auto renderer = renderMaster->getModelRenderer();
 
 	// walls and floors
-	renderer->Render(*m_roomWalls);
+	m_roomWalls->Render(renderMaster);
 
 	// stairs
 	for (auto& link : m_links)
@@ -133,11 +133,11 @@ void Room::Render(std::shared_ptr<RenderMaster> renderMaster)
 		{
 			if (link.orientation == OrientationData::XZX)
 			{
-				renderer->Render(Entity(stairsModel, { link.pos.x + link.size.x, pos.y, link.pos.z + link.size.z }, { 5, size.y, 2 }, { 0, DirectX::XM_PI, 0 }));
+				renderer->Render(*stairsModel, { link.pos.x + link.size.x, pos.y, link.pos.z + link.size.z }, { 5, size.y, 2 }, { 0, DirectX::XM_PI, 0 });
 			}
 			else
 			{
-				renderer->Render(Entity(stairsModel, { link.pos.x, pos.y, link.pos.z + link.size.z }, { 5, size.y, 2 }, { 0, DirectX::XM_PIDIV2, 0 }));
+				renderer->Render(*stairsModel, { link.pos.x, pos.y, link.pos.z + link.size.z }, { 5, size.y, 2 }, { 0, DirectX::XM_PIDIV2, 0 });
 			}
 		}
 	}

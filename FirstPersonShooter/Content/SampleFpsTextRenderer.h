@@ -7,7 +7,7 @@
 namespace FirstPersonShooter
 {
 	// Renders the current FPS value in the bottom right corner of the screen using Direct2D and DirectWrite.
-	class SampleFpsTextRenderer
+	class __declspec(dllexport) SampleFpsTextRenderer
 	{
 	public:
 		SampleFpsTextRenderer(const std::shared_ptr<DX::DeviceResources>& deviceResources);
