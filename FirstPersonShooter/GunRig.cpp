@@ -5,10 +5,10 @@
 
 GunRig::GunRig(std::string gunName)
 {
-	m_hands = std::make_shared<AnimatedEntity>(ResourceManager::Instance.getAnimatedModel(gunName));
-	m_gun = std::make_shared<AnimatedEntity>(ResourceManager::Instance.getAnimatedModel(gunName + "_gun"));
-	m_gunSound = ResourceManager::Instance.getAudioFile(gunName);
-	m_reloadSound = ResourceManager::Instance.getAudioFile("reload");
+	m_hands = std::make_shared<AnimatedEntity>(ResourceManager::Instance().getAnimatedModel(gunName));
+	m_gun = std::make_shared<AnimatedEntity>(ResourceManager::Instance().getAnimatedModel(gunName + "_gun"));
+	m_gunSound = ResourceManager::Instance().getAudioFile(gunName);
+	m_reloadSound = ResourceManager::Instance().getAudioFile("reload");
 
 	this->ChangeGun(gunName);
 }
@@ -55,7 +55,7 @@ void GunRig::Shoot()
 
 void GunRig::ChangeGun(const std::string& name)
 {
-	std::shared_ptr<GunRigMetadata> data = ResourceManager::Instance.getGunRigMetadata(name);
+	std::shared_ptr<GunRigMetadata> data = ResourceManager::Instance().getGunRigMetadata(name);
 
 	if (data != nullptr && name != m_name)
 	{
@@ -65,9 +65,9 @@ void GunRig::ChangeGun(const std::string& name)
 		m_name = data->name;
 		m_shootingAnimationSpeedup = data->shootingAnimationSpeedup;
 
-		m_hands->setModel(ResourceManager::Instance.getAnimatedModel(data->name));
-		m_gun->setModel(ResourceManager::Instance.getAnimatedModel(data->name + "_gun"));
-		m_gunSound = ResourceManager::Instance.getAudioFile(data->name);
+		m_hands->setModel(ResourceManager::Instance().getAnimatedModel(data->name));
+		m_gun->setModel(ResourceManager::Instance().getAnimatedModel(data->name + "_gun"));
+		m_gunSound = ResourceManager::Instance().getAudioFile(data->name);
 
 		m_hands->setFallbackAnimation("idle");
 		m_gun->setFallbackAnimation("idle");

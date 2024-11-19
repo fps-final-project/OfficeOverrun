@@ -10,7 +10,7 @@
 #include "CollisionDetector.hpp"
 #include "Player.h"
 
-class GameState
+class __declspec(dllexport) GameState
 {
 public:
 	std::unique_ptr<World> m_world;

@@ -1,19 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Common">
-      <UniqueIdentifier>37c04009-f5e8-495b-9e49-6f6fa444e88f</UniqueIdentifier>
-    </Filter>
     <Filter Include="Assets">
       <UniqueIdentifier>d5318baa-46a1-495a-b3e7-2a040b905318</UniqueIdentifier>
       <Extensions>bmp;fbx;gif;jpg;jpeg;tga;tiff;tif;png</Extensions>
     </Filter>
-    <Filter Include="Content">
-      <UniqueIdentifier>26a3a00d-2dd0-4e7f-887f-279a615a634c</UniqueIdentifier>
-    </Filter>
-    <ClInclude Include="Common\StepTimer.h">
-      <Filter>Common</Filter>
-    </ClInclude>
     <Image Include="Assets\LockScreenLogo.scale-200.png">
       <Filter>Assets</Filter>
     </Image>
@@ -32,42 +23,6 @@
     <Image Include="Assets\Wide310x150Logo.scale-200.png">
       <Filter>Assets</Filter>
     </Image>
-    <Filter Include="Content\Entity">
-      <UniqueIdentifier>{675191b9-1eec-4ae2-9cc0-614336ab7477}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Content\ResourceManager">
-      <UniqueIdentifier>{678fb081-8b14-47d5-9c1e-0dce2fc2b6a7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Content\World">
-      <UniqueIdentifier>{844638fe-742d-40b3-a363-404e64ecbf35}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Base">
-      <UniqueIdentifier>{55808537-456c-4681-8aa2-a22854a1caaf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Events">
-      <UniqueIdentifier>{7fb1627b-d8e3-4f7c-b79f-509e91e0b17e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Content\Entity\GunRig">
-      <UniqueIdentifier>{f5d3f666-f005-4e87-9563-2779be746441}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Content\Player">
-      <UniqueIdentifier>{9fd31a02-dea0-4701-8e34-bbd4e5a3d198}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Content\Entity\Room">
-      <UniqueIdentifier>{a0c90a09-601c-44f0-96cb-c9a3c24ae15a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameElements">
-      <UniqueIdentifier>{c7913cd6-4577-4273-ae0a-bb2d03243413}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="WorldGeneratorAdapter">
-      <UniqueIdentifier>{774b7bab-b759-451c-94f5-63d310975a76}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="WorldGeneratorAdapter\Mapper">
-      <UniqueIdentifier>{214de76f-0ded-4ce0-961f-ae52db94260f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Audio">
-      <UniqueIdentifier>{822331e8-fedb-40db-898e-79e556e4d761}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Assets\GunRig">
       <UniqueIdentifier>{9fc70142-bf4f-476d-bae9-198f1768cde9}</UniqueIdentifier>
     </Filter>
@@ -101,9 +56,6 @@
     <Filter Include="Assets\GunRig\sniper">
       <UniqueIdentifier>{d6ccbe41-c732-439c-94bd-2e1fdb7f0c25}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Content\RoomModelGenerator">
-      <UniqueIdentifier>{f0f28225-0827-46e2-b9d9-466de74d841b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Assets\Other\stairs">
       <UniqueIdentifier>{3cb61fc3-5875-48bb-963c-95f4f7cdd52e}</UniqueIdentifier>
     </Filter>
@@ -115,179 +67,13 @@
     <ClCompile Include="App.cpp" />
     <ClCompile Include="FirstPersonShooterMain.cpp" />
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="Entity.cpp">
-      <Filter>Content\Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="Hittable.cpp">
-      <Filter>Content\Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourceManager.cpp">
-      <Filter>Content\ResourceManager</Filter>
-    </ClCompile>
-    <ClCompile Include="World.cpp">
-      <Filter>Content\World</Filter>
-    </ClCompile>
-    <ClCompile Include="AnimatedEntity.cpp">
-      <Filter>Content\Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="Animable.cpp">
-      <Filter>Content\Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="CollisionDetector.cpp">
-      <Filter>Base</Filter>
-    </ClCompile>
-    <ClCompile Include="SimpleCollisionDetector.cpp">
-      <Filter>Base</Filter>
-    </ClCompile>
-    <ClCompile Include="InputHandler.cpp">
-      <Filter>Events</Filter>
-    </ClCompile>
-    <ClCompile Include="GunRig.cpp">
-      <Filter>Content\Entity\GunRig</Filter>
-    </ClCompile>
-    <ClCompile Include="ActionHandler.cpp" />
-    <ClCompile Include="GameState.cpp" />
-    <ClCompile Include="ResourceHelper.cpp">
-      <Filter>Content\ResourceManager</Filter>
-    </ClCompile>
-    <ClCompile Include="Room.cpp">
-      <Filter>Content\Entity\Room</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Content\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>GameElements</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyBuilder.cpp">
-      <Filter>GameElements</Filter>
-    </ClCompile>
-    <ClCompile Include="Object.cpp">
-      <Filter>GameElements</Filter>
-    </ClCompile>
-    <ClCompile Include="ObjectBuilder.cpp">
-      <Filter>GameElements</Filter>
-    </ClCompile>
-    <ClCompile Include="MapGeneratorAdapter.cpp">
-      <Filter>WorldGeneratorAdapter</Filter>
-    </ClCompile>
-    <ClCompile Include="MappingHelpers.cpp">
-      <Filter>WorldGeneratorAdapter\Mapper</Filter>
-    </ClCompile>
-    <ClCompile Include="RoomModelGenerator.cpp">
-      <Filter>Content\RoomModelGenerator</Filter>
-    </ClCompile>
-    <ClCompile Include="GunRigMetadata.cpp">
-      <Filter>Content\Entity\GunRig</Filter>
-    </ClCompile>
-    <ClCompile Include="AudioReader.cpp">
-      <Filter>Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="Stairs.cpp">
-      <Filter>Content\Entity\Room</Filter>
-    </ClCompile>
-    <ClCompile Include="AnimatedObjectBuilder.cpp">
-      <Filter>GameElements</Filter>
-    </ClCompile>
-    <ClCompile Include="AnimatedObject.cpp">
-      <Filter>GameElements</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
     <ClInclude Include="FirstPersonShooterMain.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Entity.hpp">
-      <Filter>Content\Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="Hittable.hpp">
-      <Filter>Content\Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="Animable.hpp">
-      <Filter>Content\Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimatedEntity.hpp">
-      <Filter>Content\Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceManager.h">
-      <Filter>Content\ResourceManager</Filter>
-    </ClInclude>
-    <ClInclude Include="World.h">
-      <Filter>Content\World</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h" />
-    <ClInclude Include="CollisionDetector.hpp">
-      <Filter>Base</Filter>
-    </ClInclude>
-    <ClInclude Include="SimpleCollisionDetector.hpp">
-      <Filter>Base</Filter>
-    </ClInclude>
-    <ClInclude Include="InputHandler.hpp">
-      <Filter>Events</Filter>
-    </ClInclude>
-    <ClInclude Include="GunRig.h">
-      <Filter>Content\Entity\GunRig</Filter>
-    </ClInclude>
-    <ClInclude Include="ActionHandler.hpp" />
-    <ClInclude Include="ActionTypes.hpp" />
-    <ClInclude Include="GameState.hpp" />
-    <ClInclude Include="ResourceHelper.hpp">
-      <Filter>Content\ResourceManager</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Content\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Room.hpp">
-      <Filter>Content\Entity\Room</Filter>
-    </ClInclude>
-    <ClInclude Include="RoomCollision.hpp">
-      <Filter>Content\Entity\Room</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.hpp">
-      <Filter>GameElements</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyBuilder.hpp">
-      <Filter>GameElements</Filter>
-    </ClInclude>
-    <ClInclude Include="Object.hpp">
-      <Filter>GameElements</Filter>
-    </ClInclude>
-    <ClInclude Include="ObjectBuilder.hpp">
-      <Filter>GameElements</Filter>
-    </ClInclude>
-    <ClInclude Include="MapGeneratorAdapter.h">
-      <Filter>WorldGeneratorAdapter</Filter>
-    </ClInclude>
-    <ClInclude Include="MapGeneratorMapper.h">
-      <Filter>WorldGeneratorAdapter\Mapper</Filter>
-    </ClInclude>
-    <ClInclude Include="MappingHelpers.h">
-      <Filter>WorldGeneratorAdapter\Mapper</Filter>
-    </ClInclude>
-    <ClInclude Include="RoomModelGenerator.h">
-      <Filter>Content\RoomModelGenerator</Filter>
-    </ClInclude>
-    <ClInclude Include="RoomLinkData.hpp">
-      <Filter>Content\Entity\Room</Filter>
-    </ClInclude>
-    <ClInclude Include="GunRigMetadata.hpp">
-      <Filter>Content\Entity\GunRig</Filter>
-    </ClInclude>
-    <ClInclude Include="AudioReader.hpp">
-      <Filter>Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="AudioFile.hpp">
-      <Filter>Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="Stairs.h">
-      <Filter>Content\Entity\Room</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimatedObjectBuilder.hpp">
-      <Filter>GameElements</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimatedObject.hpp">
-      <Filter>GameElements</Filter>
-    </ClInclude>
+    <ClInclude Include="Common\StepTimer.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\StoreLogo.png">

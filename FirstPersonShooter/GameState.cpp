@@ -32,7 +32,7 @@ GameState::GameState(
 	ObjectBuilder objectBuilder{};
 
 	auto zombie = enemyBuilder
-		.WithNewEnemy(ResourceManager::Instance.getAnimatedModel("zombie_war"))
+		.WithNewEnemy(ResourceManager::Instance().getAnimatedModel("zombie_war"))
 		.WithMaxHealth(100)
 		.WithDamage(10)
 		.WithSpeed(0.05f)

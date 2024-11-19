@@ -6,9 +6,15 @@
 #include "TextureFactory.h"
 #include <filesystem>
 
-ResourceManager ResourceManager::Instance;
+//ResourceManager ResourceManager::Instance();
 
-void ResourceManager::loadModel(const std::string& path, 
+ResourceManager& ResourceManager::Instance()
+{
+	static ResourceManager manager;
+	return manager;
+}
+
+void ResourceManager::loadModel(const std::string& path,
 	const std::shared_ptr<DX::DeviceResources>& deviceResources,
 	const std::string& nameOverride)
 {
