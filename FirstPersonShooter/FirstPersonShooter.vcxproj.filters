@@ -59,24 +59,6 @@
     <Filter Include="GameElements">
       <UniqueIdentifier>{c7913cd6-4577-4273-ae0a-bb2d03243413}</UniqueIdentifier>
     </Filter>
-    <Filter Include="WorldGenerator">
-      <UniqueIdentifier>{706e0f5a-fcd5-4407-89df-e0b2155075f6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="WorldGenerator\Common">
-      <UniqueIdentifier>{1f11af94-cf83-491c-a7a0-29039046eea7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="WorldGenerator\Common\Graph">
-      <UniqueIdentifier>{5fc7c998-0bda-4691-a0b7-0e3b9a471d9e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="WorldGenerator\RoomLayout">
-      <UniqueIdentifier>{d49c5293-81bd-467c-9bb7-b7cbac6c0020}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="WorldGenerator\RoomLayout\BSP">
-      <UniqueIdentifier>{a0a89133-5811-4fe9-985d-9190e3604b97}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="WorldGenerator\RoomLayout\Model">
-      <UniqueIdentifier>{89bcd098-54e1-4e4b-b75f-ef0b36be974d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="WorldGeneratorAdapter">
       <UniqueIdentifier>{774b7bab-b759-451c-94f5-63d310975a76}</UniqueIdentifier>
     </Filter>
@@ -121,12 +103,6 @@
     </Filter>
     <Filter Include="Content\RoomModelGenerator">
       <UniqueIdentifier>{f0f28225-0827-46e2-b9d9-466de74d841b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="WorldGenerator\RoomLayout\RooomSelector">
-      <UniqueIdentifier>{97ad2e10-ce1f-429c-8771-5c5bdf50c841}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="WorldGenerator\Common\RNG">
-      <UniqueIdentifier>{019c11fa-7298-4158-9aea-65662fa33458}</UniqueIdentifier>
     </Filter>
     <Filter Include="Assets\Other\stairs">
       <UniqueIdentifier>{3cb61fc3-5875-48bb-963c-95f4f7cdd52e}</UniqueIdentifier>
