@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "CppUnitTest.h"
 
-#include "Mesh.h"
+#include "RenderQueue.hpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -12,7 +12,8 @@ namespace FirstPersonShooter_Rendering_Test
     public:
         TEST_METHOD(TestMethod1)
         {
-            Mesh mesh;
+            RenderQueue queue;
+            queue.Push(RenderData(RendererType::MODEL, nullptr));
             Assert::AreEqual(1, 1);
         }
     };

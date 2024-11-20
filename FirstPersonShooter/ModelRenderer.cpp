@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "ModelRenderer.hpp"
-#include "Entity.hpp"
 
 ModelRenderer::ModelRenderer(const std::shared_ptr<DX::DeviceResources>& deviceResources)
 	: Base3DRenderer(deviceResources)

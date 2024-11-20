@@ -215,7 +215,7 @@
     <ClInclude Include="..\FirstPersonShooter\ActionHandler.hpp" />
     <ClInclude Include="..\FirstPersonShooter\ActionTypes.hpp" />
     <ClInclude Include="..\FirstPersonShooter\GameState.hpp" />
-    <ClInclude Include="Singleton.h" />
+    <ClInclude Include="FirstPersonShooter.Core.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

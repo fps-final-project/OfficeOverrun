@@ -279,8 +279,8 @@
     <ClInclude Include="..\FirstPersonShooter\SimpleCollisionDetector.hpp" />
     <ClInclude Include="..\FirstPersonShooter\Stairs.h" />
     <ClInclude Include="..\FirstPersonShooter\World.h" />
+    <ClInclude Include="FirstPersonShooter.Core.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Singleton.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>

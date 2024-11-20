@@ -5,7 +5,7 @@
 
 using namespace DirectX;
 
-class Entity : public Drawable, public Hittable
+class __declspec(dllexport) Entity : public Drawable, public Hittable
 {
 public:
 	Entity(std::shared_ptr<Model> model,

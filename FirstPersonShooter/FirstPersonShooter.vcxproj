@@ -315,6 +315,9 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Vendor\assimp\lib\x64\assimp-vc143-mtd.dll">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+    </None>
     <None Include="Assets\Enemy\Zombie\zombie_war.gltf">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
@@ -435,8 +438,5 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\directxtk_uwp.2024.6.5.1\build\native\directxtk_uwp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\directxtk_uwp.2024.6.5.1\build\native\directxtk_uwp.targets'))" />
-  </Target>
-  <Target Name="AfterBuild">
-    <Copy SourceFiles="$(SolutionDir)Vendor\assimp\lib\x64\assimp-vc143-mtd.dll" DestinationFolder="$(TargetDir)\AppX" SkipUnchangedFiles="false" />
   </Target>
 </Project>
