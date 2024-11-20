@@ -33,12 +33,12 @@ void ResourceHelper::addQuad(const std::string& texturePath, std::string texture
 		}
 	}
 
-	ResourceManager::Instance.loadTexture(texturePath, deviceResources, textureName);
+	ResourceManager::Instance().loadTexture(texturePath, deviceResources, textureName);
 	Model model;
 	model.meshes.push_back(MeshFactory<VertexData>::createMesh(verticies, indicies,
-		{ ResourceManager::Instance.getTexture(textureName) }, deviceResources));
+		{ ResourceManager::Instance().getTexture(textureName) }, deviceResources));
 
-	ResourceManager::Instance.addModel(model, modelName);
+	ResourceManager::Instance().addModel(model, modelName);
 
 }
 
@@ -99,11 +99,11 @@ void ResourceHelper::createSkyboxMesh(const std::string& texturePath, const std:
 	}
 
 	std::string name = "skybox";
-	ResourceManager::Instance.loadTexture(texturePath, deviceResources, name);
+	ResourceManager::Instance().loadTexture(texturePath, deviceResources, name);
 	Model model;
 	model.meshes.push_back(MeshFactory<VertexData>::createMesh(verticies, indicies,
-		{ ResourceManager::Instance.getTexture(name) }, deviceResources));
+		{ ResourceManager::Instance().getTexture(name) }, deviceResources));
 
-	ResourceManager::Instance.addModel(model, name);
+	ResourceManager::Instance().addModel(model, name);
 
 }

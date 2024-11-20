@@ -3,7 +3,7 @@
 #include "Camera.hpp"
 #include "RoomCollision.hpp"
 
-class Player : public Drawable
+class __declspec(dllexport) Player : public Drawable
 {
 public:
 	Player();

@@ -7,11 +7,11 @@
 
 
 
-class Room : public Drawable
+class __declspec(dllexport) Room : public Drawable
 {
 	DirectX::XMFLOAT3 pos;
 	DirectX::XMFLOAT3 size;
-	std::unique_ptr<Entity> m_roomWalls;
+	std::shared_ptr<Entity> m_roomWalls;
 	static const float wallOffset;
 
 public:

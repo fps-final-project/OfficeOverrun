@@ -94,7 +94,7 @@ void World::AddHelicopter()
 	m_helicopterPos = { stairsPos.x + 2 * v_mid_x, lastRoom.getPosition().y, stairsPos.z + 2 * v_mid_z };
 
 	auto heli = AnimatedObjectBuilder()
-		.WithNewObject(ResourceManager::Instance.getAnimatedModel("heli"))
+		.WithNewObject(ResourceManager::Instance().getAnimatedModel("heli"))
 		.WithPosition(m_helicopterPos)
 		.WithRotation({ 0.f, 0.f, 0.f })
 		.WithVelocity({ 0.f, 0.f, 0.f })

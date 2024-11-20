@@ -19,13 +19,13 @@ Model RoomModelGenerator::generateRoomModel(DirectX::XMFLOAT3 pos, DirectX::XMFL
 	generateWall(verticies, indicies, { pos.x + size.x, pos.y, pos.z }, { pos.x + size.x, pos.y + size.y, pos.z + size.z }, links, DirectX::XM_PIDIV2);
 	generateFloor(verticies, indicies, { pos.x, pos.y + size.y, pos.z }, { pos.x + size.x, pos.y + size.y, pos.z + size.z }, links, true);
 
-	model.meshes.push_back(MeshFactory<VertexData>::createMesh(verticies, indicies, { ResourceManager::Instance.getTexture("wall")}, deviceResources));
+	model.meshes.push_back(MeshFactory<VertexData>::createMesh(verticies, indicies, { ResourceManager::Instance().getTexture("wall")}, deviceResources));
 
 	verticies.clear();
 	indicies.clear();
 	
 	generateFloor(verticies, indicies, { pos.x, pos.y, pos.z }, { pos.x + size.x, pos.y, pos.z + size.z }, links, false);
-	model.meshes.push_back(MeshFactory<VertexData>::createMesh(verticies, indicies, { ResourceManager::Instance.getTexture("floor")}, deviceResources));
+	model.meshes.push_back(MeshFactory<VertexData>::createMesh(verticies, indicies, { ResourceManager::Instance().getTexture("floor")}, deviceResources));
 
 
 
@@ -39,7 +39,7 @@ Model RoomModelGenerator::generateRoof(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 
 	std::vector<unsigned short> indicies;
 
 	generateFloor(verticies, indicies, { pos.x, pos.y, pos.z }, { pos.x + size.x, pos.y, pos.z + size.z }, links, false);
-	model.meshes.push_back(MeshFactory<VertexData>::createMesh(verticies, indicies, { ResourceManager::Instance.getTexture("concrete") }, deviceResources));
+	model.meshes.push_back(MeshFactory<VertexData>::createMesh(verticies, indicies, { ResourceManager::Instance().getTexture("concrete") }, deviceResources));
 
 	return model;
 }

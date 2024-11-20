@@ -14,7 +14,7 @@ Room::Room(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 size, const std::vector<Room
 
 void Room::setModel(Model model)
 {
-	m_roomWalls = std::make_unique<Entity>(std::make_shared<Model>(model));
+	m_roomWalls = std::make_shared<Entity>(std::make_shared<Model>(model));
 }
 
 RoomCollision Room::checkCollision(DirectX::XMFLOAT3 entityPos) const
@@ -117,9 +117,9 @@ bool Room::insideRoom(DirectX::XMFLOAT3 pos) const
 
 void Room::Render(std::shared_ptr<RenderMaster> renderMaster)
 {
-	auto ceilingModel = ResourceManager::Instance.getModel("wall");
-	auto floorModel = ResourceManager::Instance.getModel("floor");
-	auto stairsModel = ResourceManager::Instance.getModel("stairs");
+	auto ceilingModel = ResourceManager::Instance().getModel("wall");
+	auto floorModel = ResourceManager::Instance().getModel("floor");
+	auto stairsModel = ResourceManager::Instance().getModel("stairs");
 	auto renderer = renderMaster->getModelRenderer();
 
 	// walls and floors

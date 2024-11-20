@@ -289,66 +289,15 @@
     <Image Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ActionHandler.hpp" />
-    <ClInclude Include="ActionTypes.hpp" />
-    <ClInclude Include="AnimatedObject.hpp" />
-    <ClInclude Include="AnimatedObjectBuilder.hpp" />
-    <ClInclude Include="AudioFile.hpp" />
-    <ClInclude Include="AudioReader.hpp" />
-    <ClInclude Include="Enemy.hpp" />
-    <ClInclude Include="EnemyBuilder.hpp" />
-    <ClInclude Include="GameState.hpp" />
-    <ClInclude Include="GunRig.h" />
-    <ClInclude Include="GunRigMetadata.hpp" />
-    <ClInclude Include="MapGeneratorAdapter.h" />
-    <ClInclude Include="MapGeneratorMapper.h" />
-    <ClInclude Include="MappingHelpers.h" />
-    <ClInclude Include="Object.hpp" />
-    <ClInclude Include="ObjectBuilder.hpp" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="ResourceHelper.hpp" />
-    <ClInclude Include="Room.hpp" />
-    <ClInclude Include="RoomCollision.hpp" />
-    <ClInclude Include="RoomLinkData.hpp" />
-    <ClInclude Include="RoomModelGenerator.h" />
-    <ClInclude Include="Animable.hpp" />
-    <ClInclude Include="AnimatedEntity.hpp" />
     <ClInclude Include="App.h" />
-    <ClInclude Include="CollisionDetector.hpp" />
-    <ClInclude Include="Entity.hpp" />
-    <ClInclude Include="FirstPersonShooterMain.h" />
     <ClInclude Include="Common\StepTimer.h" />
-    <ClInclude Include="Hittable.hpp" />
-    <ClInclude Include="InputHandler.hpp" />
+    <ClInclude Include="FirstPersonShooterMain.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="ResourceManager.h" />
-    <ClInclude Include="SimpleCollisionDetector.hpp" />
-    <ClInclude Include="Stairs.h" />
-    <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ActionHandler.cpp" />
-    <ClCompile Include="Animable.cpp" />
-    <ClCompile Include="AnimatedEntity.cpp" />
-    <ClCompile Include="AnimatedObject.cpp" />
-    <ClCompile Include="AnimatedObjectBuilder.cpp" />
     <ClCompile Include="App.cpp" />
-    <ClCompile Include="AudioReader.cpp" />
-    <ClCompile Include="CollisionDetector.cpp" />
-    <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="EnemyBuilder.cpp" />
-    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="FirstPersonShooterMain.cpp" />
-    <ClCompile Include="GameState.cpp" />
-    <ClCompile Include="GunRig.cpp" />
-    <ClCompile Include="GunRigMetadata.cpp" />
-    <ClCompile Include="Hittable.cpp" />
-    <ClCompile Include="InputHandler.cpp" />
-    <ClCompile Include="MapGeneratorAdapter.cpp" />
-    <ClCompile Include="MappingHelpers.cpp" />
-    <ClCompile Include="Object.cpp" />
-    <ClCompile Include="ObjectBuilder.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -359,14 +308,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="ResourceHelper.cpp" />
-    <ClCompile Include="Room.cpp" />
-    <ClCompile Include="RoomModelGenerator.cpp" />
-    <ClCompile Include="SimpleCollisionDetector.cpp" />
-    <ClCompile Include="ResourceManager.cpp" />
-    <ClCompile Include="Stairs.cpp" />
-    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -374,6 +315,9 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Vendor\assimp\lib\x64\assimp-vc143-mtd.dll">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+    </None>
     <None Include="Assets\Enemy\Zombie\zombie_war.gltf">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
@@ -472,6 +416,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FirstPersonShooter.Core\FirstPersonShooter.Core.vcxproj">
+      <Project>{28210341-8279-465b-8e97-634d4633d56a}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\FirstPersonShooter.Rendering\FirstPersonShooter.Rendering.vcxproj">
       <Project>{a0f46924-38c3-48ec-8fa2-537b64c35c84}</Project>
     </ProjectReference>
@@ -491,8 +438,5 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\directxtk_uwp.2024.6.5.1\build\native\directxtk_uwp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\directxtk_uwp.2024.6.5.1\build\native\directxtk_uwp.targets'))" />
-  </Target>
-  <Target Name="AfterBuild">
-    <Copy SourceFiles="$(SolutionDir)Vendor\assimp\lib\x64\assimp-vc143-mtd.dll" DestinationFolder="$(TargetDir)\AppX" SkipUnchangedFiles="false" />
   </Target>
 </Project>

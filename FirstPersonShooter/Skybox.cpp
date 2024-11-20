@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "Skybox.h"
-#include "Entity.hpp"
 
 void Skybox::RenderSkybox(DirectX::XMFLOAT3 cameraPos, std::shared_ptr<RenderMaster> renderMaster, std::shared_ptr<Model> skyboxModel)
 {

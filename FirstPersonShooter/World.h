@@ -22,7 +22,7 @@ struct GUIDComparer
 };
 
 
-class World
+class __declspec(dllexport) World
 {
 	std::set<int> m_visibleRooms;
 	DirectX::XMFLOAT3 m_helicopterPos;

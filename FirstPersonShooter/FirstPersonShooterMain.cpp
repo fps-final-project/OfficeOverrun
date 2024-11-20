@@ -24,46 +24,46 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 
 	bool load_only_ak = true;
 
-	ResourceManager::Instance.loadAnimatedModel("Assets\\Enemy\\Zombie\\zombie_war.gltf", m_deviceResources);
-	ResourceManager::Instance.loadAnimatedModel("Assets\\Other\\heli\\heli.gltf", m_deviceResources);
+	ResourceManager::Instance().loadAnimatedModel("Assets\\Enemy\\Zombie\\zombie_war.gltf", m_deviceResources);
+	ResourceManager::Instance().loadAnimatedModel("Assets\\Other\\heli\\heli.gltf", m_deviceResources);
 
-	ResourceManager::Instance.loadAnimatedModel("Assets\\GunRig\\AK\\ak.gltf", m_deviceResources);
-	ResourceManager::Instance.loadAnimatedModel("Assets\\GunRig\\AK\\ak_gun.gltf", m_deviceResources);
-	ResourceManager::Instance.loadGunRigMetadata("Assets\\GunRig\\AK\\ak.txt");
+	ResourceManager::Instance().loadAnimatedModel("Assets\\GunRig\\AK\\ak.gltf", m_deviceResources);
+	ResourceManager::Instance().loadAnimatedModel("Assets\\GunRig\\AK\\ak_gun.gltf", m_deviceResources);
+	ResourceManager::Instance().loadGunRigMetadata("Assets\\GunRig\\AK\\ak.txt");
 
 	if (!load_only_ak)
 	{
-		ResourceManager::Instance.loadAnimatedModel("Assets\\GunRig\\FN\\FN.gltf", m_deviceResources);
-		ResourceManager::Instance.loadAnimatedModel("Assets\\GunRig\\FN\\FN_gun.gltf", m_deviceResources);
-		ResourceManager::Instance.loadGunRigMetadata("Assets\\GunRig\\FN\\FN.txt");
+		ResourceManager::Instance().loadAnimatedModel("Assets\\GunRig\\FN\\FN.gltf", m_deviceResources);
+		ResourceManager::Instance().loadAnimatedModel("Assets\\GunRig\\FN\\FN_gun.gltf", m_deviceResources);
+		ResourceManager::Instance().loadGunRigMetadata("Assets\\GunRig\\FN\\FN.txt");
 
-		ResourceManager::Instance.loadAnimatedModel("Assets\\GunRig\\smg\\smg.gltf", m_deviceResources);
-		ResourceManager::Instance.loadAnimatedModel("Assets\\GunRig\\smg\\smg_gun.gltf", m_deviceResources);
-		ResourceManager::Instance.loadGunRigMetadata("Assets\\GunRig\\smg\\smg.txt");
+		ResourceManager::Instance().loadAnimatedModel("Assets\\GunRig\\smg\\smg.gltf", m_deviceResources);
+		ResourceManager::Instance().loadAnimatedModel("Assets\\GunRig\\smg\\smg_gun.gltf", m_deviceResources);
+		ResourceManager::Instance().loadGunRigMetadata("Assets\\GunRig\\smg\\smg.txt");
 
-		ResourceManager::Instance.loadAnimatedModel("Assets\\GunRig\\sniper\\sniper.gltf", m_deviceResources);
-		ResourceManager::Instance.loadAnimatedModel("Assets\\GunRig\\sniper\\sniper_gun.gltf", m_deviceResources);
-		ResourceManager::Instance.loadGunRigMetadata("Assets\\GunRig\\sniper\\sniper.txt");
+		ResourceManager::Instance().loadAnimatedModel("Assets\\GunRig\\sniper\\sniper.gltf", m_deviceResources);
+		ResourceManager::Instance().loadAnimatedModel("Assets\\GunRig\\sniper\\sniper_gun.gltf", m_deviceResources);
+		ResourceManager::Instance().loadGunRigMetadata("Assets\\GunRig\\sniper\\sniper.txt");
 
 	}
 
-	ResourceManager::Instance.loadTexture("Assets\\Other\\crosshair\\crosshair.png", m_deviceResources);
+	ResourceManager::Instance().loadTexture("Assets\\Other\\crosshair\\crosshair.png", m_deviceResources);
 
 	ResourceHelper::createSkyboxMesh("Assets\\Other\\skybox\\skybox.png", m_deviceResources);
 
-	//ResourceManager::Instance.loadModel("Assets\\Other\\bullet\\bullet.obj", m_deviceResources);
-	ResourceManager::Instance.loadModel("Assets\\Other\\stairs\\stairs.gltf", m_deviceResources);
-	ResourceManager::Instance.loadTexture("Assets\\Other\\wall\\wall.jpg", m_deviceResources);
-	ResourceManager::Instance.loadTexture("Assets\\Other\\wall\\floor.jpg", m_deviceResources);
-	ResourceManager::Instance.loadTexture("Assets\\Other\\wall\\concrete.jpg", m_deviceResources);
+	//ResourceManager::Instance().loadModel("Assets\\Other\\bullet\\bullet.obj", m_deviceResources);
+	ResourceManager::Instance().loadModel("Assets\\Other\\stairs\\stairs.gltf", m_deviceResources);
+	ResourceManager::Instance().loadTexture("Assets\\Other\\wall\\wall.jpg", m_deviceResources);
+	ResourceManager::Instance().loadTexture("Assets\\Other\\wall\\floor.jpg", m_deviceResources);
+	ResourceManager::Instance().loadTexture("Assets\\Other\\wall\\concrete.jpg", m_deviceResources);
 
 
-	ResourceManager::Instance.loadAudioFile("Assets\\Audio\\dark-horror-background-252905.wav", XAUDIO2_LOOP_INFINITE, m_deviceResources, "music");
-	ResourceManager::Instance.loadAudioFile("Assets\\Audio\\ak.wav", 0, m_deviceResources, "ak");
-	ResourceManager::Instance.loadAudioFile("Assets\\Audio\\FN.wav", 0, m_deviceResources, "FN");
-	ResourceManager::Instance.loadAudioFile("Assets\\Audio\\smg.wav", 0, m_deviceResources, "smg");
-	ResourceManager::Instance.loadAudioFile("Assets\\Audio\\sniper.wav", 0, m_deviceResources, "sniper");
-	ResourceManager::Instance.loadAudioFile("Assets\\Audio\\reload.wav", 0, m_deviceResources, "reload");
+	ResourceManager::Instance().loadAudioFile("Assets\\Audio\\dark-horror-background-252905.wav", XAUDIO2_LOOP_INFINITE, m_deviceResources, "music");
+	ResourceManager::Instance().loadAudioFile("Assets\\Audio\\ak.wav", 0, m_deviceResources, "ak");
+	ResourceManager::Instance().loadAudioFile("Assets\\Audio\\FN.wav", 0, m_deviceResources, "FN");
+	ResourceManager::Instance().loadAudioFile("Assets\\Audio\\smg.wav", 0, m_deviceResources, "smg");
+	ResourceManager::Instance().loadAudioFile("Assets\\Audio\\sniper.wav", 0, m_deviceResources, "sniper");
+	ResourceManager::Instance().loadAudioFile("Assets\\Audio\\reload.wav", 0, m_deviceResources, "reload");
 
 
 	m_spriteRenderer = std::make_unique<SpriteRenderer>(m_deviceResources->GetD3DDeviceContext());
@@ -76,7 +76,7 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 
 	m_mouse->SetMode(DirectX::Mouse::MODE_RELATIVE);
 
-	//DX::ThrowIfFailed(ResourceManager::Instance.getAudioFile("music")->pXAudio2SourceVoice->Start(0));
+	//DX::ThrowIfFailed(ResourceManager::Instance().getAudioFile("music")->pXAudio2SourceVoice->Start(0));
 }
 
 FirstPersonShooterMain::~FirstPersonShooterMain()
@@ -146,12 +146,12 @@ bool FirstPersonShooterMain::Render()
 	m_gameState->m_actionHandler->SetLastHitEntity(entityToHit);
 
 	Skybox::RenderSkybox(m_gameState->m_camera->getPosition(), 
-		m_renderMaster, ResourceManager::Instance.getModel("skybox"));
+		m_renderMaster, ResourceManager::Instance().getModel("skybox"));
 
 	m_spriteRenderer->BeginRendering(context, viewport);
 	Size outputSize = m_deviceResources->GetOutputSize();
 	int size = 100;
-	m_spriteRenderer->Render(ResourceManager::Instance.getTexture("crosshair"),
+	m_spriteRenderer->Render(ResourceManager::Instance().getTexture("crosshair"),
 		(outputSize.Width - size) / 2,
 		(outputSize.Height - size) / 2,
 		size,
