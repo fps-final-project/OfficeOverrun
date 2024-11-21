@@ -199,5 +199,41 @@ namespace FirstPersonShooter_Rendering_Test
 
 			Assert::IsTrue(matNorm < 1e-9);
 		}
+
+		TEST_METHOD(UpdateAnimation_uses_offsetMatrix)
+		{
+			// arrange
+			DirectX::XMFLOAT3 animationPositionOffset = { 2.f, 2.f, 3.f };
+			DirectX::XMFLOAT3 innatePositionOffset = { 5.f, 7.f, 9.f };
+
+			Animation animation = GetAnimation(animationPositionOffset, DEFAULT_ORIENTATION, DEFAULT_SCALE);
+			Animator animator;
+
+			DirectX::XMStoreFloat4x4(
+				&boneInfoMap[rootJoint.name].offsetMatrix,
+				DirectX::XMMatrixTranslation(innatePositionOffset.x, innatePositionOffset.y, innatePositionOffset.z)
+			);
+
+			// act
+			animator.playAnimation(std::make_shared<Animation>(animation));
+			animator.updateAnimation(rootJoint, boneInfoMap, ANIMATION_UPDATE_TICK);
+
+			auto rootTransformMatrix = animator.m_finalBoneMatrices[rootJoint.id];
+			DirectX::XMFLOAT4X4 rootTransformMatrix_asf4x4;
+			DirectX::XMStoreFloat4x4(&rootTransformMatrix_asf4x4, rootTransformMatrix);
+
+
+			// assert
+			animationPositionOffset = {
+				(DEFAULT_POSITION.x + (animationPositionOffset.x - DEFAULT_POSITION.x) / ((ANIMATION_UPDATE_TICK * ANIMATION_TICKSPERSECOND)) / ANIMATION_DURATION),
+				(DEFAULT_POSITION.y + (animationPositionOffset.y - DEFAULT_POSITION.y) / ((ANIMATION_UPDATE_TICK * ANIMATION_TICKSPERSECOND)) / ANIMATION_DURATION),
+				(DEFAULT_POSITION.z + (animationPositionOffset.z - DEFAULT_POSITION.z) / ((ANIMATION_UPDATE_TICK * ANIMATION_TICKSPERSECOND)) / ANIMATION_DURATION) };
+
+			auto matNorm = matrixNorm2(
+				rootTransformMatrix_asf4x4,
+				getTransform(animationPositionOffset, DEFAULT_ORIENTATION, DEFAULT_SCALE, boneInfoMap[BONE_NAME].offsetMatrix));
+
+			Assert::IsTrue(matNorm < 1e-9);
+		}
 	};
 }
