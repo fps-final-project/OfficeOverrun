@@ -9,6 +9,7 @@ Animable::Animable(std::shared_ptr<AnimatedModel> animatedModel)
 
 void Animable::setAnimation(std::string name, float speed, bool wrap)
 {
+	if (this->m_animatedModel.get() == nullptr) return;
 	if (this->m_animatedModel->m_animations.find(name) != this->m_animatedModel->m_animations.end())
 	{
 		m_animator.playAnimation(this->m_animatedModel->m_animations[name], speed, wrap);

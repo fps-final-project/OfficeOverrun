@@ -37,20 +37,14 @@ void GunRig::Reload()
 {
 	this->m_hands->setAnimation("reload1");
 	this->m_gun->setAnimation("reload1");
-	this->m_reloadSound->pXAudio2SourceVoice->FlushSourceBuffers();
-	this->m_reloadSound->pXAudio2SourceVoice->Stop();
-	this->m_reloadSound->pXAudio2SourceVoice->SubmitSourceBuffer(&(this->m_reloadSound->buffer));
-	this->m_reloadSound->pXAudio2SourceVoice->Start();
+	PlaySound(this->m_reloadSound);
 }
 
 void GunRig::Shoot()
 {
 	this->m_hands->setAnimation("shoot", m_shootingAnimationSpeedup, false);
 	this->m_gun->setAnimation("shoot", m_shootingAnimationSpeedup, false);
-	this->m_gunSound->pXAudio2SourceVoice->Stop();
-	this->m_gunSound->pXAudio2SourceVoice->FlushSourceBuffers();
-	this->m_gunSound->pXAudio2SourceVoice->SubmitSourceBuffer(&(this->m_gunSound->buffer));
-	this->m_gunSound->pXAudio2SourceVoice->Start();
+	PlaySound(this->m_gunSound);
 }
 
 void GunRig::ChangeGun(const std::string& name)
@@ -76,6 +70,15 @@ void GunRig::ChangeGun(const std::string& name)
 		m_hands->setAnimation("draw");
 		m_gun->setAnimation("draw");
 	}
+}
+
+void GunRig::PlaySound(std::shared_ptr<AudioFile> file)
+{
+	if (file == nullptr) return;
+	file->pXAudio2SourceVoice->Stop();
+	file->pXAudio2SourceVoice->FlushSourceBuffers();
+	file->pXAudio2SourceVoice->SubmitSourceBuffer(&(this->m_gunSound->buffer));
+	file->pXAudio2SourceVoice->Start();
 }
 
 

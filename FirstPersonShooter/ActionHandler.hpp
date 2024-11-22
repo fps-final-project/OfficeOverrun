@@ -8,7 +8,7 @@
 
 class Player;
 
-class ActionHandler
+class __declspec(dllexport) ActionHandler
 {
 public:
 	ActionHandler(std::shared_ptr<std::queue<Action>> actionQueue);

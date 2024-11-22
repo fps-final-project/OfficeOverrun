@@ -17,10 +17,10 @@ public:
 	void setAcceleration(DirectX::XMFLOAT3 acc);
 	void handleRoomCollision(const RoomCollision& collisionData);
 	void takeDamage(int damage);
-	inline int getHealth() { return health; }
+	inline int getHealth() { return m_health; }
 private:
 	DirectX::XMFLOAT3 m_position, m_velocity, m_acceleration;
 	std::unique_ptr<GunRig> m_gunRig;
 	bool m_isOnGround;
-	int health;
+	int m_health;
 };

@@ -4,7 +4,7 @@
 
 using namespace DirectX;
 
-class AnimatedEntity : public Hittable, public Animable
+class  __declspec(dllexport) AnimatedEntity : public Hittable, public Animable
 {
 public:
 	AnimatedEntity(std::shared_ptr<AnimatedModel> model, 
@@ -20,8 +20,11 @@ public:
 	void setRotation(DirectX::XMFLOAT3 rot);
 	void setVelocity(DirectX::XMFLOAT3 vel);
 
+	inline XMFLOAT3 getPosition() { return position; }
+	inline XMFLOAT3 getRotation() { return rotation; }
+	inline XMFLOAT3 getVelocity() { return velocity; }
+
 protected:
-	XMFLOAT3 position;
 	XMFLOAT3 rotation;
 	XMFLOAT3 velocity;
 	XMFLOAT3 size;
