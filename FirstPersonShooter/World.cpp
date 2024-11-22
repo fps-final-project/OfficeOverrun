@@ -43,16 +43,22 @@ void World::Update(float dt)
 	}*/
 }
 
-/*std::vector<Hittable> World::GetEntities()
+std::vector<std::shared_ptr<Hittable>> World::GetHittableEntities() 
 {
-	std::vector<Hittable> entities{};
+	std::vector<std::shared_ptr<Hittable>> entities{};
 	int size = m_entities.size() + m_animatedEntities.size();
 	entities.reserve(size);
-	entities.insert(entities.end(), m_entities.begin(), m_entities.end());
-	entities.insert(entities.end(), m_animatedEntities.begin(), m_animatedEntities.end());
+	for (const auto& [_, entity] : m_entities)
+	{
+		entities.push_back((std::shared_ptr<Hittable>)entity);
+	}
+	for (const auto& [_, entity] : m_animatedEntities)
+	{
+		entities.push_back((std::shared_ptr<Hittable>)entity);
+	}
 
 	return entities;
-}*/
+}
 
 void World::DeleteEntity(const GUID& entityId)
 {

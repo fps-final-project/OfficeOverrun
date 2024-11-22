@@ -5,7 +5,7 @@
 
 using namespace WorldGenerator;
 
-class MapGeneratorAdapter
+class  __declspec(dllexport) MapGeneratorAdapter
 {
 private:
 	RoomLayoutConfig roomLayoutConfig;

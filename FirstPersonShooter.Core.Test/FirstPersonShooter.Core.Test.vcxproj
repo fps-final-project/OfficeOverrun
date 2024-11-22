@@ -127,7 +127,8 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros">
-    <PackageCertificateThumbprint>5F9E40D7A2B4B04A53D6A5F5106A0AD0C57AF879</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>A047046F5225D70532746C20EEC3DE67F2CC2B49</PackageCertificateThumbprint>
+    <PackageCertificateKeyFile>FirstPersonShooter.Core.Test_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
