@@ -2,6 +2,8 @@
 #include <vector>
 #include <DirectXMath.h>
 #include <list>
+#include <set>
+#include <functional>
 
 class Room;
 struct PathNodeData;
@@ -12,7 +14,7 @@ class Pathfinder
 	int playerNode;
 
 	std::vector<DirectX::XMFLOAT3> nodes;
-	std::vector<std::vector<int>> edges;
+	std::vector<std::set<int>> edges;
 
 	// we can identify that node indexes that belong to room i 
 	// are between roomNodeIndexPrefix[i] and roomNodeIndexPrefix[i + 1]
@@ -32,6 +34,8 @@ class Pathfinder
 	float DistSquared(DirectX::XMFLOAT3 p1, DirectX::XMFLOAT3 p2) const;
 
 	void AddEdge(int u, int v);
+	void EraseFromNeighbourSetIf(std::set<int>& set, const std::function<bool(int)>& predicate);
+
 	std::vector<int> AStar(int start, int end) const;
 	std::list<PathNodeData> ConstructPath(const std::vector<int>& prev, int start) const;
 public:

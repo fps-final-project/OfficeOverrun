@@ -11,7 +11,7 @@ class Enemy : public AnimatedEntity
 {
 public:
 	Enemy(std::shared_ptr<AnimatedModel> model);
-	Action Update(std::shared_ptr<Pathfinder> pathfinder);
+	Action Update(std::shared_ptr<Pathfinder> pathfinder, DirectX::XMFLOAT3 playerPos);
 	std::list<PathNodeData> pathToPlayer;
 
 	friend class EnemyBuilder;

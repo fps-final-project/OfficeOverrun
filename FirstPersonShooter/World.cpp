@@ -127,12 +127,12 @@ void World::UpdateCurrentRoom(DirectX::XMFLOAT3 playerPos)
 	}
 }
 
-void World::UpdateEnemies(std::shared_ptr<Pathfinder> pathfinder,
+void World::UpdateEnemies(std::shared_ptr<Pathfinder> pathfinder, DirectX::XMFLOAT3 playerPos,
 	std::shared_ptr<std::queue<Action>>& actionQueue)
 {
 	for (const auto& [_, enemy] : m_enemies)
 	{
-		Action action = enemy->Update(pathfinder);
+		Action action = enemy->Update(pathfinder, playerPos);
 		if (action.type != ActionType::NOACTION)
 		{
 			actionQueue->push(action);

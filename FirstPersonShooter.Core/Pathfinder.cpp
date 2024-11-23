@@ -5,13 +5,12 @@
 #include "RoomLinkData.hpp"
 
 #include <stack>
-#include <set>
 
 void Pathfinder::AddRoomNodes(const Room& room)
 {
 	const float wallOffset = 0.5f;
-	const float targetDistance = 1.f;
-	float height = room.getPosition().y + 1.f;
+	const float targetDistance = 0.5f;
+	float height = room.getPosition().y;
 	
 	int nNodesX = (room.getSize().x - 2 * wallOffset) / targetDistance;
 	int nNodesZ = (room.getSize().z - 2 * wallOffset) / targetDistance;
@@ -25,7 +24,7 @@ void Pathfinder::AddRoomNodes(const Room& room)
 		for (int j = 0; j < nNodesZ; j++)
 		{
 			nodes.push_back({ room.getPosition().x + wallOffset + i * distanceX, height, room.getPosition().z + wallOffset + j * distanceZ });
-			edges.push_back(std::vector<int>());
+			edges.push_back(std::set<int>());
 
 			if (j)
 			{
@@ -53,7 +52,7 @@ void Pathfinder::AddDoorNodes(const RoomLinkData& link, int roomIdx)
 	int closestRoom2 = FindClosestNodeInARoom(nodePos, link.roomId);
 
 	nodes.push_back(nodePos);
-	edges.push_back(std::vector<int>());
+	edges.push_back(std::set<int>());
 
 	AddEdge(closestRoom1, nodes.size() - 1);
 	AddEdge(closestRoom2, nodes.size() - 1);
@@ -69,7 +68,7 @@ void Pathfinder::AddStairsConnectionNode(const RoomLinkData& link, int roomIdx1,
 	int node2 = FindClosestNodeInARoom(nodePosition, roomIdx2);
 
 	nodes.push_back(nodePosition);
-	edges.push_back(std::vector<int>());
+	edges.push_back(std::set<int>());
 
 	AddEdge(node1, nodes.size() - 1);
 	AddEdge(node2, nodes.size() - 1);
@@ -95,7 +94,7 @@ void Pathfinder::DeleteStairsNodes(const RoomLinkData& link, int roomIdx)
 
 		for (int neighbour : edges[toBeDeleted])
 		{
-			std::remove_if(edges[neighbour].begin(), edges[neighbour].end(), [&](int x) { return x == toBeDeleted; });
+			EraseFromNeighbourSetIf(edges[neighbour], [&](int x) { return x == toBeDeleted; });
 		}
 
 		nodes.erase(nodes.begin() + toBeDeleted);
@@ -118,7 +117,7 @@ void Pathfinder::AdjustStairsNodes(const RoomLinkData& link, int roomIdx)
 
 			for (int neighbour : edges[i])
 			{
-				std::remove_if(edges[neighbour].begin(), edges[neighbour].end(), [&](int x) 
+				EraseFromNeighbourSetIf(edges[neighbour], [&](int x)
 					{ return x == i && (nodes[x].y != link.pos.y || nodes[x].y <= nodes[i].y); });
 			}
 		}
@@ -180,8 +179,20 @@ float Pathfinder::DistSquared(DirectX::XMFLOAT3 p1, DirectX::XMFLOAT3 p2) const
 
 void Pathfinder::AddEdge(int u, int v)
 {
-	edges[u].push_back(v);
-	edges[v].push_back(u);
+	edges[u].insert(v);
+	edges[v].insert(u);
+}
+
+void Pathfinder::EraseFromNeighbourSetIf(std::set<int>& set, const std::function<bool(int)>& predicate)
+{
+	for (auto it = set.begin(); it != set.end(); ) {
+		if (predicate(*it)) {
+			it = set.erase(it); 
+		}
+		else {
+			++it; 
+		}
+	}
 }
 
 std::vector<int> Pathfinder::AStar(int start, int end) const
@@ -237,7 +248,7 @@ std::vector<int> Pathfinder::AStar(int start, int end) const
 
 std::list<PathNodeData> Pathfinder::ConstructPath(const std::vector<int>& prev, int start) const
 {
-	int currVertex = start;
+	int currVertex = prev[start];
 	std::list<PathNodeData> result;
 
 	while (currVertex != -1)
@@ -293,14 +304,11 @@ std::list<PathNodeData> Pathfinder::FindPath(DirectX::XMFLOAT3 enemyPos) const
 
 void Pathfinder::UpdatePath(std::list<PathNodeData>& path, DirectX::XMFLOAT3 currPos) const
 {
-	if (path.size() == 1)
-		return;
-
 	// check if enemy moved
 	auto currNode = path.begin();
-	auto nextNode = std::next(currNode);
+	float cutoffThreshold = 0.1f;
 
-	if (DistSquared(currNode->position, currPos) > DistSquared(nextNode->position, currPos))
+	if (path.size() > 1 && DistSquared(currNode->position, currPos) < cutoffThreshold * cutoffThreshold)
 	{
 		path.pop_front();
 	}
@@ -308,21 +316,21 @@ void Pathfinder::UpdatePath(std::list<PathNodeData>& path, DirectX::XMFLOAT3 cur
 	// check if player moved
 	if (playerNode != path.back().index)
 	{
-		auto lastNode = std::prev(path.end());
-		auto secondLastNode = std::prev(lastNode);
-
-		if (DistSquared(lastNode->position, nodes[playerNode]) > DistSquared(secondLastNode->position, nodes[playerNode]))
+		// find closest node, then add next, discard the rest
+		auto closest = path.end();
+		float minDist = 1000000.f;
+		for (auto it = path.begin(); it != path.end(); it++)
 		{
-			path.pop_back();
-			if (!(secondLastNode->index == playerNode))
+			if (edges[it->index].find(playerNode) != edges[it->index].end() &&
+				minDist > DistSquared(it->position, nodes[playerNode]))
 			{
-				path.push_back(PathNodeData(playerNode, nodes[playerNode]));
+				closest = it;
+				minDist = DistSquared(it->position, nodes[playerNode]);
 			}
 		}
-		else
-		{
-			path.push_back(PathNodeData(playerNode, nodes[playerNode]));
-		}
+
+		path.erase(std::next(closest), path.end());
+		path.push_back(PathNodeData(playerNode, nodes[playerNode]));
 	}
 }
 

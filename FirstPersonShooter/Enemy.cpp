@@ -6,13 +6,14 @@ Enemy::Enemy(std::shared_ptr<AnimatedModel> model) : AnimatedEntity{ model }
 {
 }
 
-Action Enemy::Update(std::shared_ptr<Pathfinder> pathfinder)
+Action Enemy::Update(std::shared_ptr<Pathfinder> pathfinder, DirectX::XMFLOAT3 playerPos)
 {
 	pathfinder->UpdatePath(pathToPlayer, position);
 	Action currentAction;
 	XMVECTOR direction = GetDirection();
+	XMVECTOR playerDir = { playerPos.x - position.x, 0.f, playerPos.z - position.z };
 
-	float l = XMVector3Length(direction).m128_f32[0];
+	float l = XMVector3Length(playerDir).m128_f32[0];
 	direction = XMVector3Normalize(direction);
 
 	float dx = XMVectorGetX(direction);
@@ -44,19 +45,9 @@ Action Enemy::Update(std::shared_ptr<Pathfinder> pathfinder)
 
 XMVECTOR Enemy::GetDirection()
 {
-	if (pathToPlayer.size() == 1)
-	{
-		return {
-			pathToPlayer.front().position.x - position.x,
-			pathToPlayer.front().position.y - position.y,
-			pathToPlayer.front().position.z - position.z
-		};
-	}
-	auto secondLastNode = (++pathToPlayer.rbegin());
 	return {
-		secondLastNode->position.x - position.x,
-		secondLastNode->position.y - position.y,
-		secondLastNode->position.z - position.z
+		pathToPlayer.front().position.x - position.x,
+		pathToPlayer.front().position.y - position.y,
+		pathToPlayer.front().position.z - position.z
 	};
-
 }
