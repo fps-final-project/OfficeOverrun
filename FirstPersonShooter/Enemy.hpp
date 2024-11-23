@@ -2,12 +2,17 @@
 #include "AnimatedEntity.hpp"
 #include "ActionTypes.hpp"
 #include "Room.hpp"
+#include "PathNodeData.h"
+#include <list> 
+
+class Pathfinder;
 
 class Enemy : public AnimatedEntity
 {
 public:
 	Enemy(std::shared_ptr<AnimatedModel> model);
-	Action Update(const Room& room, const std::vector<Room>& rooms, XMFLOAT3 playerPosition);
+	Action Update(std::shared_ptr<Pathfinder> pathfinder);
+	std::list<PathNodeData> pathToPlayer;
 
 	friend class EnemyBuilder;
 private:
@@ -16,5 +21,7 @@ private:
 	int damage;
 	float speed;
 	float radius;
+
+	XMVECTOR GetDirection();
 };
 

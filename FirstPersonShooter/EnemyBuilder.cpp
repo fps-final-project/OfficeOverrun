@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "EnemyBuilder.hpp"
+#include "Pathfinder.h"
 
 EnemyBuilder& EnemyBuilder::WithNewEnemy(std::shared_ptr<AnimatedModel> model)
 {
@@ -62,6 +63,12 @@ EnemyBuilder& EnemyBuilder::WithFallbackAnimation(std::string animationName)
 	m_enemy->setFallbackAnimation(animationName);
 	return *this;
 
+}
+
+EnemyBuilder& EnemyBuilder::WithPath(std::shared_ptr<Pathfinder> pathfinder)
+{
+	m_enemy->pathToPlayer = pathfinder->FindPath(m_enemy->position);
+	return *this;
 }
 
 std::shared_ptr<Enemy>& EnemyBuilder::Build()

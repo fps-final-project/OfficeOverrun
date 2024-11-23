@@ -21,9 +21,9 @@ public:
 	RoomCollision checkCollision(DirectX::XMFLOAT3 entityPos) const;
 	bool insideRoom(DirectX::XMFLOAT3 pos) const;
 
-	inline DirectX::XMFLOAT3 getPosition() { return pos; }
-	inline DirectX::XMFLOAT3 getSize() { return size; }
-	inline std::vector<RoomLinkData> getLinks() { return m_links; }
+	inline DirectX::XMFLOAT3 getPosition() const { return pos; }
+	inline DirectX::XMFLOAT3 getSize() const { return size; }
+	inline const std::vector<RoomLinkData>& getLinks() const { return m_links; }
 
 	std::vector<int> getAdjacentRooms() const;
 	virtual void Render(std::shared_ptr<RenderMaster> renderMaster) override;

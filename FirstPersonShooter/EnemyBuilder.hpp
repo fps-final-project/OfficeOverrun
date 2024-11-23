@@ -2,6 +2,8 @@
 #include "Enemy.hpp"
 #include <memory>
 
+class Pathfinder;
+
 class EnemyBuilder
 {
 public:
@@ -15,6 +17,7 @@ public:
 	EnemyBuilder& WithAttackRadius(float radius);
 	EnemyBuilder& WithSize(DirectX::XMFLOAT3 size);
 	EnemyBuilder& WithFallbackAnimation(std::string animationName);
+	EnemyBuilder& WithPath(std::shared_ptr<Pathfinder> pathfinder);
 	std::shared_ptr<Enemy>& Build();
 private:
 	std::shared_ptr<Enemy> m_enemy;

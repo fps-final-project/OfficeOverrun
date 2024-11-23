@@ -9,6 +9,7 @@
 #include "ActionHandler.hpp"
 #include "CollisionDetector.hpp"
 #include "Player.h"
+#include "Pathfinder.h"
 
 class __declspec(dllexport) GameState
 {
@@ -19,6 +20,8 @@ public:
 	std::unique_ptr<InputHandler> m_inputHandler;
 	std::unique_ptr<ActionHandler> m_actionHandler;
 	std::unique_ptr<CollisionDetector> m_collisionDetector;
+
+	std::shared_ptr<Pathfinder> m_pathfinder;
 
 	GameState(
 		std::shared_ptr<DirectX::Keyboard> keyboard, 

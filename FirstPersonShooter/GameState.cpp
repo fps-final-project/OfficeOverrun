@@ -31,18 +31,6 @@ GameState::GameState(
 	EnemyBuilder enemyBuilder{};
 	ObjectBuilder objectBuilder{};
 
-	auto zombie = enemyBuilder
-		.WithNewEnemy(ResourceManager::Instance().getAnimatedModel("zombie_war"))
-		.WithMaxHealth(100)
-		.WithDamage(10)
-		.WithSpeed(0.05f)
-		.WithPosition({ 20.f, 0.f, 4.f })
-		.WithRotation({ 0.f, 0.f, 0.f })
-		.WithVelocity({ 0.f, 0.f, 0.f })
-		.WithSize({ 0.8f, 0.8f, 0.8f })
-		.WithAttackRadius(0.7f)
-		.WithFallbackAnimation("run")
-		.Build();
 
 	// generating rooms using WorldGenerator
 	m_world->m_rooms = MapGeneratorAdapter().GenerateRooms();
@@ -62,10 +50,25 @@ GameState::GameState(
 			lastRoom.getPosition(), lastRoom.getSize(), lastRoom.getLinks(),
 			m_deviceResources));
 
-
+	m_pathfinder = std::make_shared<Pathfinder>(m_world->m_rooms, m_player->getPostition());
 	m_world->UpdateVisibleRooms();
-
 	m_world->AddHelicopter();
+
+
+	auto zombie = enemyBuilder
+		.WithNewEnemy(ResourceManager::Instance().getAnimatedModel("zombie_war"))
+		.WithMaxHealth(100)
+		.WithDamage(10)
+		.WithSpeed(0.05f)
+		.WithPosition({ 20.f, 0.f, 4.f })
+		.WithRotation({ 0.f, 0.f, 0.f })
+		.WithVelocity({ 0.f, 0.f, 0.f })
+		.WithSize({ 0.8f, 0.8f, 0.8f })
+		.WithAttackRadius(0.7f)
+		.WithFallbackAnimation("run")
+		.WithPath(m_pathfinder)
+		.Build();
+
 	m_world->AddEnemy(zombie);
 
 	this->setupActionHandlers();
@@ -86,7 +89,10 @@ void GameState::Update(float dt)
 {
 	m_player->Update(dt);
 	m_world->UpdateCurrentRoom(m_player->getPostition());
-	m_world->UpdateEnemies(m_world->GetCurrentRoom(), m_player->getPostition(), m_actionQueue);
+
+	m_pathfinder->UpdatePlayerNode(m_player->getPostition());
+
+	m_world->UpdateEnemies(m_pathfinder, m_actionQueue);
 	m_world->Update(dt);
 
 	m_player->handleRoomCollision(m_world->GetCurrentRoom().checkCollision(m_player->getPostition()));

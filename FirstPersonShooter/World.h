@@ -48,7 +48,7 @@ public:
 	bool IsPlayerNearHelicopter(DirectX::XMFLOAT3 playerPos);
 
 	void UpdateCurrentRoom(DirectX::XMFLOAT3 playerPos);
-	void UpdateEnemies(const Room& room, DirectX::XMFLOAT3 playerPos, std::shared_ptr<std::queue<Action>>& actionQueue);
+	void UpdateEnemies(std::shared_ptr<Pathfinder> pathfinder, std::shared_ptr<std::queue<Action>>& actionQueue);
 
 	LightingData GetLightingData();
 	RenderQueue CreateRenderQueue();

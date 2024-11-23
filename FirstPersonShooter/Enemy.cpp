@@ -1,32 +1,17 @@
 #include "pch.h"
 #include "Enemy.hpp"
+#include "Pathfinder.h"
 
-Enemy::Enemy(std::shared_ptr<AnimatedModel> model) : AnimatedEntity{model}
+Enemy::Enemy(std::shared_ptr<AnimatedModel> model) : AnimatedEntity{ model }
 {
 }
 
-Action Enemy::Update(const Room& room, const std::vector<Room>& rooms, XMFLOAT3 playerPosition)
+Action Enemy::Update(std::shared_ptr<Pathfinder> pathfinder)
 {
+	pathfinder->UpdatePath(pathToPlayer, position);
 	Action currentAction;
-	std::vector<int> indexes = room.getAdjacentRooms();
+	XMVECTOR direction = GetDirection();
 
-	int currentRoomIndex = -1;
-	bool inAdjacent = std::any_of(indexes.begin(), indexes.end(), [&](int index) {
-		if (rooms[index].insideRoom(position))
-		{
-			currentRoomIndex = index;
-			return true;
-		}
-		return false;
-		});
-
-	bool inCurrent = room.insideRoom(position);
-	if(!inCurrent && !inAdjacent) return currentAction;
-	XMVECTOR direction = {
-		playerPosition.x - position.x,
-		0,
-		playerPosition.z - position.z
-	};
 	float l = XMVector3Length(direction).m128_f32[0];
 	direction = XMVector3Normalize(direction);
 
@@ -35,14 +20,14 @@ Action Enemy::Update(const Room& room, const std::vector<Room>& rooms, XMFLOAT3 
 
 	float yaw = atan2(dx, dz);
 
-	setRotation({0.0f, yaw, 0.0f});
-	
+	setRotation({ 0.0f, yaw, 0.0f });
+
 	if (!isIdle()) return currentAction;
-	
+
 	if (l <= radius)
 	{
 		int id = (rand() % 2) + 1;
-		setAnimation( "attack" + std::to_string(id), 1.5);
+		setAnimation("attack" + std::to_string(id), 1.5);
 		currentAction = Action{ ActionType::ATTACK, {damage} };
 	}
 
@@ -55,4 +40,23 @@ Action Enemy::Update(const Room& room, const std::vector<Room>& rooms, XMFLOAT3 
 
 	setPosition(changedPos);
 	return currentAction;
+}
+
+XMVECTOR Enemy::GetDirection()
+{
+	if (pathToPlayer.size() == 1)
+	{
+		return {
+			pathToPlayer.front().position.x - position.x,
+			pathToPlayer.front().position.y - position.y,
+			pathToPlayer.front().position.z - position.z
+		};
+	}
+	auto secondLastNode = (++pathToPlayer.rbegin());
+	return {
+		secondLastNode->position.x - position.x,
+		secondLastNode->position.y - position.y,
+		secondLastNode->position.z - position.z
+	};
+
 }
