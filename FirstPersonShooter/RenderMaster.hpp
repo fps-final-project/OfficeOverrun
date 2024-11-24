@@ -6,7 +6,7 @@
 #include "LightingData.hpp"
 
 
-class RenderMaster
+class __declspec(dllexport) RenderMaster
 {
 public:
 	RenderMaster(const std::shared_ptr<DX::DeviceResources>& deviceResources);
@@ -14,8 +14,16 @@ public:
 	void setupShaders(DirectX::XMFLOAT4X4 projectionMatrix, DirectX::XMFLOAT4X4 viewMatrix, DirectX::XMFLOAT3 cameraPos);
 	void setLighting(const LightingData& data, const DirectX::XMVECTOR& flashlight_dir);
 
+	void renderSkybox(DirectX::XMFLOAT3 cameraPos);
+
 	std::shared_ptr<AnimatedModelRenderer> getAnimatedRenderer();	
 	std::shared_ptr<ModelRenderer> getModelRenderer();
+
+	void SetRenderer(RendererType type);
+	UINT8 GetCurrentStencilValue();
+	void ClearStencilBuffer();
+	void SetStencilBufferReferenceValue(UINT8 value);
+	inline RendererType GetCurrentRenderType() { return m_currentRenderer; }
 
 private:
 	std::shared_ptr<AnimatedModelRenderer> m_animatedRenderer;

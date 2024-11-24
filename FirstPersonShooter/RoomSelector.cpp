@@ -39,6 +39,9 @@ Graph<GeneratedRoom> WorldGenerator::RoomSelector::SelectRooms()
 	// Step 7
 	AddEdgesAtRandom();
 
+	// Add rooftop room
+	AddRooftopVertex();
+
 	return G;
 }
 
@@ -153,7 +156,7 @@ void WorldGenerator::RoomSelector::UpdatePathWithFloor(std::vector<int>& P, int 
 
 	// Add room above t to P
 	s_floor = FindNeighbourAbove(H, t_floor);
-	if(s_floor != -1) // if exists 
+	if(s_floor != H.Size() - 1) // if its not the roof
 		P.push_back(s_floor);
 }
 
@@ -182,6 +185,7 @@ void WorldGenerator::RoomSelector::ConstructGFromPath(std::vector<int> P)
 			G.AddUndirectedEdge(i - 1, i);
 	}
 	s_G = 0;
+	t_G = G.Size() - 1;
 }
 
 void WorldGenerator::RoomSelector::AddHVertexToG(int v)
@@ -216,6 +220,7 @@ void WorldGenerator::RoomSelector::AddSpareVertices()
 	}
 }
 
+
 std::vector<int> WorldGenerator::RoomSelector::ComputeNeighbourhood()
 {
 	std::vector<int> neigh_G;
@@ -246,6 +251,12 @@ void WorldGenerator::RoomSelector::UpdateNeighbourhood(std::vector<int> &neigh_G
 			neigh_G.push_back(u);
 		}
 	}
+}
+
+void WorldGenerator::RoomSelector::AddRooftopVertex()
+{
+	AddHVertexToG(H.Size() - 1);
+	G.AddUndirectedEdge(t_G, G.Size() - 1);
 }
 
 void WorldGenerator::RoomSelector::AddEdgesAtRandom()

@@ -2,7 +2,7 @@
 #include "AnimatedAssimpModel.h"
 
 
-class Animator
+class __declspec(dllexport) Animator
 {
 public:
 	Animator();

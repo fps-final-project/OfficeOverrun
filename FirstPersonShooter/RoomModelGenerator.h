@@ -12,6 +12,10 @@ public:
 		std::vector<RoomLinkData> links,
 		const std::shared_ptr<DX::DeviceResources>& deviceResources);
 
+	static Model generateRoof(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 size,
+		std::vector<RoomLinkData> links,
+		const std::shared_ptr<DX::DeviceResources>& deviceResources);
+
 private:
 	static const float frameOffset;
 

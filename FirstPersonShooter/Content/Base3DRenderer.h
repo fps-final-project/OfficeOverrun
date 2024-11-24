@@ -20,7 +20,7 @@ public:
 		this->SetClockwiseCulling();
 	}
 
-	virtual ~Base3DRenderer() 
+	virtual ~Base3DRenderer()
 	{
 		this->ReleaseDeviceDependentResources();
 	}
@@ -125,7 +125,7 @@ public:
 			);
 	}
 
-	void SetSencilBufferRefernceValue(UINT8 value)
+	void SetStencilBufferReferenceValue(UINT8 value)
 	{
 		m_deviceResources
 			->GetD3DDeviceContext()
@@ -266,6 +266,16 @@ public:
 		m_PSConstantBufferData.nlights = nlights;
 	}
 
+	void setFullyVisible()
+	{
+		m_PSConstantBufferData.fully_visible = true;
+	}
+
+	void clearFullyVisible()
+	{
+		m_PSConstantBufferData.fully_visible = false;
+	}
+
 protected:
 	// Cached pointer to device resources.
 	std::shared_ptr<DX::DeviceResources> m_deviceResources;
@@ -277,7 +287,7 @@ protected:
 	Microsoft::WRL::ComPtr<ID3D11Buffer>		m_VSConstantBuffer, m_PSConstantBuffer;
 	Microsoft::WRL::ComPtr<ID3D11SamplerState>	m_samplerState;
 	Microsoft::WRL::ComPtr<ID3D11Texture2D>		m_stagingTexture;
-	
+
 	// System resources for cube geometry.
 	VertexShaderBuffer	m_VSConstantBufferData;
 	LightingConstantBuffer m_PSConstantBufferData;
@@ -308,13 +318,13 @@ protected:
 		// Create the staging resource
 		DX::ThrowIfFailed(
 			m_deviceResources
-				->GetD3DDevice()
-				->CreateTexture2D(
-					&stagingDesc, 
-					nullptr, 
-					m_stagingTexture.GetAddressOf()
-				)
-			);
+			->GetD3DDevice()
+			->CreateTexture2D(
+				&stagingDesc,
+				nullptr,
+				m_stagingTexture.GetAddressOf()
+			)
+		);
 
 
 		UINT middleX = stagingDesc.Width / 2;
@@ -382,7 +392,7 @@ protected:
 
 		auto createSamplerTask = (createPSTask && createVSTask).then([this]() {
 			auto device = m_deviceResources->GetD3DDevice();
-			
+
 			D3D11_SAMPLER_DESC ImageSamplerDesc = {};
 
 			ImageSamplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
@@ -408,5 +418,13 @@ protected:
 		createSamplerTask.then([this]() {
 			m_loadingComplete = true;
 			});
+	}
+
+	DirectX::XMMATRIX getModelMatrix(DirectX::XMFLOAT3 position, DirectX::XMFLOAT3 rotation, DirectX::XMFLOAT3 scale)
+	{
+		return 	
+			  DirectX::XMMatrixScaling(scale.x, scale.y, scale.z)
+			* DirectX::XMMatrixRotationRollPitchYaw(rotation.x, rotation.y, rotation.z)
+			* DirectX::XMMatrixTranslation(position.x, position.y, position.z);
 	}
 };

@@ -2,9 +2,9 @@
 
 #include "Common\DeviceResources.h"
 #include <memory>
-#include <Mouse.h>
+#include "Mouse.h"
 
-class Camera
+class __declspec(dllexport) Camera
 {
 public:
 	Camera(const std::shared_ptr<DX::DeviceResources>& deviceResources,

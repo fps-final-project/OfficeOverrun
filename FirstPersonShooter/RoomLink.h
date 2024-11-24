@@ -2,10 +2,11 @@
 
 #include "Vector3.h"
 #include "GeneratedRoom.h"
+
 namespace WorldGenerator
 {
 	// the 2 dimensions that link is defined at
-	enum Orientation {
+	enum __declspec(dllexport) Orientation {
 		YZ,
 		XZ,
 		XYX, // X is length
@@ -14,7 +15,7 @@ namespace WorldGenerator
 
 	class GeneratedRoom;
 
-	class RoomLink
+	class __declspec(dllexport) RoomLink
 	{
 	private:
 		static Orientation MakeOrientation(Vector3 size);

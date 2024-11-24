@@ -1,7 +1,8 @@
 #pragma once
+
 namespace WorldGenerator
 {
-	struct RoomLayoutConfig
+	struct __declspec(dllexport) RoomLayoutConfig
 	{
 		// For BSP 
 		const static int minRoom2DSize = 4;

@@ -14,7 +14,7 @@ Room::Room(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 size, const std::vector<Room
 
 void Room::setModel(Model model)
 {
-	m_roomWalls = std::make_unique<Entity>(std::make_shared<Model>(model));
+	m_roomWalls = std::make_shared<Entity>(std::make_shared<Model>(model));
 }
 
 RoomCollision Room::checkCollision(DirectX::XMFLOAT3 entityPos) const
@@ -111,19 +111,19 @@ RoomCollision Room::checkCollision(DirectX::XMFLOAT3 entityPos) const
 bool Room::insideRoom(DirectX::XMFLOAT3 pos) const
 {
 	return pos.x > this->pos.x && pos.x < this->pos.x + this->size.x &&
-		pos.y > this->pos.y && pos.y < this->pos.y + this->size.y &&
+		pos.y >= this->pos.y && pos.y <= this->pos.y + this->size.y &&
 		pos.z > this->pos.z && pos.z < this->pos.z + this->size.z;
 }
 
 void Room::Render(std::shared_ptr<RenderMaster> renderMaster)
 {
-	auto ceilingModel = ResourceManager::Instance.getModel("wall");
-	auto floorModel = ResourceManager::Instance.getModel("floor");
-	auto stairsModel = ResourceManager::Instance.getModel("stairs");
+	auto ceilingModel = ResourceManager::Instance().getModel("wall");
+	auto floorModel = ResourceManager::Instance().getModel("floor");
+	auto stairsModel = ResourceManager::Instance().getModel("stairs");
 	auto renderer = renderMaster->getModelRenderer();
 
 	// walls and floors
-	renderer->Render(*m_roomWalls);
+	m_roomWalls->Render(renderMaster);
 
 	// stairs
 	for (auto& link : m_links)
@@ -133,17 +133,17 @@ void Room::Render(std::shared_ptr<RenderMaster> renderMaster)
 		{
 			if (link.orientation == OrientationData::XZX)
 			{
-				renderer->Render(Entity(stairsModel, { link.pos.x + link.size.x, pos.y, link.pos.z + link.size.z }, { 5, size.y, 2 }, { 0, DirectX::XM_PI, 0 }));
+				renderer->Render(*stairsModel, { link.pos.x + link.size.x, pos.y, link.pos.z + link.size.z }, { 5, size.y, 2 }, { 0, DirectX::XM_PI, 0 });
 			}
 			else
 			{
-				renderer->Render(Entity(stairsModel, { link.pos.x, pos.y, link.pos.z + link.size.z }, { 5, size.y, 2 }, { 0, DirectX::XM_PIDIV2, 0 }));
+				renderer->Render(*stairsModel, { link.pos.x, pos.y, link.pos.z + link.size.z }, { 5, size.y, 2 }, { 0, DirectX::XM_PIDIV2, 0 });
 			}
 		}
 	}
 }
 
-std::vector<int> Room::getAdjacentRooms()
+std::vector<int> Room::getAdjacentRooms() const
 {
 	std::vector<int> adjacentIds;
 	for (auto link : m_links)

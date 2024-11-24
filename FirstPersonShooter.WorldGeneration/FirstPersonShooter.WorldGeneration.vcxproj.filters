@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="WorldGenerator">
+      <UniqueIdentifier>{9d651966-8583-4dd8-9402-ae2d5879f898}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WorldGenerator\Common">
+      <UniqueIdentifier>{64a8351e-c2a8-4e33-a84c-a3b292d1fd34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WorldGenerator\Common\Graph">
+      <UniqueIdentifier>{eda86d8f-f095-460d-b135-ed3f077a0528}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WorldGenerator\Common\RNG">
+      <UniqueIdentifier>{a8b6be55-f21d-4f89-8cac-36a143ce1cf3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WorldGenerator\RoomLayout">
+      <UniqueIdentifier>{98f92a7a-9621-4466-be62-8d964ebe4e8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WorldGenerator\RoomLayout\BSP">
+      <UniqueIdentifier>{a531e3ee-496f-4bab-9fd9-4fb0ebfe02d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WorldGenerator\RoomLayout\Model">
+      <UniqueIdentifier>{f2b58cab-b28a-42ea-8448-d4b719acf52f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WorldGenerator\RoomLayout\RooomSelector">
+      <UniqueIdentifier>{e9f0224c-402a-4acf-8fee-2b882ed57709}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WorldGenerator\Common\RNG\Distributions">
+      <UniqueIdentifier>{b39d0f50-8649-42c2-a915-92cd523659b2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="..\FirstPersonShooter\MapGenerator.cpp">
+      <Filter>WorldGenerator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\Utils.cpp">
+      <Filter>WorldGenerator\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\GraphUtils.cpp">
+      <Filter>WorldGenerator\Common\Graph</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\RNG.cpp">
+      <Filter>WorldGenerator\Common\RNG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\RoomLayoutGenerator.cpp">
+      <Filter>WorldGenerator\RoomLayout</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\BinaryRoom.cpp">
+      <Filter>WorldGenerator\RoomLayout\BSP</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\GeneratedRoom.cpp">
+      <Filter>WorldGenerator\RoomLayout\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\RoomLink.cpp">
+      <Filter>WorldGenerator\RoomLayout\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\RoomSelector.cpp">
+      <Filter>WorldGenerator\RoomLayout\RooomSelector</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\RNGEngine.cpp">
+      <Filter>WorldGenerator\Common\RNG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\DistributionFactory.cpp">
+      <Filter>WorldGenerator\Common\RNG\Distributions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\UniformRNG.cpp">
+      <Filter>WorldGenerator\Common\RNG\Distributions</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="FirstPersonShooter.WorldGeneration.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="..\FirstPersonShooter\MapGenerator.h">
+      <Filter>WorldGenerator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\Utils.h">
+      <Filter>WorldGenerator\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\Graph.h">
+      <Filter>WorldGenerator\Common\Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\GraphUtils.h">
+      <Filter>WorldGenerator\Common\Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\Node.h">
+      <Filter>WorldGenerator\Common\Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\PathFinding.h">
+      <Filter>WorldGenerator\Common\Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\WeightedGraph.h">
+      <Filter>WorldGenerator\Common\Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\RNG.h">
+      <Filter>WorldGenerator\Common\RNG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\RoomLayoutGenerator.h">
+      <Filter>WorldGenerator\RoomLayout</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\BinaryRoom.h">
+      <Filter>WorldGenerator\RoomLayout\BSP</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\GeneratedRoom.h">
+      <Filter>WorldGenerator\RoomLayout\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\RoomLayout.h">
+      <Filter>WorldGenerator\RoomLayout\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\RoomLayoutConfig.h">
+      <Filter>WorldGenerator\RoomLayout\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\RoomLink.h">
+      <Filter>WorldGenerator\RoomLayout\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\Vector3.h">
+      <Filter>WorldGenerator\RoomLayout\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\RoomSelector.h">
+      <Filter>WorldGenerator\RoomLayout\RooomSelector</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\RoomSelectorArgs.h">
+      <Filter>WorldGenerator\RoomLayout\RooomSelector</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\RNGEngine.h">
+      <Filter>WorldGenerator\Common\RNG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\Distribution.h">
+      <Filter>WorldGenerator\Common\RNG\Distributions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\DistributionFactory.h">
+      <Filter>WorldGenerator\Common\RNG\Distributions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\DistributionRNG.h">
+      <Filter>WorldGenerator\Common\RNG\Distributions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\UniformRNG.h">
+      <Filter>WorldGenerator\Common\RNG\Distributions</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

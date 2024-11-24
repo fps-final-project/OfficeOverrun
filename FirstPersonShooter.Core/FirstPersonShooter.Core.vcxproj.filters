@@ -1,0 +1,238 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="WorldGeneratorAdapter">
+      <UniqueIdentifier>{cafe8675-b9ea-406f-88f2-3651fcd8fe5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WorldGeneratorAdapter\Mapper">
+      <UniqueIdentifier>{a1ed18a0-a3dc-4b33-ac29-fe8c3212cc7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameElements">
+      <UniqueIdentifier>{5df70f11-2a7e-4d3d-a30c-e5e3db4243b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Events">
+      <UniqueIdentifier>{bab7d1a1-9e28-4705-8716-05ce8cb55a44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity">
+      <UniqueIdentifier>{4ad0d929-8928-48be-bc5c-b908aaf6bd6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\GunRig">
+      <UniqueIdentifier>{f2d121a7-bdf7-4839-9748-db7ab54f79f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Entity\Room">
+      <UniqueIdentifier>{180705ea-aed3-4ba2-8d73-20bfe7db5df0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player">
+      <UniqueIdentifier>{43bc791c-fb54-4327-a842-5dd7378bb30b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ResourceManager">
+      <UniqueIdentifier>{e4ca2119-1633-4e02-9515-bbc08374d3a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RoomModelGenerator">
+      <UniqueIdentifier>{fe364d98-9707-438d-84e1-4d54dd787657}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="World">
+      <UniqueIdentifier>{50b6a892-f481-4aa6-abc8-1dd39430a0fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CollisionDetector">
+      <UniqueIdentifier>{5bb4d3f2-1157-44b5-b56a-da75ec84f175}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Audio">
+      <UniqueIdentifier>{7f1dabdb-893d-46ae-8f59-66d828f8934b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Pathfinder">
+      <UniqueIdentifier>{8c1eeab2-a2bc-4268-86d1-9092f51a8653}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="..\FirstPersonShooter\MapGeneratorAdapter.cpp">
+      <Filter>WorldGeneratorAdapter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\MappingHelpers.cpp">
+      <Filter>WorldGeneratorAdapter\Mapper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\AnimatedObject.cpp">
+      <Filter>GameElements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\AnimatedObjectBuilder.cpp">
+      <Filter>GameElements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\Enemy.cpp">
+      <Filter>GameElements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\EnemyBuilder.cpp">
+      <Filter>GameElements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\Object.cpp">
+      <Filter>GameElements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\ObjectBuilder.cpp">
+      <Filter>GameElements</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\InputHandler.cpp">
+      <Filter>Events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\Animable.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\AnimatedEntity.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\Entity.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\Hittable.cpp">
+      <Filter>Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\GunRig.cpp">
+      <Filter>Entity\GunRig</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\GunRigMetadata.cpp">
+      <Filter>Entity\GunRig</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\Room.cpp">
+      <Filter>Entity\Room</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\Stairs.cpp">
+      <Filter>Entity\Room</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\Player.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\ResourceHelper.cpp">
+      <Filter>ResourceManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\ResourceManager.cpp">
+      <Filter>ResourceManager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\RoomModelGenerator.cpp">
+      <Filter>RoomModelGenerator</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\World.cpp">
+      <Filter>World</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\CollisionDetector.cpp">
+      <Filter>CollisionDetector</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\SimpleCollisionDetector.cpp">
+      <Filter>CollisionDetector</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\AudioReader.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\ActionHandler.cpp" />
+    <ClCompile Include="..\FirstPersonShooter\GameState.cpp" />
+    <ClCompile Include="Pathfinder.cpp">
+      <Filter>Pathfinder</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="..\FirstPersonShooter\MapGeneratorAdapter.h">
+      <Filter>WorldGeneratorAdapter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\MapGeneratorMapper.h">
+      <Filter>WorldGeneratorAdapter\Mapper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\MappingHelpers.h">
+      <Filter>WorldGeneratorAdapter\Mapper</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\AnimatedObject.hpp">
+      <Filter>GameElements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\AnimatedObjectBuilder.hpp">
+      <Filter>GameElements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\Enemy.hpp">
+      <Filter>GameElements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\EnemyBuilder.hpp">
+      <Filter>GameElements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\Object.hpp">
+      <Filter>GameElements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\ObjectBuilder.hpp">
+      <Filter>GameElements</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\InputHandler.hpp">
+      <Filter>Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\Animable.hpp">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\AnimatedEntity.hpp">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\Entity.hpp">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\Hittable.hpp">
+      <Filter>Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\GunRig.h">
+      <Filter>Entity\GunRig</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\GunRigMetadata.hpp">
+      <Filter>Entity\GunRig</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\Room.hpp">
+      <Filter>Entity\Room</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\RoomCollision.hpp">
+      <Filter>Entity\Room</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\RoomLinkData.hpp">
+      <Filter>Entity\Room</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\Stairs.h">
+      <Filter>Entity\Room</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\Player.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\ResourceHelper.hpp">
+      <Filter>ResourceManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\ResourceManager.h">
+      <Filter>ResourceManager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\RoomModelGenerator.h">
+      <Filter>RoomModelGenerator</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\World.h">
+      <Filter>World</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\CollisionDetector.hpp">
+      <Filter>CollisionDetector</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\SimpleCollisionDetector.hpp">
+      <Filter>CollisionDetector</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\AudioFile.hpp">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\AudioReader.hpp">
+      <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\ActionHandler.hpp" />
+    <ClInclude Include="..\FirstPersonShooter\ActionTypes.hpp" />
+    <ClInclude Include="..\FirstPersonShooter\GameState.hpp" />
+    <ClInclude Include="FirstPersonShooter.Core.h" />
+    <ClInclude Include="Pathfinder.h">
+      <Filter>Pathfinder</Filter>
+    </ClInclude>
+    <ClInclude Include="PathNodeData.h">
+      <Filter>Pathfinder</Filter>
+    </ClInclude>
+    <ClInclude Include="Path.h">
+      <Filter>Pathfinder</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>

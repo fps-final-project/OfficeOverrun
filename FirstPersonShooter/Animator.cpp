@@ -144,7 +144,6 @@ DirectX::XMMATRIX Animator::interpolateRotation(const Joint& data, float animati
         r = DirectX::XMVector4Normalize(r);
 
         return DirectX::XMMatrixRotationQuaternion(r);
-
     }
 
     int p0Index = getIndex(animationTime);

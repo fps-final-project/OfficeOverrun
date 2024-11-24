@@ -227,7 +227,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Link>
       <AdditionalDependencies>assimp-vc143-mtd.lib;d2d1.lib; d3d11.lib; dxgi.lib; windowscodecs.lib; dwrite.lib; %(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Vendor\assimp\lib\x64;%(AdditionalLibraryDirectories);$(VCInstallDir)\lib\store\amd64;$(VCInstallDir)\lib\amd64</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Vendor\assimp\lib\x64;%(AdditionalLibraryDirectories);$(VCInstallDir)\lib\store\amd64;$(VCInstallDir)\lib\amd64;$(SolutionDir)FirstPersonShooter.WorldGeneration</AdditionalLibraryDirectories>
       <AdditionalOptions>/VERBOSE %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <ClCompile>
@@ -236,7 +236,7 @@
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204</DisableSpecificWarnings>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)Vendor\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\FirstPersonShooter.Core;$(SolutionDir)Vendor\assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <PostBuildEvent>
@@ -266,7 +266,6 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Image Include="Assets\cube\brickwall.jpg" />
     <Image Include="Assets\Enemy\Zombie\world_war_zombie_diffuse.png" />
     <Image Include="Assets\GunRig\AK\ak74m_baseColor.png" />
     <Image Include="Assets\GunRig\AK\armColor.png" />
@@ -276,8 +275,10 @@
     <Image Include="Assets\LockScreenLogo.scale-200.png" />
     <Image Include="Assets\Other\bullet\bullet.jpg" />
     <Image Include="Assets\Other\crosshair\crosshair.png" />
+    <Image Include="Assets\Other\skybox\skybox.png" />
+    <Image Include="Assets\Other\heli\Helicopter_albedo2.jpg" />
     <Image Include="Assets\Other\stairs\floor.jpg" />
-    <Image Include="Assets\Other\wall\brickwall.jpg" />
+    <Image Include="Assets\Other\wall\concrete.jpg" />
     <Image Include="Assets\Other\wall\floor.jpg" />
     <Image Include="Assets\Other\wall\wall.jpg" />
     <Image Include="Assets\SplashScreen.scale-200.png" />
@@ -288,118 +289,15 @@
     <Image Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ActionHandler.hpp" />
-    <ClInclude Include="ActionTypes.hpp" />
-    <ClInclude Include="AudioFile.hpp" />
-    <ClInclude Include="AudioReader.hpp" />
-    <ClInclude Include="BinaryRoom.h" />
-    <ClInclude Include="DistributionFactory.h" />
-    <ClInclude Include="DistributionRNG.h" />
-    <ClInclude Include="Distribution.h" />
-    <ClInclude Include="Enemy.hpp" />
-    <ClInclude Include="EnemyBuilder.hpp" />
-    <ClInclude Include="GameState.hpp" />
-    <ClInclude Include="GeneratedRoom.h" />
-    <ClInclude Include="Graph.h" />
-    <ClInclude Include="GraphUtils.h" />
-    <ClInclude Include="GunRig.h" />
-    <ClInclude Include="GunRigMetadata.hpp" />
-    <ClInclude Include="MapGeneratorAdapter.h" />
-    <ClInclude Include="LightingData.hpp" />
-    <ClInclude Include="MapGeneratorMapper.h" />
-    <ClInclude Include="MappingHelpers.h" />
-    <ClInclude Include="Node.h" />
-    <ClInclude Include="Object.hpp" />
-    <ClInclude Include="ObjectBuilder.hpp" />
-    <ClInclude Include="PathFinding.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="RendererType.hpp" />
-    <ClInclude Include="RenderMaster.hpp" />
-    <ClInclude Include="RenderQueue.hpp" />
-    <ClInclude Include="ResourceHelper.hpp" />
-    <ClInclude Include="RNG.h" />
-    <ClInclude Include="RNGEngine.h" />
-    <ClInclude Include="Room.hpp" />
-    <ClInclude Include="RoomCollision.hpp" />
-    <ClInclude Include="RoomLayout.h" />
-    <ClInclude Include="RoomLayoutConfig.h" />
-    <ClInclude Include="RoomLayoutGenerator.h" />
-    <ClInclude Include="RoomLink.h" />
-    <ClInclude Include="RoomSelector.h" />
-    <ClInclude Include="RoomSelectorArgs.h" />
-    <ClInclude Include="RoomLinkData.hpp" />
-    <ClInclude Include="RoomModelGenerator.h" />
-    <ClInclude Include="SpriteRenderer.hpp" />
-    <ClInclude Include="Animable.hpp" />
-    <ClInclude Include="AnimatedAssimpModel.h" />
-    <ClInclude Include="AnimatedEntity.hpp" />
-    <ClInclude Include="AnimatedModelRenderer.hpp" />
-    <ClInclude Include="Animator.h" />
     <ClInclude Include="App.h" />
-    <ClInclude Include="AssimpModel.h" />
-    <ClInclude Include="AssimpModelLoader.h" />
-    <ClInclude Include="BoneInfo.h" />
-    <ClInclude Include="Camera.hpp" />
-    <ClInclude Include="CollisionDetector.hpp" />
-    <ClInclude Include="Common\DeviceResources.h" />
-    <ClInclude Include="Drawable.hpp" />
-    <ClInclude Include="Entity.hpp" />
-    <ClInclude Include="FirstPersonShooterMain.h" />
-    <ClInclude Include="Common\DirectXHelper.h" />
     <ClInclude Include="Common\StepTimer.h" />
-    <ClInclude Include="Content\Base3DRenderer.h" />
-    <ClInclude Include="Content\SampleFpsTextRenderer.h" />
-    <ClInclude Include="Content\ShaderStructures.h" />
-    <ClInclude Include="Hittable.hpp" />
-    <ClInclude Include="InputHandler.hpp" />
-    <ClInclude Include="Mesh.h" />
-    <ClInclude Include="MeshFactory.h" />
-    <ClInclude Include="ModelRenderer.hpp" />
+    <ClInclude Include="FirstPersonShooterMain.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="ResourceManager.h" />
-    <ClInclude Include="SimpleCollisionDetector.hpp" />
-    <ClInclude Include="Stairs.h" />
-    <ClInclude Include="Texture.h" />
-    <ClInclude Include="TextureFactory.h" />
-    <ClInclude Include="UniformRNG.h" />
-    <ClInclude Include="Utils.h" />
-    <ClInclude Include="Vector3.h" />
-    <ClInclude Include="WeightedGraph.h" />
-    <ClInclude Include="World.h" />
-    <ClInclude Include="MapGenerator.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ActionHandler.cpp" />
-    <ClCompile Include="Animable.cpp" />
-    <ClCompile Include="AnimatedEntity.cpp" />
-    <ClCompile Include="AnimatedModelRenderer.cpp" />
-    <ClCompile Include="Animator.cpp" />
     <ClCompile Include="App.cpp" />
-    <ClCompile Include="AssimpModelLoader.cpp" />
-    <ClCompile Include="AudioReader.cpp" />
-    <ClCompile Include="BinaryRoom.cpp" />
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="CollisionDetector.cpp" />
-    <ClCompile Include="Common\DeviceResources.cpp" />
-    <ClCompile Include="DistributionFactory.cpp" />
-    <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="EnemyBuilder.cpp" />
-    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="FirstPersonShooterMain.cpp" />
-    <ClCompile Include="Content\SampleFpsTextRenderer.cpp" />
-    <ClCompile Include="GameState.cpp" />
-    <ClCompile Include="GeneratedRoom.cpp" />
-    <ClCompile Include="GraphUtils.cpp" />
-    <ClCompile Include="GunRig.cpp" />
-    <ClCompile Include="GunRigMetadata.cpp" />
-    <ClCompile Include="Hittable.cpp" />
-    <ClCompile Include="InputHandler.cpp" />
-    <ClCompile Include="MapGeneratorAdapter.cpp" />
-    <ClCompile Include="MappingHelpers.cpp" />
-    <ClCompile Include="ModelRenderer.cpp" />
-    <ClCompile Include="Object.cpp" />
-    <ClCompile Include="ObjectBuilder.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -410,26 +308,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="RenderMaster.cpp" />
-    <ClCompile Include="RenderQueue.cpp" />
-    <ClCompile Include="ResourceHelper.cpp" />
-    <ClCompile Include="RNG.cpp" />
-    <ClCompile Include="RNGEngine.cpp" />
-    <ClCompile Include="Room.cpp" />
-    <ClCompile Include="RoomLayoutGenerator.cpp" />
-    <ClCompile Include="RoomLink.cpp" />
-    <ClCompile Include="RoomModelGenerator.cpp" />
-    <ClCompile Include="RoomSelector.cpp" />
-    <ClCompile Include="SpriteRenderer.cpp" />
-    <ClCompile Include="SimpleCollisionDetector.cpp" />
-    <ClCompile Include="ResourceManager.cpp" />
-    <ClCompile Include="Stairs.cpp" />
-    <ClCompile Include="TextureFactory.cpp" />
-    <ClCompile Include="UniformRNG.cpp" />
-    <ClCompile Include="Utils.cpp" />
-    <ClCompile Include="World.cpp" />
-    <ClCompile Include="MapGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -437,30 +315,9 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="Content\SamplePixelShader.hlsl">
-      <ShaderType>Pixel</ShaderType>
-    </FxCompile>
-    <FxCompile Include="Content\SampleVertexShader.hlsl">
-      <ShaderType>Vertex</ShaderType>
-    </FxCompile>
-    <FxCompile Include="HUDPixelShader.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-    </FxCompile>
-    <FxCompile Include="HUDVertexShader.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
-    </FxCompile>
-    <FxCompile Include="SkeletalPixelShader.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
-    </FxCompile>
-    <FxCompile Include="SkeletalVertexShader.hlsl">
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
-      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
-    </FxCompile>
-  </ItemGroup>
-  <ItemGroup>
+    <None Include="..\Vendor\assimp\lib\x64\assimp-vc143-mtd.dll">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+    </None>
     <None Include="Assets\Enemy\Zombie\zombie_war.gltf">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
@@ -498,6 +355,9 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
     </None>
     <None Include="Assets\Other\bullet\bullet.mtl" />
+    <None Include="Assets\Other\heli\heli.gltf">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+    </None>
     <None Include="Assets\Other\stairs\stairs.gltf">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
     </None>
@@ -555,6 +415,17 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FirstPersonShooter.Core\FirstPersonShooter.Core.vcxproj">
+      <Project>{28210341-8279-465b-8e97-634d4633d56a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\FirstPersonShooter.Rendering\FirstPersonShooter.Rendering.vcxproj">
+      <Project>{a0f46924-38c3-48ec-8fa2-537b64c35c84}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\FirstPersonShooter.WorldGeneration\FirstPersonShooter.WorldGeneration.vcxproj">
+      <Project>{cad5db3e-5668-4c00-a384-e3d7c9f2011e}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VSINSTALLDIR)\Common7\IDE\Extensions\Microsoft\VsGraphics\ImageContentTask.targets" />
@@ -567,8 +438,5 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\directxtk_uwp.2024.6.5.1\build\native\directxtk_uwp.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\directxtk_uwp.2024.6.5.1\build\native\directxtk_uwp.targets'))" />
-  </Target>
-  <Target Name="AfterBuild">
-    <Copy SourceFiles="$(SolutionDir)Vendor\assimp\lib\x64\assimp-vc143-mtd.dll" DestinationFolder="$(TargetDir)\AppX" SkipUnchangedFiles="false" />
   </Target>
 </Project>

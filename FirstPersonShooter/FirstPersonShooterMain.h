@@ -33,6 +33,7 @@ namespace FirstPersonShooter
 		void CreateWindowSizeDependentResources();
 		void Update();
 		bool Render();
+		bool ShouldClose();
 
 		// IDeviceNotify
 		virtual void OnDeviceLost();

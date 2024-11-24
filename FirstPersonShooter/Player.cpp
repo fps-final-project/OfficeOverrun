@@ -4,7 +4,7 @@
 
 Player::Player()
 	: m_position({0.f, 0.f, 0.f}), m_velocity({0.f, 0.f, 0.f}),
-		m_gunRig(std::make_unique<GunRig>("ak"))
+	m_gunRig(std::make_unique<GunRig>("ak")), m_isOnGround(true), m_health(100)
 {
 }
 
@@ -113,4 +113,9 @@ void Player::handleRoomCollision(const RoomCollision& collisionData)
 		this->m_velocity.z = 0;
 		this->m_position.z = collisionData.correction[2];
 	}
+}
+
+void Player::takeDamage(int damage)
+{
+	m_health -= damage;
 }

@@ -41,11 +41,15 @@ __declspec(align(16))
 struct LightingConstantBuffer
 {
 	static const int MAX_LIGHTS = 20;
-	int nlights;
-	DirectX::XMFLOAT3 camera_pos;
-	DirectX::XMFLOAT3 flashlight_dir;
-	float flashlight_cutoffAngle;
-	DirectX::XMFLOAT3 light_pos[MAX_LIGHTS];
+	int nlights;                     // 4 bytes
+	int fully_visible;              // 4 bytes
+	float flashlight_cutoffAngle;    // 4 bytes
+	int pad1;
+	DirectX::XMFLOAT3 flashlight_dir;// 12 bytes
+	int pad2;
+	DirectX::XMFLOAT3 camera_pos;    // 12 bytes
+	int pad3;
+	DirectX::XMFLOAT3 light_pos[MAX_LIGHTS]; 
 };
 
 #pragma endregion

@@ -1,7 +1,7 @@
 #pragma once
 namespace WorldGenerator
 {
-	struct Vector3
+	struct __declspec(dllexport) Vector3
 	{
 		int x;
 		int y;

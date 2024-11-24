@@ -31,32 +31,43 @@ GameState::GameState(
 	EnemyBuilder enemyBuilder{};
 	ObjectBuilder objectBuilder{};
 
-	auto zombie = enemyBuilder
-		.WithNewEnemy(ResourceManager::Instance.getAnimatedModel("zombie_war"))
-		.WithMaxHealth(100)
-		.WithDamage(10)
-		.WithSpeed(0.01f)
-		.WithPosition({ 3.f, 0.f, 2.f })
-		.WithRotation({ 0.f, 0.f, 0.f })
-		.WithVelocity({ 0.f, 0.f, 0.f })
-		.WithSize({ 0.8f, 0.8f, 0.8f })
-		.WithFallbackAnimation("idle")
-		.Build();
 
-
-	//m_world->m_rooms.push_back(Room(XMFLOAT3(-1.f, -1.f, -2.f), XMFLOAT3(4.f, 4.f, 6.f)));
 	// generating rooms using WorldGenerator
 	m_world->m_rooms = MapGeneratorAdapter().GenerateRooms();
 
-	for (auto& room : m_world->m_rooms)
+	for (int i = 0; i < m_world->m_rooms.size() - 1; i++)
 	{
+		auto& room = m_world->m_rooms[i];
 		room.setModel(
 			RoomModelGenerator::generateRoomModel(
 				room.getPosition(), room.getSize(), room.getLinks(),
 				m_deviceResources));
 	}
+
+	auto& lastRoom = m_world->m_rooms[m_world->m_rooms.size() - 1];
+	lastRoom.setModel(
+		RoomModelGenerator::generateRoof(
+			lastRoom.getPosition(), lastRoom.getSize(), lastRoom.getLinks(),
+			m_deviceResources));
+
+	m_pathfinder = std::make_shared<Pathfinder>(m_world->m_rooms, m_player->getPostition());
 	m_world->UpdateVisibleRooms();
-	//m_world->m_currentRoomIndex = 0;
+	m_world->AddHelicopter();
+
+
+	auto zombie = enemyBuilder
+		.WithNewEnemy(ResourceManager::Instance().getAnimatedModel("zombie_war"))
+		.WithMaxHealth(100)
+		.WithDamage(10)
+		.WithSpeed(0.05f)
+		.WithPosition({ 20.f, 0.f, 4.f })
+		.WithRotation({ 0.f, 0.f, 0.f })
+		.WithVelocity({ 0.f, 0.f, 0.f })
+		.WithSize({ 0.8f, 0.8f, 0.8f })
+		.WithAttackRadius(0.7f)
+		.WithFallbackAnimation("run")
+		.WithPath(m_pathfinder)
+		.Build();
 
 	m_world->AddEnemy(zombie);
 
@@ -72,14 +83,16 @@ void GameState::HandleInput()
 	m_camera->alignWithMouse(mouseState);
 
 	m_inputHandler->HandleInputState({ mouseState, keyboardState });
-	m_actionHandler->HandleActions(m_player.get(), m_world.get(), m_camera.get());
 }
 
 void GameState::Update(float dt)
 {
 	m_player->Update(dt);
 	m_world->UpdateCurrentRoom(m_player->getPostition());
-	m_world->UpdateEnemies(m_player->getPostition());
+
+	m_pathfinder->UpdatePlayerNode(m_player->getPostition());
+
+	m_world->UpdateEnemies(m_pathfinder, m_player->getPostition(), m_actionQueue);
 	m_world->Update(dt);
 
 	m_player->handleRoomCollision(m_world->GetCurrentRoom().checkCollision(m_player->getPostition()));
@@ -87,6 +100,7 @@ void GameState::Update(float dt)
 	m_camera->setPosition(m_player->getPostition());
 	m_player->getGunRig()->RotateAndOffset(m_camera->getYawPitchRoll(), m_player->getPostition(), dt);
 
+	m_actionHandler->HandleActions(m_player.get(), m_world.get(), m_camera.get());
 
 	//TODO: Collision handling
 
@@ -99,60 +113,65 @@ void GameState::CreateWindowSizeDependentResources()
 	m_camera->CreateWindowSizeDependentResources(FOV);
 }
 
+bool GameState::GameFinished()
+{
+	return m_world->IsPlayerNearHelicopter(m_player->getPostition());
+}
+
 void GameState::setupActionHandlers()
 {
 	m_inputHandler->AddActionHandler(
 		[](InputState newState, InputState oldState) {	return newState.first.leftButton; },
-		Action::SHOOT
+		Action(ActionType::SHOOT)
 	);
 
 	m_inputHandler->AddActionHandler(
 		[](InputState newState, InputState oldState) {	return newState.second.R && oldState.second.R; },
-		Action::RELOAD
+		Action(ActionType::RELOAD)
 	);
 
 	m_inputHandler->AddActionHandler(
 		[](InputState newState, InputState oldState) {	return newState.second.W && oldState.second.W; },
-		Action::WALK_FORWARD
+		Action(ActionType::WALK_FORWARD)
 	);
 
 	m_inputHandler->AddActionHandler(
 		[](InputState newState, InputState oldState) {	return newState.second.S && oldState.second.S; },
-		Action::WALK_BACKWARD
+		Action(ActionType::WALK_BACKWARD)
 	);
 
 	m_inputHandler->AddActionHandler(
 		[](InputState newState, InputState oldState) {	return newState.second.A && oldState.second.A; },
-		Action::WALK_LEFT
+		Action(ActionType::WALK_LEFT)
 	);
 
 	m_inputHandler->AddActionHandler(
 		[](InputState newState, InputState oldState) {	return newState.second.D && oldState.second.D; },
-		Action::WALK_RIGHT
+		Action(ActionType::WALK_RIGHT)
 	);
 
 	m_inputHandler->AddActionHandler(
 		[](InputState newState, InputState oldState) {	return newState.second.Space && oldState.second.Space; },
-		Action::JUMP
+		Action(ActionType::JUMP)
 	);
 
 	m_inputHandler->AddActionHandler(
 		[](InputState newState, InputState oldState) {	return newState.second.D1 && oldState.second.D1; },
-		Action::WEAPON1
+		Action(ActionType::WEAPON1)
 	);
 
 	m_inputHandler->AddActionHandler(
 		[](InputState newState, InputState oldState) {	return newState.second.D2 && oldState.second.D2; },
-		Action::WEAPON2
+		Action(ActionType::WEAPON2)
 	);
 
 	m_inputHandler->AddActionHandler(
 		[](InputState newState, InputState oldState) {	return newState.second.D3 && oldState.second.D3; },
-		Action::WEAPON3
+		Action(ActionType::WEAPON3)
 	);
 
 	m_inputHandler->AddActionHandler(
 		[](InputState newState, InputState oldState) {	return newState.second.D4 && oldState.second.D4; },
-		Action::WEAPON4
+		Action(ActionType::WEAPON4)
 	);
 }

@@ -9,7 +9,7 @@ namespace WorldGenerator
 {
 	class RoomLink;
 
-	class GeneratedRoom
+	class __declspec(dllexport) GeneratedRoom
 	{
 	private:
 		bool IsAdjacent(GeneratedRoom room);

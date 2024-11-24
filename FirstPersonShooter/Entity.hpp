@@ -5,7 +5,7 @@
 
 using namespace DirectX;
 
-class Entity : public Drawable, public Hittable
+class __declspec(dllexport) Entity : public Drawable, public Hittable
 {
 public:
 	Entity(std::shared_ptr<Model> model,
@@ -16,12 +16,14 @@ public:
 	virtual ~Entity() {}
 	virtual void Render(std::shared_ptr<RenderMaster> renderMaster) override;
 	virtual void Update(float dt);
-	friend class ModelRenderer;
+
+	inline XMFLOAT3 GetPosition() const { return position; }
+	inline XMFLOAT3 GetRotation() const { return rotation; }
+	inline XMFLOAT3 GetSize() const { return size; }
 protected:
 	std::shared_ptr<Model> m_model;
 	DirectX::XMMATRIX m_modelMatrix;
 
-	XMFLOAT3 position;
 	XMFLOAT3 rotation;
 	XMFLOAT3 size;
 	XMFLOAT3 velocity;

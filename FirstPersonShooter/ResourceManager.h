@@ -11,10 +11,14 @@
 #include <memory>
 #include <vector>
 
-class ResourceManager
+class __declspec(dllexport) ResourceManager
 {
 public:
-	static ResourceManager Instance;
+	static ResourceManager& Instance();
+
+	ResourceManager(const ResourceManager&) = delete;
+	ResourceManager& operator=(const ResourceManager&) = delete;
+
 	void loadModel(const std::string& path, 
 		const std::shared_ptr<DX::DeviceResources>& deviceResources, const std::string& nameOverride = "");
 
