@@ -14,6 +14,9 @@
     <Filter Include="RoomLayout\BSP">
       <UniqueIdentifier>{93551786-665f-4474-869e-9a7df9df4859}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RoomLayout\RoomSelector">
+      <UniqueIdentifier>{16d467c5-fad0-4674-8e25-107ff7c92003}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="UnitTestApp.xaml" />
@@ -26,6 +29,9 @@
     </ClCompile>
     <ClCompile Include="BinaryRoomTest.cpp">
       <Filter>RoomLayout\BSP</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomSelectorTest.cpp">
+      <Filter>RoomLayout\RoomSelector</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

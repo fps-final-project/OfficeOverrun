@@ -7,7 +7,7 @@
 namespace WorldGenerator
 {
 	template <typename T>
-	class Graph
+	class __declspec(dllexport) Graph
 	{
 	private:
 		void MakeAdMatrix(int size);

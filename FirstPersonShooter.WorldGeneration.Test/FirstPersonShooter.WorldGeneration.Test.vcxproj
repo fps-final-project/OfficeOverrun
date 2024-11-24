@@ -205,6 +205,7 @@
   <ItemGroup>
     <ClCompile Include="BinaryRoomTest.cpp" />
     <ClCompile Include="RoomLayoutGeneratorTest.cpp" />
+    <ClCompile Include="RoomSelectorTest.cpp" />
     <ClCompile Include="UnitTestApp.xaml.cpp">
       <DependentUpon>UnitTestApp.xaml</DependentUpon>
     </ClCompile>
