@@ -23,7 +23,7 @@ Action Enemy::Update(std::shared_ptr<Pathfinder> pathfinder, DirectX::XMFLOAT3 p
 
 	setRotation({ 0.0f, yaw, 0.0f });
 
-	if (!isIdle()) return currentAction;
+	if (!isIdle() || !pathToPlayer.playerVisible) return currentAction;
 
 	if (l <= radius)
 	{
@@ -46,8 +46,8 @@ Action Enemy::Update(std::shared_ptr<Pathfinder> pathfinder, DirectX::XMFLOAT3 p
 XMVECTOR Enemy::GetDirection()
 {
 	return {
-		pathToPlayer.front().position.x - position.x,
-		pathToPlayer.front().position.y - position.y,
-		pathToPlayer.front().position.z - position.z
+		pathToPlayer.path.front().position.x - position.x,
+		pathToPlayer.path.front().position.y - position.y,
+		pathToPlayer.path.front().position.z - position.z
 	};
 }
