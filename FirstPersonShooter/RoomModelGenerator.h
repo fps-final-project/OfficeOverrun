@@ -17,7 +17,7 @@ public:
 		const std::shared_ptr<DX::DeviceResources>& deviceResources);
 
 private:
-	static const float frameOffset;
+	static const float frameOffset, roofFrameHeight;
 
 	static void generateWall(std::vector<VertexData>& allVerticies, std::vector<unsigned short>& allIndicies, 
 		DirectX::XMFLOAT3 c1, DirectX::XMFLOAT3 c2, std::vector<RoomLinkData> links, float rotationAngle);
@@ -28,6 +28,9 @@ private:
 	static void generateDoorFrame(std::vector<VertexData>& verticies, std::vector<unsigned short>& indicies, int indexOffset,
 		float x, int L, int H);
 
+	static void generateRoofFrame(std::vector<VertexData>& verticies, std::vector<unsigned short>& indicies, int indexOffset,
+		float x, float z, int sizeX, int sizeZ, int L, int H);
+
 	static void translateAndRotateVerticies(std::vector<VertexData>& verticies, DirectX::XMFLOAT3 translation, float angle);
 
 	static DirectX::XMFLOAT3 translate(DirectX::XMFLOAT3 v1, DirectX::XMFLOAT3 v2);
@@ -35,5 +38,7 @@ private:
 
 	static void generateFloor(std::vector<VertexData>& allVerticies, std::vector<unsigned short>& allIndicies,
 		DirectX::XMFLOAT3 c1, DirectX::XMFLOAT3 c2, std::vector<RoomLinkData> links, bool isRoof);
+
+	static bool areClose(float v1, float v2);
 
 };
