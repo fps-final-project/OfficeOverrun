@@ -12,23 +12,8 @@ RoomLayoutGenerator::RoomLayoutGenerator(RoomLayoutConfig config) : layout(RoomL
 {
 }
 
-RoomLayout& RoomLayoutGenerator::Generate()
+RoomLayout& WorldGenerator::RoomLayoutGenerator::GetLayout()
 {
-	// Step 1
-	GenerateRooms();
-
-	// Step 2
-	GenerateAdGraph();
-
-	// Step 3
-	SelectRooms();
-
-	// Step X - after graph operations
-	GenerateRoomLinks();
-
-	// Step X + 1
-	GenerateLayoutFromAdGraph();
-
 	return layout;
 }
 

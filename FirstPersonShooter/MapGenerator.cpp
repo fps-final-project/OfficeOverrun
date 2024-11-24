@@ -12,7 +12,20 @@ RoomLayout MapGenerator::GenerateRoomLayout(RoomLayoutConfig config)
 	RNGEngine::GetInstance()->SetSeed(SEED);
 	RoomLayoutGenerator generator(config);
 
-	RoomLayout layout = generator.Generate();
+	// Step 1
+	generator.GenerateRooms();
 
-	return layout;
+	// Step 2
+	generator.GenerateAdGraph();
+
+	// Step 3
+	generator.SelectRooms();
+
+	// Step 4
+	generator.GenerateRoomLinks();
+
+	// Step 5
+	generator.GenerateLayoutFromAdGraph();
+
+	return generator.GetLayout();
 }

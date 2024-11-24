@@ -13,13 +13,13 @@ namespace WorldGenerator
 		RoomLayout layout;
 		RoomLayoutConfig config;
 		Graph<GeneratedRoom> adGraph; // room adjacency graph
+	public:
 		void GenerateRooms();
 		void GenerateAdGraph();
 		void SelectRooms();
 		void GenerateRoomLinks();
 		void GenerateLayoutFromAdGraph();
-	public:
 		RoomLayoutGenerator(RoomLayoutConfig config);
-		RoomLayout& Generate();
+		RoomLayout& GetLayout();
 	};
 }
