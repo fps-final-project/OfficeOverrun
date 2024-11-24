@@ -13,7 +13,7 @@
     <ApplicationDefinition Include="UnitTestApp.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="UnitTest.cpp" />
+    <ClCompile Include="AnimatorTests.cpp" />
     <ClCompile Include="pch.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -47,5 +47,8 @@
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Vendor\assimp\lib\x64\assimp-vc143-mtd.dll" />
   </ItemGroup>
 </Project>
