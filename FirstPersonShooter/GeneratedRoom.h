@@ -4,6 +4,7 @@
 #include <vector>
 #include "Vector3.h"
 #include "RoomLink.h"
+#include "Utils.h"
 
 namespace WorldGenerator
 {

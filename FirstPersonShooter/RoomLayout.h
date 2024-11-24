@@ -4,7 +4,7 @@
 #include "GeneratedRoom.h"
 namespace WorldGenerator
 {
-	struct RoomLayout
+	struct __declspec(dllexport) RoomLayout
 	{
 		Vector3 mapSize;
 		std::vector<GeneratedRoom> rooms;

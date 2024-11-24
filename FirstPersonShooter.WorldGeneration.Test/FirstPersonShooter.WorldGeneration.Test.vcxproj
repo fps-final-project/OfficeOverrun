@@ -168,6 +168,7 @@
       <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
       <DisableSpecificWarnings>4453;28204;4687</DisableSpecificWarnings>
       <AdditionalIncludeDirectories>$(SolutionDir)FirstPersonShooter;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -178,6 +179,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="TestUtils.h" />
     <ClInclude Include="UnitTestApp.xaml.h">
       <DependentUpon>UnitTestApp.xaml</DependentUpon>
     </ClInclude>
@@ -202,6 +204,10 @@
     <Image Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BinaryRoomTest.cpp" />
+    <ClCompile Include="RoomLayoutGeneratorTest.cpp" />
+    <ClCompile Include="RoomLinkTest.cpp" />
+    <ClCompile Include="TestUtils.cpp" />
     <ClCompile Include="UnitTestApp.xaml.cpp">
       <DependentUpon>UnitTestApp.xaml</DependentUpon>
     </ClCompile>

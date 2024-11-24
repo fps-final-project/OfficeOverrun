@@ -8,6 +8,15 @@
       <UniqueIdentifier>a2c4e493-ca96-465f-b048-a7b292fe37ff</UniqueIdentifier>
       <Extensions>bmp;fbx;gif;jpg;jpeg;tga;tiff;tif;png</Extensions>
     </Filter>
+    <Filter Include="RoomLayout">
+      <UniqueIdentifier>{4ade178c-55dd-4687-b4dc-ec02d6d68879}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RoomLayout\BSP">
+      <UniqueIdentifier>{93551786-665f-4474-869e-9a7df9df4859}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RoomLayout\RoomSelector">
+      <UniqueIdentifier>{16d467c5-fad0-4674-8e25-107ff7c92003}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="UnitTestApp.xaml" />
@@ -15,6 +24,15 @@
   <ItemGroup>
     <ClCompile Include="UnitTest.cpp" />
     <ClCompile Include="pch.cpp" />
+    <ClCompile Include="RoomLayoutGeneratorTest.cpp">
+      <Filter>RoomLayout</Filter>
+    </ClCompile>
+    <ClCompile Include="BinaryRoomTest.cpp">
+      <Filter>RoomLayout\BSP</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomSelectorTest.cpp">
+      <Filter>RoomLayout\RoomSelector</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />

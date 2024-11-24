@@ -4,22 +4,23 @@
 #include "RoomLayout.h"
 #include "RoomLayoutConfig.h"
 #include "Graph.h"
+#include "Utils.h"
+#include "BinaryRoom.h"
+#include "RoomLink.h"
+#include "RoomSelector.h"
 
 namespace WorldGenerator
 {
-	class RoomLayoutGenerator
+	class __declspec(dllexport) RoomLayoutGenerator
 	{
 	private:
-		RoomLayout layout;
 		RoomLayoutConfig config;
-		Graph<GeneratedRoom> adGraph; // room adjacency graph
-		void GenerateRooms();
-		void GenerateAdGraph();
-		void SelectRooms();
-		void GenerateRoomLinks();
-		void GenerateLayoutFromAdGraph();
 	public:
+		RoomLayout GenerateRooms();
+		Graph<GeneratedRoom> GenerateAdGraph(RoomLayout& layout);
+		void SelectRooms(Graph<GeneratedRoom>& adGraph);
+		void GenerateRoomLinks(Graph<GeneratedRoom>& adGraph);
+		RoomLayout GenerateLayoutFromAdGraph(Graph<GeneratedRoom>& adGraph);
 		RoomLayoutGenerator(RoomLayoutConfig config);
-		RoomLayout& Generate();
 	};
 }

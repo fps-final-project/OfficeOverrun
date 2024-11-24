@@ -1,5 +1,6 @@
 #pragma once
 #include "RoomLayoutGenerator.h"
+#include "RNGEngine.h"
 
 namespace WorldGenerator
 {

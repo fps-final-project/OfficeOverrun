@@ -2,6 +2,7 @@
 #include <random>
 
 #include "DistributionRNG.h"
+#include "RNGEngine.h"
 
 #pragma once
 
