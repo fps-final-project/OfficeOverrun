@@ -40,6 +40,9 @@
     <Filter Include="Audio">
       <UniqueIdentifier>{7f1dabdb-893d-46ae-8f59-66d828f8934b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Pathfinder">
+      <UniqueIdentifier>{8c1eeab2-a2bc-4268-86d1-9092f51a8653}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -119,9 +122,10 @@
     <ClCompile Include="..\FirstPersonShooter\AudioReader.cpp">
       <Filter>Audio</Filter>
     </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\ActionHandler.cpp" />
     <ClCompile Include="..\FirstPersonShooter\GameState.cpp" />
-    <ClCompile Include="..\FirstPersonShooter\ActionHandler.cpp">
-      <Filter>Events</Filter>
+    <ClCompile Include="Pathfinder.cpp">
+      <Filter>Pathfinder</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -214,13 +218,18 @@
     <ClInclude Include="..\FirstPersonShooter\AudioReader.hpp">
       <Filter>Audio</Filter>
     </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\ActionHandler.hpp" />
+    <ClInclude Include="..\FirstPersonShooter\ActionTypes.hpp" />
     <ClInclude Include="..\FirstPersonShooter\GameState.hpp" />
     <ClInclude Include="FirstPersonShooter.Core.h" />
-    <ClInclude Include="..\FirstPersonShooter\ActionHandler.hpp">
-      <Filter>Events</Filter>
+    <ClInclude Include="Pathfinder.h">
+      <Filter>Pathfinder</Filter>
     </ClInclude>
-    <ClInclude Include="..\FirstPersonShooter\ActionTypes.hpp">
-      <Filter>Events</Filter>
+    <ClInclude Include="PathNodeData.h">
+      <Filter>Pathfinder</Filter>
+    </ClInclude>
+    <ClInclude Include="Path.h">
+      <Filter>Pathfinder</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

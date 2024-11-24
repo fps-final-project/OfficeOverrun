@@ -172,6 +172,7 @@
     <None Include="Assets\Other\heli\heli.gltf">
       <Filter>Assets\Other\heli</Filter>
     </None>
+    <None Include="..\Vendor\assimp\lib\x64\assimp-vc143-mtd.dll" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="FirstPersonShooter.rc" />

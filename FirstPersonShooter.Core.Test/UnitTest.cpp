@@ -6,6 +6,7 @@
 #include "EnemyBuilder.hpp"
 #include "ActionHandler.hpp"
 #include "Player.h"
+#include "Pathfinder.h"
 #include "ResourceManager.h"
 #include "SimpleCollisionDetector.hpp"
 
@@ -25,23 +26,28 @@ namespace FirstPersonShooter_Core_Test
 		EnemyBuilder enemyBuilder;
         World world;
 		MapGeneratorAdapter mapGeneratorAdapter;
+        std::shared_ptr<Pathfinder> pathfinder;
     public:
         EnemyTest()
         {
 			world.m_rooms = mapGeneratorAdapter.GenerateRooms();
+            pathfinder = std::make_shared<Pathfinder>(world.m_rooms, DirectX::XMFLOAT3(0.f, 0.f, 0.f));
         }
         TEST_METHOD(SameRoomShouldMove)
         {            
 			XMFLOAT3 start = { 1.f, 1.f, 1.f };
 			XMFLOAT3 playerPos = { 0.f, 1.f, 0.f };
+            pathfinder->UpdatePlayerNode(playerPos);
+
             std::shared_ptr<Enemy> e = enemyBuilder
                 .WithNewEnemy(std::make_shared<AnimatedModel>())
                 .WithSpeed(1.f)
                 .WithPosition(start)
+                .WithPath(pathfinder)
                 .Build();
 
-
-            e->Update(world.GetCurrentRoom(), world.m_rooms, playerPos);
+            
+            e->Update(pathfinder, playerPos);
 
 			e->getPosition() == start;
             Assert::IsTrue(!(e->getPosition() == start));
@@ -50,23 +56,27 @@ namespace FirstPersonShooter_Core_Test
         {
 
             XMFLOAT3 playerPos = { 0.f, 1.f, 0.f };
+            pathfinder->UpdatePlayerNode(playerPos);
             int adj = world.GetCurrentRoom().getAdjacentRooms()[0];
             XMFLOAT3 roomPos = world.m_rooms[adj].getPosition();
             XMFLOAT3 roomSize = world.m_rooms[adj].getSize();
-            XMFLOAT3 start = { roomPos.x + (roomSize.x / 2.f), roomPos.y + (roomSize.y / 2.f), roomPos.z + (roomSize.z / 2.f) };
+            XMFLOAT3 start = { roomPos.x + (roomSize.x / 2.f), roomPos.y, roomPos.z + (roomSize.z / 2.f) };
             std::shared_ptr<Enemy> e = enemyBuilder
                 .WithNewEnemy(std::make_shared<AnimatedModel>())
                 .WithSpeed(1.f)
                 .WithPosition(start)
+                .WithPath(pathfinder)
                 .Build();
 
-            e->Update(world.GetCurrentRoom(), world.m_rooms, playerPos);
+            e->Update(pathfinder, playerPos);
 
             Assert::IsTrue(!(e->getPosition() == start));
         }
 		TEST_METHOD(NotAdjacentRoomShouldNotMove)
         {
 			XMFLOAT3 playerPos = { 0.f, 1.f, 0.f };
+            pathfinder->UpdatePlayerNode(playerPos);
+
             std::vector adj = world.GetCurrentRoom().getAdjacentRooms();
 
             for (int i = 0; i < world.m_rooms.size(); i++)
@@ -80,9 +90,10 @@ namespace FirstPersonShooter_Core_Test
                         .WithNewEnemy(std::make_shared<AnimatedModel>())
                         .WithSpeed(1.f)
                         .WithPosition(start)
+                        .WithPath(pathfinder)
                         .Build();
 
-					e->Update(world.GetCurrentRoom(), world.m_rooms, playerPos);
+                    e->Update(pathfinder, playerPos);
 
 					Assert::IsTrue(e->getPosition() == start);
 
@@ -94,15 +105,17 @@ namespace FirstPersonShooter_Core_Test
         {
             XMFLOAT3 start = { 1.f, 1.f, 1.f };
             XMFLOAT3 playerPos = { 0.f, 1.f, 1.f };
+            pathfinder->UpdatePlayerNode(playerPos);
             std::shared_ptr<Enemy> e = enemyBuilder
                 .WithNewEnemy(std::make_shared<AnimatedModel>())
                 .WithSpeed(1.f)
 				.WithAttackRadius(1.1f)
                 .WithPosition(start)
+                .WithPath(pathfinder)
                 .Build();
 
 
-            Action a = e->Update(world.GetCurrentRoom(), world.m_rooms, playerPos);
+            Action a = e->Update(pathfinder, playerPos);
             Assert::IsTrue(a.type == ActionType::ATTACK);
         }
     };
