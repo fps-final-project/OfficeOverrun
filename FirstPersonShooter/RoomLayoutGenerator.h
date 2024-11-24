@@ -15,14 +15,12 @@ namespace WorldGenerator
 	{
 	private:
 		RoomLayoutConfig config;
-		Graph<GeneratedRoom> adGraph; // room adjacency graph
 	public:
-		RoomLayout layout;
-		void GenerateRooms();
-		void GenerateAdGraph();
-		void SelectRooms();
-		void GenerateRoomLinks();
-		void GenerateLayoutFromAdGraph();
+		RoomLayout GenerateRooms();
+		Graph<GeneratedRoom> GenerateAdGraph(RoomLayout& layout);
+		void SelectRooms(Graph<GeneratedRoom>& adGraph);
+		void GenerateRoomLinks(Graph<GeneratedRoom>& adGraph);
+		RoomLayout GenerateLayoutFromAdGraph(Graph<GeneratedRoom>& adGraph);
 		RoomLayoutGenerator(RoomLayoutConfig config);
 	};
 }

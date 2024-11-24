@@ -12,19 +12,19 @@ RoomLayout MapGenerator::GenerateRoomLayout(RoomLayoutConfig config)
 	RoomLayoutGenerator generator(config);
 
 	// Step 1
-	generator.GenerateRooms();
+	RoomLayout layout = generator.GenerateRooms();
 
 	// Step 2
-	generator.GenerateAdGraph();
+	Graph<GeneratedRoom> adGraph = generator.GenerateAdGraph(layout);
 
 	// Step 3
-	generator.SelectRooms();
+	generator.SelectRooms(adGraph);
 
 	// Step 4
-	generator.GenerateRoomLinks();
+	generator.GenerateRoomLinks(adGraph);
 
 	// Step 5
-	generator.GenerateLayoutFromAdGraph();
+	layout = generator.GenerateLayoutFromAdGraph(adGraph);
 
-	return generator.layout;
+	return layout;
 }

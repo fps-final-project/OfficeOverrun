@@ -4,12 +4,13 @@
 
 using namespace WorldGenerator;
 
-RoomLayoutGenerator::RoomLayoutGenerator(RoomLayoutConfig config) : layout(RoomLayout(config.mapSize)), config(config)
+RoomLayoutGenerator::RoomLayoutGenerator(RoomLayoutConfig config) : config(config)
 {
 }
 
-void RoomLayoutGenerator::GenerateRooms()
+RoomLayout RoomLayoutGenerator::GenerateRooms()
 {
+	RoomLayout layout(config.mapSize);
 	for (int floor = 0; floor < config.mapSize.z; floor++ )
 	{
 		BinaryRoom::MakeRoomsOnLayoutFloor(layout, floor);
@@ -19,11 +20,13 @@ void RoomLayoutGenerator::GenerateRooms()
 	roof.pos = Vector3(0, 0, config.mapSize.z);
 	roof.size = Vector3(config.mapSize.x, config.mapSize.y, 1);
 	layout.rooms.push_back(roof);
+
+	return layout;
 }
 
-void RoomLayoutGenerator::GenerateAdGraph()
+Graph<GeneratedRoom> RoomLayoutGenerator::GenerateAdGraph(RoomLayout& layout)
 {
-	adGraph = Graph<GeneratedRoom>(layout.rooms);
+	Graph<GeneratedRoom> adGraph(layout.rooms);
 	for (int i = 0; i < adGraph.Size(); i++)
 	{
 		Node<GeneratedRoom>& node = adGraph[i];
@@ -35,9 +38,11 @@ void RoomLayoutGenerator::GenerateAdGraph()
 			}
 		}
 	}
+
+	return adGraph;
 }
 
-void WorldGenerator::RoomLayoutGenerator::SelectRooms()
+void WorldGenerator::RoomLayoutGenerator::SelectRooms(Graph<GeneratedRoom>& adGraph)
 {
 	// Setup selector args
 	RoomSelectorArgs args(adGraph);
@@ -53,7 +58,7 @@ void WorldGenerator::RoomLayoutGenerator::SelectRooms()
 }
 
 // The method removes some edges, spoils graph structure
-void RoomLayoutGenerator::GenerateRoomLinks()
+void RoomLayoutGenerator::GenerateRoomLinks(Graph<GeneratedRoom>& adGraph)
 {
 	int n = adGraph.Size();
 	for (int i = 0; i < n; i++) 
@@ -79,12 +84,16 @@ void RoomLayoutGenerator::GenerateRoomLinks()
 	}
 }
 
-void WorldGenerator::RoomLayoutGenerator::GenerateLayoutFromAdGraph()
+RoomLayout WorldGenerator::RoomLayoutGenerator::GenerateLayoutFromAdGraph(Graph<GeneratedRoom>& adGraph)
 {
 	std::vector<GeneratedRoom> newRooms;
 	for (int i = 0; i < adGraph.Size(); i++)
 	{
 		newRooms.push_back(*adGraph[i].value);
 	}
+
+	RoomLayout layout(config.mapSize);
 	layout.rooms = newRooms;
+
+	return layout;
 }
