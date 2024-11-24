@@ -4,7 +4,7 @@
 
 class Pathfinder;
 
-class EnemyBuilder
+class __declspec(dllexport) EnemyBuilder
 {
 public:
 	EnemyBuilder& WithNewEnemy(std::shared_ptr<AnimatedModel> model);

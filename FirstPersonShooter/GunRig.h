@@ -25,5 +25,6 @@ private:
 	std::shared_ptr<AudioFile> m_gunSound, m_reloadSound;
 	std::string m_name;
 	float m_shootingAnimationSpeedup;
+	void PlaySound(std::shared_ptr<AudioFile> file);
 
 };

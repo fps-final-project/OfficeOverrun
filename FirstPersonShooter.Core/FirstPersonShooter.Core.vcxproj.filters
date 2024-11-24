@@ -228,6 +228,9 @@
     <ClInclude Include="PathNodeData.h">
       <Filter>Pathfinder</Filter>
     </ClInclude>
+    <ClInclude Include="Path.h">
+      <Filter>Pathfinder</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

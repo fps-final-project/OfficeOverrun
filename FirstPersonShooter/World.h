@@ -28,7 +28,7 @@ class __declspec(dllexport) World
 	DirectX::XMFLOAT3 m_helicopterPos;
 public:
 	void Update(float dt);
-	//std::vector<Hittable> GetEntities();
+	std::vector<std::shared_ptr<Hittable>> GetHittableEntities();
 	void DeleteEntity(const GUID& entity);
 	void UpdateVisibleRooms();
 

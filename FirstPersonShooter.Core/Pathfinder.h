@@ -11,7 +11,7 @@ struct PathNodeData;
 struct RoomLinkData;
 struct Path;
 
-class Pathfinder
+class __declspec(dllexport) Pathfinder
 {
 	int playerNode;
 

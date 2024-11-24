@@ -2,14 +2,12 @@
 #include "AnimatedEntity.hpp"
 #include "ActionTypes.hpp"
 #include "Room.hpp"
-#include "PathNodeData.h"
 #include "Path.h"
 #include <list> 
 
 class Pathfinder;
 
-
-class Enemy : public AnimatedEntity
+class  __declspec(dllexport) Enemy : public AnimatedEntity
 {
 public:
 	Enemy(std::shared_ptr<AnimatedModel> model);
