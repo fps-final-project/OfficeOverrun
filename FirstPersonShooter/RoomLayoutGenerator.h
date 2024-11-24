@@ -11,7 +11,7 @@
 
 namespace WorldGenerator
 {
-	class RoomLayoutGenerator
+	class __declspec(dllexport) RoomLayoutGenerator
 	{
 	private:
 		RoomLayoutConfig config;

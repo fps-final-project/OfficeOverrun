@@ -2,9 +2,6 @@
 #include "CppUnitTest.h"
 
 #include "RoomLayoutGenerator.h"
-#include "RoomLayoutGenerator.cpp"
-#include "GraphUtils.cpp"
-#include "RoomSelector.cpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace WorldGenerator;

@@ -2,8 +2,6 @@
 #include "CppUnitTest.h"
 
 #include "BinaryRoom.h"
-#include "BinaryRoom.cpp"
-#include "RngIncludes.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace WorldGenerator;

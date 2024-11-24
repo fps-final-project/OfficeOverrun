@@ -8,7 +8,7 @@
 namespace WorldGenerator
 {
 	// credits: https://medium.com/@guribemontero/dungeon-generation-using-binary-space-trees-47d4a668e2d0
-	class BinaryRoom
+	class __declspec(dllexport) BinaryRoom
 	{
 	public:
 		int x, y, z; // the minimal coordinates cuboid vertex
