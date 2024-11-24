@@ -179,6 +179,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="TestUtils.h" />
     <ClInclude Include="UnitTestApp.xaml.h">
       <DependentUpon>UnitTestApp.xaml</DependentUpon>
     </ClInclude>
@@ -205,7 +206,8 @@
   <ItemGroup>
     <ClCompile Include="BinaryRoomTest.cpp" />
     <ClCompile Include="RoomLayoutGeneratorTest.cpp" />
-    <ClCompile Include="RoomSelectorTest.cpp" />
+    <ClCompile Include="RoomLinkTest.cpp" />
+    <ClCompile Include="TestUtils.cpp" />
     <ClCompile Include="UnitTestApp.xaml.cpp">
       <DependentUpon>UnitTestApp.xaml</DependentUpon>
     </ClCompile>

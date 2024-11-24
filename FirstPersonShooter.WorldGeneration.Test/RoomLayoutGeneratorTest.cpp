@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CppUnitTest.h"
 #include "RoomLayoutGenerator.h"
+#include "TestUtils.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace WorldGenerator;
@@ -11,23 +12,14 @@ namespace FirstPersonShooter_WorldGeneration_Test
     {
         RoomLayoutConfig _config;
         
-        GeneratedRoom MakeGeneratedRoom(int posX, int posY, int posZ, int sizeX, int sizeY)
-        {
-            GeneratedRoom room;
-            room.pos = Vector3(posX, posY, posZ);
-            room.size = Vector3(sizeX, sizeY, 1);
-
-            return room;
-        }
-
         RoomLayout MakeLayoutWithRooms()
         {
             RoomLayout layout(_config.mapSize);
             // Add some rooms
             std::vector<GeneratedRoom> rooms;
-            rooms.push_back(MakeGeneratedRoom(4, 0, 0, 4, 4));
-            rooms.push_back(MakeGeneratedRoom(0, 4, 0, 12, 12));
-            rooms.push_back(MakeGeneratedRoom(4, 8, 1, 9, 12));
+            rooms.push_back(TestUtils::MakeGeneratedRoom(4, 0, 0, 4, 4));
+            rooms.push_back(TestUtils::MakeGeneratedRoom(0, 4, 0, 12, 12));
+            rooms.push_back(TestUtils::MakeGeneratedRoom(4, 8, 1, 9, 12));
 
             layout.rooms = rooms;
 
