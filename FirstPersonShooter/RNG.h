@@ -1,26 +1,25 @@
+#include <vector>
+#include <random>
+#include "RNGEngine.h"
+#include "DistributionFactory.h"
+
 #pragma once
-#include <time.h>
 
 namespace WorldGenerator
 {
 	class RNG
 	{
-	private:
-		unsigned int seed;
-	protected:
-		RNG() : seed(time(NULL))
-		{
-		}
-		static RNG* instance_;
-
 	public:
-		RNG(RNG& other) = delete;
-		void operator=(const RNG&) = delete;
-
-		static RNG* GetInstance();
-
-		void SetSeed(unsigned int seed);
-
-		unsigned int GetSeed();
+		static bool RandBool();
+		static bool RandBoolWithProbabilty(double probability);
+		static int RandIntInRange(int min, int max, Distribution distribution = Uniform);
+		template<typename T>
+		static T SelectRandomElement(std::vector<T> input, Distribution distribution = Uniform);
 	};
+
+	template<typename T>
+	inline T RNG::SelectRandomElement(std::vector<T> input, Distribution distribution)
+	{
+		return input[RandIntInRange(0, input.size() - 1, distribution)];
+	}
 }

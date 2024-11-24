@@ -29,6 +29,9 @@
     <Filter Include="WorldGenerator\RoomLayout\RooomSelector">
       <UniqueIdentifier>{e9f0224c-402a-4acf-8fee-2b882ed57709}</UniqueIdentifier>
     </Filter>
+    <Filter Include="WorldGenerator\Common\RNG\Distributions">
+      <UniqueIdentifier>{b39d0f50-8649-42c2-a915-92cd523659b2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -45,9 +48,6 @@
     <ClCompile Include="..\FirstPersonShooter\RNG.cpp">
       <Filter>WorldGenerator\Common\RNG</Filter>
     </ClCompile>
-    <ClCompile Include="..\FirstPersonShooter\RngUtils.cpp">
-      <Filter>WorldGenerator\Common\RNG</Filter>
-    </ClCompile>
     <ClCompile Include="..\FirstPersonShooter\RoomLayoutGenerator.cpp">
       <Filter>WorldGenerator\RoomLayout</Filter>
     </ClCompile>
@@ -62,6 +62,15 @@
     </ClCompile>
     <ClCompile Include="..\FirstPersonShooter\RoomSelector.cpp">
       <Filter>WorldGenerator\RoomLayout\RooomSelector</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\RNGEngine.cpp">
+      <Filter>WorldGenerator\Common\RNG</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\DistributionFactory.cpp">
+      <Filter>WorldGenerator\Common\RNG\Distributions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\UniformRNG.cpp">
+      <Filter>WorldGenerator\Common\RNG\Distributions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -92,9 +101,6 @@
     <ClInclude Include="..\FirstPersonShooter\RNG.h">
       <Filter>WorldGenerator\Common\RNG</Filter>
     </ClInclude>
-    <ClInclude Include="..\FirstPersonShooter\RngUtils.h">
-      <Filter>WorldGenerator\Common\RNG</Filter>
-    </ClInclude>
     <ClInclude Include="..\FirstPersonShooter\RoomLayoutGenerator.h">
       <Filter>WorldGenerator\RoomLayout</Filter>
     </ClInclude>
@@ -121,6 +127,21 @@
     </ClInclude>
     <ClInclude Include="..\FirstPersonShooter\RoomSelectorArgs.h">
       <Filter>WorldGenerator\RoomLayout\RooomSelector</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\RNGEngine.h">
+      <Filter>WorldGenerator\Common\RNG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\Distribution.h">
+      <Filter>WorldGenerator\Common\RNG\Distributions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\DistributionFactory.h">
+      <Filter>WorldGenerator\Common\RNG\Distributions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\DistributionRNG.h">
+      <Filter>WorldGenerator\Common\RNG\Distributions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\UniformRNG.h">
+      <Filter>WorldGenerator\Common\RNG\Distributions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

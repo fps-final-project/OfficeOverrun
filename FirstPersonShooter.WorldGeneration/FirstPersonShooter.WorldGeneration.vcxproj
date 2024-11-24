@@ -246,6 +246,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\FirstPersonShooter\BinaryRoom.h" />
+    <ClInclude Include="..\FirstPersonShooter\Distribution.h" />
+    <ClInclude Include="..\FirstPersonShooter\DistributionFactory.h" />
+    <ClInclude Include="..\FirstPersonShooter\DistributionRNG.h" />
     <ClInclude Include="..\FirstPersonShooter\GeneratedRoom.h" />
     <ClInclude Include="..\FirstPersonShooter\Graph.h" />
     <ClInclude Include="..\FirstPersonShooter\GraphUtils.h" />
@@ -253,13 +256,14 @@
     <ClInclude Include="..\FirstPersonShooter\Node.h" />
     <ClInclude Include="..\FirstPersonShooter\PathFinding.h" />
     <ClInclude Include="..\FirstPersonShooter\RNG.h" />
-    <ClInclude Include="..\FirstPersonShooter\RngUtils.h" />
+    <ClInclude Include="..\FirstPersonShooter\RNGEngine.h" />
     <ClInclude Include="..\FirstPersonShooter\RoomLayout.h" />
     <ClInclude Include="..\FirstPersonShooter\RoomLayoutConfig.h" />
     <ClInclude Include="..\FirstPersonShooter\RoomLayoutGenerator.h" />
     <ClInclude Include="..\FirstPersonShooter\RoomLink.h" />
     <ClInclude Include="..\FirstPersonShooter\RoomSelector.h" />
     <ClInclude Include="..\FirstPersonShooter\RoomSelectorArgs.h" />
+    <ClInclude Include="..\FirstPersonShooter\UniformRNG.h" />
     <ClInclude Include="..\FirstPersonShooter\Utils.h" />
     <ClInclude Include="..\FirstPersonShooter\Vector3.h" />
     <ClInclude Include="..\FirstPersonShooter\WeightedGraph.h" />
@@ -269,14 +273,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\FirstPersonShooter\BinaryRoom.cpp" />
+    <ClCompile Include="..\FirstPersonShooter\DistributionFactory.cpp" />
     <ClCompile Include="..\FirstPersonShooter\GeneratedRoom.cpp" />
     <ClCompile Include="..\FirstPersonShooter\GraphUtils.cpp" />
     <ClCompile Include="..\FirstPersonShooter\MapGenerator.cpp" />
     <ClCompile Include="..\FirstPersonShooter\RNG.cpp" />
-    <ClCompile Include="..\FirstPersonShooter\RngUtils.cpp" />
+    <ClCompile Include="..\FirstPersonShooter\RNGEngine.cpp" />
     <ClCompile Include="..\FirstPersonShooter\RoomLayoutGenerator.cpp" />
     <ClCompile Include="..\FirstPersonShooter\RoomLink.cpp" />
     <ClCompile Include="..\FirstPersonShooter\RoomSelector.cpp" />
+    <ClCompile Include="..\FirstPersonShooter\UniformRNG.cpp" />
     <ClCompile Include="..\FirstPersonShooter\Utils.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="pch.cpp">

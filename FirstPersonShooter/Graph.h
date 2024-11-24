@@ -14,7 +14,7 @@ namespace WorldGenerator
 		void InitGraph(std::vector<T>& values, int maxSize);
 		int maxSize;
 	public:
-		std::vector<Node<T>> nodes; // TODO: delete Node class as it was mistake
+		std::vector<Node<T>> nodes;
 		std::vector<std::vector<int>> adMatrix;
 
 		Graph(int maxSize);

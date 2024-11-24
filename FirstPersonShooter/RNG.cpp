@@ -1,26 +1,23 @@
 #include "pch.h"
 #include "RNG.h"
-#include <stdlib.h>
 
 using namespace WorldGenerator;
 
-RNG* RNG::instance_;
-
-RNG* RNG::GetInstance()
+bool RNG::RandBool()
 {
-	if (instance_ == nullptr)
-		instance_ = new RNG();
-	else
-		return instance_;
+	return RandBoolWithProbabilty(0.5);
 }
 
-void RNG::SetSeed(unsigned int seed)
+bool RNG::RandBoolWithProbabilty(double probability)
 {
-	this->seed = seed;
-	srand(seed);
+	std::mt19937 &generator = RNGEngine::GetInstance()->generator;
+	std::bernoulli_distribution distribution(probability);
+
+	return distribution(generator);
 }
 
-unsigned int RNG::GetSeed()
+int RNG::RandIntInRange(int min, int max, Distribution distribution)
 {
-	return this->seed;
+	auto rng = DistributionFactory::CreateRNG(distribution);
+	return rng->RandIntInRange(min, max);
 }
