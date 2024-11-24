@@ -36,8 +36,7 @@ void RoomLayoutGenerator::GenerateRooms()
 {
 	for (int floor = 0; floor < config.mapSize.z; floor++ )
 	{
-		BinaryRoom rootRoom = BinaryRoom(0, 0, floor, layout.mapSize.x, layout.mapSize.y, 1);
-		rootRoom.Split(layout);
+		BinaryRoom::MakeRoomsOnLayoutFloor(layout, floor);
 	}
 	// Add rooftop room
 	GeneratedRoom roof;

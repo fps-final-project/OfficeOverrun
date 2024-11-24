@@ -4,9 +4,14 @@
 
 using namespace WorldGenerator;
 
-bool BinaryRoom::IsLeaf()
+void WorldGenerator::BinaryRoom::Test()
 {
-    return leftRoom == nullptr && rightRoom == nullptr;
+}
+
+void WorldGenerator::BinaryRoom::MakeRoomsOnLayoutFloor(RoomLayout& layout, int floor)
+{
+	BinaryRoom rootRoom = BinaryRoom(0, 0, floor, layout.mapSize.x, layout.mapSize.y, 1);
+	rootRoom.Split(layout);
 }
 
 void BinaryRoom::Split(RoomLayout& layout)

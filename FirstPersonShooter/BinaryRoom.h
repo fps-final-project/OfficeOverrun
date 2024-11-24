@@ -15,12 +15,12 @@ namespace WorldGenerator
 		BinaryRoom* leftRoom;
 		BinaryRoom* rightRoom;
 
-		bool IsLeaf();
+		static void Test();
+		static void MakeRoomsOnLayoutFloor(RoomLayout& layout, int floor);
+	private:
 		void Split(RoomLayout& layout);
 		void Split2D(RoomLayout& layout, int cutType);
-		void SplitVertical(RoomLayout& layout);
 		BinaryRoom(int x, int y, int z, int width, int depth, int height);
-	private:
 		GeneratedRoom MakeRoom();
 	};
 }
