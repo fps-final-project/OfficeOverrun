@@ -1,6 +1,13 @@
 #include "Graph.h"
 #include "GeneratedRoom.h"
 #include "RoomSelectorArgs.h"
+#include "RNG.h"
+#include "WeightedGraph.h"
+#include "GraphUtils.h"
+#include "PathFinding.h"
+#include <cmath>
+#include <algorithm>
+#include <utility>
 
 #pragma once
 

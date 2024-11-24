@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "BinaryRoom.h"
-#include "RNG.h"
 
 using namespace WorldGenerator;
 

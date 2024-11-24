@@ -2,6 +2,8 @@
 
 #include "Vector3.h"
 #include "GeneratedRoom.h"
+#include "RoomLayoutConfig.h"
+#include "RNG.h"
 
 namespace WorldGenerator
 {

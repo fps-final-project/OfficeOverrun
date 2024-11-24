@@ -1,20 +1,11 @@
 #include "pch.h"
 #include "RoomLayoutGenerator.h"
-#include "Utils.h"
-#include "BinaryRoom.h"
-#include "RoomLink.h"
-#include "RoomSelector.h"
 #include <algorithm>
 
 using namespace WorldGenerator;
 
 RoomLayoutGenerator::RoomLayoutGenerator(RoomLayoutConfig config) : layout(RoomLayout(config.mapSize)), config(config)
 {
-}
-
-RoomLayout& WorldGenerator::RoomLayoutGenerator::GetLayout()
-{
-	return layout;
 }
 
 void RoomLayoutGenerator::GenerateRooms()

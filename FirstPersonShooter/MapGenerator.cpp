@@ -1,7 +1,6 @@
 #include "pch.h"
 #include <iostream>
 #include "MapGenerator.h"
-#include "RNGEngine.h"
 
 #define SEED 432423
 
@@ -27,5 +26,5 @@ RoomLayout MapGenerator::GenerateRoomLayout(RoomLayoutConfig config)
 	// Step 5
 	generator.GenerateLayoutFromAdGraph();
 
-	return generator.GetLayout();
+	return generator.layout;
 }
