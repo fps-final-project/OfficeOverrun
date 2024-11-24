@@ -13,7 +13,7 @@ public:
 		XMFLOAT3 rotation = DirectX::XMFLOAT3(0.f, 0.f, 0.f), 
 		XMFLOAT3 velocity = DirectX::XMFLOAT3(0.f, 0.f, 0.f));
 	virtual ~AnimatedEntity() {}
-	void Update(float dt);
+	virtual void Update(float dt);
 	virtual void Render(std::shared_ptr<RenderMaster> renderMaster) override;
 
 	void setPosition(DirectX::XMFLOAT3 pos);

@@ -20,9 +20,8 @@ Action Enemy::Update(std::shared_ptr<Pathfinder> pathfinder, DirectX::XMFLOAT3 p
 	float dz = XMVectorGetZ(direction);
 
 	float yaw = atan2(dx, dz);
-
-	setRotation({ 0.0f, yaw, 0.0f });
-
+	targetRotation = AdjustAngleToPositive(yaw);
+	
 	if (!isIdle() || !pathToPlayer.playerVisible) return currentAction;
 
 	if (l <= radius)
@@ -41,6 +40,33 @@ Action Enemy::Update(std::shared_ptr<Pathfinder> pathfinder, DirectX::XMFLOAT3 p
 
 	setPosition(changedPos);
 	return currentAction;
+}
+
+void Enemy::Update(float dt)
+{
+	rotation.y = AdjustAngleToPositive(rotation.y + GetRotationIncrement() * dt);
+	setRotation({ 0.0f, rotation.y, 0.0f });
+	AnimatedEntity::Update(dt);
+}
+
+float Enemy::GetRotationIncrement()
+{
+	float direction1 = targetRotation - rotation.y;
+	int target = targetRotation;
+	if (targetRotation > rotation.y)
+		targetRotation -= DirectX::XM_2PI;
+	else targetRotation += DirectX::XM_2PI;
+	float direction2 = targetRotation - rotation.y;
+	if (std::abs(direction1) < std::abs(direction2))
+	{
+		return direction1 * rotationSpeed;
+	}
+	else return direction2 * rotationSpeed;
+}
+
+float Enemy::AdjustAngleToPositive(float angle)
+{
+	return angle < 0.f ? angle + DirectX::XM_2PI : angle > DirectX::XM_2PI ? angle - DirectX::XM_2PI : angle;
 }
 
 XMVECTOR Enemy::GetDirection()
