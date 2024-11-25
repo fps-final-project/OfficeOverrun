@@ -439,6 +439,9 @@ void DX::DeviceResources::CreateWindowSizeDependentResources()
 
 	m_d3dDevice->CreateDepthStencilState(&dsDesc, &m_d3dDepthStenciState);
 
+	// may be useful later
+	m_d3dDevice->CreateDepthStencilState(&dsDesc, &m_d3dDepthStenciStateNoDepth);
+
 
 	// Set the 3D rendering viewport to target the entire window.
 	m_screenViewport = CD3D11_VIEWPORT(

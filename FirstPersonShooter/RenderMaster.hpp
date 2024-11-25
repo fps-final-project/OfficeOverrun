@@ -19,6 +19,8 @@ public:
 	std::shared_ptr<AnimatedModelRenderer> getAnimatedRenderer();	
 	std::shared_ptr<ModelRenderer> getModelRenderer();
 
+	void SetCullingMode(bool culling);
+
 	void SetRenderer(RendererType type);
 	UINT8 GetCurrentStencilValue();
 	void ClearStencilBuffer();

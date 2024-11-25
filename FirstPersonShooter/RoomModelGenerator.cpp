@@ -6,6 +6,7 @@
 #include "ResourceManager.h"
 
 const float RoomModelGenerator::frameOffset = 0.1f;
+const float RoomModelGenerator::roofFrameHeight = 0.3f;
 
 Model RoomModelGenerator::generateRoomModel(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 size, std::vector<RoomLinkData> links, const std::shared_ptr<DX::DeviceResources>& deviceResources)
 {
@@ -17,7 +18,7 @@ Model RoomModelGenerator::generateRoomModel(DirectX::XMFLOAT3 pos, DirectX::XMFL
 	generateWall(verticies, indicies, { pos.x, pos.y, pos.z + size.z }, { pos.x, pos.y + size.y, pos.z }, links, 3 * DirectX::XM_PIDIV2);
 	generateWall(verticies, indicies, { pos.x + size.x, pos.y, pos.z + size.z }, { pos.x, pos.y + size.y, pos.z + size.z }, links, DirectX::XM_PI);
 	generateWall(verticies, indicies, { pos.x + size.x, pos.y, pos.z }, { pos.x + size.x, pos.y + size.y, pos.z + size.z }, links, DirectX::XM_PIDIV2);
-	generateFloor(verticies, indicies, { pos.x, pos.y + size.y, pos.z }, { pos.x + size.x, pos.y + size.y, pos.z + size.z }, links, true);
+	generateFloor(verticies, indicies, { pos.x, pos.y + size.y - roofFrameHeight, pos.z }, { pos.x + size.x, pos.y + size.y - roofFrameHeight, pos.z + size.z }, links, true);
 
 	model.meshes.push_back(MeshFactory<VertexData>::createMesh(verticies, indicies, { ResourceManager::Instance().getTexture("wall")}, deviceResources));
 
@@ -155,6 +156,48 @@ void RoomModelGenerator::generateDoorFrame(std::vector<VertexData>& verticies, s
 
 }
 
+void RoomModelGenerator::generateRoofFrame(std::vector<VertexData>& verticies, std::vector<unsigned short>& indicies, int indexOffset, float x, float z, int sizeX, int sizeZ, int L, int H)
+{
+	float nVerticies = verticies.size();
+
+	// left side
+	verticies.push_back(VertexData({ x, -roofFrameHeight, z}, { x / L, (float)roofFrameHeight / H }, { 0, 0, 1 }));
+	verticies.push_back(VertexData({ x + sizeX, -roofFrameHeight, z}, { (x + sizeX) / L, (float)roofFrameHeight / H }, { 0, 0, 1 }));
+	verticies.push_back(VertexData({ x + sizeX, 0, z }, { (x + sizeX) / L, 0 }, { 0, 0, 1 }));
+	verticies.push_back(VertexData({ x, 0, z }, { x / L, 0 }, { 0, 0, 1 }));
+
+	// right side
+	verticies.push_back(VertexData({ x + sizeX, -roofFrameHeight, z + sizeZ }, { x / L, (float)roofFrameHeight / H }, { 0, 0, -1 }));
+	verticies.push_back(VertexData({ x, -roofFrameHeight, z + sizeZ }, { x / L, (float)roofFrameHeight / H }, { 0, 0, -1 }));
+	verticies.push_back(VertexData({ x, 0, z + sizeZ }, { x / L, 0 }, { 0, 0, -1 }));
+	verticies.push_back(VertexData({ x + sizeX, 0, z + sizeZ }, { (x + sizeX) / L, 0 }, { 0, 0, -1 }));
+
+	// back side
+	verticies.push_back(VertexData({ x, -roofFrameHeight, z + sizeZ }, { (z + sizeZ) / L, (float)roofFrameHeight / H }, { 1, 0, 0 }));
+	verticies.push_back(VertexData({ x, -roofFrameHeight, z }, { z / L, (float)roofFrameHeight / H }, { 1, 0, 0 }));
+	verticies.push_back(VertexData({ x, 0, z}, { z / L, 0 }, { 1, 0, 0 }));
+	verticies.push_back(VertexData({ x, 0, z + sizeZ }, { (z + sizeZ) / L, 0 }, { 1, 0, 0 }));
+
+	// front side
+	verticies.push_back(VertexData({ x + sizeX, -roofFrameHeight, z }, { z / L, (float)roofFrameHeight / H }, { -1, 0, 0 }));
+	verticies.push_back(VertexData({ x + sizeX, -roofFrameHeight, z + sizeZ }, { (z + sizeZ) / L, (float)roofFrameHeight / H }, { -1, 0, 0 }));
+	verticies.push_back(VertexData({ x + sizeX, 0, z + sizeZ }, { (z + sizeZ) / L, 0 }, { -1, 0, 0 }));
+	verticies.push_back(VertexData({ x + sizeX, 0, z }, { z / L, 0 }, { -1, 0, 0 }));
+
+	for (int i = 0; i < 4; i++)
+	{
+		indicies.push_back(indexOffset + nVerticies);
+		indicies.push_back(indexOffset + nVerticies + 1);
+		indicies.push_back(indexOffset + nVerticies + 2);
+		indicies.push_back(indexOffset + nVerticies + 2);
+		indicies.push_back(indexOffset + nVerticies + 3);
+		indicies.push_back(indexOffset + nVerticies);
+
+		nVerticies += 4;
+	}
+
+}
+
 void RoomModelGenerator::translateAndRotateVerticies(std::vector<VertexData>& verticies, DirectX::XMFLOAT3 translation, float angle)
 {
 	float cosAngle = cos(angle);
@@ -208,12 +251,17 @@ void RoomModelGenerator::generateFloor(std::vector<VertexData>& allVerticies, st
 		}
 	}
 
+	if (stairs && !isRoof && std::abs(stairs->pos.y + stairs->size.y - c1.y) < 1.f)
+	{
+		generateRoofFrame(verticies, indicies, indexOffset, stairs->pos.x - c1.x, stairs->pos.z - c1.z, stairs->size.x, stairs->size.z, L, stairs->size.y);
+	}
+
 
 	for (int x = 0; x < L; x++)
 	{
 		for (int z = 0; z < W; z++)
 		{
-			if (stairs && stairs->pos.y + stairs->size.y == c1.y)
+			if (stairs && std::abs(stairs->pos.y + stairs->size.y - c1.y) < 1.f)
 			{
 				int x_global = x + c1.x;
 				int z_global = z + c1.z;
@@ -224,8 +272,6 @@ void RoomModelGenerator::generateFloor(std::vector<VertexData>& allVerticies, st
 					continue;
 				}
 			}
-
-
 
 			int nVerticies = verticies.size();
 			DirectX::XMFLOAT3 normal = { 0, (isRoof ? -1.f : 1.f), 0 };
@@ -255,4 +301,10 @@ void RoomModelGenerator::generateFloor(std::vector<VertexData>& allVerticies, st
 
 	allVerticies.insert(allVerticies.end(), verticies.begin(), verticies.end());
 	allIndicies.insert(allIndicies.end(), indicies.begin(), indicies.end());
+}
+
+bool RoomModelGenerator::areClose(float v1, float v2)
+{
+	const float threshold = 1e-6;
+	return std::abs(v1 - v2) < threshold;
 }

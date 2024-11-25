@@ -55,6 +55,20 @@ std::shared_ptr<ModelRenderer> RenderMaster::getModelRenderer()
 	return m_modelRenderer;
 }
 
+void RenderMaster::SetCullingMode(bool culling)
+{
+	if (culling)
+	{
+		m_modelRenderer->SetClockwiseCulling();
+		m_animatedRenderer->SetClockwiseCulling();
+	}
+	else
+	{
+		m_modelRenderer->SetNoCulling();
+		m_animatedRenderer->SetNoCulling();
+	}
+}
+
 void RenderMaster::SetStencilBufferReferenceValue(UINT8 value)
 {
 	if(m_currentRenderer == RendererType::MODEL)
