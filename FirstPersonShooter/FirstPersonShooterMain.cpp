@@ -128,7 +128,7 @@ bool FirstPersonShooterMain::Render()
 
 	// Clear the back buffer and depth stencil view.
 	context->ClearRenderTargetView(m_deviceResources->GetBackBufferRenderTargetView(), DirectX::Colors::CornflowerBlue);
-	context->ClearDepthStencilView(m_deviceResources->GetDepthStencilView(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+	context->ClearDepthStencilView(m_deviceResources->GetDepthStencilView(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 1);
 	// Render the scene objects.
 	// TODO: Replace this with your app's content rendering functions.
 
@@ -141,9 +141,14 @@ bool FirstPersonShooterMain::Render()
 	m_gameState->m_camera->getAt();
 
 	auto queue = m_gameState->m_world->CreateRenderQueue();
-	queue.Push(RenderData(RendererType::ANIMATED, (Drawable*)m_gameState->m_player.get()));
+
 	GUID entityToHit = queue.DrawAllAndClear(m_renderMaster);
 	m_gameState->m_actionHandler->SetLastHitEntity(entityToHit);
+
+	// override the depth buffer with a value close to 1, that corresponds to moving everything that got drawn far away from the screen
+	context->ClearDepthStencilView(m_deviceResources->GetDepthStencilView(), D3D11_CLEAR_DEPTH, 0.999f, 0);
+
+	m_gameState->m_player->Render(m_renderMaster);
 
 	Skybox::RenderSkybox(m_gameState->m_camera->getPosition(), 
 		m_renderMaster, ResourceManager::Instance().getModel("skybox"));

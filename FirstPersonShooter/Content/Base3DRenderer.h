@@ -17,6 +17,31 @@ public:
 		m_loadingComplete(false),
 		m_deviceResources(deviceResources)
 	{
+		ID3D11Device* device = m_deviceResources->GetD3DDevice();
+
+		// Define the rasterizer state description
+		D3D11_RASTERIZER_DESC rasterDesc = {};
+		rasterDesc.FillMode = D3D11_FILL_SOLID;            // Use solid fill mode
+		rasterDesc.CullMode = D3D11_CULL_FRONT;             // Cull back faces
+		rasterDesc.FrontCounterClockwise = FALSE;          // Clockwise faces are front faces
+		rasterDesc.DepthClipEnable = TRUE;                 // Enable depth clipping
+
+		// Create the rasterizer state
+		HRESULT hr = device->CreateRasterizerState(&rasterDesc, m_clockwiseCullingRasterizerState.GetAddressOf());
+		if (FAILED(hr))
+		{
+			return;
+		}
+		rasterDesc.DepthBias = -1000; // Positive value pushes geometry forward
+		rasterDesc.DepthBiasClamp = 0.0001f;
+		rasterDesc.SlopeScaledDepthBias = 0.01f;
+		
+		hr = device->CreateRasterizerState(&rasterDesc, m_noCullingRasterizerState.GetAddressOf());
+		if (FAILED(hr))
+		{
+			return;
+		}
+
 		this->SetClockwiseCulling();
 	}
 
@@ -33,6 +58,8 @@ public:
 		m_pixelShader.Reset();
 		m_VSConstantBuffer.Reset();
 		m_PSConstantBuffer.Reset();
+		m_clockwiseCullingRasterizerState.Reset();
+		m_noCullingRasterizerState.Reset();
 	}
 
 	virtual void CreateDeviceDependentResources() = 0;
@@ -197,27 +224,18 @@ public:
 
 	void SetClockwiseCulling()
 	{
-		ID3D11Device* device = m_deviceResources->GetD3DDevice();
 		ID3D11DeviceContext* context = m_deviceResources->GetD3DDeviceContext();
 
-		// Define the rasterizer state description
-		D3D11_RASTERIZER_DESC rasterDesc = {};
-		rasterDesc.FillMode = D3D11_FILL_SOLID;            // Use solid fill mode
-		rasterDesc.CullMode = D3D11_CULL_FRONT;             // Cull back faces
-		rasterDesc.FrontCounterClockwise = FALSE;          // Clockwise faces are front faces
-		rasterDesc.DepthClipEnable = TRUE;                 // Enable depth clipping
+		// Set the rasterizer state
+		context->RSSetState(m_clockwiseCullingRasterizerState.Get());
+	}
 
-		// Create the rasterizer state
-		Microsoft::WRL::ComPtr<ID3D11RasterizerState> rasterizerState;
-		HRESULT hr = device->CreateRasterizerState(&rasterDesc, rasterizerState.GetAddressOf());
-		if (FAILED(hr))
-		{
-			// Handle error (e.g., throw an exception, log the error, etc.)
-			return;
-		}
+	void SetNoCulling()
+	{
+		ID3D11DeviceContext* context = m_deviceResources->GetD3DDeviceContext();
 
 		// Set the rasterizer state
-		context->RSSetState(rasterizerState.Get());
+		context->RSSetState(m_noCullingRasterizerState.Get());
 	}
 
 	// Call this function just before the first render calls
@@ -287,6 +305,8 @@ protected:
 	Microsoft::WRL::ComPtr<ID3D11Buffer>		m_VSConstantBuffer, m_PSConstantBuffer;
 	Microsoft::WRL::ComPtr<ID3D11SamplerState>	m_samplerState;
 	Microsoft::WRL::ComPtr<ID3D11Texture2D>		m_stagingTexture;
+
+	Microsoft::WRL::ComPtr<ID3D11RasterizerState> m_clockwiseCullingRasterizerState, m_noCullingRasterizerState;
 
 	// System resources for cube geometry.
 	VertexShaderBuffer	m_VSConstantBufferData;

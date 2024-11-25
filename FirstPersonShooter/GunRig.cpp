@@ -84,8 +84,8 @@ void GunRig::PlaySound(std::shared_ptr<AudioFile> file)
 
 void GunRig::Render(std::shared_ptr<RenderMaster> renderMaster)
 {
-	this->m_gun->Render(renderMaster);
 	this->m_hands->Render(renderMaster);
+	this->m_gun->Render(renderMaster);
 }
 
 DirectX::XMFLOAT3 GunRig::GetBarrelOffset()
