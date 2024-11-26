@@ -21,6 +21,27 @@ SourceVoice::~SourceVoice()
 	m_sourceVoice->DestroyVoice();
 }
 
+void SourceVoice::SetEmmiterSettings(X3DAUDIO_EMITTER* emitter, X3DAUDIO_LISTENER* listener, BYTE* x3dInstance, IXAudio2Voice* masteringVoice)
+{
+	X3DAUDIO_DSP_SETTINGS dspSettings;
+	dspSettings.DstChannelCount = 2;
+	dspSettings.SrcChannelCount = 1;
+	dspSettings.pMatrixCoefficients = m_matrix;
+
+	X3DAudioCalculate(x3dInstance, listener, emitter,
+		X3DAUDIO_CALCULATE_MATRIX | X3DAUDIO_CALCULATE_DOPPLER,
+		&dspSettings
+	);
+
+	m_sourceVoice->SetOutputMatrix(
+		masteringVoice,
+		dspSettings.SrcChannelCount,
+		dspSettings.DstChannelCount,
+		dspSettings.pMatrixCoefficients
+	);
+	m_sourceVoice->SetFrequencyRatio(dspSettings.DopplerFactor);
+}
+
 void SourceVoice::PlaySound(bool overwrite)
 {
 	if ((!overwrite && IsPlaying()) || empty)	return;

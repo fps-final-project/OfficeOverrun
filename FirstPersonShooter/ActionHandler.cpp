@@ -8,7 +8,7 @@ ActionHandler::ActionHandler(std::shared_ptr<std::queue<Action>> actionQueue)
 	m_actionQueue = actionQueue;
 }
 
-void ActionHandler::HandleActions(Player* player, World* world, Camera* camera, IXAudio2* xaudio)
+void ActionHandler::HandleActions(Player* player, World* world, Camera* camera, DX::DeviceResources* deviceResources)
 {
 	std::unique_ptr<GunRig>& gunRig = player->getGunRig();
 	const float defaultGravity = 20.f;
@@ -24,6 +24,7 @@ void ActionHandler::HandleActions(Player* player, World* world, Camera* camera, 
 			case ActionType::ATTACK:
 			{
 				player->takeDamage(action.args.attack.damage);
+				world->lastDamage = 0.0f;
 				break;
 			}
 			case ActionType::SHOOT:
@@ -34,6 +35,15 @@ void ActionHandler::HandleActions(Player* player, World* world, Camera* camera, 
 					auto entity = world->m_enemies.find(m_lastHitEntity);
 					if (entity != world->m_enemies.end())
 					{
+						if (entity->second->getDamageSound() != nullptr) {
+							entity->second->getDamageSound()->SetEmmiterSettings(
+								entity->second->getEmitter().get(),
+								player->getAudioListener().get(),
+								deviceResources->GetX3DInstance(),
+								deviceResources->GetMasteringVoice()
+							);
+							entity->second->getDamageSound()->PlaySound(true);
+						}
 						entity->second->takeDamage(gunRig->GetDamage());
 						if (entity->second->isDead()) {
 							world->DeleteEntity(m_lastHitEntity);
@@ -99,22 +109,22 @@ void ActionHandler::HandleActions(Player* player, World* world, Camera* camera, 
 			}
 			case ActionType::WEAPON1:
 			{
-				player->getGunRig()->ChangeGun("ak", xaudio);
+				player->getGunRig()->ChangeGun("ak", deviceResources->GetXAudio());
 				break;
 			}
 			case ActionType::WEAPON2:
 			{
-				player->getGunRig()->ChangeGun("FN", xaudio);
+				player->getGunRig()->ChangeGun("FN", deviceResources->GetXAudio());
 				break;
 			}
 			case ActionType::WEAPON3:
 			{
-				player->getGunRig()->ChangeGun("smg", xaudio);
+				player->getGunRig()->ChangeGun("smg", deviceResources->GetXAudio());
 				break;
 			}
 			case ActionType::WEAPON4:
 			{
-				player->getGunRig()->ChangeGun("sniper", xaudio);
+				player->getGunRig()->ChangeGun("sniper", deviceResources->GetXAudio());
 				break;
 			}
 		}

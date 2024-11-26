@@ -62,6 +62,9 @@
     <Filter Include="Assets\Other\heli">
       <UniqueIdentifier>{11c86587-2862-402f-af4b-28acdf03102b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\Other\damage">
+      <UniqueIdentifier>{dcfd5e3d-c5dc-4aa9-9ff5-1284e1e94cf3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -120,6 +123,9 @@
     </Image>
     <Image Include="Assets\Other\wall\concrete.jpg">
       <Filter>Assets\Other\wall</Filter>
+    </Image>
+    <Image Include="Assets\Other\damage\damage.png">
+      <Filter>Assets\Other\damage</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
@@ -191,5 +197,8 @@
     <Text Include="Assets\GunRig\sniper\sniper.txt">
       <Filter>Assets\GunRig\sniper</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Assets\Audio\zombie_dying.wav" />
   </ItemGroup>
 </Project>

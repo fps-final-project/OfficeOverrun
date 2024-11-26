@@ -56,11 +56,9 @@ GameState::GameState(
 
 
 	auto zombie = enemyBuilder
-		.WithNewEnemy(
-			ResourceManager::Instance().getAnimatedModel("zombie_war"),
-			ResourceManager::Instance().getAudioFile("zombie"),
-			deviceResources->GetXAudio()
-		)
+		.WithNewEnemy(ResourceManager::Instance().getAnimatedModel("zombie_war"))
+		.WithSound(ResourceManager::Instance().getAudioFile("zombie"), deviceResources->GetXAudio())
+		.WithDamageSound(ResourceManager::Instance().getAudioFile("zombie_dying"), deviceResources->GetXAudio())
 		.WithHealth(100)
 		.WithDamage(10)
 		.WithSpeed(0.05f)
@@ -105,7 +103,7 @@ void GameState::Update(float dt)
 	m_player->getGunRig()->RotateAndOffset(m_camera->getYawPitchRoll(), m_player->getPostition(), dt);
 	m_world->PlayEnemySounds(m_deviceResources, m_player.get());
 
-	m_actionHandler->HandleActions(m_player.get(), m_world.get(), m_camera.get(), m_deviceResources->GetXAudio());
+	m_actionHandler->HandleActions(m_player.get(), m_world.get(), m_camera.get(), m_deviceResources.get());
 
 	//TODO: Collision handling
 
