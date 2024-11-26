@@ -275,6 +275,7 @@
     <Image Include="Assets\LockScreenLogo.scale-200.png" />
     <Image Include="Assets\Other\bullet\bullet.jpg" />
     <Image Include="Assets\Other\crosshair\crosshair.png" />
+    <Image Include="Assets\Other\damage\damage.png" />
     <Image Include="Assets\Other\skybox\skybox.png" />
     <Image Include="Assets\Other\heli\Helicopter_albedo2.jpg" />
     <Image Include="Assets\Other\stairs\floor.jpg" />
@@ -431,6 +432,9 @@
       <FileType>Document</FileType>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Assets\Audio\zombie_dying.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

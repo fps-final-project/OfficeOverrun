@@ -8,7 +8,9 @@ class Pathfinder;
 class __declspec(dllexport) EnemyBuilder
 {
 public:
-	EnemyBuilder& WithNewEnemy(std::shared_ptr<AnimatedModel> model, std::shared_ptr<AudioFile> file, IXAudio2* xaudio);
+	EnemyBuilder& WithNewEnemy(std::shared_ptr<AnimatedModel> model);
+	EnemyBuilder& WithSound(std::shared_ptr<AudioFile> file, IXAudio2* xaudio);
+	EnemyBuilder& WithDamageSound(std::shared_ptr<AudioFile> file, IXAudio2* xaudio);
 	EnemyBuilder& WithHealth(int maxHealth);
 	EnemyBuilder& WithDamage(int health);
 	EnemyBuilder& WithSpeed(float speed);
