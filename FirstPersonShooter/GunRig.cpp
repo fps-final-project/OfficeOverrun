@@ -59,6 +59,7 @@ void GunRig::ChangeGun(const std::string& name, IXAudio2* xaudio)
 		m_rigOffset = data->rigOffset;
 		m_name = data->name;
 		m_shootingAnimationSpeedup = data->shootingAnimationSpeedup;
+		m_damage = data->damage;
 
 		m_hands->setModel(ResourceManager::Instance().getAnimatedModel(data->name));
 		m_gun->setModel(ResourceManager::Instance().getAnimatedModel(data->name + "_gun"));
