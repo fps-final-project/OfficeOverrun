@@ -23,7 +23,7 @@ SourceVoice::~SourceVoice()
 
 void SourceVoice::PlaySound(bool overwrite)
 {
-	if (!overwrite && IsPlaying() || empty)	return;
+	if ((!overwrite && IsPlaying()) || empty)	return;
 	HRESULT hr;
 	hr = m_sourceVoice->Stop();
 	hr = m_sourceVoice->FlushSourceBuffers();

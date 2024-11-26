@@ -3,14 +3,15 @@
 #include <cmath>
 #include "ResourceManager.h"
 
-GunRig::GunRig(std::string gunName, IXAudio2* xaudio)
+GunRig::GunRig(std::string gunName, IXAudio2* xaudio) : 
+	m_gunSound(std::make_unique<SourceVoice>(ResourceManager::Instance().getAudioFile(gunName), xaudio)), 
+	m_reloadSound(std::make_unique<SourceVoice>(ResourceManager::Instance().getAudioFile("reload"), xaudio))
+
 {
 	m_hands = std::make_shared<AnimatedEntity>(ResourceManager::Instance().getAnimatedModel(gunName));
 	m_gun = std::make_shared<AnimatedEntity>(ResourceManager::Instance().getAnimatedModel(gunName + "_gun"));
-	m_gunSound = std::make_shared<SourceVoice>(ResourceManager::Instance().getAudioFile(gunName), xaudio);
-	m_reloadSound = std::make_shared<SourceVoice>(ResourceManager::Instance().getAudioFile("reload"), xaudio);
-
-	this->ChangeGun(gunName);
+	 
+	this->ChangeGun(gunName, xaudio);
 }
 
 DirectX::XMFLOAT3 GunRig::CalculateBulletOrientation(DirectX::XMFLOAT3 yawPitchRoll)
@@ -47,7 +48,7 @@ void GunRig::Shoot()
 	m_gunSound->PlaySound(true);
 }
 
-void GunRig::ChangeGun(const std::string& name)
+void GunRig::ChangeGun(const std::string& name, IXAudio2* xaudio)
 {
 	std::shared_ptr<GunRigMetadata> data = ResourceManager::Instance().getGunRigMetadata(name);
 
@@ -61,7 +62,7 @@ void GunRig::ChangeGun(const std::string& name)
 
 		m_hands->setModel(ResourceManager::Instance().getAnimatedModel(data->name));
 		m_gun->setModel(ResourceManager::Instance().getAnimatedModel(data->name + "_gun"));
-		//m_gunSound = ResourceManager::Instance().getAudioFile(data->name);
+		m_gunSound = std::make_unique<SourceVoice>( ResourceManager::Instance().getAudioFile(data->name), xaudio);
 
 		m_hands->setFallbackAnimation("idle");
 		m_gun->setFallbackAnimation("idle");

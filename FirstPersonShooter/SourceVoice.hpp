@@ -1,7 +1,7 @@
 #pragma once
 #include "AudioFile.hpp"
 
-class SourceVoice
+class __declspec(dllexport) SourceVoice
 {
 public:
 	SourceVoice(std::shared_ptr<AudioFile> file, IXAudio2* xaudio);

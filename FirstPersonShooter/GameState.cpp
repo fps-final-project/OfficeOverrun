@@ -12,7 +12,7 @@ GameState::GameState(
 	std::shared_ptr<DirectX::Keyboard> keyboard,
 	std::shared_ptr<DirectX::Mouse> mouse,
 	std::shared_ptr<DX::DeviceResources> deviceResources
-)
+) : m_music(ResourceManager::Instance().getAudioFile("music"), deviceResources->GetXAudio())
 {
 	m_keyboard = keyboard;
 	m_mouse = mouse;
@@ -77,6 +77,7 @@ GameState::GameState(
 
 	this->setupActionHandlers();
 
+	//m_music.PlaySound(true);
 }
 
 void GameState::HandleInput()
@@ -104,7 +105,7 @@ void GameState::Update(float dt)
 	m_player->getGunRig()->RotateAndOffset(m_camera->getYawPitchRoll(), m_player->getPostition(), dt);
 	m_world->PlayEnemySounds(m_deviceResources, m_player.get());
 
-	m_actionHandler->HandleActions(m_player.get(), m_world.get(), m_camera.get());
+	m_actionHandler->HandleActions(m_player.get(), m_world.get(), m_camera.get(), m_deviceResources->GetXAudio());
 
 	//TODO: Collision handling
 

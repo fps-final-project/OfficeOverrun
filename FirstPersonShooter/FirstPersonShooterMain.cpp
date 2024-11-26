@@ -22,7 +22,7 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	// Register to be notified if the Device is lost or recreated
 	m_deviceResources->RegisterDeviceNotify(this);
 
-	bool load_only_ak = true;
+	bool load_only_ak = false;
 
 	ResourceManager::Instance().loadAnimatedModel("Assets\\Enemy\\Zombie\\zombie_war.gltf", m_deviceResources);
 	ResourceManager::Instance().loadAnimatedModel("Assets\\Other\\heli\\heli.gltf", m_deviceResources);
@@ -77,7 +77,7 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 
 	m_mouse->SetMode(DirectX::Mouse::MODE_RELATIVE);
 
-	//DX::ThrowIfFailed(ResourceManager::Instance().getAudioFile("music")->pXAudio2SourceVoice->Start(0));
+
 }
 
 FirstPersonShooterMain::~FirstPersonShooterMain()

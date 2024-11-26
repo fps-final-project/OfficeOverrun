@@ -152,7 +152,7 @@ void World::PlayEnemySounds(std::shared_ptr<DX::DeviceResources> deviceResources
 	static FLOAT32 matrix[2];
 	for (const auto& [_, enemy] : m_enemies)
 	{
-		if (!enemy->getSound()->IsPlaying() && rand() % 800 != 0)
+		if (!enemy->getSound()->IsPlaying() && rand() % 80 != 0)
 			continue;
 
 		X3DAUDIO_DSP_SETTINGS dspSettings;

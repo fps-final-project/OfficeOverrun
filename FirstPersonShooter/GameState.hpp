@@ -10,6 +10,7 @@
 #include "CollisionDetector.hpp"
 #include "Player.h"
 #include "Pathfinder.h"
+#include "SourceVoice.hpp"
 
 class __declspec(dllexport) GameState
 {
@@ -39,6 +40,7 @@ private:
 	std::shared_ptr<DirectX::Mouse> m_mouse;
 	std::shared_ptr<DX::DeviceResources> m_deviceResources;
 	std::shared_ptr<std::queue<Action>> m_actionQueue;
+	SourceVoice m_music;
 
 	void setupActionHandlers();
 

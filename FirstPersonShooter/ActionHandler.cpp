@@ -8,7 +8,7 @@ ActionHandler::ActionHandler(std::shared_ptr<std::queue<Action>> actionQueue)
 	m_actionQueue = actionQueue;
 }
 
-void ActionHandler::HandleActions(Player* player, World* world, Camera* camera)
+void ActionHandler::HandleActions(Player* player, World* world, Camera* camera, IXAudio2* xaudio)
 {
 	std::unique_ptr<GunRig>& gunRig = player->getGunRig();
 	const float defaultGravity = 20.f;
@@ -92,22 +92,22 @@ void ActionHandler::HandleActions(Player* player, World* world, Camera* camera)
 			}
 			case ActionType::WEAPON1:
 			{
-				player->getGunRig()->ChangeGun("ak");
+				player->getGunRig()->ChangeGun("ak", xaudio);
 				break;
 			}
 			case ActionType::WEAPON2:
 			{
-				player->getGunRig()->ChangeGun("FN");
+				player->getGunRig()->ChangeGun("FN", xaudio);
 				break;
 			}
 			case ActionType::WEAPON3:
 			{
-				player->getGunRig()->ChangeGun("smg");
+				player->getGunRig()->ChangeGun("smg", xaudio);
 				break;
 			}
 			case ActionType::WEAPON4:
 			{
-				player->getGunRig()->ChangeGun("sniper");
+				player->getGunRig()->ChangeGun("sniper", xaudio);
 				break;
 			}
 		}
