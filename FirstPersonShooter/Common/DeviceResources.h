@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include <xaudio2.h>
-
+#include <x3daudio.h>
 namespace DX
 {
 	// Provides an interface for an application that owns DeviceResources to be notified of the device being lost or created.
@@ -56,7 +56,8 @@ namespace DX
 
 		// Audio Accessors
 		IXAudio2*					GetXAudio() const						{ return m_xaudio.Get(); }
-
+		IXAudio2MasteringVoice*		GetMasteringVoice() const				{ return m_masteringVoice; }
+		BYTE*						GetX3DInstance() const					{ return (BYTE*)m_X3DInstance; }
 	private:
 		void CreateDeviceIndependentResources();
 		void CreateDeviceResources();
@@ -89,8 +90,10 @@ namespace DX
 		Microsoft::WRL::ComPtr<IWICImagingFactory2>	m_wicFactory;
 
 		// Audio control
-		Microsoft::WRL::ComPtr<IXAudio2>	m_xaudio;
-		IXAudio2MasteringVoice* m_masteringVoice;
+		Microsoft::WRL::ComPtr<IXAudio2>				m_xaudio;
+		IXAudio2MasteringVoice*							m_masteringVoice;
+		X3DAUDIO_HANDLE									m_X3DInstance;
+
 
 		// Cached reference to the Window.
 		Platform::Agile<Windows::UI::Core::CoreWindow> m_window;

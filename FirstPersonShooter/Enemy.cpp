@@ -4,6 +4,16 @@
 
 Enemy::Enemy(std::shared_ptr<AnimatedModel> model) : AnimatedEntity{ model }
 {
+	m_emitter = std::make_shared<X3DAUDIO_EMITTER>();
+	m_emitter->Position = { position.x, position.y, position.z };
+	m_emitter->OrientFront = { rotation.x, rotation.y, rotation.z };
+	m_emitter->OrientTop = { 0.0f, 1.0f, 0.0f };
+	m_emitter->Velocity = { 0.0f, 0.0f, 0.0f };
+	m_emitter->pCone = nullptr;
+	m_emitter->ChannelCount = 1;
+	m_emitter->CurveDistanceScaler = 1.0f;
+	m_emitter->DopplerScaler = 1.0f;
+	
 }
 
 Action Enemy::Update(std::shared_ptr<Pathfinder> pathfinder, DirectX::XMFLOAT3 playerPos)
@@ -39,6 +49,8 @@ Action Enemy::Update(std::shared_ptr<Pathfinder> pathfinder, DirectX::XMFLOAT3 p
 	};
 
 	setPosition(changedPos);
+	m_emitter->Position = { position.x, position.y, position.z };
+	m_emitter->OrientFront = { rotation.x, rotation.y, rotation.z };
 	return currentAction;
 }
 

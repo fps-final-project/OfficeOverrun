@@ -2,6 +2,8 @@
 #include "AnimatedEntity.hpp"
 #include "ActionTypes.hpp"
 #include "Room.hpp"
+#include "SourceVoice.hpp"
+#include <x3daudio.h>
 #include "Path.h"
 #include <list> 
 
@@ -14,14 +16,18 @@ public:
 	Action Update(std::shared_ptr<Pathfinder> pathfinder, DirectX::XMFLOAT3 playerPos);
 	virtual void Update(float dt) override;
 	Path pathToPlayer;
+	inline std::shared_ptr<X3DAUDIO_EMITTER> getEmitter() const { return m_emitter; }
+	inline SourceVoice* getSound() { return m_sound.get(); }
 
 	friend class EnemyBuilder;
 private:
-	int maxHealth;
+
 	int health;
 	int damage;
 	float speed;
 	float radius;
+	std::shared_ptr<SourceVoice> m_sound;
+	std::shared_ptr<X3DAUDIO_EMITTER> m_emitter;
 
 	const float rotationSpeed = 4.f;
 	float targetRotation;

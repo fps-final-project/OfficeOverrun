@@ -60,7 +60,7 @@ AudioFile AudioReader::ReadWAVFile(std::string path, const UINT32 loop)
 	buffer.LoopLength = 0;
 	buffer.LoopCount = loop;
 
-	return { wfx, buffer, pDataBuffer, nullptr };
+	return { wfx, buffer, pDataBuffer };
 }
 
 HRESULT AudioReader::FindChunk(HANDLE hFile, DWORD fourcc, DWORD& dwChunkSize, DWORD& dwChunkDataPosition)

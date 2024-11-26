@@ -13,6 +13,8 @@
 #include <map>
 #include <set>
 
+class Player;
+
 struct GUIDComparer
 {
 	bool operator()(const GUID& Left, const GUID& Right) const
@@ -20,7 +22,6 @@ struct GUIDComparer
 		return memcmp(&Left, &Right, sizeof(Right)) < 0;
 	}
 };
-
 
 class __declspec(dllexport) World
 {
@@ -48,6 +49,7 @@ public:
 	bool IsPlayerNearHelicopter(DirectX::XMFLOAT3 playerPos);
 
 	void UpdateCurrentRoom(DirectX::XMFLOAT3 playerPos);
+	void PlayEnemySounds(std::shared_ptr<DX::DeviceResources> deviceResources, Player* player) const;
 	void UpdateEnemies(std::shared_ptr<Pathfinder> pathfinder, DirectX::XMFLOAT3 playerPos,
 		std::shared_ptr<std::queue<Action>>& actionQueue);
 

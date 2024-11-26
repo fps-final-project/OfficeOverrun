@@ -40,7 +40,7 @@ namespace FirstPersonShooter_Core_Test
             pathfinder->UpdatePlayerNode(playerPos);
 
             std::shared_ptr<Enemy> e = enemyBuilder
-                .WithNewEnemy(std::make_shared<AnimatedModel>())
+                .WithNewEnemy(std::make_shared<AnimatedModel>(), std::make_shared<AudioFile>(), nullptr)
                 .WithSpeed(1.f)
                 .WithPosition(start)
                 .WithPath(pathfinder)
@@ -62,7 +62,7 @@ namespace FirstPersonShooter_Core_Test
             XMFLOAT3 roomSize = world.m_rooms[adj].getSize();
             XMFLOAT3 start = { roomPos.x + (roomSize.x / 2.f), roomPos.y, roomPos.z + (roomSize.z / 2.f) };
             std::shared_ptr<Enemy> e = enemyBuilder
-                .WithNewEnemy(std::make_shared<AnimatedModel>())
+                .WithNewEnemy(std::make_shared<AnimatedModel>(), std::make_shared<AudioFile>(), nullptr)
                 .WithSpeed(1.f)
                 .WithPosition(start)
                 .WithPath(pathfinder)
@@ -87,7 +87,7 @@ namespace FirstPersonShooter_Core_Test
 					XMFLOAT3 roomSize = world.m_rooms[i].getSize();
 					XMFLOAT3 start = { roomPos.x + (roomSize.x / 2.f), roomPos.y + (roomSize.y / 2.f), roomPos.z + (roomSize.z / 2.f) };
                     std::shared_ptr<Enemy> e = enemyBuilder
-                        .WithNewEnemy(std::make_shared<AnimatedModel>())
+                        .WithNewEnemy(std::make_shared<AnimatedModel>(), std::make_shared<AudioFile>(), nullptr)
                         .WithSpeed(1.f)
                         .WithPosition(start)
                         .WithPath(pathfinder)
@@ -107,7 +107,7 @@ namespace FirstPersonShooter_Core_Test
             XMFLOAT3 playerPos = { 0.f, 1.f, 1.f };
             pathfinder->UpdatePlayerNode(playerPos);
             std::shared_ptr<Enemy> e = enemyBuilder
-                .WithNewEnemy(std::make_shared<AnimatedModel>())
+                .WithNewEnemy(std::make_shared<AnimatedModel>(), std::make_shared<AudioFile>(), nullptr)
                 .WithSpeed(1.f)
 				.WithAttackRadius(1.1f)
                 .WithPosition(start)
@@ -144,10 +144,10 @@ namespace FirstPersonShooter_Core_Test
 			std::shared_ptr<std::queue <Action>> actionQueue = std::make_shared<std::queue<Action>>();
 			ActionHandler actionHandler(actionQueue);
 			World world;
-			Player player;
+            Player player{ nullptr };
 
 			std::shared_ptr<Enemy> e = enemyBuilder
-				.WithNewEnemy(std::make_shared<AnimatedModel>())
+                .WithNewEnemy(std::make_shared<AnimatedModel>(), std::make_shared<AudioFile>(), nullptr)
 				.Build();
 
 			GUID guid = e->id; 
@@ -167,7 +167,7 @@ namespace FirstPersonShooter_Core_Test
             std::shared_ptr<std::queue <Action>> actionQueue = std::make_shared<std::queue<Action>>();
             ActionHandler actionHandler(actionQueue);
             World world;
-            Player player;
+            Player player{ nullptr };
 
 			ActionArgs args;
 			args.attack = { 10 };
@@ -179,7 +179,7 @@ namespace FirstPersonShooter_Core_Test
         
         TEST_METHOD(WallCollisionPlayerShouldMove) 
         {
-			Player player;
+            Player player{ nullptr };
             RoomCollision collisionData;
             collisionData.collision[0] = true;
             collisionData.collision[1] = true;
@@ -201,14 +201,14 @@ namespace FirstPersonShooter_Core_Test
 			SimpleCollisionDetector collisionDetector;
 
             std::shared_ptr<Enemy> e = enemyBuilder
-				.WithNewEnemy(std::make_shared<AnimatedModel>())
+                .WithNewEnemy(std::make_shared<AnimatedModel>(), std::make_shared<AudioFile>(), nullptr)
 				.WithSpeed(1.f)
                 .WithSize({ 1.f, 1.f, 1.f })
 				.WithPosition({ 1.f, 1.f, 1.f })
 				.Build();
 
-			std::shared_ptr<Enemy> e2 = enemyBuilder
-				.WithNewEnemy(std::make_shared<AnimatedModel>())
+                std::shared_ptr<Enemy> e2 = enemyBuilder
+                .WithNewEnemy(std::make_shared<AnimatedModel>(), std::make_shared<AudioFile>(), nullptr)
                 .WithSpeed(1.f)
                 .WithSize({ 1.f, 1.f, 1.f })
 				.WithPosition({ 1.f, 1.f, 1.f })
@@ -230,14 +230,14 @@ namespace FirstPersonShooter_Core_Test
             SimpleCollisionDetector collisionDetector;
 
             std::shared_ptr<Enemy> e = enemyBuilder
-                .WithNewEnemy(std::make_shared<AnimatedModel>())
+                .WithNewEnemy(std::make_shared<AnimatedModel>(), std::make_shared<AudioFile>(), nullptr)
                 .WithSpeed(1.f)
                 .WithSize({ 1.f, 1.f, 1.f })
                 .WithPosition({ 1.f, 1.f, 1.f })
                 .Build();
 
             std::shared_ptr<Enemy> e2 = enemyBuilder
-                .WithNewEnemy(std::make_shared<AnimatedModel>())
+                .WithNewEnemy(std::make_shared<AnimatedModel>(), std::make_shared<AudioFile>(), nullptr)
                 .WithSpeed(1.f)
                 .WithSize({1.f, 1.f, 1.f})
                 .WithPosition({ 1.f, 10.f, 1.f })

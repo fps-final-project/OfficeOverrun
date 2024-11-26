@@ -127,6 +127,9 @@
     <ClCompile Include="Pathfinder.cpp">
       <Filter>Pathfinder</Filter>
     </ClCompile>
+    <ClCompile Include="SourceVoice.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -230,6 +233,9 @@
     </ClInclude>
     <ClInclude Include="Path.h">
       <Filter>Pathfinder</Filter>
+    </ClInclude>
+    <ClInclude Include="SourceVoice.hpp">
+      <Filter>Audio</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

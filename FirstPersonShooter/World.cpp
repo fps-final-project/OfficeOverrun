@@ -3,6 +3,7 @@
 #include "ctime"
 #include "AnimatedObjectBuilder.hpp"
 #include "ResourceManager.h"
+#include "Player.h"
 
 void World::UpdateVisibleRooms()
 {
@@ -143,6 +144,37 @@ void World::UpdateEnemies(std::shared_ptr<Pathfinder> pathfinder, DirectX::XMFLO
 		{
 			actionQueue->push(action);
 		}
+	}
+}
+
+void World::PlayEnemySounds(std::shared_ptr<DX::DeviceResources> deviceResources, Player* player) const
+{
+	static FLOAT32 matrix[2];
+	for (const auto& [_, enemy] : m_enemies)
+	{
+		if (!enemy->getSound()->IsPlaying() && rand() % 800 != 0)
+			continue;
+
+		X3DAUDIO_DSP_SETTINGS dspSettings;
+		dspSettings.DstChannelCount = 2;
+		dspSettings.SrcChannelCount = 1;
+		dspSettings.pMatrixCoefficients = matrix;
+
+		X3DAudioCalculate((deviceResources->GetX3DInstance()), player->getAudioListener().get(), enemy->getEmitter().get(),
+			X3DAUDIO_CALCULATE_MATRIX | X3DAUDIO_CALCULATE_DOPPLER,
+			&dspSettings
+			);
+		
+		enemy->getSound()->getSourceVoice()->SetOutputMatrix(
+			deviceResources->GetMasteringVoice(),
+			dspSettings.SrcChannelCount, 
+			dspSettings.DstChannelCount,
+			dspSettings.pMatrixCoefficients
+		);
+		enemy->getSound()->getSourceVoice()->SetFrequencyRatio(dspSettings.DopplerFactor);
+
+		enemy->getSound()->PlaySound(false);
+
 	}
 }
 

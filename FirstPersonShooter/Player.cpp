@@ -2,10 +2,15 @@
 #include "Player.h"
 #include "ResourceManager.h"
 
-Player::Player()
+Player::Player(IXAudio2* xaudio)
 	: m_position({0.f, 0.f, 0.f}), m_velocity({0.f, 0.f, 0.f}),
-	m_gunRig(std::make_unique<GunRig>("ak")), m_isOnGround(true), m_health(100)
+	m_gunRig(std::make_unique<GunRig>("ak", xaudio)), m_isOnGround(true), m_health(100)
 {
+	m_listener = std::make_shared<X3DAUDIO_LISTENER>();
+	m_listener->OrientTop = { 0.f, 1.f, 0.f };
+	m_listener->OrientFront = { 0.f, 1.f, 0.f };
+	m_listener->Position = { m_position.x, m_position.y, m_position.z };
+	m_listener->Velocity = { m_velocity.x, m_velocity.y, m_velocity.z };
 }
 
 void Player::jump()
@@ -44,6 +49,9 @@ void Player::Update(float dt)
 	m_position.x += m_velocity.x * dt;
 	m_position.y += m_velocity.y * dt;
 	m_position.z += m_velocity.z * dt;
+
+	m_listener->Position = { m_position.x, m_position.y, m_position.z };
+	m_listener->Velocity = { m_velocity.x, m_velocity.y, m_velocity.z };
 
 }
 

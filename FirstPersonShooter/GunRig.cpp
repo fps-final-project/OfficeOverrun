@@ -3,12 +3,12 @@
 #include <cmath>
 #include "ResourceManager.h"
 
-GunRig::GunRig(std::string gunName)
+GunRig::GunRig(std::string gunName, IXAudio2* xaudio)
 {
 	m_hands = std::make_shared<AnimatedEntity>(ResourceManager::Instance().getAnimatedModel(gunName));
 	m_gun = std::make_shared<AnimatedEntity>(ResourceManager::Instance().getAnimatedModel(gunName + "_gun"));
-	m_gunSound = ResourceManager::Instance().getAudioFile(gunName);
-	m_reloadSound = ResourceManager::Instance().getAudioFile("reload");
+	m_gunSound = std::make_shared<SourceVoice>(ResourceManager::Instance().getAudioFile(gunName), xaudio);
+	m_reloadSound = std::make_shared<SourceVoice>(ResourceManager::Instance().getAudioFile("reload"), xaudio);
 
 	this->ChangeGun(gunName);
 }
@@ -37,14 +37,14 @@ void GunRig::Reload()
 {
 	this->m_hands->setAnimation("reload1");
 	this->m_gun->setAnimation("reload1");
-	PlaySound(this->m_reloadSound);
+	m_reloadSound->PlaySound(true);
 }
 
 void GunRig::Shoot()
 {
 	this->m_hands->setAnimation("shoot", m_shootingAnimationSpeedup, false);
 	this->m_gun->setAnimation("shoot", m_shootingAnimationSpeedup, false);
-	PlaySound(this->m_gunSound);
+	m_gunSound->PlaySound(true);
 }
 
 void GunRig::ChangeGun(const std::string& name)
@@ -61,7 +61,7 @@ void GunRig::ChangeGun(const std::string& name)
 
 		m_hands->setModel(ResourceManager::Instance().getAnimatedModel(data->name));
 		m_gun->setModel(ResourceManager::Instance().getAnimatedModel(data->name + "_gun"));
-		m_gunSound = ResourceManager::Instance().getAudioFile(data->name);
+		//m_gunSound = ResourceManager::Instance().getAudioFile(data->name);
 
 		m_hands->setFallbackAnimation("idle");
 		m_gun->setFallbackAnimation("idle");
@@ -72,14 +72,6 @@ void GunRig::ChangeGun(const std::string& name)
 	}
 }
 
-void GunRig::PlaySound(std::shared_ptr<AudioFile> file)
-{
-	if (file == nullptr) return;
-	file->pXAudio2SourceVoice->Stop();
-	file->pXAudio2SourceVoice->FlushSourceBuffers();
-	file->pXAudio2SourceVoice->SubmitSourceBuffer(&(this->m_gunSound->buffer));
-	file->pXAudio2SourceVoice->Start();
-}
 
 
 void GunRig::Render(std::shared_ptr<RenderMaster> renderMaster)
