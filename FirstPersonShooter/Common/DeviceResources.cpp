@@ -388,6 +388,13 @@ void DX::DeviceResources::CreateWindowSizeDependentResources()
 		m_xaudio->CreateMasteringVoice(&m_masteringVoice)
 	);
 
+	DWORD dwChannelMask;
+	m_masteringVoice->GetChannelMask(&dwChannelMask);
+
+	DX::ThrowIfFailed(
+		X3DAudioInitialize(dwChannelMask, X3DAUDIO_SPEED_OF_SOUND, (m_X3DInstance))
+	);
+
 	// Create a depth stencil view for use with 3D rendering if needed.
 	CD3D11_TEXTURE2D_DESC1 depthStencilDesc(
 		DXGI_FORMAT_D24_UNORM_S8_UINT, 

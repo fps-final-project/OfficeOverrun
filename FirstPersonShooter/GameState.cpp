@@ -25,7 +25,7 @@ GameState::GameState(
 
 	m_world = std::make_unique<World>();
 	m_camera = std::unique_ptr<Camera>(new Camera(m_deviceResources, FOV));
-	m_player = std::make_unique<Player>();
+	m_player = std::make_unique<Player>(deviceResources->GetXAudio());
 	m_collisionDetector = std::make_unique<SimpleCollisionDetector>();
 
 	EnemyBuilder enemyBuilder{};
@@ -56,8 +56,12 @@ GameState::GameState(
 
 
 	auto zombie = enemyBuilder
-		.WithNewEnemy(ResourceManager::Instance().getAnimatedModel("zombie_war"))
-		.WithMaxHealth(100)
+		.WithNewEnemy(
+			ResourceManager::Instance().getAnimatedModel("zombie_war"),
+			ResourceManager::Instance().getAudioFile("zombie"),
+			deviceResources->GetXAudio()
+		)
+		.WithHealth(100)
 		.WithDamage(10)
 		.WithSpeed(0.05f)
 		.WithPosition({ 20.f, 0.f, 4.f })
@@ -94,11 +98,11 @@ void GameState::Update(float dt)
 
 	m_world->UpdateEnemies(m_pathfinder, m_player->getPostition(), m_actionQueue);
 	m_world->Update(dt);
-
 	m_player->handleRoomCollision(m_world->GetCurrentRoom().checkCollision(m_player->getPostition()));
 
 	m_camera->setPosition(m_player->getPostition());
 	m_player->getGunRig()->RotateAndOffset(m_camera->getYawPitchRoll(), m_player->getPostition(), dt);
+	m_world->PlayEnemySounds(m_deviceResources, m_player.get());
 
 	m_actionHandler->HandleActions(m_player.get(), m_world.get(), m_camera.get());
 
@@ -112,6 +116,7 @@ void GameState::CreateWindowSizeDependentResources()
 {
 	m_camera->CreateWindowSizeDependentResources(FOV);
 }
+
 
 bool GameState::GameFinished()
 {

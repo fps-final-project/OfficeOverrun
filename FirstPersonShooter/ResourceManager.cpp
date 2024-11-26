@@ -74,16 +74,6 @@ void ResourceManager::loadAudioFile(
 
 	AudioFile audioFile = AudioReader::ReadWAVFile(path, loop);
 
-	DX::ThrowIfFailed(
-		deviceResources
-		->GetXAudio()
-		->CreateSourceVoice(
-			&audioFile.pXAudio2SourceVoice,
-			(WAVEFORMATEX*)(&audioFile.wfx)
-		));
-
-	DX::ThrowIfFailed(audioFile.pXAudio2SourceVoice->SubmitSourceBuffer(&audioFile.buffer));
-
 	this->m_audioFiles.insert(std::make_pair(
 		name,
 		std::make_shared<AudioFile>(audioFile)));

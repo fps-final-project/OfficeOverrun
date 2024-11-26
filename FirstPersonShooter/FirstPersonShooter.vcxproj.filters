@@ -173,6 +173,7 @@
       <Filter>Assets\Other\heli</Filter>
     </None>
     <None Include="..\Vendor\assimp\lib\x64\assimp-vc143-mtd.dll" />
+    <None Include="Assets\Audio\zombie.wav" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="FirstPersonShooter.rc" />

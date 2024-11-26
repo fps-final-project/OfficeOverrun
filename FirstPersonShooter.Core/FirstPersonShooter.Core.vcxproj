@@ -284,6 +284,7 @@
     <ClInclude Include="Pathfinder.h" />
     <ClInclude Include="PathNodeData.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="SourceVoice.hpp" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
@@ -326,6 +327,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="SourceVoice.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FirstPersonShooter.Rendering\FirstPersonShooter.Rendering.vcxproj">

@@ -1,14 +1,14 @@
 #pragma once
 #include "AnimatedEntity.hpp"
 #include <memory> 
-#include "AudioFile.hpp"
+#include "SourceVoice.hpp"
 
 
 class GunRig : public Drawable
 {
 
 public:
-	GunRig(std::string gunName);
+	GunRig(std::string gunName, IXAudio2* xaudio);
 	static DirectX::XMFLOAT3 CalculateBulletOrientation(DirectX::XMFLOAT3 yawPitchRoll);
 	DirectX::XMVECTOR CalculateBulletDirection(DirectX::XMVECTOR cameraAt);
 	void Update(float dt);
@@ -22,9 +22,8 @@ public:
 private:
 	DirectX::XMFLOAT3 m_rigOffset, m_gunOffset, m_initialBarrelOffset, m_barrelOffset;
 	std::shared_ptr<AnimatedEntity> m_hands, m_gun;
-	std::shared_ptr<AudioFile> m_gunSound, m_reloadSound;
+	std::shared_ptr<SourceVoice> m_gunSound, m_reloadSound;
 	std::string m_name;
 	float m_shootingAnimationSpeedup;
-	void PlaySound(std::shared_ptr<AudioFile> file);
 
 };

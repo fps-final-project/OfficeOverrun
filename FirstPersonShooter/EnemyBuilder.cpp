@@ -2,16 +2,16 @@
 #include "EnemyBuilder.hpp"
 #include "Pathfinder.h"
 
-EnemyBuilder& EnemyBuilder::WithNewEnemy(std::shared_ptr<AnimatedModel> model)
+EnemyBuilder& EnemyBuilder::WithNewEnemy(std::shared_ptr<AnimatedModel> model, std::shared_ptr<AudioFile> file, IXAudio2* xaudio)
 {
 	m_enemy.reset();
 	m_enemy = std::make_shared<Enemy>(model);
+	m_enemy->m_sound = std::make_shared<SourceVoice>(file, xaudio);
 	return *this;
 }
 
-EnemyBuilder& EnemyBuilder::WithMaxHealth(int maxHealth)
+EnemyBuilder& EnemyBuilder::WithHealth(int maxHealth)
 {
-	m_enemy->maxHealth = maxHealth;
 	m_enemy->health = maxHealth;
 	return *this;
 }
@@ -31,18 +31,21 @@ EnemyBuilder& EnemyBuilder::WithSpeed(float speed)
 EnemyBuilder& EnemyBuilder::WithPosition(DirectX::XMFLOAT3 pos)
 {
 	m_enemy->position = pos;
+	m_enemy->m_emitter->Position = { pos.x, pos.y, pos.z };
 	return *this;
 }
 
 EnemyBuilder& EnemyBuilder::WithRotation(DirectX::XMFLOAT3 rot)
 {
 	m_enemy->rotation = rot;
+	m_enemy->m_emitter->OrientFront = { rot.x, rot.y, rot.z };
 	return *this;
 }
 
 EnemyBuilder& EnemyBuilder::WithVelocity(DirectX::XMFLOAT3 vel)
 {
 	m_enemy->velocity = vel;
+	m_enemy->m_emitter->Velocity = { vel.x, vel.y, vel.z };
 	return *this;
 }
 
