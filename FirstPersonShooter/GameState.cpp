@@ -121,7 +121,7 @@ void GameState::CreateWindowSizeDependentResources()
 
 bool GameState::GameFinished()
 {
-	return m_world->IsPlayerNearHelicopter(m_player->getPostition());
+	return m_world->IsPlayerNearHelicopter(m_player->getPostition()) || m_player->isDead();
 }
 
 void GameState::setupActionHandlers()

@@ -31,7 +31,14 @@ void ActionHandler::HandleActions(Player* player, World* world, Camera* camera, 
 				if (gunRig->IsIdle())
 				{
 					gunRig->Shoot();
-					world->DeleteEntity(m_lastHitEntity);
+					auto entity = world->m_enemies.find(m_lastHitEntity);
+					if (entity != world->m_enemies.end())
+					{
+						entity->second->takeDamage(gunRig->GetDamage());
+						if (entity->second->isDead()) {
+							world->DeleteEntity(m_lastHitEntity);
+						}
+					}
 				}
 				break;
 			}
