@@ -172,7 +172,7 @@ void World::UpdateEnemies(std::shared_ptr<Pathfinder> pathfinder, DirectX::XMFLO
 void World::SpawnEnemyNearPlayer(int currentEnemiesNearPlayer,
 	std::shared_ptr<Pathfinder> pathfinder, std::shared_ptr<DX::DeviceResources> deviceResources)
 {
-	const int maxEnemiesNearPlayer = 7;
+	const int maxEnemiesNearPlayer = 4;
 	const float wallOffset = 0.5f;
 	if (currentEnemiesNearPlayer < maxEnemiesNearPlayer)
 	{
