@@ -78,8 +78,6 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	m_gameState = std::make_unique<GameState>(keyboard, mouse, deviceResources);
 
 	m_mouse->SetMode(DirectX::Mouse::MODE_RELATIVE);
-
-
 }
 
 FirstPersonShooterMain::~FirstPersonShooterMain()
@@ -148,13 +146,14 @@ bool FirstPersonShooterMain::Render()
 	GUID entityToHit = queue.DrawAllAndClear(m_renderMaster);
 	m_gameState->m_actionHandler->SetLastHitEntity(entityToHit);
 
+	Skybox::RenderSkybox(m_gameState->m_camera->getPosition(), 
+		m_renderMaster, ResourceManager::Instance().getModel("skybox"));
+
 	// override the depth buffer with a value close to 1, that corresponds to moving everything that got drawn far away from the screen
 	context->ClearDepthStencilView(m_deviceResources->GetDepthStencilView(), D3D11_CLEAR_DEPTH, 0.999f, 0);
 
 	m_gameState->m_player->Render(m_renderMaster);
 
-	Skybox::RenderSkybox(m_gameState->m_camera->getPosition(), 
-		m_renderMaster, ResourceManager::Instance().getModel("skybox"));
 
 	m_spriteRenderer->BeginRendering(context, viewport);
 	Size outputSize = m_deviceResources->GetOutputSize();

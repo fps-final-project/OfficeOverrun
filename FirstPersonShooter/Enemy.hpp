@@ -22,6 +22,8 @@ public:
 	inline SourceVoice* getDamageSound() { return m_damageSound.get(); }
 	inline void takeDamage(int damage) { health -= damage; }
 	inline bool isDead() const { return health <= 0; }
+
+	inline bool inCloseProximity() const { return pathToPlayer.playerVisible; }
 	
 	Path pathToPlayer;
 

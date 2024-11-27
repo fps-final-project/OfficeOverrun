@@ -2,7 +2,7 @@
 #include "Enemy.hpp"
 #include "Pathfinder.h"
 
-Enemy::Enemy(std::shared_ptr<AnimatedModel> model) : AnimatedEntity{ model }
+Enemy::Enemy(std::shared_ptr<AnimatedModel> model) : AnimatedEntity{ model }, targetRotation(0.f)
 {
 	m_emitter = std::make_shared<X3DAUDIO_EMITTER>();
 	m_emitter->Position = { position.x, position.y, position.z };
@@ -50,7 +50,6 @@ Action Enemy::Update(std::shared_ptr<Pathfinder> pathfinder, DirectX::XMFLOAT3 p
 
 	setPosition(changedPos);
 	m_emitter->Position = { position.x, position.y, position.z };
-	m_emitter->OrientFront = { rotation.x, rotation.y, rotation.z };
 	return currentAction;
 }
 
@@ -58,6 +57,7 @@ void Enemy::Update(float dt)
 {
 	rotation.y = AdjustAngleToPositive(rotation.y + GetRotationIncrement() * dt);
 	setRotation({ 0.0f, rotation.y, 0.0f });
+	m_emitter->OrientFront = { rotation.x, rotation.y, rotation.z };
 	AnimatedEntity::Update(dt);
 }
 

@@ -7,7 +7,7 @@
 
 #include <stack>
 
-void Pathfinder::AddRoomNodes(const Room& room)
+void Pathfinder::AddRoomNodes(const Room& room, std::function<bool(DirectX::XMFLOAT3)> pred)
 {
 	const float wallOffset = 0.5f;
 	const float targetDistance = 0.8f;
@@ -24,7 +24,11 @@ void Pathfinder::AddRoomNodes(const Room& room)
 	{
 		for (int j = 0; j < nNodesZ; j++)
 		{
-			nodes.push_back({ room.getPosition().x + wallOffset + i * distanceX, height, room.getPosition().z + wallOffset + j * distanceZ });
+			DirectX::XMFLOAT3 nodePos = { room.getPosition().x + wallOffset + i * distanceX, height, room.getPosition().z + wallOffset + j * distanceZ };
+			if (!pred(nodePos))
+				continue;
+
+			nodes.push_back(nodePos);
 			edges.push_back(std::set<int>());
 
 			if (j)
@@ -355,7 +359,7 @@ std::vector<int> Pathfinder::AStarRoom(int start, int end, int roomId) const
 
 		for (auto v : edges[elem.second])
 		{
-			if (v >= roomNodeIndexPrefix[roomId] && v < roomNodeIndexPrefix[roomId + 1] 
+			if (v >= roomNodeIndexPrefix[roomId] && v < roomNodeIndexPrefix[roomId + 1]
 				&& sol[elem.second - idxOffset] + Dist(nodes[elem.second], nodes[v]) < sol[v - idxOffset])
 			{
 				auto it = pq.find(std::make_pair(fScore[v - idxOffset], v));
@@ -394,24 +398,26 @@ Pathfinder::Pathfinder(const std::vector<Room>& rooms, DirectX::XMFLOAT3 playerP
 
 	for (int i = 0; i < rooms.size(); i++)
 	{
-		AddRoomNodes(rooms[i]);
 
 		// process stairs first, we ensure correct values in room links map after deletion of some nodes
 		auto stairsIt = std::find_if(rooms[i].m_links.begin(), rooms[i].m_links.end(), [](const RoomLinkData& link) {
 			return link.orientation == OrientationData::XZX || link.orientation == OrientationData::XZZ;
 			});
+	
+
 
 		if (stairsIt != rooms[i].m_links.end())
 		{
-			if (stairsIt->roomId > i)
-			{
-				AdjustStairsNodes(*stairsIt, i);
-			}
-			else
-			{
-				DeleteStairsNodes(*stairsIt, i);
-				AddStairsConnectionNode(*stairsIt, i, stairsIt->roomId);
-			}
+
+			AddRoomNodes(rooms[i], [&](DirectX::XMFLOAT3 pos) {
+				return !(
+					pos.x >= stairsIt->pos.x && pos.x <= stairsIt->pos.x + stairsIt->size.x &&
+					pos.z >= stairsIt->pos.z && pos.z <= stairsIt->pos.z + stairsIt->size.z);
+				});
+		}
+		else
+		{
+			AddRoomNodes(rooms[i]);
 		}
 
 		for (const auto& link : rooms[i].m_links)
@@ -426,6 +432,8 @@ Pathfinder::Pathfinder(const std::vector<Room>& rooms, DirectX::XMFLOAT3 playerP
 		roomNodeIndexPrefix.push_back(nodes.size() + 1);
 	}
 
+	// correction for the last bounding
+	roomNodeIndexPrefix[roomNodeIndexPrefix.size() - 1]--;
 	playerNode = FindClosestNode(playerPos);
 }
 
@@ -487,7 +495,7 @@ void Pathfinder::UpdatePath(Path& path, DirectX::XMFLOAT3 currPos) const
 	path.currentNode = UpdateNode(currPos, path.currentNode);
 
 	if (
-		path.path.size() > 1 && 
+		path.path.size() > 1 &&
 		DistSquared(nodes[path.path.front().index], currPos) < cutoffThreshold * cutoffThreshold)
 	{
 		path.path.pop_front();
@@ -504,8 +512,12 @@ void Pathfinder::UpdatePath(Path& path, DirectX::XMFLOAT3 currPos) const
 	}
 }
 
-void Pathfinder::UpdatePlayerNode(DirectX::XMFLOAT3 playerPos)
+void Pathfinder::UpdatePlayerNode(DirectX::XMFLOAT3 playerPos, int currentNodeIndex)
 {
 	playerNode = UpdateNode(playerPos, playerNode);
+	if (DistSquared(nodes[playerNode], playerPos) > 4.f)
+	{
+		playerNode = FindClosestNodeInARoom(playerPos, currentNodeIndex);
+	}
 }
 

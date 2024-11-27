@@ -12,6 +12,7 @@
 #include "ActionTypes.hpp"
 #include <map>
 #include <set>
+#include <random>
 
 class Player;
 
@@ -27,10 +28,13 @@ class __declspec(dllexport) World
 {
 	std::set<int> m_visibleRooms;
 	DirectX::XMFLOAT3 m_helicopterPos;
+	std::mt19937 gen;
 public:
+	World();
+
 	void Update(float dt);
 	std::vector<std::shared_ptr<Hittable>> GetHittableEntities();
-	void DeleteEntity(const GUID& entity);
+	void DeleteEnemy(const GUID& entity);
 	void UpdateVisibleRooms();
 
 	std::map<GUID, std::shared_ptr<AnimatedEntity>, GUIDComparer> m_animatedEntities;
@@ -51,7 +55,10 @@ public:
 	void UpdateCurrentRoom(DirectX::XMFLOAT3 playerPos);
 	void PlayEnemySounds(std::shared_ptr<DX::DeviceResources> deviceResources, Player* player) const;
 	void UpdateEnemies(std::shared_ptr<Pathfinder> pathfinder, DirectX::XMFLOAT3 playerPos,
-		std::shared_ptr<std::queue<Action>>& actionQueue);
+		std::shared_ptr<std::queue<Action>>& actionQueue, std::shared_ptr<DX::DeviceResources> deviceResources);
+
+	void SpawnEnemyNearPlayer(int currentEnemiesNearPlayer, std::shared_ptr<Pathfinder> pathfinder, std::shared_ptr<DX::DeviceResources> deviceResources);
+	std::set<int> GetSetOfSecondNeighbours(int roomId);
 
 	LightingData GetLightingData();
 	RenderQueue CreateRenderQueue();

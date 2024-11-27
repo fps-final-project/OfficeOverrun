@@ -55,10 +55,12 @@ GameState::GameState(
 	m_world->AddHelicopter();
 
 
-	auto zombie = enemyBuilder
-		.WithNewEnemy(ResourceManager::Instance().getAnimatedModel("zombie_war"))
-		.WithSound(ResourceManager::Instance().getAudioFile("zombie"), deviceResources->GetXAudio())
-		.WithDamageSound(ResourceManager::Instance().getAudioFile("zombie_dying"), deviceResources->GetXAudio())
+	/*auto zombie = enemyBuilder
+		.WithNewEnemy(
+			ResourceManager::Instance().getAnimatedModel("zombie_war"),
+			ResourceManager::Instance().getAudioFile("zombie"),
+			deviceResources->GetXAudio()
+		)
 		.WithHealth(100)
 		.WithDamage(10)
 		.WithSpeed(0.05f)
@@ -71,7 +73,7 @@ GameState::GameState(
 		.WithPath(m_pathfinder)
 		.Build();
 
-	m_world->AddEnemy(zombie);
+	m_world->AddEnemy(zombie);*/
 
 	this->setupActionHandlers();
 
@@ -93,9 +95,9 @@ void GameState::Update(float dt)
 	m_player->Update(dt);
 	m_world->UpdateCurrentRoom(m_player->getPostition());
 
-	m_pathfinder->UpdatePlayerNode(m_player->getPostition());
+	m_pathfinder->UpdatePlayerNode(m_player->getPostition(), m_world->m_currentRoomIndex);
 
-	m_world->UpdateEnemies(m_pathfinder, m_player->getPostition(), m_actionQueue);
+	m_world->UpdateEnemies(m_pathfinder, m_player->getPostition(), m_actionQueue, m_deviceResources);
 	m_world->Update(dt);
 	m_player->handleRoomCollision(m_world->GetCurrentRoom().checkCollision(m_player->getPostition()));
 

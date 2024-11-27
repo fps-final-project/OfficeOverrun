@@ -25,12 +25,15 @@ class __declspec(dllexport) Pathfinder
 	// are between roomNodeIndexPrefix[i] and roomNodeIndexPrefix[i + 1]
 	std::vector<int> roomNodeIndexPrefix;
 
-	void AddRoomNodes(const Room& room);
+	void AddRoomNodes(const Room& room, std::function<bool(DirectX::XMFLOAT3)> pred = [](DirectX::XMFLOAT3 pos) { return true; });
 	void AddDoorNodes(const RoomLinkData& link, int roomIdx);
 	void AddStairsConnectionNode(const RoomLinkData& link, int roomIdx1, int roomIdx2);
 	void AdjustStairsNodes(const RoomLinkData& link, int roomIdx);
 	float GetAdjustedHeight(const RoomLinkData& link, DirectX::XMFLOAT3 position);
+
 	void DeleteStairsNodes(const RoomLinkData& link, int roomIdx);
+
+
 
 	int FindClosestNodeInARoom(DirectX::XMFLOAT3 position, int roomIdx) const;
 	int FindClosestNode(DirectX::XMFLOAT3 position) const;
@@ -56,5 +59,5 @@ public:
 	Path FindPathFromNode(int nodeIdx) const;
 	Path FindPathFromNodeFast(int nodeIdx) const;
 	void UpdatePath(Path& path, DirectX::XMFLOAT3 currPos) const;
-	void UpdatePlayerNode(DirectX::XMFLOAT3 playerPos);
+	void UpdatePlayerNode(DirectX::XMFLOAT3 playerPos, int currentNodeIndex);
 };
