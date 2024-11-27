@@ -4,6 +4,7 @@
 #include "AnimatedObjectBuilder.hpp"
 #include "ResourceManager.h"
 #include "Player.h"
+#include "EnemyBuilder.hpp"
 
 void World::UpdateVisibleRooms()
 {
@@ -25,6 +26,10 @@ void World::UpdateVisibleRooms()
 	}
 }
 
+World::World() : gen(std::random_device{}())
+{
+}
+
 void World::Update(float dt)
 {
 	// maybe parallelism?
@@ -37,11 +42,6 @@ void World::Update(float dt)
 	{
 		entity.second->Update(dt);
 	}
-	/*if (m_animatedEntities.size() && m_animatedEntities[0].isIdle())
-	{
-		int idx = (time(NULL) % 2) + 1;
-		m_animatedEntities[0].setAnimation("attack" + std::to_string(idx), 1.5f);
-	}*/
 }
 
 std::vector<std::shared_ptr<Hittable>> World::GetHittableEntities() 
@@ -61,7 +61,7 @@ std::vector<std::shared_ptr<Hittable>> World::GetHittableEntities()
 	return entities;
 }
 
-void World::DeleteEntity(const GUID& entityId)
+void World::DeleteEnemy(const GUID& entityId)
 {
 	if (m_enemies.find(entityId) != m_enemies.end())
 	{
@@ -135,8 +135,11 @@ void World::UpdateCurrentRoom(DirectX::XMFLOAT3 playerPos)
 }
 
 void World::UpdateEnemies(std::shared_ptr<Pathfinder> pathfinder, DirectX::XMFLOAT3 playerPos,
-	std::shared_ptr<std::queue<Action>>& actionQueue)
+	std::shared_ptr<std::queue<Action>>& actionQueue, std::shared_ptr<DX::DeviceResources> deviceResources)
 {
+	std::vector<GUID> enemiesToDelete;
+	auto secondNeighbors = GetSetOfSecondNeighbours(m_currentRoomIndex);
+
 	for (const auto& [_, enemy] : m_enemies)
 	{
 		Action action = enemy->Update(pathfinder, playerPos);
@@ -144,7 +147,84 @@ void World::UpdateEnemies(std::shared_ptr<Pathfinder> pathfinder, DirectX::XMFLO
 		{
 			actionQueue->push(action);
 		}
+
+		if (!enemy->inCloseProximity() && std::none_of(secondNeighbors.begin(), secondNeighbors.end(), [&](int roomId) {
+			return m_rooms[roomId].insideRoom(enemy->getPosition());
+			}))
+		{
+			enemiesToDelete.push_back(enemy->id);
+		}
 	}
+
+	for (const auto& enemyId : enemiesToDelete)
+		DeleteEnemy(enemyId);
+
+	SpawnEnemyNearPlayer(m_enemies.size(), pathfinder, deviceResources);
+}
+
+void World::SpawnEnemyNearPlayer(int currentEnemiesNearPlayer,
+	std::shared_ptr<Pathfinder> pathfinder, std::shared_ptr<DX::DeviceResources> deviceResources)
+{
+	const int maxEnemiesNearPlayer = 7;
+	const float wallOffset = 0.5f;
+	if (currentEnemiesNearPlayer < maxEnemiesNearPlayer)
+	{
+		auto neighbors = GetSetOfSecondNeighbours(m_currentRoomIndex);
+		int random_neighbor = *std::next(neighbors.begin(), std::uniform_int_distribution<int>(0, neighbors.size() - 1)(gen));
+
+		auto random_float = std::uniform_real_distribution<float>();
+		
+		auto roomPosition = m_rooms[random_neighbor].getPosition();
+		auto roomSize = m_rooms[random_neighbor].getSize();
+
+		DirectX::XMFLOAT3 enemyPos = {
+			roomPosition.x + wallOffset + random_float(gen) * (roomSize.x - 2 * wallOffset),
+			roomPosition.y,
+			roomPosition.z + wallOffset + random_float(gen) * (roomSize.z - 2 * wallOffset)
+		};
+
+
+		EnemyBuilder enemyBuilder{};
+		auto zombie = enemyBuilder
+			.WithNewEnemy(
+				ResourceManager::Instance().getAnimatedModel("zombie_war"),
+				ResourceManager::Instance().getAudioFile("zombie"),
+				deviceResources->GetXAudio()
+			)
+			.WithHealth(100)
+			.WithDamage(10)
+			.WithSpeed(0.05f)
+			.WithPosition(enemyPos)
+			.WithRotation({ 0.f, 0.f, 0.f })
+			.WithVelocity({ 0.f, 0.f, 0.f })
+			.WithSize({ 0.8f, 0.8f, 0.8f })
+			.WithAttackRadius(0.7f)
+			.WithFallbackAnimation("run")
+			.WithPath(pathfinder)
+			.Build();
+
+		AddEnemy(zombie);
+	}
+
+}
+
+std::set<int> World::GetSetOfSecondNeighbours(int roomId)
+{
+	std::set<int> result;
+	for (auto roomIdx : m_rooms[roomId].getAdjacentRooms())
+	{
+		for (auto nextRoomIdx : m_rooms[roomIdx].getAdjacentRooms())
+		{
+			result.insert(nextRoomIdx);
+		}
+	}
+
+	for (auto roomIdx : m_rooms[roomId].getAdjacentRooms())
+		result.erase(roomIdx);
+
+	result.erase(roomId);
+
+	return result;
 }
 
 void World::PlayEnemySounds(std::shared_ptr<DX::DeviceResources> deviceResources, Player* player) const

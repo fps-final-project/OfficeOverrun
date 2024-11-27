@@ -36,7 +36,7 @@ void ActionHandler::HandleActions(Player* player, World* world, Camera* camera, 
 					{
 						entity->second->takeDamage(gunRig->GetDamage());
 						if (entity->second->isDead()) {
-							world->DeleteEntity(m_lastHitEntity);
+							world->DeleteEnemy(m_lastHitEntity);
 						}
 					}
 				}
