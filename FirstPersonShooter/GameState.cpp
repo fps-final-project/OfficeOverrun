@@ -105,7 +105,7 @@ void GameState::Update(float dt)
 	m_player->getGunRig()->RotateAndOffset(m_camera->getYawPitchRoll(), m_player->getPostition(), dt);
 	m_world->PlayEnemySounds(m_deviceResources, m_player.get());
 
-	m_actionHandler->HandleActions(m_player.get(), m_world.get(), m_camera.get(), m_deviceResources->GetXAudio());
+	m_actionHandler->HandleActions(m_player.get(), m_world.get(), m_camera.get(), m_deviceResources.get());
 
 	//TODO: Collision handling
 

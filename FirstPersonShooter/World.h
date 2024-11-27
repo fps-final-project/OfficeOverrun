@@ -62,4 +62,6 @@ public:
 
 	LightingData GetLightingData();
 	RenderQueue CreateRenderQueue();
+
+	float lastDamage = 4.f;
 };

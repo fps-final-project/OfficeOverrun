@@ -19,6 +19,7 @@ public:
 	
 	inline std::shared_ptr<X3DAUDIO_EMITTER> getEmitter() const { return m_emitter; }
 	inline SourceVoice* getSound() { return m_sound.get(); }
+	inline SourceVoice* getDamageSound() { return m_damageSound.get(); }
 	inline void takeDamage(int damage) { health -= damage; }
 	inline bool isDead() const { return health <= 0; }
 
@@ -33,7 +34,7 @@ private:
 	int damage;
 	float speed;
 	float radius;
-	std::shared_ptr<SourceVoice> m_sound;
+	std::shared_ptr<SourceVoice> m_sound, m_damageSound;
 	std::shared_ptr<X3DAUDIO_EMITTER> m_emitter;
 
 	const float rotationSpeed = 4.f;

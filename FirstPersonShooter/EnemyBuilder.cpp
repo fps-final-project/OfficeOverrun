@@ -2,11 +2,22 @@
 #include "EnemyBuilder.hpp"
 #include "Pathfinder.h"
 
-EnemyBuilder& EnemyBuilder::WithNewEnemy(std::shared_ptr<AnimatedModel> model, std::shared_ptr<AudioFile> file, IXAudio2* xaudio)
+EnemyBuilder& EnemyBuilder::WithNewEnemy(std::shared_ptr<AnimatedModel> model)
 {
 	m_enemy.reset();
 	m_enemy = std::make_shared<Enemy>(model);
+	return *this;
+}
+
+EnemyBuilder& EnemyBuilder::WithSound(std::shared_ptr<AudioFile> file, IXAudio2* xaudio)
+{
 	m_enemy->m_sound = std::make_shared<SourceVoice>(file, xaudio);
+	return *this;
+}
+
+EnemyBuilder& EnemyBuilder::WithDamageSound(std::shared_ptr<AudioFile> file, IXAudio2* xaudio)
+{
+	m_enemy->m_damageSound = std::make_shared<SourceVoice>(file, xaudio);
 	return *this;
 }
 

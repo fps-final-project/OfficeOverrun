@@ -57,6 +57,7 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	ResourceManager::Instance().loadTexture("Assets\\Other\\wall\\floor.jpg", m_deviceResources);
 	ResourceManager::Instance().loadTexture("Assets\\Other\\wall\\concrete.jpg", m_deviceResources);
 
+	ResourceManager::Instance().loadTexture("Assets\\Other\\damage\\damage.png", m_deviceResources);
 
 	ResourceManager::Instance().loadAudioFile("Assets\\Audio\\dark-horror-background-252905.wav", XAUDIO2_LOOP_INFINITE, m_deviceResources, "music");
 	ResourceManager::Instance().loadAudioFile("Assets\\Audio\\ak.wav", 0, m_deviceResources, "ak");
@@ -65,6 +66,7 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	ResourceManager::Instance().loadAudioFile("Assets\\Audio\\sniper.wav", 0, m_deviceResources, "sniper");
 	ResourceManager::Instance().loadAudioFile("Assets\\Audio\\reload.wav", 0, m_deviceResources, "reload");
 	ResourceManager::Instance().loadAudioFile("Assets\\Audio\\zombie.wav", 0, m_deviceResources, "zombie");
+	ResourceManager::Instance().loadAudioFile("Assets\\Audio\\zombie_dying.wav", 0, m_deviceResources, "zombie_dying");
 
 
 	m_spriteRenderer = std::make_unique<SpriteRenderer>(m_deviceResources->GetD3DDeviceContext());
@@ -161,6 +163,12 @@ bool FirstPersonShooterMain::Render()
 		(outputSize.Height - size) / 2,
 		size,
 		size);
+	if (m_gameState->m_world->lastDamage < 4.f)
+		m_spriteRenderer->Render(ResourceManager::Instance().getTexture("damage"),
+			0,
+			0,
+			outputSize.Width,
+			outputSize.Height);
 	m_spriteRenderer->EndRendering(context);
 
 	auto pos = m_gameState->m_player->getPostition();

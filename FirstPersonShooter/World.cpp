@@ -42,6 +42,13 @@ void World::Update(float dt)
 	{
 		entity.second->Update(dt);
 	}
+	if (lastDamage < 100.f)
+		lastDamage += dt;
+	/*if (m_animatedEntities.size() && m_animatedEntities[0].isIdle())
+	{
+		int idx = (time(NULL) % 2) + 1;
+		m_animatedEntities[0].setAnimation("attack" + std::to_string(idx), 1.5f);
+	}*/
 }
 
 std::vector<std::shared_ptr<Hittable>> World::GetHittableEntities() 
@@ -186,11 +193,9 @@ void World::SpawnEnemyNearPlayer(int currentEnemiesNearPlayer,
 
 		EnemyBuilder enemyBuilder{};
 		auto zombie = enemyBuilder
-			.WithNewEnemy(
-				ResourceManager::Instance().getAnimatedModel("zombie_war"),
-				ResourceManager::Instance().getAudioFile("zombie"),
-				deviceResources->GetXAudio()
-			)
+			.WithNewEnemy(ResourceManager::Instance().getAnimatedModel("zombie_war"))
+			.WithSound(ResourceManager::Instance().getAudioFile("zombie"), deviceResources->GetXAudio())
+			.WithDamageSound(ResourceManager::Instance().getAudioFile("zombie_dying"), deviceResources->GetXAudio())
 			.WithHealth(100)
 			.WithDamage(10)
 			.WithSpeed(0.05f)
@@ -229,29 +234,19 @@ std::set<int> World::GetSetOfSecondNeighbours(int roomId)
 
 void World::PlayEnemySounds(std::shared_ptr<DX::DeviceResources> deviceResources, Player* player) const
 {
-	static FLOAT32 matrix[2];
 	for (const auto& [_, enemy] : m_enemies)
 	{
 		if (!enemy->getSound()->IsPlaying() && rand() % 80 != 0)
 			continue;
 
-		X3DAUDIO_DSP_SETTINGS dspSettings;
-		dspSettings.DstChannelCount = 2;
-		dspSettings.SrcChannelCount = 1;
-		dspSettings.pMatrixCoefficients = matrix;
-
-		X3DAudioCalculate((deviceResources->GetX3DInstance()), player->getAudioListener().get(), enemy->getEmitter().get(),
-			X3DAUDIO_CALCULATE_MATRIX | X3DAUDIO_CALCULATE_DOPPLER,
-			&dspSettings
+		enemy
+			->getSound()
+			->SetEmmiterSettings(
+				enemy->getEmitter().get(),
+				player->getAudioListener().get(),
+				deviceResources->GetX3DInstance(), 
+				deviceResources->GetMasteringVoice()
 			);
-		
-		enemy->getSound()->getSourceVoice()->SetOutputMatrix(
-			deviceResources->GetMasteringVoice(),
-			dspSettings.SrcChannelCount, 
-			dspSettings.DstChannelCount,
-			dspSettings.pMatrixCoefficients
-		);
-		enemy->getSound()->getSourceVoice()->SetFrequencyRatio(dspSettings.DopplerFactor);
 
 		enemy->getSound()->PlaySound(false);
 
