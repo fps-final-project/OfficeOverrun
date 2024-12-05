@@ -61,27 +61,38 @@ float flashlight(float3 player_pos, float3 model_pos, float3 normal)
 	else return 0.f;
 }
 
+float fog_factor(float d)
+{
+	const float fog_far = 10.f;
+	const float fog_near = 5.f;
+
+	return clamp(1 - (fog_far - d) / (fog_far - fog_near), 0.f, 1.f);
+}
+
 float4 main(PixelShaderInput input) : SV_TARGET
 {
 	float3 final_light = float3(0.f, 0.f, 0.f);
+	float4 fog_color = float4(0.39f, 0.39f, 0.39f, 0.f);
 
-// ambient 
-float ambientStrength = 0.1;
-float3 lightColor = float3(1.f, 1.f, 1.f);
-float3 ambient = ambientStrength * lightColor;
+	// ambient 
+	float ambientStrength = 0.1;
+	float3 lightColor = float3(1.f, 1.f, 1.f);
+	float3 ambient = ambientStrength * lightColor;
 
-if (fully_visible)
-{
-	final_light = lightColor;
-}
-else
-{
-	for (int i = 0; i < nlights; i++)
+	if (fully_visible)
 	{
-		final_light += float3(1.f, 1.f, 1.f) * phong_lighting(light_pos[i], input.model_pos, input.normal, 0.09, 0.032);
+		final_light = lightColor;
 	}
-	final_light += float3(1.f, 1.f, 1.f) * flashlight(camera_pos, input.model_pos, input.normal);
-}
+	else
+	{
+		for (int i = 0; i < nlights; i++)
+		{
+			final_light += float3(1.f, 1.f, 1.f) * phong_lighting(light_pos[i], input.model_pos, input.normal, 0.09, 0.032);
+		}
+		final_light += float3(1.f, 1.f, 1.f) * flashlight(camera_pos, input.model_pos, input.normal);
+	}
 
-return float4(final_light, 0.f) * my_texture.Sample(my_sampler, input.texture_pos);
+	float4 texturedColor = float4(final_light, 0.f) * my_texture.Sample(my_sampler, input.texture_pos);
+
+	return lerp(texturedColor, fog_color, fog_factor(length(camera_pos - input.model_pos)));
 }

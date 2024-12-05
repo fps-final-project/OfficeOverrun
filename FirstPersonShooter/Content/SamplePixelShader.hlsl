@@ -15,10 +15,10 @@ cbuffer LightingConstantBuffer : register(b1)
 }
 struct PixelShaderInput
 {
-    float4 pos : SV_POSITION;
-    float4 model_pos : POSITION;
-    float2 texture_pos : UV;
-    float3 normal : NORMAL;
+	float4 pos : SV_POSITION;
+	float4 model_pos : POSITION;
+	float2 texture_pos : UV;
+	float3 normal : NORMAL;
 };
 
 Texture2D my_texture;
@@ -26,13 +26,13 @@ SamplerState my_sampler;
 
 float phong_lighting(float3 light_position, float3 model_pos, float3 normal, float k1, float k2)
 {
-    // diffuse
-    float3 norm = normalize(normal);
-    float3 lightDir = normalize(light_position - model_pos);
-    float diffuse = max(dot(norm, lightDir), 0.0);
+	// diffuse
+	float3 norm = normalize(normal);
+	float3 lightDir = normalize(light_position - model_pos);
+	float diffuse = max(dot(norm, lightDir), 0.0);
 
-    // specular - phong-blinn model
-    float specularStrength = 0.5;
+	// specular - phong-blinn model
+	float specularStrength = 0.5;
 	float specular = 0.f;
 	if (diffuse > 0)
 	{
@@ -42,28 +42,37 @@ float phong_lighting(float3 light_position, float3 model_pos, float3 normal, flo
 		specular = specularStrength * pow(max(dot(normal, halfwayVec), 0.0), 32);
 	}
 
-    // attenuation (light is dimmer the farther the object is from the light)
-    float distance = length(light_position - model_pos);
-    float attenuation = 1.0 / (1.0 + k1 * distance + k2 * (distance * distance));
+	// attenuation (light is dimmer the farther the object is from the light)
+	float distance = length(light_position - model_pos);
+	float attenuation = 1.0 / (1.0 + k1 * distance + k2 * (distance * distance));
 
-    return (diffuse + specular) * attenuation;
+	return (diffuse + specular) * attenuation;
 }
 
 float flashlight(float3 player_pos, float3 model_pos, float3 normal)
 {
-    float3 lightDir = normalize(player_pos - model_pos);
-    float cos_theta = dot(lightDir, normalize(-flashlight_dir));
+	float3 lightDir = normalize(player_pos - model_pos);
+	float cos_theta = dot(lightDir, normalize(-flashlight_dir));
 
-    if (cos_theta > flashlight_cutoffAngle)
-    {
-        return phong_lighting(player_pos, model_pos, normal, 0.09, 0.09) * (1 - 50 * (1 - cos_theta) * (1 - cos_theta));
-    }
-    else return 0.f;
+	if (cos_theta > flashlight_cutoffAngle)
+	{
+		return phong_lighting(player_pos, model_pos, normal, 0.09, 0.09) * (1 - 50 * (1 - cos_theta) * (1 - cos_theta));
+	}
+	else return 0.f;
+}
+
+float fog_factor(float d)
+{
+	const float fog_far = 10.f;
+	const float fog_near = 5.f;
+
+	return clamp(1 - (fog_far - d) / (fog_far - fog_near), 0.f, 1.f);
 }
 
 float4 main(PixelShaderInput input) : SV_TARGET
 {
 	float3 final_light = float3(0.f, 0.f, 0.f);
+	float4 fog_color = float4(0.39f, 0.39f, 0.39f, 0.f);
 
 	// ambient 
 	float ambientStrength = 0.1;
@@ -83,5 +92,7 @@ float4 main(PixelShaderInput input) : SV_TARGET
 		final_light += float3(1.f, 1.f, 1.f) * flashlight(camera_pos, input.model_pos, input.normal);
 	}
 
-	return float4(final_light, 0.f) * my_texture.Sample(my_sampler, input.texture_pos);
+	float4 texturedColor = float4(final_light, 0.f) * my_texture.Sample(my_sampler, input.texture_pos);
+
+	return lerp(texturedColor, fog_color, fog_factor(length(camera_pos - input.model_pos.xyz)));
 }
