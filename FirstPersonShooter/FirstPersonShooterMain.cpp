@@ -22,7 +22,7 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	// Register to be notified if the Device is lost or recreated
 	m_deviceResources->RegisterDeviceNotify(this);
 
-	bool load_only_ak = true;
+	bool load_only_ak = false;
 
 	ResourceManager::Instance().loadAnimatedModel("Assets\\Enemy\\Zombie\\zombie_war.gltf", m_deviceResources);
 	ResourceManager::Instance().loadAnimatedModel("Assets\\Other\\heli\\heli.gltf", m_deviceResources);
@@ -172,8 +172,8 @@ bool FirstPersonShooterMain::Render()
 	m_spriteRenderer->EndRendering(context);
 
 	auto pos = m_gameState->m_player->getPostition();
-	//m_fpsTextRenderer->Render(std::to_string(m_timer.GetFramesPerSecond()));
-	m_fpsTextRenderer->Render(std::to_string(pos.x) + ", " +std::to_string(pos.y) + ", " + std::to_string(pos.z));
+	m_fpsTextRenderer->Render(std::to_string(m_timer.GetFramesPerSecond()));
+	//m_fpsTextRenderer->Render(std::to_string(pos.x) + ", " +std::to_string(pos.y) + ", " + std::to_string(pos.z));
 
 	return true;
 }

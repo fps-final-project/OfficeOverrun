@@ -77,7 +77,7 @@ GameState::GameState(
 
 	this->setupActionHandlers();
 
-	//m_music.PlaySound(true);
+	m_music.PlaySound(true);
 }
 
 void GameState::HandleInput()

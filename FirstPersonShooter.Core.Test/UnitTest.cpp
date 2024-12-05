@@ -37,7 +37,7 @@ namespace FirstPersonShooter_Core_Test
         {            
 			XMFLOAT3 start = { 1.f, 1.f, 1.f };
 			XMFLOAT3 playerPos = { 0.f, 1.f, 0.f };
-            pathfinder->UpdatePlayerNode(playerPos);
+            pathfinder->UpdatePlayerNode(playerPos, world.m_currentRoomIndex);
 
             std::shared_ptr<Enemy> e = enemyBuilder
                 .WithNewEnemy(std::make_shared<AnimatedModel>())
@@ -56,7 +56,7 @@ namespace FirstPersonShooter_Core_Test
         {
 
             XMFLOAT3 playerPos = { 0.f, 1.f, 0.f };
-            pathfinder->UpdatePlayerNode(playerPos);
+            pathfinder->UpdatePlayerNode(playerPos, world.m_currentRoomIndex);
             int adj = world.GetCurrentRoom().getAdjacentRooms()[0];
             XMFLOAT3 roomPos = world.m_rooms[adj].getPosition();
             XMFLOAT3 roomSize = world.m_rooms[adj].getSize();
@@ -75,7 +75,7 @@ namespace FirstPersonShooter_Core_Test
 		TEST_METHOD(NotAdjacentRoomShouldNotMove)
         {
 			XMFLOAT3 playerPos = { 0.f, 1.f, 0.f };
-            pathfinder->UpdatePlayerNode(playerPos);
+            pathfinder->UpdatePlayerNode(playerPos, world.m_currentRoomIndex);
 
             std::vector adj = world.GetCurrentRoom().getAdjacentRooms();
 
@@ -105,7 +105,7 @@ namespace FirstPersonShooter_Core_Test
         {
             XMFLOAT3 start = { 1.f, 1.f, 1.f };
             XMFLOAT3 playerPos = { 0.f, 1.f, 1.f };
-            pathfinder->UpdatePlayerNode(playerPos);
+            pathfinder->UpdatePlayerNode(playerPos, world.m_currentRoomIndex);
             std::shared_ptr<Enemy> e = enemyBuilder
                 .WithNewEnemy(std::make_shared<AnimatedModel>())
                 .WithSpeed(1.f)
