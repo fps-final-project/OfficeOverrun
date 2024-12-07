@@ -15,10 +15,11 @@ namespace DX
 	{
 	public:
 		DeviceResources();
-		void SetWindow(Windows::UI::Core::CoreWindow^ window);
+		void SetSwapChainPanel(Windows::UI::Xaml::Controls::SwapChainPanel^ panel);
 		void SetLogicalSize(Windows::Foundation::Size logicalSize);
 		void SetCurrentOrientation(Windows::Graphics::Display::DisplayOrientations currentOrientation);
 		void SetDpi(float dpi);
+		void SetCompositionScale(float compositionScaleX, float compositionScaleY);
 		void ValidateDevice();
 		void HandleDeviceLost();
 		void RegisterDeviceNotify(IDeviceNotify* deviceNotify);
@@ -95,8 +96,8 @@ namespace DX
 		X3DAUDIO_HANDLE									m_X3DInstance;
 
 
-		// Cached reference to the Window.
-		Platform::Agile<Windows::UI::Core::CoreWindow> m_window;
+		// Cached reference to the XAML panel.
+		Windows::UI::Xaml::Controls::SwapChainPanel^ m_swapChainPanel;
 
 		// Cached device properties.
 		D3D_FEATURE_LEVEL								m_d3dFeatureLevel;
@@ -106,9 +107,13 @@ namespace DX
 		Windows::Graphics::Display::DisplayOrientations	m_nativeOrientation;
 		Windows::Graphics::Display::DisplayOrientations	m_currentOrientation;
 		float											m_dpi;
+		float											m_compositionScaleX;
+		float											m_compositionScaleY;
 
 		// This is the DPI that will be reported back to the app. It takes into account whether the app supports high resolution screens or not.
-		float m_effectiveDpi;
+		float											m_effectiveDpi;
+		float											m_effectiveCompositionScaleX;
+		float											m_effectiveCompositionScaleY;
 
 		// Transforms used for display orientation.
 		D2D1::Matrix3x2F	m_orientationTransform2D;

@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Assets">
+      <UniqueIdentifier>{f12348b8-29e8-4f6a-91d8-7936db2a8a37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\GunRig">
+      <UniqueIdentifier>{0f72ec5c-d78d-40cd-bac8-4f04328c4b0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\GunRig\AK">
+      <UniqueIdentifier>{df31293c-dad3-4141-8eb3-2e69a1153103}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\GunRig\FN">
+      <UniqueIdentifier>{a7f73228-d3a7-482d-96f0-55e6c9949c60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\GunRig\smg">
+      <UniqueIdentifier>{16c5f43d-f8e5-4f19-8dd2-fafe344dc2d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\GunRig\sniper">
+      <UniqueIdentifier>{bc54156b-e18e-4d9c-848b-7c77d2586dba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Enemy">
+      <UniqueIdentifier>{0d251a90-5472-481d-ab5f-91c892b0d574}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Enemy\Zombie">
+      <UniqueIdentifier>{53fe50ce-c3f2-4a34-b9b5-c1198fc059ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Other">
+      <UniqueIdentifier>{04edf66e-727e-4570-801a-39b7c1ff4483}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Other\bullet">
+      <UniqueIdentifier>{3544458d-9d65-4192-9e35-ae8c8230cbbb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Other\wall">
+      <UniqueIdentifier>{b1b7d807-d0bd-4760-ac1c-1df3e29b65fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Other\crosshair">
+      <UniqueIdentifier>{3aa28a6e-541f-490a-ba09-fe2bbf10f8d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Other\stairs">
+      <UniqueIdentifier>{afd40f9f-b85e-4322-8e41-0c6fbeeeae46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Other\heli">
+      <UniqueIdentifier>{0a2bb7f6-23bd-49f3-a409-2654eb254a5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Other\damage">
+      <UniqueIdentifier>{901312d4-67c1-40e9-85b6-02b63c3366dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Sounds">
+      <UniqueIdentifier>{9e2e4424-2ec8-41f2-bdee-3b7cdc1b0d88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Libs">
+      <UniqueIdentifier>{5cbb4c0a-9c0e-43a0-9d51-fdb9a2ee93aa}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="FirstPersonShooterXAMLMain.cpp" />
+    <ClCompile Include="pch.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="FirstPersonShooterXAMLMain.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="..\FirstPersonShooter\resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <AppxManifest Include="Package.appxmanifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="DirectXPage.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\LockScreenLogo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Other\skybox\skybox.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\SplashScreen.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Square150x150Logo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Square44x44Logo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\StoreLogo.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\Wide310x150Logo.scale-200.png">
+      <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\GunRig\AK\ak74m_baseColor.png">
+      <Filter>Assets\GunRig\AK</Filter>
+    </Image>
+    <Image Include="Assets\GunRig\AK\armColor.png">
+      <Filter>Assets\GunRig\AK</Filter>
+    </Image>
+    <Image Include="Assets\GunRig\FN\material_diffuse.png">
+      <Filter>Assets\GunRig\FN</Filter>
+    </Image>
+    <Image Include="Assets\GunRig\smg\Material_457_baseColor.png">
+      <Filter>Assets\GunRig\smg</Filter>
+    </Image>
+    <Image Include="Assets\GunRig\sniper\Atlas_00001.png">
+      <Filter>Assets\GunRig\sniper</Filter>
+    </Image>
+    <Image Include="Assets\Enemy\Zombie\world_war_zombie_diffuse.png">
+      <Filter>Assets\Enemy\Zombie</Filter>
+    </Image>
+    <Image Include="Assets\Other\bullet\bullet.jpg">
+      <Filter>Assets\Other\bullet</Filter>
+    </Image>
+    <Image Include="Assets\Other\wall\concrete.jpg">
+      <Filter>Assets\Other\wall</Filter>
+    </Image>
+    <Image Include="Assets\Other\wall\floor.jpg">
+      <Filter>Assets\Other\wall</Filter>
+    </Image>
+    <Image Include="Assets\Other\wall\wall.jpg">
+      <Filter>Assets\Other\wall</Filter>
+    </Image>
+    <Image Include="Assets\Other\crosshair\crosshair.png">
+      <Filter>Assets\Other\crosshair</Filter>
+    </Image>
+    <Image Include="Assets\Other\stairs\floor.jpg">
+      <Filter>Assets\Other\stairs</Filter>
+    </Image>
+    <Image Include="Assets\Other\heli\Helicopter_albedo2.jpg">
+      <Filter>Assets\Other\heli</Filter>
+    </Image>
+    <Image Include="Assets\Other\damage\damage.png">
+      <Filter>Assets\Other\damage</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\GunRig\AK\ak.gltf">
+      <Filter>Assets\GunRig\AK</Filter>
+    </None>
+    <None Include="Assets\GunRig\AK\ak_gun.gltf">
+      <Filter>Assets\GunRig\AK</Filter>
+    </None>
+    <None Include="Assets\GunRig\FN\FN.gltf">
+      <Filter>Assets\GunRig\FN</Filter>
+    </None>
+    <None Include="Assets\GunRig\FN\FN_gun.gltf">
+      <Filter>Assets\GunRig\FN</Filter>
+    </None>
+    <None Include="Assets\GunRig\smg\smg.gltf">
+      <Filter>Assets\GunRig\smg</Filter>
+    </None>
+    <None Include="Assets\GunRig\smg\smg_gun.gltf">
+      <Filter>Assets\GunRig\smg</Filter>
+    </None>
+    <None Include="Assets\GunRig\sniper\sniper.gltf">
+      <Filter>Assets\GunRig\sniper</Filter>
+    </None>
+    <None Include="Assets\GunRig\sniper\sniper_gun.gltf">
+      <Filter>Assets\GunRig\sniper</Filter>
+    </None>
+    <None Include="Assets\Enemy\Zombie\zombie_war.gltf">
+      <Filter>Assets\Enemy\Zombie</Filter>
+    </None>
+    <None Include="Assets\Other\bullet\bullet.mtl">
+      <Filter>Assets\Other\bullet</Filter>
+    </None>
+    <None Include="Assets\Other\bullet\bullet.obj">
+      <Filter>Assets\Other\bullet</Filter>
+    </None>
+    <None Include="Assets\Other\stairs\stairs.gltf">
+      <Filter>Assets\Other\stairs</Filter>
+    </None>
+    <None Include="Assets\Other\heli\heli.gltf">
+      <Filter>Assets\Other\heli</Filter>
+    </None>
+    <None Include="Assets\Audio\dark-horror-background-252905.wav">
+      <Filter>Assets\Sounds</Filter>
+    </None>
+    <None Include="Assets\Audio\FN.wav">
+      <Filter>Assets\Sounds</Filter>
+    </None>
+    <None Include="Assets\Audio\reload.wav">
+      <Filter>Assets\Sounds</Filter>
+    </None>
+    <None Include="Assets\Audio\smg.wav">
+      <Filter>Assets\Sounds</Filter>
+    </None>
+    <None Include="Assets\Audio\sniper.wav">
+      <Filter>Assets\Sounds</Filter>
+    </None>
+    <None Include="Assets\Audio\zombie.wav">
+      <Filter>Assets\Sounds</Filter>
+    </None>
+    <None Include="Assets\Audio\ak.wav">
+      <Filter>Assets\Sounds</Filter>
+    </None>
+    <None Include="..\Vendor\assimp\lib\x64\assimp-vc143-mtd.dll">
+      <Filter>Assets\Libs</Filter>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Assets\GunRig\AK\ak.txt">
+      <Filter>Assets\GunRig\AK</Filter>
+    </Text>
+    <Text Include="Assets\GunRig\FN\FN.txt">
+      <Filter>Assets\GunRig\FN</Filter>
+    </Text>
+    <Text Include="Assets\GunRig\smg\smg.txt">
+      <Filter>Assets\GunRig\smg</Filter>
+    </Text>
+    <Text Include="Assets\GunRig\sniper\sniper.txt">
+      <Filter>Assets\GunRig\sniper</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Assets\Audio\zombie_dying.wav">
+      <Filter>Assets\Sounds</Filter>
+    </Media>
+  </ItemGroup>
+</Project>

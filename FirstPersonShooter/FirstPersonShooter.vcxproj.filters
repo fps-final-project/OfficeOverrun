@@ -65,6 +65,12 @@
     <Filter Include="Assets\Other\damage">
       <UniqueIdentifier>{dcfd5e3d-c5dc-4aa9-9ff5-1284e1e94cf3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\Sounds">
+      <UniqueIdentifier>{aa6c5f54-023e-4986-a741-6423a506a0b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Libs">
+      <UniqueIdentifier>{c83ca1a6-3e4e-4d40-98b8-07b6a0853876}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -166,20 +172,36 @@
     <None Include="Assets\GunRig\sniper\sniper_gun.gltf">
       <Filter>Assets\GunRig\sniper</Filter>
     </None>
-    <None Include="Assets\Audio\dark-horror-background-252905.wav" />
     <None Include="Assets\Other\stairs\stairs.gltf">
       <Filter>Assets\Other\stairs</Filter>
     </None>
-    <None Include="Assets\Audio\ak.wav" />
-    <None Include="Assets\Audio\FN.wav" />
-    <None Include="Assets\Audio\smg.wav" />
-    <None Include="Assets\Audio\sniper.wav" />
-    <None Include="Assets\Audio\reload.wav" />
     <None Include="Assets\Other\heli\heli.gltf">
       <Filter>Assets\Other\heli</Filter>
     </None>
-    <None Include="..\Vendor\assimp\lib\x64\assimp-vc143-mtd.dll" />
-    <None Include="Assets\Audio\zombie.wav" />
+    <None Include="Assets\Audio\dark-horror-background-252905.wav">
+      <Filter>Assets\Sounds</Filter>
+    </None>
+    <None Include="Assets\Audio\FN.wav">
+      <Filter>Assets\Sounds</Filter>
+    </None>
+    <None Include="Assets\Audio\reload.wav">
+      <Filter>Assets\Sounds</Filter>
+    </None>
+    <None Include="Assets\Audio\smg.wav">
+      <Filter>Assets\Sounds</Filter>
+    </None>
+    <None Include="Assets\Audio\sniper.wav">
+      <Filter>Assets\Sounds</Filter>
+    </None>
+    <None Include="Assets\Audio\zombie.wav">
+      <Filter>Assets\Sounds</Filter>
+    </None>
+    <None Include="Assets\Audio\ak.wav">
+      <Filter>Assets\Sounds</Filter>
+    </None>
+    <None Include="..\Vendor\assimp\lib\x64\assimp-vc143-mtd.dll">
+      <Filter>Assets\Libs</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="FirstPersonShooter.rc" />
@@ -199,6 +221,8 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <Media Include="Assets\Audio\zombie_dying.wav" />
+    <Media Include="Assets\Audio\zombie_dying.wav">
+      <Filter>Assets\Sounds</Filter>
+    </Media>
   </ItemGroup>
 </Project>
