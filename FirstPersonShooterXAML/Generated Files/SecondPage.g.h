@@ -7,20 +7,11 @@
 //------------------------------------------------------------------------------
 
 
-namespace Windows {
-    namespace UI {
-        namespace Xaml {
-            namespace Controls {
-                ref class SwapChainPanel;
-            }
-        }
-    }
-}
 
 namespace FirstPersonShooterXAML
 {
     [::Windows::Foundation::Metadata::WebHostHidden]
-    partial ref class DirectXPage : public ::Windows::UI::Xaml::Controls::Page, 
+    partial ref class SecondPage : public ::Windows::UI::Xaml::Controls::Page, 
         public ::Windows::UI::Xaml::Markup::IComponentConnector,
         public ::Windows::UI::Xaml::Markup::IComponentConnector2
     {
@@ -36,9 +27,8 @@ namespace FirstPersonShooterXAML
     private:
         bool _contentLoaded;
     
-        class DirectXPage_obj1_Bindings;
+        class SecondPage_obj1_Bindings;
     
-        private: ::Windows::UI::Xaml::Controls::SwapChainPanel^ swapChainPanel;
     };
 }
 

@@ -5,6 +5,7 @@
 
 #include "pch.h"
 #include "DirectXPage.xaml.h"
+#include "SecondPage.xaml.h"
 
 using namespace FirstPersonShooterXAML;
 
@@ -34,6 +35,8 @@ DirectXPage::DirectXPage() :
 	// Register event handlers for page lifecycle.
 	CoreWindow^ window = Window::Current->CoreWindow;
 
+	this->KeyDown += ref new KeyEventHandler(this, &DirectXPage::Page_KeyDown);
+
 	window->VisibilityChanged +=
 		ref new TypedEventHandler<CoreWindow^, VisibilityChangedEventArgs^>(this, &DirectXPage::OnVisibilityChanged);
 
@@ -60,21 +63,21 @@ DirectXPage::DirectXPage() :
 	m_deviceResources->SetSwapChainPanel(swapChainPanel);
 
 	// Register our SwapChainPanel to get independent input pointer events
-	auto workItemHandler = ref new WorkItemHandler([this] (IAsyncAction ^)
-	{
-		// The CoreIndependentInputSource will raise pointer events for the specified device types on whichever thread it's created on.
-		m_coreInput = swapChainPanel->CreateCoreIndependentInputSource(
-			Windows::UI::Core::CoreInputDeviceTypes::Mouse |
-			Windows::UI::Core::CoreInputDeviceTypes::Touch |
-			Windows::UI::Core::CoreInputDeviceTypes::Pen
-			);
+	//auto workItemHandler = ref new WorkItemHandler([this] (IAsyncAction ^)
+	//{
+	//	// The CoreIndependentInputSource will raise pointer events for the specified device types on whichever thread it's created on.
+	//	m_coreInput = swapChainPanel->CreateCoreIndependentInputSource(
+	//		Windows::UI::Core::CoreInputDeviceTypes::Mouse |
+	//		Windows::UI::Core::CoreInputDeviceTypes::Touch |
+	//		Windows::UI::Core::CoreInputDeviceTypes::Pen
+	//		);
 
-		// Begin processing input messages as they're delivered.
-		m_coreInput->Dispatcher->ProcessEvents(CoreProcessEventsOption::ProcessUntilQuit);
-	});
+	//	// Begin processing input messages as they're delivered.
+	//	m_coreInput->Dispatcher->ProcessEvents(CoreProcessEventsOption::ProcessUntilQuit);
+	//});
 
 	// Run task on a dedicated high priority background thread.
-	m_inputLoopWorker = ThreadPool::RunAsync(workItemHandler, WorkItemPriority::High, WorkItemOptions::TimeSliced);
+	//m_inputLoopWorker = ThreadPool::RunAsync(workItemHandler, WorkItemPriority::High, WorkItemOptions::TimeSliced);
 
 	m_mouse = std::make_shared<Mouse>();
 	m_keyboard = std::make_shared<Keyboard>();
@@ -84,6 +87,8 @@ DirectXPage::DirectXPage() :
 	
 	m_main = std::unique_ptr<FirstPersonShooterXAMLMain>(new FirstPersonShooterXAMLMain(m_deviceResources, m_mouse, m_keyboard));
 	m_main->StartRenderLoop();
+
+	this->Focus(::FocusState::Programmatic);
 }
 
 DirectXPage::~DirectXPage()
@@ -155,6 +160,11 @@ void DirectXPage::OnDisplayContentsInvalidated(DisplayInformation^ sender, Objec
 	m_deviceResources->ValidateDevice();
 }
 
+void DirectXPage::OnPageLoaded(Platform::Object^ sender, RoutedEventArgs^ e)
+{
+	this->Focus(::FocusState::Programmatic);
+}
+
 // Called when the app bar button is clicked.
 void DirectXPage::AppBarButton_Click(Object^ sender, RoutedEventArgs^ e)
 {
@@ -174,4 +184,22 @@ void DirectXPage::OnSwapChainPanelSizeChanged(Object^ sender, SizeChangedEventAr
 	critical_section::scoped_lock lock(m_main->GetCriticalSection());
 	m_deviceResources->SetLogicalSize(e->NewSize);
 	m_main->CreateWindowSizeDependentResources();
+}
+
+
+void FirstPersonShooterXAML::DirectXPage::swapChainPanel_Tapped(Platform::Object^ sender, Windows::UI::Xaml::Input::TappedRoutedEventArgs^ e)
+{
+
+}
+
+
+
+
+void FirstPersonShooterXAML::DirectXPage::Page_KeyDown(Platform::Object^ sender, Windows::UI::Xaml::Input::KeyRoutedEventArgs^ e)
+{
+	if (e->Key == Windows::System::VirtualKey::Escape)
+	{
+		// Navigate to the second page
+		this->Frame->Navigate(Windows::UI::Xaml::Interop::TypeName(SecondPage::typeid));
+	}
 }

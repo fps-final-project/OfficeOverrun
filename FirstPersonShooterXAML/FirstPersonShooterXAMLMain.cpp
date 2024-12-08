@@ -194,21 +194,21 @@ bool FirstPersonShooterXAMLMain::Render()
 	m_gameState->m_player->Render(m_renderMaster);
 
 
-	//m_spriteRenderer->BeginRendering(context, viewport);
-	//Size outputSize = m_deviceResources->GetOutputSize();
-	//int size = 100;
-	//m_spriteRenderer->Render(ResourceManager::Instance().getTexture("crosshair"),
-	//	(outputSize.Width - size) / 2,
-	//	(outputSize.Height - size) / 2,
-	//	size,
-	//	size);
-	//if (m_gameState->m_world->lastDamage < 4.f)
-	//	m_spriteRenderer->Render(ResourceManager::Instance().getTexture("damage"),
-	//		0,
-	//		0,
-	//		outputSize.Width,
-	//		outputSize.Height);
-	//m_spriteRenderer->EndRendering(context);
+	m_spriteRenderer->BeginRendering(context, viewport);
+	Size outputSize = m_deviceResources->GetOutputSize();
+	int size = 100;
+	m_spriteRenderer->Render(ResourceManager::Instance().getTexture("crosshair"),
+		(outputSize.Width - size) / 2,
+		(outputSize.Height - size) / 2,
+		size,
+		size);
+	if (m_gameState->m_world->lastDamage < 4.f)
+		m_spriteRenderer->Render(ResourceManager::Instance().getTexture("damage"),
+			0,
+			0,
+			outputSize.Width,
+			outputSize.Height);
+	m_spriteRenderer->EndRendering(context);
 
 	auto pos = m_gameState->m_player->getPostition();
 	m_fpsTextRenderer->Render(std::to_string(m_timer.GetFramesPerSecond()));

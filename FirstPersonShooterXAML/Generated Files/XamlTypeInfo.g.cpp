@@ -11,9 +11,11 @@
 
 #include "App.xaml.h"
 #include "DirectXPage.xaml.h"
+#include "SecondPage.xaml.h"
 #include "XamlBindingInfo.g.hpp"
 #include "App.g.hpp"
 #include "DirectXPage.g.hpp"
+#include "SecondPage.g.hpp"
 
 template<typename T>
 ::Platform::Object^ ActivateType()
@@ -76,13 +78,20 @@ const TypeInfo TypeInfos[] =
     TypeInfo_Flags_IsSystemType | TypeInfo_Flags_None,
     -1,
     //   1
+    L"FirstPersonShooterXAML.SecondPage", L"",
+    &ActivateType<::FirstPersonShooterXAML::SecondPage>, nullptr, nullptr, nullptr,
+    0, // Windows.UI.Xaml.Controls.Page
+    0, 0, -1, ::Windows::UI::Xaml::Interop::TypeKind::Custom,
+    TypeInfo_Flags_IsLocalType | TypeInfo_Flags_None,
+    -1,
+    //   2
     L"FirstPersonShooterXAML.DirectXPage", L"",
     &ActivateType<::FirstPersonShooterXAML::DirectXPage>, nullptr, nullptr, nullptr,
     0, // Windows.UI.Xaml.Controls.Page
     0, 0, -1, ::Windows::UI::Xaml::Interop::TypeKind::Custom,
     TypeInfo_Flags_IsLocalType | TypeInfo_Flags_None,
     -1,
-    //   2
+    //   3
     L"Windows.UI.Xaml.Controls.UserControl", L"",
     nullptr, nullptr, nullptr, nullptr,
     -1,
@@ -132,10 +141,10 @@ const UINT TypeInfoLookup[] = {
       1,   //  31
       1,   //  32
       1,   //  33
-      1,   //  34
-      2,   //  35
-      2,   //  36
-      3,   //  37
+      2,   //  34
+      3,   //  35
+      3,   //  36
+      4,   //  37
 };
 
 const TypeInfo* GetTypeInfo(::Platform::String^ typeName)

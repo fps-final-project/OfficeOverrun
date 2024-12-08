@@ -63,13 +63,14 @@
   <ItemGroup>
     <ClInclude Include="FirstPersonShooterXAMLMain.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="..\FirstPersonShooter\resource.h" />
+    <ClInclude Include=".resource.h" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="DirectXPage.xaml" />
+    <Page Include="SecondPage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\LockScreenLogo.scale-200.png">

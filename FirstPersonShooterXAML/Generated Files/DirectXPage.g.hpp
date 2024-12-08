@@ -30,21 +30,18 @@ void ::FirstPersonShooterXAML::DirectXPage::Connect(int __connectionId, ::Platfo
 {
     switch (__connectionId)
     {
+    case 1:
+        {
+            ::Windows::UI::Xaml::Controls::Page^ element1 = safe_cast<::Windows::UI::Xaml::Controls::Page^>(__target);
+            (safe_cast<::Windows::UI::Xaml::Controls::Page^>(element1))->KeyDown += ref new ::Windows::UI::Xaml::Input::KeyEventHandler(this, (void (::FirstPersonShooterXAML::DirectXPage::*)
+                (::Platform::Object^, ::Windows::UI::Xaml::Input::KeyRoutedEventArgs^))&DirectXPage::Page_KeyDown);
+        }
+        break;
     case 2:
         {
             this->swapChainPanel = safe_cast<::Windows::UI::Xaml::Controls::SwapChainPanel^>(__target);
-        }
-        break;
-    case 3:
-        {
-            this->bottomAppBar = safe_cast<::Windows::UI::Xaml::Controls::AppBar^>(__target);
-        }
-        break;
-    case 4:
-        {
-            ::Windows::UI::Xaml::Controls::AppBarButton^ element4 = safe_cast<::Windows::UI::Xaml::Controls::AppBarButton^>(__target);
-            (safe_cast<::Windows::UI::Xaml::Controls::AppBarButton^>(element4))->Click += ref new ::Windows::UI::Xaml::RoutedEventHandler(this, (void (::FirstPersonShooterXAML::DirectXPage::*)
-                (::Platform::Object^, ::Windows::UI::Xaml::RoutedEventArgs^))&DirectXPage::AppBarButton_Click);
+            (safe_cast<::Windows::UI::Xaml::Controls::SwapChainPanel^>(this->swapChainPanel))->Tapped += ref new ::Windows::UI::Xaml::Input::TappedEventHandler(this, (void (::FirstPersonShooterXAML::DirectXPage::*)
+                (::Platform::Object^, ::Windows::UI::Xaml::Input::TappedRoutedEventArgs^))&DirectXPage::swapChainPanel_Tapped);
         }
         break;
     }
