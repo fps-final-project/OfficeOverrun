@@ -225,7 +225,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)Vendor\assimp\include;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)FirstPersonShooter;$(SolutionDir)Vendor\assimp\include;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -277,6 +277,7 @@
     <ClInclude Include="FirstPersonShooter.Rendering.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="UI.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\FirstPersonShooter\AnimatedModelRenderer.cpp" />
@@ -302,6 +303,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\FirstPersonShooter\Content\SamplePixelShader.hlsl">

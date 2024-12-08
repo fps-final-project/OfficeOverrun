@@ -49,6 +49,9 @@
     <Filter Include="Texture">
       <UniqueIdentifier>{a2d561ce-edd9-4e86-b2da-21bb75c44d53}</UniqueIdentifier>
     </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{15d51385-5fd8-4d50-98c6-8ea9a3d578ea}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -87,6 +90,9 @@
       <Filter>Texture</Filter>
     </ClCompile>
     <ClCompile Include="..\FirstPersonShooter\Common\DeviceResources.cpp" />
+    <ClCompile Include="UI.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FirstPersonShooter.Rendering.h" />
@@ -158,6 +164,9 @@
     <ClInclude Include="..\FirstPersonShooter\Drawable.hpp" />
     <ClInclude Include="..\FirstPersonShooter\Common\DeviceResources.h" />
     <ClInclude Include="..\FirstPersonShooter\Common\DirectXHelper.h" />
+    <ClInclude Include="UI.hpp">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\FirstPersonShooter\Content\SamplePixelShader.hlsl">

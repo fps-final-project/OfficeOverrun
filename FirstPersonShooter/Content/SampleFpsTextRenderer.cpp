@@ -43,7 +43,7 @@ SampleFpsTextRenderer::SampleFpsTextRenderer(const std::shared_ptr<DX::DeviceRes
 }
 
 // Updates the text to be displayed.
-void SampleFpsTextRenderer::UpdateText(std::string text)
+void SampleFpsTextRenderer::UpdateText(std::string text, int maxWidth, int maxHeight)
 {
 	m_text = std::wstring(text.begin(), text.end());
 
@@ -53,8 +53,8 @@ void SampleFpsTextRenderer::UpdateText(std::string text)
 			m_text.c_str(),
 			(uint32) m_text.length(),
 			m_textFormat.Get(),
-			240.0f, // Max width of the input text.
-			50.0f, // Max height of the input text.
+			maxWidth, // Max width of the input text.
+			maxHeight, // Max height of the input text.
 			&textLayout
 			)
 		);
@@ -69,9 +69,9 @@ void SampleFpsTextRenderer::UpdateText(std::string text)
 }
 
 // Renders a frame to the screen.
-void SampleFpsTextRenderer::Render(std::string text)
+void SampleFpsTextRenderer::Render(std::string text, int rightOffset, int bottomOffset, int maxWidth, int maxHeight)
 {
-	this->UpdateText(text);
+	this->UpdateText(text, maxWidth, maxHeight);
 
 	ID2D1DeviceContext* context = m_deviceResources->GetD2DDeviceContext();
 	Windows::Foundation::Size logicalSize = m_deviceResources->GetLogicalSize();
@@ -81,9 +81,9 @@ void SampleFpsTextRenderer::Render(std::string text)
 
 	// Position on the bottom right corner
 	D2D1::Matrix3x2F screenTranslation = D2D1::Matrix3x2F::Translation(
-		logicalSize.Width - m_textMetrics.layoutWidth,
-		logicalSize.Height - m_textMetrics.height
-		);
+		logicalSize.Width - rightOffset,
+		logicalSize.Height - bottomOffset
+	);
 
 	context->SetTransform(screenTranslation * m_deviceResources->GetOrientationTransform2D());
 

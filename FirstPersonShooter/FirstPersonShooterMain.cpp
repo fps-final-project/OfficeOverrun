@@ -6,6 +6,7 @@
 #include "ResourceManager.h"
 #include "ResourceHelper.hpp"
 #include "Skybox.h"
+#include "UI.hpp"
 
 using namespace FirstPersonShooter;
 using namespace Windows::Foundation;
@@ -58,6 +59,8 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	ResourceManager::Instance().loadTexture("Assets\\Other\\wall\\concrete.jpg", m_deviceResources);
 
 	ResourceManager::Instance().loadTexture("Assets\\Other\\damage\\damage.png", m_deviceResources);
+	ResourceManager::Instance().loadTexture("Assets\\empty_texture.png", m_deviceResources, "empty");
+	ResourceManager::Instance().loadTexture("Assets\\cube\\ammo.png", m_deviceResources);
 
 	ResourceManager::Instance().loadAudioFile("Assets\\Audio\\dark-horror-background-252905.wav", XAUDIO2_LOOP_INFINITE, m_deviceResources, "music");
 	ResourceManager::Instance().loadAudioFile("Assets\\Audio\\ak.wav", 0, m_deviceResources, "ak");
@@ -69,10 +72,12 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	ResourceManager::Instance().loadAudioFile("Assets\\Audio\\zombie_dying.wav", 0, m_deviceResources, "zombie_dying");
 
 
-	m_spriteRenderer = std::make_unique<SpriteRenderer>(m_deviceResources->GetD3DDeviceContext());
-	m_fpsTextRenderer = std::unique_ptr<SampleFpsTextRenderer>(new SampleFpsTextRenderer(m_deviceResources));
+	m_spriteRenderer = std::make_shared<SpriteRenderer>(
+		m_deviceResources->GetD3DDeviceContext(), 
+		ResourceManager::Instance().getTexture("empty"));
+	m_fpsTextRenderer = std::shared_ptr<SampleFpsTextRenderer>(new SampleFpsTextRenderer(m_deviceResources));
 
-	m_renderMaster = std::make_unique<RenderMaster>(m_deviceResources);
+	m_renderMaster = std::make_shared<RenderMaster>(m_deviceResources);
 
 	m_states = std::make_unique<DirectX::CommonStates>(m_deviceResources->GetD3DDevice());
 	m_gameState = std::make_unique<GameState>(keyboard, mouse, deviceResources);
@@ -154,25 +159,16 @@ bool FirstPersonShooterMain::Render()
 
 	m_gameState->m_player->Render(m_renderMaster);
 
-
 	m_spriteRenderer->BeginRendering(context, viewport);
 	Size outputSize = m_deviceResources->GetOutputSize();
-	int size = 100;
-	m_spriteRenderer->Render(ResourceManager::Instance().getTexture("crosshair"),
-		(outputSize.Width - size) / 2,
-		(outputSize.Height - size) / 2,
-		size,
-		size);
+	UI::RenderCrosshair(outputSize, m_spriteRenderer, ResourceManager::Instance().getTexture("crosshair"));
 	if (m_gameState->m_world->lastDamage < 4.f)
-		m_spriteRenderer->Render(ResourceManager::Instance().getTexture("damage"),
-			0,
-			0,
-			outputSize.Width,
-			outputSize.Height);
+		UI::RenderDamageIndicator(outputSize, m_spriteRenderer, ResourceManager::Instance().getTexture("damage"));
+	UI::RenderHealth(outputSize, m_spriteRenderer, 100, m_gameState->m_player->getHealth());
+	UI::RenderBulletCapacity(outputSize, m_spriteRenderer, m_fpsTextRenderer, ResourceManager::Instance().getTexture("ammo"), 10, 100);
 	m_spriteRenderer->EndRendering(context);
 
-	auto pos = m_gameState->m_player->getPostition();
-	m_fpsTextRenderer->Render(std::to_string(m_timer.GetFramesPerSecond()));
+	//m_fpsTextRenderer->Render(std::to_string(m_timer.GetFramesPerSecond()));
 	//m_fpsTextRenderer->Render(std::to_string(pos.x) + ", " +std::to_string(pos.y) + ", " + std::to_string(pos.z));
 
 	return true;
