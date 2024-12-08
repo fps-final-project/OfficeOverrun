@@ -16,16 +16,18 @@ RoomLayoutConfig MapGeneratorAdapter::MakeDefaultLayoutConfig()
 MapGeneratorAdapter::MapGeneratorAdapter()
 {
 	roomLayoutConfig = MakeDefaultLayoutConfig();
+	seed = time(nullptr);
 }
 
-void MapGeneratorAdapter::WithConfig(RoomLayoutConfig config)
+MapGeneratorAdapter& MapGeneratorAdapter::WithSeed(int seed)
 {
-	roomLayoutConfig = config;
+	this->seed = seed;
+	return *this;
 }
 
 std::vector<Room> MapGeneratorAdapter::GenerateRooms()
 {
-	RoomLayout layout = MapGenerator().GenerateRoomLayout(roomLayoutConfig);
+	RoomLayout layout = MapGenerator().GenerateRoomLayout(roomLayoutConfig, seed);
 	std::vector<Room> rooms = std::vector<Room>();
 
 	// Mapping function

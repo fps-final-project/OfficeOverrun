@@ -33,7 +33,8 @@ GameState::GameState(
 
 
 	// generating rooms using WorldGenerator
-	m_world->m_rooms = MapGeneratorAdapter().GenerateRooms();
+	m_world->m_rooms = MapGeneratorAdapter().WithSeed(123).GenerateRooms();
+
 
 	for (int i = 0; i < m_world->m_rooms.size() - 1; i++)
 	{
