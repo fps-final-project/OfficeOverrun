@@ -43,8 +43,8 @@ namespace FirstPersonShooter
 		// Cached pointer to device resources.
 		std::shared_ptr<DX::DeviceResources> m_deviceResources;
 
-		std::unique_ptr<SpriteRenderer> m_spriteRenderer;
-		std::unique_ptr<SampleFpsTextRenderer> m_fpsTextRenderer;
+		std::shared_ptr<SpriteRenderer> m_spriteRenderer;
+		std::shared_ptr<SampleFpsTextRenderer> m_fpsTextRenderer;
 
 		std::shared_ptr<RenderMaster> m_renderMaster;
 
