@@ -2,13 +2,11 @@
 #include <iostream>
 #include "MapGenerator.h"
 
-#define SEED 432423
-
 using namespace WorldGenerator;
 
-RoomLayout MapGenerator::GenerateRoomLayout(RoomLayoutConfig config)
+RoomLayout MapGenerator::GenerateRoomLayout(RoomLayoutConfig config, int seed)
 {
-	RNGEngine::GetInstance()->SetSeed(SEED);
+	RNGEngine::GetInstance()->SetSeed(seed);
 	RoomLayoutGenerator generator(config);
 
 	// Step 1

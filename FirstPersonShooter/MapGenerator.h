@@ -7,6 +7,6 @@ namespace WorldGenerator
 	class __declspec(dllexport) MapGenerator
 	{
 	public:
-		RoomLayout GenerateRoomLayout(RoomLayoutConfig config);
+		RoomLayout GenerateRoomLayout(RoomLayoutConfig config, int seed);
 	};
 }

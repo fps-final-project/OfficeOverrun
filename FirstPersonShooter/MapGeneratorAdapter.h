@@ -9,9 +9,10 @@ class  __declspec(dllexport) MapGeneratorAdapter
 {
 private:
 	RoomLayoutConfig roomLayoutConfig;
+	int seed;
 	static RoomLayoutConfig MakeDefaultLayoutConfig();
 public:
 	MapGeneratorAdapter();
-	void WithConfig(RoomLayoutConfig config);
+	MapGeneratorAdapter& WithSeed(int seed);
 	std::vector<Room> GenerateRooms();
 };
