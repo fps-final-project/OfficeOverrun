@@ -31,7 +31,7 @@ void UI::RenderHealth(Windows::Foundation::Size screenSize, std::shared_ptr<Spri
 	const int rightOffset = 20;
 
 	spriteRenderer->Render({1.f, 0.f, 0.f, 1.f},
-		screenSize.Width - barWidth - rightOffset,
+		screenSize.Width - barWidth * healthPrecentage - rightOffset,
 		screenSize.Height - barHeight - bottomOffset,
 		barWidth * healthPrecentage,
 		barHeight);
@@ -44,7 +44,7 @@ void UI::RenderBulletCapacity(Windows::Foundation::Size screenSize, std::shared_
 	const int bottomOffset = 70;
 	const int rightOffset = 20;
 
-	const int textMaxHeight = 50;
+	const int textMaxHeight = 30;
 	const int textMaxWidth = 200;
 
 	const int iconSize = 50;
@@ -55,9 +55,9 @@ void UI::RenderBulletCapacity(Windows::Foundation::Size screenSize, std::shared_
 		iconSize,
 		iconSize);
 
-	fpsTextRenderer->Render(std::to_string(numBullets) + "|" + std::to_string(maxBullets),
-		screenSize.Width - rightOffset - iconSize * 2 - textMaxWidth,
-		screenSize.Height - bottomOffset - textMaxHeight,
+	fpsTextRenderer->Render(std::to_string(numBullets) + "/" + std::to_string(maxBullets),
+		rightOffset + iconSize + textMaxWidth,
+		bottomOffset + textMaxHeight,
 		textMaxWidth,
 		textMaxHeight);
 

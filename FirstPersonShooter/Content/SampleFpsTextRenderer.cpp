@@ -69,7 +69,7 @@ void SampleFpsTextRenderer::UpdateText(std::string text, int maxWidth, int maxHe
 }
 
 // Renders a frame to the screen.
-void SampleFpsTextRenderer::Render(std::string text, int x, int y, int maxWidth, int maxHeight)
+void SampleFpsTextRenderer::Render(std::string text, int rightOffset, int bottomOffset, int maxWidth, int maxHeight)
 {
 	this->UpdateText(text, maxWidth, maxHeight);
 
@@ -81,7 +81,8 @@ void SampleFpsTextRenderer::Render(std::string text, int x, int y, int maxWidth,
 
 	// Position on the bottom right corner
 	D2D1::Matrix3x2F screenTranslation = D2D1::Matrix3x2F::Translation(
-		x, y
+		logicalSize.Width - rightOffset,
+		logicalSize.Height - bottomOffset
 	);
 
 	context->SetTransform(screenTranslation * m_deviceResources->GetOrientationTransform2D());

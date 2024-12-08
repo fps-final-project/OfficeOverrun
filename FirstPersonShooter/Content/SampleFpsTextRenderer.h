@@ -13,7 +13,7 @@ namespace FirstPersonShooter
 		SampleFpsTextRenderer(const std::shared_ptr<DX::DeviceResources>& deviceResources);
 		void CreateDeviceDependentResources();
 		void ReleaseDeviceDependentResources();
-		void Render(std::string text, int x, int y, int maxWidth, int maxHeight);
+		void Render(std::string text, int rightOffset, int bottomOffset, int maxWidth, int maxHeight);
 
 	private:
 		// Cached pointer to device resources.
