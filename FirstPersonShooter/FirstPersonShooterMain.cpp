@@ -77,7 +77,7 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	m_states = std::make_unique<DirectX::CommonStates>(m_deviceResources->GetD3DDevice());
 	m_gameState = std::make_unique<GameState>(keyboard, mouse, deviceResources);
 
-	m_mouse->SetMode(DirectX::Mouse::MODE_RELATIVE);
+	//m_mouse->SetMode(DirectX::Mouse::MODE_RELATIVE);
 }
 
 FirstPersonShooterMain::~FirstPersonShooterMain()

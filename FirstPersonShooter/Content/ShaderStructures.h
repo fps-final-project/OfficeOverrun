@@ -49,7 +49,9 @@ struct LightingConstantBuffer
 	int pad2;
 	DirectX::XMFLOAT3 camera_pos;    // 12 bytes
 	int pad3;
-	DirectX::XMFLOAT3 light_pos[MAX_LIGHTS]; 
+
+	// misalinged
+	__declspec(align(16)) DirectX::XMFLOAT3 light_pos[MAX_LIGHTS];
 };
 
 #pragma endregion

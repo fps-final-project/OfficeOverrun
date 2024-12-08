@@ -101,3 +101,9 @@ void RenderMaster::ClearStencilBuffer()
 	if (m_currentRenderer == RendererType::ANIMATED)
 		m_animatedRenderer->ClearStencilBuffer();
 }
+
+void RenderMaster::CreateDeviceDependentResources()
+{
+	m_animatedRenderer->CreateDeviceDependentResources();
+	m_modelRenderer->CreateDeviceDependentResources();
+}

@@ -24,6 +24,7 @@ public:
 	void SetRenderer(RendererType type);
 	UINT8 GetCurrentStencilValue();
 	void ClearStencilBuffer();
+	void CreateDeviceDependentResources();
 	void SetStencilBufferReferenceValue(UINT8 value);
 	inline RendererType GetCurrentRenderType() { return m_currentRenderer; }
 

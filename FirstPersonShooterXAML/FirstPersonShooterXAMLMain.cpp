@@ -20,7 +20,7 @@ FirstPersonShooterXAMLMain::FirstPersonShooterXAMLMain(
 	// Register to be notified if the Device is lost or recreated
 	m_deviceResources->RegisterDeviceNotify(this);
 
-	bool load_only_ak = false;
+	bool load_only_ak = true;
 
 	ResourceManager::Instance().loadAnimatedModel("Assets\\Enemy\\Zombie\\zombie_war.gltf", m_deviceResources);
 	ResourceManager::Instance().loadAnimatedModel("Assets\\Other\\heli\\heli.gltf", m_deviceResources);
@@ -89,6 +89,7 @@ void FirstPersonShooterXAMLMain::CreateWindowSizeDependentResources()
 {
 	// TODO: Replace this with the size-dependent initialization of your app's content.
 	m_gameState->CreateWindowSizeDependentResources();
+	m_renderMaster->CreateDeviceDependentResources();
 }
 
 void FirstPersonShooterXAMLMain::StartRenderLoop()
@@ -193,21 +194,21 @@ bool FirstPersonShooterXAMLMain::Render()
 	m_gameState->m_player->Render(m_renderMaster);
 
 
-	m_spriteRenderer->BeginRendering(context, viewport);
-	Size outputSize = m_deviceResources->GetOutputSize();
-	int size = 100;
-	m_spriteRenderer->Render(ResourceManager::Instance().getTexture("crosshair"),
-		(outputSize.Width - size) / 2,
-		(outputSize.Height - size) / 2,
-		size,
-		size);
-	if (m_gameState->m_world->lastDamage < 4.f)
-		m_spriteRenderer->Render(ResourceManager::Instance().getTexture("damage"),
-			0,
-			0,
-			outputSize.Width,
-			outputSize.Height);
-	m_spriteRenderer->EndRendering(context);
+	//m_spriteRenderer->BeginRendering(context, viewport);
+	//Size outputSize = m_deviceResources->GetOutputSize();
+	//int size = 100;
+	//m_spriteRenderer->Render(ResourceManager::Instance().getTexture("crosshair"),
+	//	(outputSize.Width - size) / 2,
+	//	(outputSize.Height - size) / 2,
+	//	size,
+	//	size);
+	//if (m_gameState->m_world->lastDamage < 4.f)
+	//	m_spriteRenderer->Render(ResourceManager::Instance().getTexture("damage"),
+	//		0,
+	//		0,
+	//		outputSize.Width,
+	//		outputSize.Height);
+	//m_spriteRenderer->EndRendering(context);
 
 	auto pos = m_gameState->m_player->getPostition();
 	m_fpsTextRenderer->Render(std::to_string(m_timer.GetFramesPerSecond()));
@@ -231,6 +232,7 @@ void FirstPersonShooterXAMLMain::OnDeviceLost()
 void FirstPersonShooterXAMLMain::OnDeviceRestored()
 {
 	m_fpsTextRenderer->CreateDeviceDependentResources();
+	m_renderMaster->CreateDeviceDependentResources();
 	m_gameState->CreateWindowSizeDependentResources();
 	CreateWindowSizeDependentResources();
 }
