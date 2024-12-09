@@ -207,6 +207,7 @@
     <ClCompile Include="BinaryRoomTest.cpp" />
     <ClCompile Include="RoomLayoutGeneratorTest.cpp" />
     <ClCompile Include="RoomLinkTest.cpp" />
+    <ClCompile Include="SubgraphMatcherTest.cpp" />
     <ClCompile Include="TestUtils.cpp" />
     <ClCompile Include="UnitTestApp.xaml.cpp">
       <DependentUpon>UnitTestApp.xaml</DependentUpon>

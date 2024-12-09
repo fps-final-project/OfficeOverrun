@@ -257,12 +257,14 @@
     <ClInclude Include="..\FirstPersonShooter\PathFinding.h" />
     <ClInclude Include="..\FirstPersonShooter\RNG.h" />
     <ClInclude Include="..\FirstPersonShooter\RNGEngine.h" />
+    <ClInclude Include="..\FirstPersonShooter\RoomLabel.h" />
     <ClInclude Include="..\FirstPersonShooter\RoomLayout.h" />
     <ClInclude Include="..\FirstPersonShooter\RoomLayoutConfig.h" />
     <ClInclude Include="..\FirstPersonShooter\RoomLayoutGenerator.h" />
     <ClInclude Include="..\FirstPersonShooter\RoomLink.h" />
     <ClInclude Include="..\FirstPersonShooter\RoomSelector.h" />
     <ClInclude Include="..\FirstPersonShooter\RoomSelectorArgs.h" />
+    <ClInclude Include="..\FirstPersonShooter\SubgraphMatcher.h" />
     <ClInclude Include="..\FirstPersonShooter\UniformRNG.h" />
     <ClInclude Include="..\FirstPersonShooter\Utils.h" />
     <ClInclude Include="..\FirstPersonShooter\Vector3.h" />
@@ -282,6 +284,7 @@
     <ClCompile Include="..\FirstPersonShooter\RoomLayoutGenerator.cpp" />
     <ClCompile Include="..\FirstPersonShooter\RoomLink.cpp" />
     <ClCompile Include="..\FirstPersonShooter\RoomSelector.cpp" />
+    <ClCompile Include="..\FirstPersonShooter\SubgraphMatcher.cpp" />
     <ClCompile Include="..\FirstPersonShooter\UniformRNG.cpp" />
     <ClCompile Include="..\FirstPersonShooter\Utils.cpp" />
     <ClCompile Include="dllmain.cpp" />

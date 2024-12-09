@@ -17,12 +17,17 @@
     <Filter Include="RoomLayout\RoomSelector">
       <UniqueIdentifier>{16d467c5-fad0-4674-8e25-107ff7c92003}</UniqueIdentifier>
     </Filter>
+    <Filter Include="RoomTypes">
+      <UniqueIdentifier>{fc7383f4-f310-49d3-8f78-0ba403e4b073}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RoomLayout\RoomLink">
+      <UniqueIdentifier>{840c2e3c-95c1-4d9c-9356-03be45e8894d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="UnitTestApp.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="UnitTest.cpp" />
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="RoomLayoutGeneratorTest.cpp">
       <Filter>RoomLayout</Filter>
@@ -30,12 +35,21 @@
     <ClCompile Include="BinaryRoomTest.cpp">
       <Filter>RoomLayout\BSP</Filter>
     </ClCompile>
-    <ClCompile Include="RoomSelectorTest.cpp">
+    <ClCompile Include="TestUtils.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomLinkTest.cpp">
+      <Filter>RoomLayout\RoomLink</Filter>
+    </ClCompile>
+    <ClCompile Include="SubgraphMatcherTest.cpp">
       <Filter>RoomLayout\RoomSelector</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="TestUtils.h">
+      <Filter>Common</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="UnitTestApp.rd.xml" />
