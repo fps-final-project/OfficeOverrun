@@ -173,7 +173,7 @@ bool FirstPersonShooterMain::Render()
 	m_spriteRenderer->EndRendering(context);
 
 	if(m_gameState->IsPaused())
-		m_menu->Render();
+		m_menu->Render(outputSize);
 
 	//m_fpsTextRenderer->Render(std::to_string(m_timer.GetFramesPerSecond()));
 	//m_fpsTextRenderer->Render(std::to_string(pos.x) + ", " +std::to_string(pos.y) + ", " + std::to_string(pos.z));

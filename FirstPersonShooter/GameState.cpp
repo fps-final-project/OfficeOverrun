@@ -204,6 +204,7 @@ void GameState::TogglePaused()
 
 	}
 
+	m_music.TogglePlay();
 	m_actionHandler->ClearActions();
 	m_isPaused = !m_isPaused;
 }

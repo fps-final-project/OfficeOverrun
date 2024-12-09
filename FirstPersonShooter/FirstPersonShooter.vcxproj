@@ -438,6 +438,9 @@
   <ItemGroup>
     <Media Include="Assets\Audio\zombie_dying.wav" />
   </ItemGroup>
+  <ItemGroup>
+    <Font Include="Assets\fonts\arial.ttf" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="$(VSINSTALLDIR)\Common7\IDE\Extensions\Microsoft\VsGraphics\ImageContentTask.targets" />

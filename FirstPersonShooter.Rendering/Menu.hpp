@@ -9,5 +9,5 @@ class __declspec(dllexport) Menu
 public:
 	Menu(std::shared_ptr<DX::DeviceResources> deviceResources);
 	~Menu();
-	void Render();
+	void Render(Windows::Foundation::Size screenSize);
 };
