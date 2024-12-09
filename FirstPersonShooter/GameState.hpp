@@ -34,6 +34,8 @@ public:
 	void Update(float dt);
 	void CreateWindowSizeDependentResources();
 
+	bool IsPaused() { return m_isPaused; }
+
 	bool GameFinished();
 private:
 	std::shared_ptr<DirectX::Keyboard> m_keyboard;
@@ -43,8 +45,10 @@ private:
 	SourceVoice m_music;
 
 	void setupActionHandlers();
+	void TogglePaused();
 
 	const float FOV = 95.0f;
 
+	bool m_isPaused;
 };
 

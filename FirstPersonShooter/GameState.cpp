@@ -12,7 +12,7 @@ GameState::GameState(
 	std::shared_ptr<DirectX::Keyboard> keyboard,
 	std::shared_ptr<DirectX::Mouse> mouse,
 	std::shared_ptr<DX::DeviceResources> deviceResources
-) : m_music(ResourceManager::Instance().getAudioFile("music"), deviceResources->GetXAudio())
+) : m_music(ResourceManager::Instance().getAudioFile("music"), deviceResources->GetXAudio()), m_isPaused(false)
 {
 	m_keyboard = keyboard;
 	m_mouse = mouse;
@@ -83,16 +83,27 @@ GameState::GameState(
 
 void GameState::HandleInput()
 {
+	
 	auto mouseState = m_mouse->GetState();
 	auto keyboardState = m_keyboard->GetState();
-
+	
+	if (m_inputHandler->GetEscPressed({ mouseState, keyboardState }))
+		TogglePaused();
+	
 	m_camera->alignWithMouse(mouseState);
-
 	m_inputHandler->HandleInputState({ mouseState, keyboardState });
+
+	if (m_isPaused)
+		return;
+
+	m_actionHandler->HandleActions(m_player.get(), m_world.get(), m_camera.get(), m_deviceResources.get());
 }
 
 void GameState::Update(float dt)
 {
+	if (m_isPaused)
+		return;
+
 	m_player->Update(dt);
 	m_world->UpdateCurrentRoom(m_player->getPostition());
 
@@ -106,7 +117,6 @@ void GameState::Update(float dt)
 	m_player->getGunRig()->RotateAndOffset(m_camera->getYawPitchRoll(), m_player->getPostition(), dt);
 	m_world->PlayEnemySounds(m_deviceResources, m_player.get());
 
-	m_actionHandler->HandleActions(m_player.get(), m_world.get(), m_camera.get(), m_deviceResources.get());
 
 	//TODO: Collision handling
 
@@ -118,7 +128,6 @@ void GameState::CreateWindowSizeDependentResources()
 {
 	m_camera->CreateWindowSizeDependentResources(FOV);
 }
-
 
 bool GameState::GameFinished()
 {
@@ -181,4 +190,20 @@ void GameState::setupActionHandlers()
 		[](InputState newState, InputState oldState) {	return newState.second.D4 && oldState.second.D4; },
 		Action(ActionType::WEAPON4)
 	);
+}
+
+void GameState::TogglePaused()
+{
+	if (m_isPaused)
+	{
+		m_mouse->SetMode(DirectX::Mouse::MODE_RELATIVE);
+	}
+	else
+	{
+		m_mouse->SetMode(DirectX::Mouse::MODE_ABSOLUTE);
+
+	}
+
+	m_actionHandler->ClearActions();
+	m_isPaused = !m_isPaused;
 }

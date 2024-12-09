@@ -127,6 +127,7 @@ void ActionHandler::HandleActions(Player* player, World* world, Camera* camera, 
 				player->getGunRig()->ChangeGun("sniper", deviceResources->GetXAudio());
 				break;
 			}
+			
 		}
 	}
 
@@ -134,4 +135,10 @@ void ActionHandler::HandleActions(Player* player, World* world, Camera* camera, 
 	DirectX::XMFLOAT3 acc;
 	DirectX::XMStoreFloat3(&acc, normalized_acceleration);
 	player->setAcceleration({acc.x, -defaultGravity, acc.z});
+}
+
+void ActionHandler::ClearActions()
+{
+	while (!m_actionQueue->empty())
+		m_actionQueue->pop();
 }

@@ -16,6 +16,7 @@ public:
 	void HandleInputState(InputState newState);
 	void AddActionHandler(std::function<bool(InputState newState, InputState oldState)> condition, Action action);
 	void RemoveActionHandler(Action action);
+	bool GetEscPressed(InputState newState);
 private:
 	std::shared_ptr<std::queue<Action>> m_actionQueue;
 	std::vector<std::pair<std::function<bool(InputState newState, InputState oldState)>, Action>> m_actions;

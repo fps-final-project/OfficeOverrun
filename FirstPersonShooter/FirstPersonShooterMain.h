@@ -17,6 +17,7 @@
 #include "Camera.hpp"
 #include "World.h"
 #include "GunRig.h"
+#include "Menu.hpp"
 
 // Renders Direct2D and 3D content on the screen.
 namespace FirstPersonShooter
@@ -47,6 +48,7 @@ namespace FirstPersonShooter
 		std::shared_ptr<SampleFpsTextRenderer> m_fpsTextRenderer;
 
 		std::shared_ptr<RenderMaster> m_renderMaster;
+		std::shared_ptr<Menu> m_menu;
 
 		std::unique_ptr<DirectX::CommonStates> m_states;
 		std::unique_ptr<GameState> m_gameState;
@@ -56,6 +58,5 @@ namespace FirstPersonShooter
 
 		std::shared_ptr<DirectX::Keyboard> m_keyboard;
 		std::shared_ptr<DirectX::Mouse> m_mouse;
-
 	};
 }

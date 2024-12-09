@@ -75,12 +75,15 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	m_spriteRenderer = std::make_shared<SpriteRenderer>(
 		m_deviceResources->GetD3DDeviceContext(), 
 		ResourceManager::Instance().getTexture("empty"));
+
 	m_fpsTextRenderer = std::shared_ptr<SampleFpsTextRenderer>(new SampleFpsTextRenderer(m_deviceResources));
 
 	m_renderMaster = std::make_shared<RenderMaster>(m_deviceResources);
 
 	m_states = std::make_unique<DirectX::CommonStates>(m_deviceResources->GetD3DDevice());
 	m_gameState = std::make_unique<GameState>(keyboard, mouse, deviceResources);
+
+	m_menu = std::make_shared<Menu>(deviceResources);
 
 	m_mouse->SetMode(DirectX::Mouse::MODE_RELATIVE);
 }
@@ -103,6 +106,7 @@ void FirstPersonShooterMain::Update()
 	// Update scene objects.
 	m_timer.Tick([&]()
 		{
+
 			float dt = m_timer.GetElapsedSeconds();
 
 			// do not change this order
@@ -167,6 +171,9 @@ bool FirstPersonShooterMain::Render()
 	UI::RenderHealth(outputSize, m_spriteRenderer, 100, m_gameState->m_player->getHealth());
 	UI::RenderBulletCapacity(outputSize, m_spriteRenderer, m_fpsTextRenderer, ResourceManager::Instance().getTexture("ammo"), 10, 100);
 	m_spriteRenderer->EndRendering(context);
+
+	if(m_gameState->IsPaused())
+		m_menu->Render();
 
 	//m_fpsTextRenderer->Render(std::to_string(m_timer.GetFramesPerSecond()));
 	//m_fpsTextRenderer->Render(std::to_string(pos.x) + ", " +std::to_string(pos.y) + ", " + std::to_string(pos.z));

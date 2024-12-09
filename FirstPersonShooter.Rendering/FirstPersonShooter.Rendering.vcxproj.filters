@@ -52,6 +52,12 @@
     <Filter Include="UI">
       <UniqueIdentifier>{15d51385-5fd8-4d50-98c6-8ea9a3d578ea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ImGui">
+      <UniqueIdentifier>{4f37d29a-d3d6-4771-8829-b473db581a4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ImGui\Implementation">
+      <UniqueIdentifier>{ef280586-1d7a-446c-b7fe-961f6f70d32c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -92,6 +98,30 @@
     <ClCompile Include="..\FirstPersonShooter\Common\DeviceResources.cpp" />
     <ClCompile Include="UI.cpp">
       <Filter>UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Vendor\imgui\imgui_demo.cpp">
+      <Filter>ImGui\Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Vendor\imgui\imgui_impl_dx11.cpp">
+      <Filter>ImGui\Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Vendor\imgui\imgui_draw.cpp">
+      <Filter>ImGui\Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Vendor\imgui\imgui_impl_uwp.cpp">
+      <Filter>ImGui\Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Vendor\imgui\imgui_widgets.cpp">
+      <Filter>ImGui\Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Vendor\imgui\imgui_tables.cpp">
+      <Filter>ImGui\Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Vendor\imgui\imgui.cpp">
+      <Filter>ImGui\Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
+      <Filter>ImGui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -166,6 +196,33 @@
     <ClInclude Include="..\FirstPersonShooter\Common\DirectXHelper.h" />
     <ClInclude Include="UI.hpp">
       <Filter>UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\imgui\imgui_impl_dx11.h">
+      <Filter>ImGui\Implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\imgui\imgui_impl_uwp.h">
+      <Filter>ImGui\Implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\imgui\imgui_internal.h">
+      <Filter>ImGui\Implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\imgui\imstb_rectpack.h">
+      <Filter>ImGui\Implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\imgui\imstb_textedit.h">
+      <Filter>ImGui\Implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\imgui\imstb_truetype.h">
+      <Filter>ImGui\Implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\imgui\imgui.h">
+      <Filter>ImGui\Implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Vendor\imgui\imconfig.h">
+      <Filter>ImGui\Implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.hpp">
+      <Filter>ImGui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
