@@ -70,6 +70,7 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	ResourceManager::Instance().loadAudioFile("Assets\\Audio\\reload.wav", 0, m_deviceResources, "reload");
 	ResourceManager::Instance().loadAudioFile("Assets\\Audio\\zombie.wav", 0, m_deviceResources, "zombie");
 	ResourceManager::Instance().loadAudioFile("Assets\\Audio\\zombie_dying.wav", 0, m_deviceResources, "zombie_dying");
+	ResourceManager::Instance().loadAudioFile("Assets\\Audio\\empty-clip.wav", 0, m_deviceResources, "empty-clip");
 
 
 	m_spriteRenderer = std::make_shared<SpriteRenderer>(

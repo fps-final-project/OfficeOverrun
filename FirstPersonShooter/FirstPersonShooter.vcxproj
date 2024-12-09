@@ -436,6 +436,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Audio\empty-clip.wav">
+      <FileType>Document</FileType>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+    </None>
     <Media Include="Assets\Audio\zombie_dying.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

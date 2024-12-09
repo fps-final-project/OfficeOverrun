@@ -14,21 +14,26 @@ public:
 	
 	void Update(float dt);
 	void Reload();
-	void Shoot();
 	void ChangeGun(const std::string& name, IXAudio2* xaudio);
 	void RotateAndOffset(DirectX::XMFLOAT3 yawPitchRoll, DirectX::XMFLOAT3 playerPos, float dt);
-	bool IsIdle() { return m_hands->isIdle(); }
+	bool Shoot();
 	DirectX::XMFLOAT3 GetBarrelOffset();
 	DirectX::XMVECTOR CalculateBulletDirection(DirectX::XMVECTOR cameraAt);
 
 	inline int GetDamage() { return m_damage; }
+	inline bool IsIdle() { return m_hands->isIdle(); }
+	inline int GetClipAmmo() { return m_ammo[m_name].first; }
+	inline int GetTotalAmmo() { return m_ammo[m_name].second; }
+
 	
 	static DirectX::XMFLOAT3 CalculateBulletOrientation(DirectX::XMFLOAT3 yawPitchRoll);
 private:
 	DirectX::XMFLOAT3 m_rigOffset, m_gunOffset, m_initialBarrelOffset, m_barrelOffset;
 	std::shared_ptr<AnimatedEntity> m_hands, m_gun;
-	std::unique_ptr<SourceVoice> m_gunSound, m_reloadSound;
+	std::unique_ptr<SourceVoice> m_gunSound, m_reloadSound, m_emptyClip;
 	std::string m_name;
 	float m_shootingAnimationSpeedup;
 	int m_damage;
+	int m_clipSize;
+	std::map<std::string, std::pair<int, int>> m_ammo;
 };

@@ -29,9 +29,8 @@ void ActionHandler::HandleActions(Player* player, World* world, Camera* camera, 
 			}
 			case ActionType::SHOOT:
 			{
-				if (gunRig->IsIdle())
+				if (gunRig->IsIdle() && gunRig->Shoot())
 				{
-					gunRig->Shoot();
 					auto entity = world->m_enemies.find(m_lastHitEntity);
 					if (entity != world->m_enemies.end())
 					{
