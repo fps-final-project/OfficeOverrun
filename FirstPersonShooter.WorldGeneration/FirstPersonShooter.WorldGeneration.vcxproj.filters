@@ -75,9 +75,7 @@
     <ClCompile Include="..\FirstPersonShooter\UniformRNG.cpp">
       <Filter>WorldGenerator\Common\RNG\Distributions</Filter>
     </ClCompile>
-    <ClCompile Include="..\FirstPersonShooter\SubgraphMatcher.cpp">
-      <Filter>WorldGenerator\RoomTypes</Filter>
-    </ClCompile>
+    <ClCompile Include="SubgraphMatcher.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FirstPersonShooter.WorldGeneration.h" />
@@ -149,10 +147,10 @@
     <ClInclude Include="..\FirstPersonShooter\UniformRNG.h">
       <Filter>WorldGenerator\Common\RNG\Distributions</Filter>
     </ClInclude>
-    <ClInclude Include="..\FirstPersonShooter\SubgraphMatcher.h">
+    <ClInclude Include="RoomLabel.h">
       <Filter>WorldGenerator\RoomTypes</Filter>
     </ClInclude>
-    <ClInclude Include="..\FirstPersonShooter\RoomLabel.h">
+    <ClInclude Include="SubgraphMatcher.h">
       <Filter>WorldGenerator\RoomTypes</Filter>
     </ClInclude>
   </ItemGroup>

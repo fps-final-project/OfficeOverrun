@@ -8,6 +8,7 @@ namespace WorldGenerator
 	{
 	public:
 		T* value;
+		int label;
 		Node(T* value);
 	};
 

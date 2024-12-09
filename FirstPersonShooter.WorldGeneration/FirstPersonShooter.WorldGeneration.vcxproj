@@ -257,20 +257,20 @@
     <ClInclude Include="..\FirstPersonShooter\PathFinding.h" />
     <ClInclude Include="..\FirstPersonShooter\RNG.h" />
     <ClInclude Include="..\FirstPersonShooter\RNGEngine.h" />
-    <ClInclude Include="..\FirstPersonShooter\RoomLabel.h" />
     <ClInclude Include="..\FirstPersonShooter\RoomLayout.h" />
     <ClInclude Include="..\FirstPersonShooter\RoomLayoutConfig.h" />
     <ClInclude Include="..\FirstPersonShooter\RoomLayoutGenerator.h" />
     <ClInclude Include="..\FirstPersonShooter\RoomLink.h" />
     <ClInclude Include="..\FirstPersonShooter\RoomSelector.h" />
     <ClInclude Include="..\FirstPersonShooter\RoomSelectorArgs.h" />
-    <ClInclude Include="..\FirstPersonShooter\SubgraphMatcher.h" />
     <ClInclude Include="..\FirstPersonShooter\UniformRNG.h" />
     <ClInclude Include="..\FirstPersonShooter\Utils.h" />
     <ClInclude Include="..\FirstPersonShooter\Vector3.h" />
     <ClInclude Include="..\FirstPersonShooter\WeightedGraph.h" />
     <ClInclude Include="FirstPersonShooter.WorldGeneration.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="RoomLabel.h" />
+    <ClInclude Include="SubgraphMatcher.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
@@ -284,7 +284,6 @@
     <ClCompile Include="..\FirstPersonShooter\RoomLayoutGenerator.cpp" />
     <ClCompile Include="..\FirstPersonShooter\RoomLink.cpp" />
     <ClCompile Include="..\FirstPersonShooter\RoomSelector.cpp" />
-    <ClCompile Include="..\FirstPersonShooter\SubgraphMatcher.cpp" />
     <ClCompile Include="..\FirstPersonShooter\UniformRNG.cpp" />
     <ClCompile Include="..\FirstPersonShooter\Utils.cpp" />
     <ClCompile Include="dllmain.cpp" />
@@ -298,6 +297,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="SubgraphMatcher.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
