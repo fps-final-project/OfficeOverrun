@@ -23,7 +23,8 @@ GunRigMetadata GunRigMetadata::loadFromFile(const std::string& path)
     file >> metadata.rigOffset.y;
     file >> metadata.rigOffset.z;
 
-	file >> metadata.damage;
+    file >> metadata.damage;
+    file >> metadata.clipSize;
 
     file.close();
     return metadata;

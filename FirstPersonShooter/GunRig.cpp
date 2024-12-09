@@ -5,7 +5,8 @@
 
 GunRig::GunRig(std::string gunName, IXAudio2* xaudio) : 
 	m_gunSound(std::make_unique<SourceVoice>(ResourceManager::Instance().getAudioFile(gunName), xaudio)), 
-	m_reloadSound(std::make_unique<SourceVoice>(ResourceManager::Instance().getAudioFile("reload"), xaudio))
+	m_reloadSound(std::make_unique<SourceVoice>(ResourceManager::Instance().getAudioFile("reload"), xaudio)),
+	m_emptyClip(std::make_unique<SourceVoice>(ResourceManager::Instance().getAudioFile("empty-clip"), xaudio))
 
 {
 	m_hands = std::make_shared<AnimatedEntity>(ResourceManager::Instance().getAnimatedModel(gunName));
@@ -36,16 +37,41 @@ void GunRig::Update(float dt)
 
 void GunRig::Reload()
 {
+	if (m_ammo[m_name].second - m_ammo[m_name].first == 0)
+	{
+		return;
+	}
 	this->m_hands->setAnimation("reload1");
 	this->m_gun->setAnimation("reload1");
-	m_reloadSound->PlaySound(true);
+	m_reloadSound->PlaySound(false);
+	int ammoInClip = m_ammo[m_name].first;
+	int ammoInTotal = m_ammo[m_name].second;
+	int ammoToReload = m_clipSize - ammoInClip;
+	if (ammoInTotal >= ammoToReload)
+	{
+		m_ammo[m_name].first = m_clipSize;
+		m_ammo[m_name].second -= ammoToReload;
+	}
+	else
+	{
+		m_ammo[m_name].first += ammoInTotal;
+		m_ammo[m_name].second = 0;
+	}
 }
 
-void GunRig::Shoot()
+bool GunRig::Shoot()
 {
+	if (m_ammo[m_name].first <= 0)
+	{
+		m_emptyClip->PlaySound(false);
+		return false;
+	}
+	m_ammo[m_name].first--;
+	m_ammo[m_name].second--;
 	this->m_hands->setAnimation("shoot", m_shootingAnimationSpeedup, false);
 	this->m_gun->setAnimation("shoot", m_shootingAnimationSpeedup, false);
 	m_gunSound->PlaySound(true);
+	return true;
 }
 
 void GunRig::ChangeGun(const std::string& name, IXAudio2* xaudio)
@@ -54,6 +80,11 @@ void GunRig::ChangeGun(const std::string& name, IXAudio2* xaudio)
 
 	if (data != nullptr && name != m_name)
 	{
+		if (m_ammo.find(name) == m_ammo.end())
+		{
+			m_ammo[name] = { data->clipSize, data->clipSize };
+		}
+		m_clipSize = data->clipSize;
 		m_gunOffset = data->gunOffset;
 		m_barrelOffset = data->barrelOffset;
 		m_rigOffset = data->rigOffset;

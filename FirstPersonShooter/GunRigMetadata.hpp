@@ -10,5 +10,6 @@ struct GunRigMetadata
 	DirectX::XMFLOAT3 barrelOffset;
 	DirectX::XMFLOAT3 rigOffset;
 	int damage;
+	int clipSize;
 	static GunRigMetadata loadFromFile(const std::string& path);
 };
