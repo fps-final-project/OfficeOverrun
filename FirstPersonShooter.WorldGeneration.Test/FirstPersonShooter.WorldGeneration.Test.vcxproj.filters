@@ -29,6 +29,9 @@
     <Filter Include="Common\Graphs\SubgraphMatcher">
       <UniqueIdentifier>{ff5a34d9-9a96-4866-9414-a2176d45c131}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Common\Graphs\GraphGrammar">
+      <UniqueIdentifier>{78058c32-4c69-4198-a158-063d2d7c5759}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="UnitTestApp.xaml" />
@@ -50,10 +53,19 @@
     <ClCompile Include="TestUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="GraphProductionTest.cpp">
+      <Filter>Common\Graphs\GraphGrammar</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphTestUtils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="TestUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphTestUtils.h">
       <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>

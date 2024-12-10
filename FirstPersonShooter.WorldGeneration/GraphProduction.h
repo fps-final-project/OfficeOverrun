@@ -15,6 +15,11 @@ namespace WorldGenerator
 		std::vector<std::vector<int>> Match(const Graph<T> &G);
 
 		void Apply(Graph<T>& G, std::vector<int> match);
+
+		GraphProduction(const Graph<T>& l_graph, const Graph<T>& r_graph)
+			: l_graph(l_graph), r_graph(r_graph)
+		{
+		}
 	};
 
 	template<typename T>
