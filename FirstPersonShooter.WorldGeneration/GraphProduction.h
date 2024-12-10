@@ -30,6 +30,9 @@ namespace WorldGenerator
 	template<typename T>
 	inline void GraphProduction<T>::Apply(Graph<T>& G, std::vector<int> match)
 	{
+		if (l_graph.Size() != r_graph.Size())
+			throw std::exception("Error: Production containg vertex addition/deletion not implemented");
+
 		// Relabel vertices
 		for (int i = 0; i < match.size(); i++)
 			G[match[i]].label = r_graph[i].label;
