@@ -14,7 +14,7 @@ namespace WorldGenerator
 		// Returns where the production can be applied
 		std::vector<std::vector<int>> Match(const Graph<T> &G);
 
-		void Apply(Graph<T>& G, std::vector<int> match);
+		void Apply(Graph<T>& G, const std::vector<int> &match);
 
 		GraphProduction(const Graph<T>& l_graph, const Graph<T>& r_graph)
 			: l_graph(l_graph), r_graph(r_graph)
@@ -27,8 +27,9 @@ namespace WorldGenerator
 	{
 		return SubgraphMatcher::MatchSubgraph(l_graph, G);
 	}
+
 	template<typename T>
-	inline void GraphProduction<T>::Apply(Graph<T>& G, std::vector<int> match)
+	inline void GraphProduction<T>::Apply(Graph<T>& G,const std::vector<int> &match)
 	{
 		if (l_graph.Size() != r_graph.Size())
 			throw std::exception("Error: Production containg vertex addition/deletion not implemented");
