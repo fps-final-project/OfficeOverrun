@@ -47,9 +47,10 @@ bool WorldGenerator::SubgraphMatcher::Refine(std::vector<unsigned long>& M, cons
 				{
 					for (int x : ad_list[i])
 					{
-						if (M[x] & B[j] == 0)
+						int test = M[x] & B[j];
+						if ((M[x] & B[j]) == 0)
 						{
-							BIT_CLEAR(M[i], j);
+							M[i] = BIT_CLEAR(M[i], j);
 							elim++;
 						}
 					}

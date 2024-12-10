@@ -4,7 +4,7 @@
 
 #define BIT_SET(byte,nbit)   ((byte) |  (1<<(nbit)))
 #define BIT_CHECK(byte,nbit) ((byte) &   (1<<(nbit)))
-#define BIT_CLEAR(byte,nbit) ((byte) &= ~(1<<(nbit)))
+#define BIT_CLEAR(byte,nbit) ((byte) & ~(1<<(nbit)))
 
 
 namespace WorldGenerator
@@ -15,7 +15,7 @@ namespace WorldGenerator
 	{
 	public:
 		template <typename T>
-		static std::vector<int> MatchSubgraph(Graph<T> &G1, Graph<T> &G2);
+		static std::vector<std::vector<int>> MatchSubgraph(Graph<T> &G1, Graph<T> &G2);
 
 	private:
 		template <typename T>
@@ -38,7 +38,7 @@ namespace WorldGenerator
 
 	// Subgraph matcher finds the mapping of pattern G1 to subgraph of G2 with respect to isomorphism and vertex labelling stored in nodes
 	template<typename T>
-	inline std::vector<int> SubgraphMatcher::MatchSubgraph(Graph<T>& G1, Graph<T>& G2)
+	inline std::vector<std::vector<int>> SubgraphMatcher::MatchSubgraph(Graph<T>& G1, Graph<T>& G2)
 	{
 		std::vector<unsigned long> M0 = GenerateM0(G1, G2); // Matrix where rows are bitmasks
 		std::vector<unsigned long> A = GenerateA(G1);
@@ -50,11 +50,11 @@ namespace WorldGenerator
 		std::vector<int> H(G1.Size(), -1); // Stores columns of M used at each depth
 
 		if(!Refine(M0, A, B, ad_list))
-			return std::vector<int>();
+			return std::vector<std::vector<int>>();
 
 		ExploreBranch(M0, A, B, ad_list, F, H, 0, matches);
 
-		return std::vector<int>();
+		return matches;
 	}
 
 	//  M0 is a vector of int-bitmask
