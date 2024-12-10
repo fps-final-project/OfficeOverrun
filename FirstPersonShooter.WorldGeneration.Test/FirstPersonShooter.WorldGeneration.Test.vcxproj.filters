@@ -14,14 +14,14 @@
     <Filter Include="RoomLayout\BSP">
       <UniqueIdentifier>{93551786-665f-4474-869e-9a7df9df4859}</UniqueIdentifier>
     </Filter>
-    <Filter Include="RoomLayout\RoomSelector">
-      <UniqueIdentifier>{16d467c5-fad0-4674-8e25-107ff7c92003}</UniqueIdentifier>
-    </Filter>
     <Filter Include="RoomTypes">
       <UniqueIdentifier>{fc7383f4-f310-49d3-8f78-0ba403e4b073}</UniqueIdentifier>
     </Filter>
     <Filter Include="RoomLayout\RoomLink">
       <UniqueIdentifier>{840c2e3c-95c1-4d9c-9356-03be45e8894d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RoomTypes\SubgraphMatcher">
+      <UniqueIdentifier>{ff5a34d9-9a96-4866-9414-a2176d45c131}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -42,7 +42,7 @@
       <Filter>RoomLayout\RoomLink</Filter>
     </ClCompile>
     <ClCompile Include="SubgraphMatcherTest.cpp">
-      <Filter>RoomLayout\RoomSelector</Filter>
+      <Filter>RoomTypes\SubgraphMatcher</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

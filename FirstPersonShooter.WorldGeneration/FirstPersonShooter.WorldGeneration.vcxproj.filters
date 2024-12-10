@@ -35,6 +35,9 @@
     <Filter Include="WorldGenerator\RoomTypes">
       <UniqueIdentifier>{8a8c1fa4-f895-44f2-be2c-0940204e3d43}</UniqueIdentifier>
     </Filter>
+    <Filter Include="WorldGenerator\RoomTypes\SubgraphMatcher">
+      <UniqueIdentifier>{bfa15d33-9530-4711-b2ee-4f29a9ad2ca1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -75,7 +78,9 @@
     <ClCompile Include="..\FirstPersonShooter\UniformRNG.cpp">
       <Filter>WorldGenerator\Common\RNG\Distributions</Filter>
     </ClCompile>
-    <ClCompile Include="SubgraphMatcher.cpp" />
+    <ClCompile Include="SubgraphMatcher.cpp">
+      <Filter>WorldGenerator\RoomTypes\SubgraphMatcher</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FirstPersonShooter.WorldGeneration.h" />
@@ -151,7 +156,7 @@
       <Filter>WorldGenerator\RoomTypes</Filter>
     </ClInclude>
     <ClInclude Include="SubgraphMatcher.h">
-      <Filter>WorldGenerator\RoomTypes</Filter>
+      <Filter>WorldGenerator\RoomTypes\SubgraphMatcher</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
