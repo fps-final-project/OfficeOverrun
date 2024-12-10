@@ -19,66 +19,16 @@ GameState::GameState(
 	m_deviceResources = deviceResources;
 
 	m_actionQueue = std::make_shared<std::queue<Action>>();
-
 	m_inputHandler = std::make_unique<InputHandler>(m_actionQueue);
 	m_actionHandler = std::make_unique<ActionHandler>(m_actionQueue);
 
-	m_world = std::make_unique<World>();
-	m_camera = std::unique_ptr<Camera>(new Camera(m_deviceResources, FOV));
-	m_player = std::make_unique<Player>(deviceResources->GetXAudio());
 	m_collisionDetector = std::make_unique<SimpleCollisionDetector>();
-
-	EnemyBuilder enemyBuilder{};
-	ObjectBuilder objectBuilder{};
-
-
-	// generating rooms using WorldGenerator
-	m_world->m_rooms = MapGeneratorAdapter().WithSeed(123).GenerateRooms();
-
-
-	for (int i = 0; i < m_world->m_rooms.size() - 1; i++)
-	{
-		auto& room = m_world->m_rooms[i];
-		room.setModel(
-			RoomModelGenerator::generateRoomModel(
-				room.getPosition(), room.getSize(), room.getLinks(),
-				m_deviceResources));
-	}
-
-	auto& lastRoom = m_world->m_rooms[m_world->m_rooms.size() - 1];
-	lastRoom.setModel(
-		RoomModelGenerator::generateRoof(
-			lastRoom.getPosition(), lastRoom.getSize(), lastRoom.getLinks(),
-			m_deviceResources));
-
-	m_pathfinder = std::make_shared<Pathfinder>(m_world->m_rooms, m_player->getPostition());
-	m_world->UpdateVisibleRooms();
-	m_world->AddHelicopter();
-
-
-	/*auto zombie = enemyBuilder
-		.WithNewEnemy(
-			ResourceManager::Instance().getAnimatedModel("zombie_war"),
-			ResourceManager::Instance().getAudioFile("zombie"),
-			deviceResources->GetXAudio()
-		)
-		.WithHealth(100)
-		.WithDamage(10)
-		.WithSpeed(0.05f)
-		.WithPosition({ 20.f, 0.f, 4.f })
-		.WithRotation({ 0.f, 0.f, 0.f })
-		.WithVelocity({ 0.f, 0.f, 0.f })
-		.WithSize({ 0.8f, 0.8f, 0.8f })
-		.WithAttackRadius(0.7f)
-		.WithFallbackAnimation("run")
-		.WithPath(m_pathfinder)
-		.Build();
-
-	m_world->AddEnemy(zombie);*/
 
 	this->setupActionHandlers();
 
 	m_music.PlaySound(true);
+
+	RestartWithSeed(123);
 }
 
 void GameState::HandleInput()
@@ -127,6 +77,42 @@ void GameState::Update(float dt)
 void GameState::CreateWindowSizeDependentResources()
 {
 	m_camera->CreateWindowSizeDependentResources(FOV);
+}
+
+void GameState::RestartWithSeed(int seed)
+{
+	while (!m_actionQueue->empty())
+	{
+		m_actionQueue->pop();
+	}
+
+	m_world = std::make_unique<World>();
+	m_camera = std::unique_ptr<Camera>(new Camera(m_deviceResources, FOV));
+	m_player = std::make_unique<Player>(m_deviceResources->GetXAudio());
+
+	// generating rooms using WorldGenerator
+	m_world->m_rooms = MapGeneratorAdapter().WithSeed(seed).GenerateRooms();
+
+	for (int i = 0; i < m_world->m_rooms.size() - 1; i++)
+	{
+		auto& room = m_world->m_rooms[i];
+		room.setModel(
+			RoomModelGenerator::generateRoomModel(
+				room.getPosition(), room.getSize(), room.getLinks(),
+				m_deviceResources));
+	}
+
+	auto& lastRoom = m_world->m_rooms[m_world->m_rooms.size() - 1];
+	lastRoom.setModel(
+		RoomModelGenerator::generateRoof(
+			lastRoom.getPosition(), lastRoom.getSize(), lastRoom.getLinks(),
+			m_deviceResources));
+
+	m_pathfinder = std::make_shared<Pathfinder>(m_world->m_rooms, m_player->getPostition());
+	m_world->UpdateVisibleRooms();
+	m_world->AddHelicopter();
+
+	m_seed = seed;
 }
 
 bool GameState::GameFinished()

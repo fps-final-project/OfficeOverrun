@@ -58,5 +58,7 @@ namespace FirstPersonShooter
 
 		std::shared_ptr<DirectX::Keyboard> m_keyboard;
 		std::shared_ptr<DirectX::Mouse> m_mouse;
+
+		MenuResponse m_lastMenuResponse;
 	};
 }

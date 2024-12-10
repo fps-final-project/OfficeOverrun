@@ -4,7 +4,7 @@
 #include "imgui_impl_uwp.h"
 #include "imgui_impl_dx11.h"
 
-Menu::Menu(std::shared_ptr<DX::DeviceResources> deviceResources) : m_deviceResources(deviceResources)
+Menu::Menu(std::shared_ptr<DX::DeviceResources> deviceResources, int currentSeed) : m_deviceResources(deviceResources), currentSeed(currentSeed)
 {
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -23,7 +23,8 @@ Menu::Menu(std::shared_ptr<DX::DeviceResources> deviceResources) : m_deviceResou
     ImGui_ImplUwp_InitForCurrentView();
     ImGui_ImplDX11_Init(m_deviceResources->GetD3DDevice(), m_deviceResources->GetD3DDeviceContext());
 
-    io.Fonts->AddFontFromFileTTF("Assets\\fonts\\arial.ttf", 56.0f);
+    buttonFont = io.Fonts->AddFontFromFileTTF("Assets\\fonts\\arial.ttf", 32.0f);
+    labelFont = io.Fonts->AddFontFromFileTTF("Assets\\fonts\\arial.ttf", 16.0f);
 }
 
 Menu::~Menu()
@@ -31,47 +32,82 @@ Menu::~Menu()
     ImGui_ImplDX11_Shutdown();
     ImGui_ImplUwp_Shutdown();
     ImGui::DestroyContext();
-
 }
 
-void Menu::Render(Windows::Foundation::Size screenSize)
+MenuResponse Menu::RenderAndGetResponse(Windows::Foundation::Size screenSize, bool paused)
 {
     ImGui_ImplDX11_NewFrame();
     ImGui_ImplUwp_NewFrame();
     ImGui::NewFrame();
 
-    auto size = m_deviceResources->GetLogicalSize();
+    MenuResponse response;
 
-    if (ImGui::Begin("Menu", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar))
+    if (paused)
     {
-        const ImVec2 windowSize = ImVec2(300, 200);
 
-        // Calculate the centered position
-        ImVec2 windowPos = ImVec2(
-            (screenSize.Width - windowSize.x) * 0.5f,
-            (screenSize.Height - windowSize.y) * 0.5f
-        );
-
-        ImGui::SetWindowPos(windowPos, ImGuiCond_Always);
-        ImGui::SetWindowSize(windowSize, ImGuiCond_Always);
-
-        // Center the button within the window
-        ImGui::SetCursorPosX((windowSize.x - ImGui::CalcTextSize("Exit").x - ImGui::GetStyle().FramePadding.x * 2) * 0.5f);
-        ImGui::SetCursorPosY((windowSize.y - ImGui::GetFrameHeight()) * 0.5f);
-
-        // Create the "Exit" button
-        if (ImGui::Button("Exit"))
+        if (ImGui::Begin("Menu", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar))
         {
-            // Handle exit logic here
-            // For example: Close the application or return to a previous menu
-            ImGui::End(); // Properly close the current ImGui window
-            exit(0);      // Replace this with your application's exit logic
+            const ImVec2 windowSize = ImVec2(500, 500); // Adjusted height to accommodate spacing
+            const ImVec2 windowPos = ImVec2(
+                (screenSize.Width - windowSize.x) * 0.5f,
+                (screenSize.Height - windowSize.y) * 0.5f
+            );
+
+
+            ImGui::SetWindowPos(windowPos, ImGuiCond_Always);
+            ImGui::SetWindowSize(windowSize, ImGuiCond_Always);
+
+            // Define common element size
+            const float elementWidth = windowSize.x * 0.7f;
+            const float elementHeight = 50.0f;
+
+            // Calculate initial Y position for centering the column
+            const float totalHeight = (elementHeight * 3) + (50.0f * 2); // 3 elements + 2 spacings of 50px
+            const float initialCursorY = (windowSize.y - totalHeight) * 0.5f;
+
+            // Input field for "game seed"
+            ImGui::SetCursorPosY(initialCursorY);
+            ImGui::SetCursorPosX((windowSize.x - elementWidth) * 0.5f); // Center horizontally
+
+            ImGui::SetNextItemWidth(elementWidth); // Set the width of the input field
+            ImGui::InputInt("##GameSeed", &currentSeed, 0);
+            ImGui::PushFont(labelFont); // Use the smaller font
+            ImGui::SetCursorPosX((windowSize.x - ImGui::CalcTextSize("Game Seed").x) * 0.5f);
+            ImGui::Text("Game Seed");
+            ImGui::PopFont();
+
+            // Vertical spacing (50px)
+            ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 50.0f);
+
+            // "Change Seed and Restart" button
+            ImGui::SetCursorPosX((windowSize.x - elementWidth) * 0.5f);
+            if (ImGui::Button("Change Seed and Restart", ImVec2(elementWidth, elementHeight)))
+            {
+                response.changeSeedAndRestart = true;
+            }
+
+            // Vertical spacing (50px)
+            ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 50.0f);
+
+            // "Exit" button
+            ImGui::SetCursorPosX((windowSize.x - elementWidth) * 0.5f);
+            if (ImGui::Button("Exit", ImVec2(elementWidth, elementHeight)))
+            {
+                response.exit = true;
+            }
         }
+
+        ImGui::End();
+
+        ImGui::Render();
+
+        ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
     }
 
-    ImGui::End();
 
-    ImGui::Render();
+    ImGui::EndFrame();
+    
+    response.seed = currentSeed;
 
-    ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+    return response;
 }
