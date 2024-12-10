@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "SourceVoice.hpp"
 
-SourceVoice::SourceVoice(std::shared_ptr<AudioFile> file, IXAudio2* xaudio)
+SourceVoice::SourceVoice(std::shared_ptr<AudioFile> file, IXAudio2* xaudio) : playing(false)
 {
 	if (xaudio == nullptr) return;
 
@@ -50,6 +50,19 @@ void SourceVoice::PlaySound(bool overwrite)
 	hr = m_sourceVoice->FlushSourceBuffers();
 	hr = m_sourceVoice->SubmitSourceBuffer(m_buffer);
 	hr = m_sourceVoice->Start();
+	playing = true;
+}
+
+void SourceVoice::TogglePlay()
+{
+	if (empty)
+		return;
+
+	if (playing)
+		m_sourceVoice->Stop();
+	else m_sourceVoice->Start();
+
+	playing = !playing;
 }
 
 bool SourceVoice::IsPlaying()

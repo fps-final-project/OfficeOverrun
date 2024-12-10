@@ -12,29 +12,86 @@ GameState::GameState(
 	std::shared_ptr<DirectX::Keyboard> keyboard,
 	std::shared_ptr<DirectX::Mouse> mouse,
 	std::shared_ptr<DX::DeviceResources> deviceResources
-) : m_music(ResourceManager::Instance().getAudioFile("music"), deviceResources->GetXAudio())
+) : m_music(ResourceManager::Instance().getAudioFile("music"), deviceResources->GetXAudio()), m_isPaused(false)
 {
 	m_keyboard = keyboard;
 	m_mouse = mouse;
 	m_deviceResources = deviceResources;
 
 	m_actionQueue = std::make_shared<std::queue<Action>>();
-
 	m_inputHandler = std::make_unique<InputHandler>(m_actionQueue);
 	m_actionHandler = std::make_unique<ActionHandler>(m_actionQueue);
 
-	m_world = std::make_unique<World>();
-	m_camera = std::unique_ptr<Camera>(new Camera(m_deviceResources, FOV));
-	m_player = std::make_unique<Player>(deviceResources->GetXAudio());
 	m_collisionDetector = std::make_unique<SimpleCollisionDetector>();
 
-	EnemyBuilder enemyBuilder{};
-	ObjectBuilder objectBuilder{};
+	this->setupActionHandlers();
 
+	m_music.PlaySound(true);
+
+	RestartWithSeed(123);
+}
+
+void GameState::HandleInput()
+{
+	
+	auto mouseState = m_mouse->GetState();
+	auto keyboardState = m_keyboard->GetState();
+	
+	if (m_inputHandler->GetEscPressed({ mouseState, keyboardState }))
+		TogglePaused();
+	
+	m_camera->alignWithMouse(mouseState);
+	m_inputHandler->HandleInputState({ mouseState, keyboardState });
+
+	if (m_isPaused)
+		return;
+
+	m_actionHandler->HandleActions(m_player.get(), m_world.get(), m_camera.get(), m_deviceResources.get());
+}
+
+void GameState::Update(float dt)
+{
+	if (m_isPaused)
+		return;
+
+	m_player->Update(dt);
+	m_world->UpdateCurrentRoom(m_player->getPostition());
+
+	m_pathfinder->UpdatePlayerNode(m_player->getPostition(), m_world->m_currentRoomIndex);
+
+	m_world->UpdateEnemies(m_pathfinder, m_player->getPostition(), m_actionQueue, m_deviceResources);
+	m_world->Update(dt);
+	m_player->handleRoomCollision(m_world->GetCurrentRoom().checkCollision(m_player->getPostition()));
+
+	m_camera->setPosition(m_player->getPostition());
+	m_player->getGunRig()->RotateAndOffset(m_camera->getYawPitchRoll(), m_player->getPostition(), dt);
+	m_world->PlayEnemySounds(m_deviceResources, m_player.get());
+
+
+	//TODO: Collision handling
+
+	//auto collisions = m_collisionDetector->GetCollisions(m_world->GetEntities());
+
+}
+
+void GameState::CreateWindowSizeDependentResources()
+{
+	m_camera->CreateWindowSizeDependentResources(FOV);
+}
+
+void GameState::RestartWithSeed(int seed)
+{
+	while (!m_actionQueue->empty())
+	{
+		m_actionQueue->pop();
+	}
+
+	m_world = std::make_unique<World>();
+	m_camera = std::unique_ptr<Camera>(new Camera(m_deviceResources, FOV));
+	m_player = std::make_unique<Player>(m_deviceResources->GetXAudio());
 
 	// generating rooms using WorldGenerator
-	m_world->m_rooms = MapGeneratorAdapter().WithSeed(123).GenerateRooms();
-
+	m_world->m_rooms = MapGeneratorAdapter().WithSeed(seed).GenerateRooms();
 
 	for (int i = 0; i < m_world->m_rooms.size() - 1; i++)
 	{
@@ -55,70 +112,8 @@ GameState::GameState(
 	m_world->UpdateVisibleRooms();
 	m_world->AddHelicopter();
 
-
-	/*auto zombie = enemyBuilder
-		.WithNewEnemy(
-			ResourceManager::Instance().getAnimatedModel("zombie_war"),
-			ResourceManager::Instance().getAudioFile("zombie"),
-			deviceResources->GetXAudio()
-		)
-		.WithHealth(100)
-		.WithDamage(10)
-		.WithSpeed(0.05f)
-		.WithPosition({ 20.f, 0.f, 4.f })
-		.WithRotation({ 0.f, 0.f, 0.f })
-		.WithVelocity({ 0.f, 0.f, 0.f })
-		.WithSize({ 0.8f, 0.8f, 0.8f })
-		.WithAttackRadius(0.7f)
-		.WithFallbackAnimation("run")
-		.WithPath(m_pathfinder)
-		.Build();
-
-	m_world->AddEnemy(zombie);*/
-
-	this->setupActionHandlers();
-
-	m_music.PlaySound(true);
+	m_seed = seed;
 }
-
-void GameState::HandleInput()
-{
-	auto mouseState = m_mouse->GetState();
-	auto keyboardState = m_keyboard->GetState();
-
-	m_camera->alignWithMouse(mouseState);
-
-	m_inputHandler->HandleInputState({ mouseState, keyboardState });
-}
-
-void GameState::Update(float dt)
-{
-	m_player->Update(dt);
-	m_world->UpdateCurrentRoom(m_player->getPostition());
-
-	m_pathfinder->UpdatePlayerNode(m_player->getPostition(), m_world->m_currentRoomIndex);
-
-	m_world->UpdateEnemies(m_pathfinder, m_player->getPostition(), m_actionQueue, m_deviceResources);
-	m_world->Update(dt);
-	m_player->handleRoomCollision(m_world->GetCurrentRoom().checkCollision(m_player->getPostition()));
-
-	m_camera->setPosition(m_player->getPostition());
-	m_player->getGunRig()->RotateAndOffset(m_camera->getYawPitchRoll(), m_player->getPostition(), dt);
-	m_world->PlayEnemySounds(m_deviceResources, m_player.get());
-
-	m_actionHandler->HandleActions(m_player.get(), m_world.get(), m_camera.get(), m_deviceResources.get());
-
-	//TODO: Collision handling
-
-	//auto collisions = m_collisionDetector->GetCollisions(m_world->GetEntities());
-
-}
-
-void GameState::CreateWindowSizeDependentResources()
-{
-	m_camera->CreateWindowSizeDependentResources(FOV);
-}
-
 
 bool GameState::GameFinished()
 {
@@ -181,4 +176,21 @@ void GameState::setupActionHandlers()
 		[](InputState newState, InputState oldState) {	return newState.second.D4 && oldState.second.D4; },
 		Action(ActionType::WEAPON4)
 	);
+}
+
+void GameState::TogglePaused()
+{
+	if (m_isPaused)
+	{
+		m_mouse->SetMode(DirectX::Mouse::MODE_RELATIVE);
+	}
+	else
+	{
+		m_mouse->SetMode(DirectX::Mouse::MODE_ABSOLUTE);
+
+	}
+
+	m_music.TogglePlay();
+	m_actionHandler->ClearActions();
+	m_isPaused = !m_isPaused;
 }

@@ -23,7 +23,7 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	// Register to be notified if the Device is lost or recreated
 	m_deviceResources->RegisterDeviceNotify(this);
 
-	bool load_only_ak = false;
+	bool load_only_ak = true;
 
 	ResourceManager::Instance().loadAnimatedModel("Assets\\Enemy\\Zombie\\zombie_war.gltf", m_deviceResources);
 	ResourceManager::Instance().loadAnimatedModel("Assets\\Other\\heli\\heli.gltf", m_deviceResources);
@@ -76,12 +76,18 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	m_spriteRenderer = std::make_shared<SpriteRenderer>(
 		m_deviceResources->GetD3DDeviceContext(), 
 		ResourceManager::Instance().getTexture("empty"));
+
 	m_fpsTextRenderer = std::shared_ptr<SampleFpsTextRenderer>(new SampleFpsTextRenderer(m_deviceResources));
 
 	m_renderMaster = std::make_shared<RenderMaster>(m_deviceResources);
 
 	m_states = std::make_unique<DirectX::CommonStates>(m_deviceResources->GetD3DDevice());
 	m_gameState = std::make_unique<GameState>(keyboard, mouse, deviceResources);
+
+	m_menu = std::make_shared<Menu>(deviceResources, m_gameState->GetSeed());
+	
+	// HACK TO MAKE SURE CURSOR IS DISABLED BY DEFAULT
+	m_menu->RenderAndGetResponse(Windows::Foundation::Size(0, 0), false);
 
 	m_mouse->SetMode(DirectX::Mouse::MODE_RELATIVE);
 }
@@ -106,8 +112,16 @@ void FirstPersonShooterMain::Update()
 		{
 			float dt = m_timer.GetElapsedSeconds();
 
+			if (m_lastMenuResponse.changeSeedAndRestart)
+			{
+				m_gameState->RestartWithSeed(m_lastMenuResponse.seed);
+				m_lastMenuResponse.changeSeedAndRestart = false;
+				m_gameState->TogglePaused();
+			}
+
 			// do not change this order
 			m_gameState->HandleInput();
+			m_mouse->EndOfInputFrame();
 			m_gameState->Update(dt);
 		});
 
@@ -169,6 +183,10 @@ bool FirstPersonShooterMain::Render()
 	UI::RenderBulletCapacity(outputSize, m_spriteRenderer, m_fpsTextRenderer, ResourceManager::Instance().getTexture("ammo"), 10, 100);
 	m_spriteRenderer->EndRendering(context);
 
+
+	// will not render unless paused
+	m_lastMenuResponse = m_menu->RenderAndGetResponse(outputSize, m_gameState->IsPaused());
+
 	//m_fpsTextRenderer->Render(std::to_string(m_timer.GetFramesPerSecond()));
 	//m_fpsTextRenderer->Render(std::to_string(pos.x) + ", " +std::to_string(pos.y) + ", " + std::to_string(pos.z));
 
@@ -177,7 +195,7 @@ bool FirstPersonShooterMain::Render()
 
 bool FirstPersonShooter::FirstPersonShooterMain::ShouldClose()
 {
-	return m_gameState->GameFinished();
+	return m_gameState->GameFinished() || m_lastMenuResponse.exit;
 }
 
 // Notifies renderers that device resources need to be released.

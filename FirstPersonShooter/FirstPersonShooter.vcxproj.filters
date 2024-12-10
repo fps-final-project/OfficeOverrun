@@ -71,6 +71,9 @@
     <Filter Include="Assets\Libs">
       <UniqueIdentifier>{c83ca1a6-3e4e-4d40-98b8-07b6a0853876}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\fonts">
+      <UniqueIdentifier>{f25cc8f2-7d6f-44ca-ae88-4de00e598983}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -230,5 +233,10 @@
     <Media Include="Assets\Audio\zombie_dying.wav">
       <Filter>Assets\Sounds</Filter>
     </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="Assets\fonts\arial.ttf">
+      <Filter>Assets\fonts</Filter>
+    </Font>
   </ItemGroup>
 </Project>

@@ -32,3 +32,8 @@ void InputHandler::RemoveActionHandler(Action action)
 		),
 		m_actions.end());
 }
+
+bool InputHandler::GetEscPressed(InputState newState)
+{
+	return m_inputState.second.Escape && !newState.second.Escape;
+}
