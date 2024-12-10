@@ -27,7 +27,7 @@ MapGeneratorAdapter& MapGeneratorAdapter::WithSeed(int seed)
 
 std::vector<Room> MapGeneratorAdapter::GenerateRooms()
 {
-	RoomLayout layout = MapGenerator().GenerateRoomLayout(roomLayoutConfig, seed);
+	RoomLayout layout = MapGenerator().GenerateRooms(roomLayoutConfig, seed);
 	std::vector<Room> rooms = std::vector<Room>();
 
 	// Mapping function

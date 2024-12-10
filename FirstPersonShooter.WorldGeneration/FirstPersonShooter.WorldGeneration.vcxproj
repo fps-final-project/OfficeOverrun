@@ -268,8 +268,11 @@
     <ClInclude Include="..\FirstPersonShooter\Vector3.h" />
     <ClInclude Include="..\FirstPersonShooter\WeightedGraph.h" />
     <ClInclude Include="FirstPersonShooter.WorldGeneration.h" />
+    <ClInclude Include="GraphGrammar.h" />
+    <ClInclude Include="GraphProduction.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="RoomLabel.h" />
+    <ClInclude Include="RoomTypesGenerator.h" />
     <ClInclude Include="SubgraphMatcher.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -297,6 +300,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="RoomTypesGenerator.cpp" />
     <ClCompile Include="SubgraphMatcher.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

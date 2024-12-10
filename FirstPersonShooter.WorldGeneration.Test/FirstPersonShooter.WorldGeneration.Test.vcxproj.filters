@@ -20,7 +20,13 @@
     <Filter Include="RoomLayout\RoomLink">
       <UniqueIdentifier>{840c2e3c-95c1-4d9c-9356-03be45e8894d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="RoomTypes\SubgraphMatcher">
+    <Filter Include="Utils">
+      <UniqueIdentifier>{e5d33347-13a1-4117-bdcc-036c5a63d72c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Graphs">
+      <UniqueIdentifier>{159863a4-5406-4fe8-a489-5ebb1eabfd8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Graphs\SubgraphMatcher">
       <UniqueIdentifier>{ff5a34d9-9a96-4866-9414-a2176d45c131}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -35,20 +41,20 @@
     <ClCompile Include="BinaryRoomTest.cpp">
       <Filter>RoomLayout\BSP</Filter>
     </ClCompile>
-    <ClCompile Include="TestUtils.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <ClCompile Include="RoomLinkTest.cpp">
       <Filter>RoomLayout\RoomLink</Filter>
     </ClCompile>
     <ClCompile Include="SubgraphMatcherTest.cpp">
-      <Filter>RoomTypes\SubgraphMatcher</Filter>
+      <Filter>Common\Graphs\SubgraphMatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="TestUtils.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="TestUtils.h">
-      <Filter>Common</Filter>
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

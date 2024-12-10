@@ -1,6 +1,5 @@
 #pragma once
 #include "Graph.h"
-#include "GeneratedRoom.h"
 
 #define BIT_SET(byte,nbit)   ((byte) |  (1<<(nbit)))
 #define BIT_CHECK(byte,nbit) ((byte) &   (1<<(nbit)))

@@ -11,9 +11,6 @@
     <Filter Include="WorldGenerator\Common">
       <UniqueIdentifier>{64a8351e-c2a8-4e33-a84c-a3b292d1fd34}</UniqueIdentifier>
     </Filter>
-    <Filter Include="WorldGenerator\Common\Graph">
-      <UniqueIdentifier>{eda86d8f-f095-460d-b135-ed3f077a0528}</UniqueIdentifier>
-    </Filter>
     <Filter Include="WorldGenerator\Common\RNG">
       <UniqueIdentifier>{a8b6be55-f21d-4f89-8cac-36a143ce1cf3}</UniqueIdentifier>
     </Filter>
@@ -35,8 +32,14 @@
     <Filter Include="WorldGenerator\RoomTypes">
       <UniqueIdentifier>{8a8c1fa4-f895-44f2-be2c-0940204e3d43}</UniqueIdentifier>
     </Filter>
-    <Filter Include="WorldGenerator\RoomTypes\SubgraphMatcher">
+    <Filter Include="WorldGenerator\Common\Graph">
+      <UniqueIdentifier>{eda86d8f-f095-460d-b135-ed3f077a0528}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WorldGenerator\Common\Graph\SubgraphMatcher">
       <UniqueIdentifier>{bfa15d33-9530-4711-b2ee-4f29a9ad2ca1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WorldGenerator\Common\Graph\GraphGrammars">
+      <UniqueIdentifier>{7442b78e-eded-4d50-adff-fda33d778bf3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -79,7 +82,10 @@
       <Filter>WorldGenerator\Common\RNG\Distributions</Filter>
     </ClCompile>
     <ClCompile Include="SubgraphMatcher.cpp">
-      <Filter>WorldGenerator\RoomTypes\SubgraphMatcher</Filter>
+      <Filter>WorldGenerator\Common\Graph\SubgraphMatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomTypesGenerator.cpp">
+      <Filter>WorldGenerator\RoomTypes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -156,7 +162,16 @@
       <Filter>WorldGenerator\RoomTypes</Filter>
     </ClInclude>
     <ClInclude Include="SubgraphMatcher.h">
-      <Filter>WorldGenerator\RoomTypes\SubgraphMatcher</Filter>
+      <Filter>WorldGenerator\Common\Graph\SubgraphMatcher</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomTypesGenerator.h">
+      <Filter>WorldGenerator\RoomTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphGrammar.h">
+      <Filter>WorldGenerator\Common\Graph\GraphGrammars</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphProduction.h">
+      <Filter>WorldGenerator\Common\Graph\GraphGrammars</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

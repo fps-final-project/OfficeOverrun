@@ -4,7 +4,7 @@
 
 using namespace WorldGenerator;
 
-RoomLayout MapGenerator::GenerateRoomLayout(RoomLayoutConfig config, int seed)
+RoomLayout MapGenerator::GenerateRooms(RoomLayoutConfig config, int seed)
 {
 	RNGEngine::GetInstance()->SetSeed(seed);
 	RoomLayoutGenerator generator(config);
