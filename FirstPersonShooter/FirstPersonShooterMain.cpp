@@ -23,7 +23,7 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	// Register to be notified if the Device is lost or recreated
 	m_deviceResources->RegisterDeviceNotify(this);
 
-	bool load_only_ak = true;
+	bool load_only_ak = false;
 
 	ResourceManager::Instance().loadAnimatedModel("Assets\\Enemy\\Zombie\\zombie_war.gltf", m_deviceResources);
 	ResourceManager::Instance().loadAnimatedModel("Assets\\Other\\heli\\heli.gltf", m_deviceResources);
@@ -180,7 +180,9 @@ bool FirstPersonShooterMain::Render()
 	if (m_gameState->m_world->lastDamage < 4.f)
 		UI::RenderDamageIndicator(outputSize, m_spriteRenderer, ResourceManager::Instance().getTexture("damage"));
 	UI::RenderHealth(outputSize, m_spriteRenderer, 100, m_gameState->m_player->getHealth());
-	UI::RenderBulletCapacity(outputSize, m_spriteRenderer, m_fpsTextRenderer, ResourceManager::Instance().getTexture("ammo"), 10, 100);
+
+	auto ammoCapacity = m_gameState->m_player->getAmmoCapacity();
+	UI::RenderBulletCapacity(outputSize, m_spriteRenderer, m_fpsTextRenderer, ResourceManager::Instance().getTexture("ammo"), ammoCapacity.first, ammoCapacity.second);
 	m_spriteRenderer->EndRendering(context);
 
 

@@ -20,6 +20,7 @@ public:
 	void Render(std::shared_ptr<RenderMaster> renderMaster) override;
 	std::unique_ptr<GunRig>& getGunRig();
 	DirectX::XMFLOAT3 getPostition();
+	std::pair<int, int> getAmmoCapacity() { return std::make_pair(m_gunRig->GetClipAmmo(), m_gunRig->GetTotalAmmo()); }
 
 
 	inline int getHealth() { return m_health; }

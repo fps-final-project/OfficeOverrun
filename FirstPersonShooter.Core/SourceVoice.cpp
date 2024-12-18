@@ -3,21 +3,22 @@
 
 SourceVoice::SourceVoice(std::shared_ptr<AudioFile> file, IXAudio2* xaudio) : playing(false)
 {
-	if (xaudio == nullptr) return;
+	if (xaudio != nullptr)
+	{
+		xaudio->CreateSourceVoice(
+			&m_sourceVoice,
+			(WAVEFORMATEX*)(&file->wfx)
+		);
 
-	xaudio->CreateSourceVoice(
-		&m_sourceVoice,
-		(WAVEFORMATEX*)(&file->wfx)
-	);
-
-	m_buffer = &file->buffer;
-	m_sourceVoice->SubmitSourceBuffer(m_buffer);
-	empty = false;
+		m_buffer = &file->buffer;
+		m_sourceVoice->SubmitSourceBuffer(m_buffer);
+	}
+	empty = !m_sourceVoice;
 }
 
 SourceVoice::~SourceVoice()
 {
-	if(empty) return;
+	if (empty) return;
 	m_sourceVoice->DestroyVoice();
 }
 
@@ -44,7 +45,7 @@ void SourceVoice::SetEmmiterSettings(X3DAUDIO_EMITTER* emitter, X3DAUDIO_LISTENE
 
 void SourceVoice::PlaySound(bool overwrite)
 {
-	if ((!overwrite && IsPlaying()) || empty)	return;
+	if (empty || (!overwrite && IsPlaying()))	return;
 	HRESULT hr;
 	hr = m_sourceVoice->Stop();
 	hr = m_sourceVoice->FlushSourceBuffers();
@@ -67,6 +68,8 @@ void SourceVoice::TogglePlay()
 
 bool SourceVoice::IsPlaying()
 {
+	if (empty)
+		return false;
 	XAUDIO2_VOICE_STATE state;
 	m_sourceVoice->GetState(&state);
 	return !(state.BuffersQueued == 1 && state.SamplesPlayed == 0 || state.BuffersQueued == 0);
