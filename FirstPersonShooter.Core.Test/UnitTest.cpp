@@ -140,7 +140,6 @@ namespace FirstPersonShooter_Core_Test
 
 		TEST_METHOD(ShotEnemyShouldDelete)
 		{
-            
 			std::shared_ptr<std::queue <Action>> actionQueue = std::make_shared<std::queue<Action>>();
 			ActionHandler actionHandler(actionQueue);
 			World world;

@@ -67,7 +67,6 @@ bool GunRig::Shoot()
 		return false;
 	}
 	m_ammo[m_name].first--;
-	m_ammo[m_name].second--;
 	this->m_hands->setAnimation("shoot", m_shootingAnimationSpeedup, false);
 	this->m_gun->setAnimation("shoot", m_shootingAnimationSpeedup, false);
 	m_gunSound->PlaySound(true);
@@ -82,7 +81,7 @@ void GunRig::ChangeGun(const std::string& name, IXAudio2* xaudio)
 	{
 		if (m_ammo.find(name) == m_ammo.end())
 		{
-			m_ammo[name] = { data->clipSize, data->clipSize };
+			m_ammo[name] = { data->clipSize, data->clipSize * 4 };
 		}
 		m_clipSize = data->clipSize;
 		m_gunOffset = data->gunOffset;
