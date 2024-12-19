@@ -193,7 +193,7 @@ bool FirstPersonShooterMain::Render()
 	m_lastMenuResponse = m_menu->RenderAndGetResponse(outputSize, m_gameState->IsPaused());
 
 	//m_fpsTextRenderer->Render(std::to_string(m_timer.GetFramesPerSecond()));
-	//m_fpsTextRenderer->Render(std::to_string(pos.x) + ", " +std::to_string(pos.y) + ", " + std::to_string(pos.z));
+	m_fpsTextRenderer->Render(std::to_string(m_gameState->m_player->getPostition().x) + ", " + std::to_string(m_gameState->m_player->getPostition().y) + ", " + std::to_string(m_gameState->m_player->getPostition().z), 400, 400, 300, 50);
 
 	return true;
 }
