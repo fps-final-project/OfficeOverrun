@@ -86,6 +86,9 @@
     <Filter Include="Assets\props\dead-body">
       <UniqueIdentifier>{484cbea9-0ea9-4f5f-8298-7e550b41fd29}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\props\old-paper">
+      <UniqueIdentifier>{b2498303-1e88-494d-97c8-473effb719ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -162,6 +165,9 @@
     </Image>
     <Image Include="Assets\props\dead-body\DeadBodyCovered_BaseColor.png">
       <Filter>Assets\props\dead-body</Filter>
+    </Image>
+    <Image Include="Assets\props\old-paper\MAT_Cardboard_Base_Color.png">
+      <Filter>Assets\props\old-paper</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
@@ -251,6 +257,12 @@
     <None Include="Assets\props\dead-body\dead-body.obj">
       <Filter>Assets\props\dead-body</Filter>
     </None>
+    <None Include="Assets\props\old-paper\old-paper.mtl">
+      <Filter>Assets\props\old-paper</Filter>
+    </None>
+    <None Include="Assets\props\old-paper\old-paper.obj">
+      <Filter>Assets\props\old-paper</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="FirstPersonShooter.rc" />
@@ -276,6 +288,9 @@
     </Text>
     <Text Include="Assets\props\dead-body\dead-body.txt">
       <Filter>Assets\props\dead-body</Filter>
+    </Text>
+    <Text Include="Assets\props\old-paper\old-paper.txt">
+      <Filter>Assets\props\old-paper</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>

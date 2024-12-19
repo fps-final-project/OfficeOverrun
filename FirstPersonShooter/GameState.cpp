@@ -103,10 +103,10 @@ void GameState::RestartWithSeed(int seed)
 	}
 
 	PropInstance instance;
-	instance.name = "dead-body";
+	instance.name = "old-paper";
 	instance.position = {2.f, 0.f, 2.f};
 	instance.rotation = {0.f, 0.f, 0.f};
-	instance.size = { 2.43, 0.282, 1.46 };
+	instance.size = { 1.3704, 0.7833, 1.198 };
 	//instance.size = { 1.f, 1.f, 1.f };
 	m_world->m_rooms[0].m_props.push_back(instance);
 
