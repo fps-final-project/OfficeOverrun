@@ -36,7 +36,7 @@ PixelShaderInput main(VertexShaderInput input)
 
 	output.texture_pos = input.texture_pos;
 
-	output.normal = mul(input.normal, transpose(inv_model));
+	output.normal = normalize(mul(input.normal, transpose(inv_model)));
 
 	return output;
 }

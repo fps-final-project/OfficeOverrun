@@ -74,6 +74,12 @@
     <Filter Include="Assets\fonts">
       <UniqueIdentifier>{f25cc8f2-7d6f-44ca-ae88-4de00e598983}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\props">
+      <UniqueIdentifier>{7d20c056-2359-400e-ba06-b93be8130ba3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\props\office-chair-1">
+      <UniqueIdentifier>{faac3d94-e81f-4d3b-bcaf-fd693727ecda}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -141,6 +147,9 @@
     </Image>
     <Image Include="Assets\cube\ammo.png">
       <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\props\office-chair-1\up_1001_albedo.jpg">
+      <Filter>Assets\props\office-chair-1</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
@@ -211,6 +220,13 @@
     <None Include="..\Vendor\assimp\lib\x64\assimp-vc143-mtd.dll">
       <Filter>Assets\Libs</Filter>
     </None>
+    <None Include="Assets\Audio\empty-clip.wav" />
+    <None Include="Assets\props\office-chair-1\office-chair-1.mtl">
+      <Filter>Assets\props\office-chair-1</Filter>
+    </None>
+    <None Include="Assets\props\office-chair-1\office-chair-1.obj">
+      <Filter>Assets\props\office-chair-1</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="FirstPersonShooter.rc" />
@@ -227,6 +243,9 @@
     </Text>
     <Text Include="Assets\GunRig\sniper\sniper.txt">
       <Filter>Assets\GunRig\sniper</Filter>
+    </Text>
+    <Text Include="Assets\props\office-chair-1\office-chair-1.txt">
+      <Filter>Assets\props\office-chair-1</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>

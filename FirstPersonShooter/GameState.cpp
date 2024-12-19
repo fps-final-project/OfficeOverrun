@@ -102,6 +102,14 @@ void GameState::RestartWithSeed(int seed)
 				m_deviceResources));
 	}
 
+	PropInstance instance;
+	instance.name = "office-chair";
+	instance.position = {2.f, 0.f, 2.f};
+	instance.rotation = {0.f, 0.f, 0.f};
+	instance.size = { 0.644, 1.17, 0.739 };
+	//instance.size = { 1.f, 1.f, 1.f };
+	m_world->m_rooms[0].m_props.push_back(instance);
+
 	auto& lastRoom = m_world->m_rooms[m_world->m_rooms.size() - 1];
 	lastRoom.setModel(
 		RoomModelGenerator::generateRoof(

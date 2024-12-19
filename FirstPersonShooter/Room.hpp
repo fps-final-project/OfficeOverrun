@@ -4,6 +4,7 @@
 #include "RoomCollision.hpp"
 #include "RoomLinkData.hpp"
 #include "Entity.hpp"
+#include "PropInstance.hpp"
 
 
 
@@ -15,6 +16,7 @@ class __declspec(dllexport) Room : public Drawable
 	static const float wallOffset;
 
 public:
+	std::vector<PropInstance> m_props;
 	std::vector<RoomLinkData> m_links;
 	Room(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 size, const std::vector<RoomLinkData>& links = {});
 	void setModel(Model model);
