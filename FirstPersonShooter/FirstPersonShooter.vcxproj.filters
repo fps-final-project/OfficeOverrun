@@ -205,11 +205,11 @@
     <Image Include="Assets\props\lamp\Atlas_00001.png">
       <Filter>Assets\props\lamp</Filter>
     </Image>
-    <Image Include="Assets\props\monitor2\Atlas_00001.png">
-      <Filter>Assets\props\monitor2</Filter>
-    </Image>
     <Image Include="Assets\props\potted-plant\flowerLP_flowerLP_BaseColor.png">
       <Filter>Assets\props\potted-plant</Filter>
+    </Image>
+    <Image Include="Assets\props\monitor2\PSX_Monitor_0.png">
+      <Filter>Assets\props\monitor2</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
