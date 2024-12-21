@@ -295,6 +295,7 @@
     <Image Include="Assets\props\office-chair-2\Chair_low_phong1_BaseColor.png" />
     <Image Include="Assets\props\old-paper\MAT_Cardboard_Base_Color.png" />
     <Image Include="Assets\props\potted-plant\flowerLP_flowerLP_BaseColor.png" />
+    <Image Include="Assets\props\spider-plant\Atlas_00002.png" />
     <Image Include="Assets\SplashScreen.scale-200.png" />
     <Image Include="Assets\Square150x150Logo.scale-200.png" />
     <Image Include="Assets\Square44x44Logo.scale-200.png" />
@@ -413,6 +414,10 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
     </None>
+    <None Include="Assets\props\spider-plant\spider-plant.mtl">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -441,6 +446,7 @@
     <Text Include="Assets\props\office-chair-2\office-chair-2.txt" />
     <Text Include="Assets\props\old-paper\old-paper.txt" />
     <Text Include="Assets\props\potted-plant\potted-plant.txt" />
+    <Text Include="Assets\props\spider-plant\spider-plant.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Audio\dark-horror-background-252905.wav">
@@ -571,6 +577,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\props\potted-plant\potted-plant.obj">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+      <FileType>Document</FileType>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\props\spider-plant\spider-plant.obj">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
       <FileType>Document</FileType>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>

@@ -110,6 +110,9 @@
     <Filter Include="Assets\props\potted-plant">
       <UniqueIdentifier>{1aae5440-3842-40c6-aec8-3ad666494fc6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\props\spider-plant">
+      <UniqueIdentifier>{47c3d71c-be7c-4066-921e-fd17072609e1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -210,6 +213,9 @@
     </Image>
     <Image Include="Assets\props\monitor2\PSX_Monitor_0.png">
       <Filter>Assets\props\monitor2</Filter>
+    </Image>
+    <Image Include="Assets\props\spider-plant\Atlas_00002.png">
+      <Filter>Assets\props\spider-plant</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
@@ -347,6 +353,12 @@
     <None Include="Assets\props\potted-plant\potted-plant.obj">
       <Filter>Assets\props\potted-plant</Filter>
     </None>
+    <None Include="Assets\props\spider-plant\spider-plant.mtl">
+      <Filter>Assets\props\spider-plant</Filter>
+    </None>
+    <None Include="Assets\props\spider-plant\spider-plant.obj">
+      <Filter>Assets\props\spider-plant</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="FirstPersonShooter.rc" />
@@ -396,6 +408,9 @@
     </Text>
     <Text Include="Assets\props\potted-plant\potted-plant.txt">
       <Filter>Assets\props\potted-plant</Filter>
+    </Text>
+    <Text Include="Assets\props\spider-plant\spider-plant.txt">
+      <Filter>Assets\props\spider-plant</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>
