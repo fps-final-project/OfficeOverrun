@@ -288,6 +288,7 @@
     <Image Include="Assets\props\cabinet\Study_Filing_Cabinet_Material_BaseColor.png" />
     <Image Include="Assets\props\dead-body\DeadBodyCovered_BaseColor.png" />
     <Image Include="Assets\props\desk1\1.jpg" />
+    <Image Include="Assets\props\desk2\Office_desk_BaseColor.png" />
     <Image Include="Assets\props\office-chair-1\up_1001_albedo.jpg" />
     <Image Include="Assets\props\office-chair-2\Chair_low_phong1_BaseColor.png" />
     <Image Include="Assets\props\old-paper\MAT_Cardboard_Base_Color.png" />
@@ -384,6 +385,10 @@
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
     </None>
+    <None Include="Assets\props\desk2\desk2.mtl">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
+    </None>
     <None Include="Assets\props\office-chair-1\office-chair-1.mtl">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
     </None>
@@ -414,6 +419,7 @@
     <Text Include="Assets\props\cabinet\cabinet.txt" />
     <Text Include="Assets\props\dead-body\dead-body.txt" />
     <Text Include="Assets\props\desk1\desk1.txt" />
+    <Text Include="Assets\props\desk2\desk2.txt" />
     <Text Include="Assets\props\office-chair-1\office-chair-1.txt" />
     <Text Include="Assets\props\office-chair-2\office-chair-2.txt" />
     <Text Include="Assets\props\old-paper\old-paper.txt" />
@@ -519,6 +525,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\props\desk1\desk1.obj">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
+      <FileType>Document</FileType>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\props\desk2\desk2.obj">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</DeploymentContent>
       <FileType>Document</FileType>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</DeploymentContent>
