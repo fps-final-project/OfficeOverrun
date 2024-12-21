@@ -1,0 +1,4 @@
+dead-body
+Assets\\props\\dead-body\\dead-body.obj
+2.43 0.282 1.46
+0

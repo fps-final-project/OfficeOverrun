@@ -74,6 +74,51 @@
     <Filter Include="Assets\fonts">
       <UniqueIdentifier>{f25cc8f2-7d6f-44ca-ae88-4de00e598983}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\props">
+      <UniqueIdentifier>{7d20c056-2359-400e-ba06-b93be8130ba3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\props\office-chair-1">
+      <UniqueIdentifier>{faac3d94-e81f-4d3b-bcaf-fd693727ecda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\props\office-chair-2">
+      <UniqueIdentifier>{34bffe86-36c1-4619-a14d-b05bacce6708}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\props\dead-body">
+      <UniqueIdentifier>{484cbea9-0ea9-4f5f-8298-7e550b41fd29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\props\old-paper">
+      <UniqueIdentifier>{b2498303-1e88-494d-97c8-473effb719ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\props\bean-bag">
+      <UniqueIdentifier>{1b7e1f58-48dd-43c9-b10c-5250a832fd5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\props\cabinet">
+      <UniqueIdentifier>{9053675e-037e-4168-a9d7-7cda88a86f89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\props\desk1">
+      <UniqueIdentifier>{7701f910-7612-4229-91d3-ce05dc61bf4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\props\desk2">
+      <UniqueIdentifier>{01cbb4fb-5ec5-4b5c-b75f-7d3dd25f0052}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\props\lamp">
+      <UniqueIdentifier>{2670ed72-91ee-4dd4-8fbb-8208ae42de03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\props\monitor2">
+      <UniqueIdentifier>{6639438e-18ce-4b0c-bc9e-4e952c108a0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\props\potted-plant">
+      <UniqueIdentifier>{1aae5440-3842-40c6-aec8-3ad666494fc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\props\spider-plant">
+      <UniqueIdentifier>{47c3d71c-be7c-4066-921e-fd17072609e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\props\trash-can">
+      <UniqueIdentifier>{cc222e77-259a-4345-a9b7-695ad961d23c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\props\whiteboard">
+      <UniqueIdentifier>{e0070beb-5650-4032-a8d1-643132767da8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -141,6 +186,48 @@
     </Image>
     <Image Include="Assets\cube\ammo.png">
       <Filter>Assets</Filter>
+    </Image>
+    <Image Include="Assets\props\office-chair-1\up_1001_albedo.jpg">
+      <Filter>Assets\props\office-chair-1</Filter>
+    </Image>
+    <Image Include="Assets\props\office-chair-2\Chair_low_phong1_BaseColor.png">
+      <Filter>Assets\props\office-chair-2</Filter>
+    </Image>
+    <Image Include="Assets\props\dead-body\DeadBodyCovered_BaseColor.png">
+      <Filter>Assets\props\dead-body</Filter>
+    </Image>
+    <Image Include="Assets\props\old-paper\MAT_Cardboard_Base_Color.png">
+      <Filter>Assets\props\old-paper</Filter>
+    </Image>
+    <Image Include="Assets\props\bean-bag\Textures_COL_2k.png">
+      <Filter>Assets\props\bean-bag</Filter>
+    </Image>
+    <Image Include="Assets\props\cabinet\Study_Filing_Cabinet_Material_BaseColor.png">
+      <Filter>Assets\props\cabinet</Filter>
+    </Image>
+    <Image Include="Assets\props\desk1\1.jpg">
+      <Filter>Assets\props\desk1</Filter>
+    </Image>
+    <Image Include="Assets\props\desk2\Office_desk_BaseColor.png">
+      <Filter>Assets\props\desk2</Filter>
+    </Image>
+    <Image Include="Assets\props\lamp\Atlas_00001.png">
+      <Filter>Assets\props\lamp</Filter>
+    </Image>
+    <Image Include="Assets\props\potted-plant\flowerLP_flowerLP_BaseColor.png">
+      <Filter>Assets\props\potted-plant</Filter>
+    </Image>
+    <Image Include="Assets\props\monitor2\PSX_Monitor_0.png">
+      <Filter>Assets\props\monitor2</Filter>
+    </Image>
+    <Image Include="Assets\props\spider-plant\Atlas_00002.png">
+      <Filter>Assets\props\spider-plant</Filter>
+    </Image>
+    <Image Include="Assets\props\trash-can\TrashCan_DefaultMaterial_BaseColor.jpg">
+      <Filter>Assets\props\trash-can</Filter>
+    </Image>
+    <Image Include="Assets\props\whiteboard\Untitled_2_default_BaseColor.png">
+      <Filter>Assets\props\whiteboard</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
@@ -211,6 +298,91 @@
     <None Include="..\Vendor\assimp\lib\x64\assimp-vc143-mtd.dll">
       <Filter>Assets\Libs</Filter>
     </None>
+    <None Include="Assets\Audio\empty-clip.wav" />
+    <None Include="Assets\props\office-chair-1\office-chair-1.mtl">
+      <Filter>Assets\props\office-chair-1</Filter>
+    </None>
+    <None Include="Assets\props\office-chair-1\office-chair-1.obj">
+      <Filter>Assets\props\office-chair-1</Filter>
+    </None>
+    <None Include="Assets\props\office-chair-2\office-chair-2.mtl">
+      <Filter>Assets\props\office-chair-2</Filter>
+    </None>
+    <None Include="Assets\props\office-chair-2\office-chair-2.obj">
+      <Filter>Assets\props\office-chair-2</Filter>
+    </None>
+    <None Include="Assets\props\dead-body\dead-body.mtl">
+      <Filter>Assets\props\dead-body</Filter>
+    </None>
+    <None Include="Assets\props\dead-body\dead-body.obj">
+      <Filter>Assets\props\dead-body</Filter>
+    </None>
+    <None Include="Assets\props\old-paper\old-paper.mtl">
+      <Filter>Assets\props\old-paper</Filter>
+    </None>
+    <None Include="Assets\props\old-paper\old-paper.obj">
+      <Filter>Assets\props\old-paper</Filter>
+    </None>
+    <None Include="Assets\props\bean-bag\bean-bag.mtl">
+      <Filter>Assets\props\bean-bag</Filter>
+    </None>
+    <None Include="Assets\props\bean-bag\bean-bag.obj">
+      <Filter>Assets\props\bean-bag</Filter>
+    </None>
+    <None Include="Assets\props\cabinet\cabinet.mtl">
+      <Filter>Assets\props\cabinet</Filter>
+    </None>
+    <None Include="Assets\props\cabinet\cabinet.obj">
+      <Filter>Assets\props\cabinet</Filter>
+    </None>
+    <None Include="Assets\props\desk1\desk1.mtl">
+      <Filter>Assets\props\desk1</Filter>
+    </None>
+    <None Include="Assets\props\desk1\desk1.obj">
+      <Filter>Assets\props\desk1</Filter>
+    </None>
+    <None Include="Assets\props\desk2\desk2.mtl">
+      <Filter>Assets\props\desk2</Filter>
+    </None>
+    <None Include="Assets\props\desk2\desk2.obj">
+      <Filter>Assets\props\desk2</Filter>
+    </None>
+    <None Include="Assets\props\lamp\lamp.mtl">
+      <Filter>Assets\props\lamp</Filter>
+    </None>
+    <None Include="Assets\props\lamp\lamp.obj">
+      <Filter>Assets\props\lamp</Filter>
+    </None>
+    <None Include="Assets\props\monitor2\monitor2.mtl">
+      <Filter>Assets\props\monitor2</Filter>
+    </None>
+    <None Include="Assets\props\monitor2\monitor2.obj">
+      <Filter>Assets\props\monitor2</Filter>
+    </None>
+    <None Include="Assets\props\potted-plant\potted-plant.mtl">
+      <Filter>Assets\props\potted-plant</Filter>
+    </None>
+    <None Include="Assets\props\potted-plant\potted-plant.obj">
+      <Filter>Assets\props\potted-plant</Filter>
+    </None>
+    <None Include="Assets\props\spider-plant\spider-plant.mtl">
+      <Filter>Assets\props\spider-plant</Filter>
+    </None>
+    <None Include="Assets\props\spider-plant\spider-plant.obj">
+      <Filter>Assets\props\spider-plant</Filter>
+    </None>
+    <None Include="Assets\props\trash-can\trash-can.mtl">
+      <Filter>Assets\props\trash-can</Filter>
+    </None>
+    <None Include="Assets\props\trash-can\trash-can.obj">
+      <Filter>Assets\props\trash-can</Filter>
+    </None>
+    <None Include="Assets\props\whiteboard\whiteboard.mtl">
+      <Filter>Assets\props\whiteboard</Filter>
+    </None>
+    <None Include="Assets\props\whiteboard\whiteboard.obj">
+      <Filter>Assets\props\whiteboard</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="FirstPersonShooter.rc" />
@@ -227,6 +399,48 @@
     </Text>
     <Text Include="Assets\GunRig\sniper\sniper.txt">
       <Filter>Assets\GunRig\sniper</Filter>
+    </Text>
+    <Text Include="Assets\props\office-chair-1\office-chair-1.txt">
+      <Filter>Assets\props\office-chair-1</Filter>
+    </Text>
+    <Text Include="Assets\props\office-chair-2\office-chair-2.txt">
+      <Filter>Assets\props\office-chair-2</Filter>
+    </Text>
+    <Text Include="Assets\props\dead-body\dead-body.txt">
+      <Filter>Assets\props\dead-body</Filter>
+    </Text>
+    <Text Include="Assets\props\old-paper\old-paper.txt">
+      <Filter>Assets\props\old-paper</Filter>
+    </Text>
+    <Text Include="Assets\props\bean-bag\bean-bag.txt">
+      <Filter>Assets\props\bean-bag</Filter>
+    </Text>
+    <Text Include="Assets\props\cabinet\cabinet.txt">
+      <Filter>Assets\props\cabinet</Filter>
+    </Text>
+    <Text Include="Assets\props\desk1\desk1.txt">
+      <Filter>Assets\props\desk1</Filter>
+    </Text>
+    <Text Include="Assets\props\desk2\desk2.txt">
+      <Filter>Assets\props\desk2</Filter>
+    </Text>
+    <Text Include="Assets\props\lamp\lamp.txt">
+      <Filter>Assets\props\lamp</Filter>
+    </Text>
+    <Text Include="Assets\props\monitor2\monitor2.txt">
+      <Filter>Assets\props\monitor2</Filter>
+    </Text>
+    <Text Include="Assets\props\potted-plant\potted-plant.txt">
+      <Filter>Assets\props\potted-plant</Filter>
+    </Text>
+    <Text Include="Assets\props\spider-plant\spider-plant.txt">
+      <Filter>Assets\props\spider-plant</Filter>
+    </Text>
+    <Text Include="Assets\props\trash-can\trash-can.txt">
+      <Filter>Assets\props\trash-can</Filter>
+    </Text>
+    <Text Include="Assets\props\whiteboard\whiteboard.txt">
+      <Filter>Assets\props\whiteboard</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>

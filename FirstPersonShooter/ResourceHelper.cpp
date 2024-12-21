@@ -3,6 +3,9 @@
 #include "ResourceManager.h"
 #include "MeshFactory.h"
 
+#include <filesystem>
+#include "PropLoader.hpp"
+
 void ResourceHelper::addQuad(const std::string& texturePath, std::string textureName, std::string modelName, int nSubdivs, const std::shared_ptr<DX::DeviceResources>& deviceResources)
 {
 	std::vector<VertexData> verticies;
@@ -106,4 +109,14 @@ void ResourceHelper::createSkyboxMesh(const std::string& texturePath, const std:
 
 	ResourceManager::Instance().addModel(model, name);
 
+}
+
+void ResourceHelper::LoadAllPropsModels(const std::string& propFolderPath, const std::shared_ptr<DX::DeviceResources>& deviceResources)
+{
+	auto props = PropLoader::LoadAllProps(propFolderPath);
+
+	for (const auto& prop : props)
+	{
+		ResourceManager::Instance().loadModel(prop.modelPath, deviceResources, prop.name);
+	}
 }

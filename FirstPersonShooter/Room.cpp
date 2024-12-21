@@ -141,6 +141,12 @@ void Room::Render(std::shared_ptr<RenderMaster> renderMaster)
 			}
 		}
 	}
+
+	// props
+	for (const auto& prop : m_props)
+	{
+		renderer->Render(*ResourceManager::Instance().getModel(prop.name), prop.position, prop.size, prop.rotation);
+	}
 }
 
 std::vector<int> Room::getAdjacentRooms() const

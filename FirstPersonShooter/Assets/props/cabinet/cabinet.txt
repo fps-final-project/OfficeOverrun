@@ -1,0 +1,4 @@
+cabinet
+Assets\\props\\cabinet\\cabinet.obj
+1 1.95 1.06
+0

@@ -1,0 +1,4 @@
+old-paper
+Assets\\props\\old-paper\\old-paper.obj
+1.3704 0.7833 1.198
+0

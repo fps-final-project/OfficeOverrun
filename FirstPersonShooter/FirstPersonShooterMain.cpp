@@ -23,7 +23,7 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	// Register to be notified if the Device is lost or recreated
 	m_deviceResources->RegisterDeviceNotify(this);
 
-	bool load_only_ak = false;
+	bool load_only_ak = true;
 
 	ResourceManager::Instance().loadAnimatedModel("Assets\\Enemy\\Zombie\\zombie_war.gltf", m_deviceResources);
 	ResourceManager::Instance().loadAnimatedModel("Assets\\Other\\heli\\heli.gltf", m_deviceResources);
@@ -71,6 +71,8 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	ResourceManager::Instance().loadAudioFile("Assets\\Audio\\zombie.wav", 0, m_deviceResources, "zombie");
 	ResourceManager::Instance().loadAudioFile("Assets\\Audio\\zombie_dying.wav", 0, m_deviceResources, "zombie_dying");
 	ResourceManager::Instance().loadAudioFile("Assets\\Audio\\empty-clip.wav", 0, m_deviceResources, "empty-clip");
+	
+	ResourceHelper::LoadAllPropsModels("Assets\\props", m_deviceResources);
 
 
 	m_spriteRenderer = std::make_shared<SpriteRenderer>(
@@ -90,6 +92,7 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	m_menu->RenderAndGetResponse(Windows::Foundation::Size(0, 0), false);
 
 	m_mouse->SetMode(DirectX::Mouse::MODE_RELATIVE);
+
 }
 
 FirstPersonShooterMain::~FirstPersonShooterMain()
@@ -190,7 +193,7 @@ bool FirstPersonShooterMain::Render()
 	m_lastMenuResponse = m_menu->RenderAndGetResponse(outputSize, m_gameState->IsPaused());
 
 	//m_fpsTextRenderer->Render(std::to_string(m_timer.GetFramesPerSecond()));
-	//m_fpsTextRenderer->Render(std::to_string(pos.x) + ", " +std::to_string(pos.y) + ", " + std::to_string(pos.z));
+	m_fpsTextRenderer->Render(std::to_string(m_gameState->m_player->getPostition().x) + ", " + std::to_string(m_gameState->m_player->getPostition().y) + ", " + std::to_string(m_gameState->m_player->getPostition().z), 400, 400, 300, 50);
 
 	return true;
 }
