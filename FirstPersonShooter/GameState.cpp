@@ -103,10 +103,13 @@ void GameState::RestartWithSeed(int seed)
 	}
 
 	PropInstance instance;
-	instance.name = "lamp";
+	instance.name = "potted-plant";
 	instance.position = {2.f, 0.f, 2.f};
 	instance.rotation = {0.f, 0.f, 0.f};
-	instance.size = {0.954, 1.27, 0.227};
+	instance.size = {0.373, 0.77, 0.363};
+
+
+
 
 	//instance.size = { 1.f, 1.f, 1.f };
 	m_world->m_rooms[0].m_props.push_back(instance);

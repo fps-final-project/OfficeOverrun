@@ -1,4 +1,4 @@
-office-chair
-Assets\\props\\office-chair-1\\office-chair-1.obj
-0.644 1.17 0.739
+monitor2
+Assets\\props\\monitor2\\monitor2.obj
+0.198 0.403 0.461
 0

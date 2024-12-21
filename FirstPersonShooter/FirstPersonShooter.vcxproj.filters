@@ -104,6 +104,12 @@
     <Filter Include="Assets\props\lamp">
       <UniqueIdentifier>{2670ed72-91ee-4dd4-8fbb-8208ae42de03}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\props\monitor2">
+      <UniqueIdentifier>{6639438e-18ce-4b0c-bc9e-4e952c108a0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\props\potted-plant">
+      <UniqueIdentifier>{1aae5440-3842-40c6-aec8-3ad666494fc6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -198,6 +204,12 @@
     </Image>
     <Image Include="Assets\props\lamp\Atlas_00001.png">
       <Filter>Assets\props\lamp</Filter>
+    </Image>
+    <Image Include="Assets\props\monitor2\Atlas_00001.png">
+      <Filter>Assets\props\monitor2</Filter>
+    </Image>
+    <Image Include="Assets\props\potted-plant\flowerLP_flowerLP_BaseColor.png">
+      <Filter>Assets\props\potted-plant</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
@@ -323,6 +335,18 @@
     <None Include="Assets\props\lamp\lamp.obj">
       <Filter>Assets\props\lamp</Filter>
     </None>
+    <None Include="Assets\props\monitor2\monitor2.mtl">
+      <Filter>Assets\props\monitor2</Filter>
+    </None>
+    <None Include="Assets\props\monitor2\monitor2.obj">
+      <Filter>Assets\props\monitor2</Filter>
+    </None>
+    <None Include="Assets\props\potted-plant\potted-plant.mtl">
+      <Filter>Assets\props\potted-plant</Filter>
+    </None>
+    <None Include="Assets\props\potted-plant\potted-plant.obj">
+      <Filter>Assets\props\potted-plant</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="FirstPersonShooter.rc" />
@@ -366,6 +390,12 @@
     </Text>
     <Text Include="Assets\props\lamp\lamp.txt">
       <Filter>Assets\props\lamp</Filter>
+    </Text>
+    <Text Include="Assets\props\monitor2\monitor2.txt">
+      <Filter>Assets\props\monitor2</Filter>
+    </Text>
+    <Text Include="Assets\props\potted-plant\potted-plant.txt">
+      <Filter>Assets\props\potted-plant</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>
