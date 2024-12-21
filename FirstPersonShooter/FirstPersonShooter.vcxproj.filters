@@ -101,6 +101,9 @@
     <Filter Include="Assets\props\desk2">
       <UniqueIdentifier>{01cbb4fb-5ec5-4b5c-b75f-7d3dd25f0052}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\props\lamp">
+      <UniqueIdentifier>{2670ed72-91ee-4dd4-8fbb-8208ae42de03}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -192,6 +195,9 @@
     </Image>
     <Image Include="Assets\props\desk2\Office_desk_BaseColor.png">
       <Filter>Assets\props\desk2</Filter>
+    </Image>
+    <Image Include="Assets\props\lamp\Atlas_00001.png">
+      <Filter>Assets\props\lamp</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
@@ -311,6 +317,12 @@
     <None Include="Assets\props\desk2\desk2.obj">
       <Filter>Assets\props\desk2</Filter>
     </None>
+    <None Include="Assets\props\lamp\lamp.mtl">
+      <Filter>Assets\props\lamp</Filter>
+    </None>
+    <None Include="Assets\props\lamp\lamp.obj">
+      <Filter>Assets\props\lamp</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="FirstPersonShooter.rc" />
@@ -351,6 +363,9 @@
     </Text>
     <Text Include="Assets\props\desk2\desk2.txt">
       <Filter>Assets\props\desk2</Filter>
+    </Text>
+    <Text Include="Assets\props\lamp\lamp.txt">
+      <Filter>Assets\props\lamp</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>
