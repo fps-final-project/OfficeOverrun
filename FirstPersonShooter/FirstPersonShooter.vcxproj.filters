@@ -95,6 +95,9 @@
     <Filter Include="Assets\props\cabinet">
       <UniqueIdentifier>{9053675e-037e-4168-a9d7-7cda88a86f89}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\props\desk1">
+      <UniqueIdentifier>{7701f910-7612-4229-91d3-ce05dc61bf4d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -180,6 +183,9 @@
     </Image>
     <Image Include="Assets\props\cabinet\Study_Filing_Cabinet_Material_BaseColor.png">
       <Filter>Assets\props\cabinet</Filter>
+    </Image>
+    <Image Include="Assets\props\desk1\1.jpg">
+      <Filter>Assets\props\desk1</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
@@ -287,6 +293,12 @@
     <None Include="Assets\props\cabinet\cabinet.obj">
       <Filter>Assets\props\cabinet</Filter>
     </None>
+    <None Include="Assets\props\desk1\desk1.mtl">
+      <Filter>Assets\props\desk1</Filter>
+    </None>
+    <None Include="Assets\props\desk1\desk1.obj">
+      <Filter>Assets\props\desk1</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="FirstPersonShooter.rc" />
@@ -321,6 +333,9 @@
     </Text>
     <Text Include="Assets\props\cabinet\cabinet.txt">
       <Filter>Assets\props\cabinet</Filter>
+    </Text>
+    <Text Include="Assets\props\desk1\desk1.txt">
+      <Filter>Assets\props\desk1</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>

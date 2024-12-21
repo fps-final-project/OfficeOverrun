@@ -103,10 +103,10 @@ void GameState::RestartWithSeed(int seed)
 	}
 
 	PropInstance instance;
-	instance.name = "cabinet";
+	instance.name = "desk1";
 	instance.position = {2.f, 0.f, 2.f};
 	instance.rotation = {0.f, 0.f, 0.f};
-	instance.size = {0.66, 1.28, 0.702};
+	instance.size = {1.4, 0.798, 0.6};
 
 	//instance.size = { 1.f, 1.f, 1.f };
 	m_world->m_rooms[0].m_props.push_back(instance);
