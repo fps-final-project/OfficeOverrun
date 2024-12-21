@@ -1,0 +1,4 @@
+bean-bag
+Assets\\props\\bean-bag\\bean-bag.obj
+0.839 0.509 0.849 
+0

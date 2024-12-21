@@ -89,6 +89,9 @@
     <Filter Include="Assets\props\old-paper">
       <UniqueIdentifier>{b2498303-1e88-494d-97c8-473effb719ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\props\bean-bag">
+      <UniqueIdentifier>{1b7e1f58-48dd-43c9-b10c-5250a832fd5d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -168,6 +171,9 @@
     </Image>
     <Image Include="Assets\props\old-paper\MAT_Cardboard_Base_Color.png">
       <Filter>Assets\props\old-paper</Filter>
+    </Image>
+    <Image Include="Assets\props\bean-bag\Textures_COL_2k.png">
+      <Filter>Assets\props\bean-bag</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
@@ -263,6 +269,12 @@
     <None Include="Assets\props\old-paper\old-paper.obj">
       <Filter>Assets\props\old-paper</Filter>
     </None>
+    <None Include="Assets\props\bean-bag\bean-bag.mtl">
+      <Filter>Assets\props\bean-bag</Filter>
+    </None>
+    <None Include="Assets\props\bean-bag\bean-bag.obj">
+      <Filter>Assets\props\bean-bag</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="FirstPersonShooter.rc" />
@@ -291,6 +303,9 @@
     </Text>
     <Text Include="Assets\props\old-paper\old-paper.txt">
       <Filter>Assets\props\old-paper</Filter>
+    </Text>
+    <Text Include="Assets\props\bean-bag\bean-bag.txt">
+      <Filter>Assets\props\bean-bag</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>
