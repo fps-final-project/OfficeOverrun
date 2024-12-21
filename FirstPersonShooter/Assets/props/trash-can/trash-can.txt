@@ -1,4 +1,4 @@
-office-chair
-Assets\\props\\office-chair-1\\office-chair-1.obj
-0.644 1.17 0.739
+trash-can
+Assets\\props\\trash-can\\trash-can.obj
+0.268 0.268 0.268
 0

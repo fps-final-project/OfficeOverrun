@@ -103,10 +103,10 @@ void GameState::RestartWithSeed(int seed)
 	}
 
 	PropInstance instance;
-	instance.name = "spider-plant";
+	instance.name = "whiteboard";
 	instance.position = {2.f, 0.f, 2.f};
 	instance.rotation = {0.f, 0.f, 0.f};
-	instance.size = {0.702, 0.432, 0.663};
+	instance.size = { 1.64, 1.51, 0.492 };
 
 
 

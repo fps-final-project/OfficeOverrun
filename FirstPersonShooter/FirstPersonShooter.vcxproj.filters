@@ -113,6 +113,12 @@
     <Filter Include="Assets\props\spider-plant">
       <UniqueIdentifier>{47c3d71c-be7c-4066-921e-fd17072609e1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\props\trash-can">
+      <UniqueIdentifier>{cc222e77-259a-4345-a9b7-695ad961d23c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\props\whiteboard">
+      <UniqueIdentifier>{e0070beb-5650-4032-a8d1-643132767da8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
@@ -216,6 +222,12 @@
     </Image>
     <Image Include="Assets\props\spider-plant\Atlas_00002.png">
       <Filter>Assets\props\spider-plant</Filter>
+    </Image>
+    <Image Include="Assets\props\trash-can\TrashCan_DefaultMaterial_BaseColor.jpg">
+      <Filter>Assets\props\trash-can</Filter>
+    </Image>
+    <Image Include="Assets\props\whiteboard\Untitled_2_default_BaseColor.png">
+      <Filter>Assets\props\whiteboard</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
@@ -359,6 +371,18 @@
     <None Include="Assets\props\spider-plant\spider-plant.obj">
       <Filter>Assets\props\spider-plant</Filter>
     </None>
+    <None Include="Assets\props\trash-can\trash-can.mtl">
+      <Filter>Assets\props\trash-can</Filter>
+    </None>
+    <None Include="Assets\props\trash-can\trash-can.obj">
+      <Filter>Assets\props\trash-can</Filter>
+    </None>
+    <None Include="Assets\props\whiteboard\whiteboard.mtl">
+      <Filter>Assets\props\whiteboard</Filter>
+    </None>
+    <None Include="Assets\props\whiteboard\whiteboard.obj">
+      <Filter>Assets\props\whiteboard</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="FirstPersonShooter.rc" />
@@ -411,6 +435,12 @@
     </Text>
     <Text Include="Assets\props\spider-plant\spider-plant.txt">
       <Filter>Assets\props\spider-plant</Filter>
+    </Text>
+    <Text Include="Assets\props\trash-can\trash-can.txt">
+      <Filter>Assets\props\trash-can</Filter>
+    </Text>
+    <Text Include="Assets\props\whiteboard\whiteboard.txt">
+      <Filter>Assets\props\whiteboard</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>

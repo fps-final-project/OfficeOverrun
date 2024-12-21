@@ -1,4 +1,4 @@
-office-chair
-Assets\\props\\office-chair-1\\office-chair-1.obj
-0.644 1.17 0.739
+whiteboard
+Assets\\props\\whiteboard\\whiteboard.obj
+1.64 1.51 0.492
 0
