@@ -23,6 +23,6 @@ private:
 	XAUDIO2_BUFFER* m_buffer;
 	bool empty = true;
 	bool playing = false;
-	FLOAT32 m_matrix[2];
+	FLOAT32 m_matrix[8];
 };
 

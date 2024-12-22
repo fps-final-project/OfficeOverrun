@@ -25,7 +25,7 @@ SourceVoice::~SourceVoice()
 void SourceVoice::SetEmmiterSettings(X3DAUDIO_EMITTER* emitter, X3DAUDIO_LISTENER* listener, BYTE* x3dInstance, IXAudio2Voice* masteringVoice)
 {
 	X3DAUDIO_DSP_SETTINGS dspSettings;
-	dspSettings.DstChannelCount = 2;
+	dspSettings.DstChannelCount = 8;
 	dspSettings.SrcChannelCount = 1;
 	dspSettings.pMatrixCoefficients = m_matrix;
 

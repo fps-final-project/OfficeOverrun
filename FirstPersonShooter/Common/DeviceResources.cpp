@@ -121,6 +121,22 @@ void DX::DeviceResources::CreateDeviceIndependentResources()
 			IID_PPV_ARGS(&m_wicFactory)
 			)
 		);
+
+	DX::ThrowIfFailed(
+		XAudio2Create(m_xaudio.GetAddressOf(), 0, XAUDIO2_DEFAULT_PROCESSOR)
+	);
+
+	DX::ThrowIfFailed(
+		m_xaudio->CreateMasteringVoice(&m_masteringVoice)
+	);
+
+	DWORD dwChannelMask;
+	m_masteringVoice->GetChannelMask(&dwChannelMask);
+
+	DX::ThrowIfFailed(
+		X3DAudioInitialize(dwChannelMask, X3DAUDIO_SPEED_OF_SOUND, (m_X3DInstance))
+	);
+
 }
 
 // Configures the Direct3D device, and stores handles to it and the device context.
@@ -380,20 +396,6 @@ void DX::DeviceResources::CreateWindowSizeDependentResources()
 			)
 		);
 
-	DX::ThrowIfFailed(
-		XAudio2Create(m_xaudio.GetAddressOf(), 0, XAUDIO2_DEFAULT_PROCESSOR)
-	);
-
-	DX::ThrowIfFailed(
-		m_xaudio->CreateMasteringVoice(&m_masteringVoice)
-	);
-
-	DWORD dwChannelMask;
-	m_masteringVoice->GetChannelMask(&dwChannelMask);
-
-	DX::ThrowIfFailed(
-		X3DAudioInitialize(dwChannelMask, X3DAUDIO_SPEED_OF_SOUND, (m_X3DInstance))
-	);
 
 	// Create a depth stencil view for use with 3D rendering if needed.
 	CD3D11_TEXTURE2D_DESC1 depthStencilDesc(

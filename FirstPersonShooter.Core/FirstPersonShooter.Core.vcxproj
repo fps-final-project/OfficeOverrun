@@ -238,12 +238,16 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <CompileAsWinRT>false</CompileAsWinRT>
+      <CompileAsWinRT>true</CompileAsWinRT>
+      <AdditionalIncludeDirectories>$(SolutionDir)Vendor\assimp\include;$(SolutionDir)FirstPersonShooter;$(SolutionDir)FirstPersonShooter.Core;$(SolutionDir)FirstPersonShooter.WorldGeneration;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <AdditionalLibraryDirectories>$(SolutionDir)Vendor\assimp\lib\x64;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>assimp-vc143-mtd.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -277,6 +281,7 @@
     <ClInclude Include="..\FirstPersonShooter\RoomLinkData.hpp" />
     <ClInclude Include="..\FirstPersonShooter\RoomModelGenerator.h" />
     <ClInclude Include="..\FirstPersonShooter\SimpleCollisionDetector.hpp" />
+    <ClInclude Include="..\FirstPersonShooter\SourceVoice.hpp" />
     <ClInclude Include="..\FirstPersonShooter\Stairs.h" />
     <ClInclude Include="..\FirstPersonShooter\World.h" />
     <ClInclude Include="FirstPersonShooter.Core.h" />
@@ -284,7 +289,6 @@
     <ClInclude Include="Pathfinder.h" />
     <ClInclude Include="PathNodeData.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="SourceVoice.hpp" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>

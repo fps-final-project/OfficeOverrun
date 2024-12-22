@@ -7,7 +7,7 @@
 #include "AnimatedAssimpModel.h"
 
 
-class Animable : public Drawable
+class  __declspec(dllexport) Animable : public Drawable
 {
 public:
 	Animable(std::shared_ptr<AnimatedModel> animatedModel);

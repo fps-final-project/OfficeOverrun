@@ -234,7 +234,7 @@
     <ClInclude Include="Path.h">
       <Filter>Pathfinder</Filter>
     </ClInclude>
-    <ClInclude Include="SourceVoice.hpp">
+    <ClInclude Include="..\FirstPersonShooter\SourceVoice.hpp">
       <Filter>Audio</Filter>
     </ClInclude>
   </ItemGroup>

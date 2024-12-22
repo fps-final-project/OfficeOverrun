@@ -3,7 +3,7 @@
 #include <DirectXCollision.h>
 #include <DirectXMath.h>
 
-class Hittable
+class __declspec(dllexport) Hittable
 {
 public:
 	Hittable(DirectX::BoundingBox box, DirectX::XMFLOAT3 position);
