@@ -6,6 +6,7 @@
 #include "Path.h"
 
 #include <stack>
+#include <queue>
 
 void Pathfinder::AddRoomNodes(const Room& room, std::function<bool(DirectX::XMFLOAT3)> pred)
 {
@@ -279,16 +280,17 @@ std::vector<int> Pathfinder::AStar(int start, int end) const
 	float unreachable = 100000.f;
 	std::vector<float> sol(n, unreachable);
 	std::vector<float> fScore(n, unreachable);
+	std::vector<bool> visited(n, false);
 	std::vector<int> prev(n, -1);
-	std::set<std::pair<float, int>> pq;
+	std::priority_queue<std::pair<float, int>, std::vector<std::pair<float, int>>, std::greater<std::pair<float, int>>> pq;
 
 	for (int i = 0; i < n; i++)
 	{
 		if (i == start)
 		{
-			pq.insert(std::make_pair(0, i));
+			pq.push(std::make_pair(0, i));
 		}
-		else pq.insert(std::make_pair(unreachable, i));
+		else pq.push(std::make_pair(unreachable, i));
 	}
 
 	sol[start] = 0;
@@ -297,8 +299,14 @@ std::vector<int> Pathfinder::AStar(int start, int end) const
 
 	while (!pq.empty())
 	{
-		auto elem = *pq.begin();
-		pq.erase(pq.begin());
+		auto elem = pq.top();
+		pq.pop();
+
+		if (visited[elem.second])
+			continue;
+
+		visited[elem.second] = true;
+
 		if (elem.first == unreachable || elem.second == end)
 		{
 			break;
@@ -308,15 +316,10 @@ std::vector<int> Pathfinder::AStar(int start, int end) const
 		{
 			if (fScore[elem.second] + Dist(nodes[elem.second], nodes[v]) < fScore[v])
 			{
-				auto it = pq.find(std::make_pair(fScore[v], v));
-				if (it != pq.end())
-				{
-					pq.erase(it);
-					prev[v] = elem.second;
-					sol[v] = sol[elem.second] + Dist(nodes[elem.second], nodes[v]);
-					fScore[v] = sol[v] + H(nodes[v], nodes[end]);
-					pq.insert(std::make_pair(fScore[v], v));
-				}
+				prev[v] = elem.second;
+				sol[v] = sol[elem.second] + Dist(nodes[elem.second], nodes[v]);
+				fScore[v] = sol[v] + H(nodes[v], nodes[end]);
+				pq.push(std::make_pair(fScore[v], v));
 			}
 		}
 	}
@@ -332,16 +335,17 @@ std::vector<int> Pathfinder::AStarRoom(int start, int end, int roomId) const
 	float unreachable = 100000.f;
 	std::vector<float> sol(n, unreachable);
 	std::vector<float> fScore(n, unreachable);
+	std::vector<bool> visited(n, false);
 	std::vector<int> prev(n, -1);
-	std::set<std::pair<float, int>> pq;
+	std::priority_queue<std::pair<float, int>, std::vector<std::pair<float, int>>, std::greater<std::pair<float, int>>> pq;
 
 	for (int i = roomNodeIndexPrefix[roomId]; i < roomNodeIndexPrefix[roomId + 1]; i++)
 	{
 		if (i == start)
 		{
-			pq.insert(std::make_pair(0, i));
+			pq.push(std::make_pair(0, i));
 		}
-		else pq.insert(std::make_pair(unreachable, i));
+		else pq.push(std::make_pair(unreachable, i));
 	}
 
 	sol[start - idxOffset] = 0;
@@ -350,8 +354,14 @@ std::vector<int> Pathfinder::AStarRoom(int start, int end, int roomId) const
 
 	while (!pq.empty())
 	{
-		auto elem = *pq.begin();
-		pq.erase(pq.begin());
+		auto elem = pq.top();
+		pq.pop();
+
+		if (visited[elem.second - idxOffset])
+			continue;
+
+		visited[elem.second - idxOffset] = true;
+
 		if (elem.first == unreachable || elem.second == end)
 		{
 			break;
@@ -362,15 +372,11 @@ std::vector<int> Pathfinder::AStarRoom(int start, int end, int roomId) const
 			if (v >= roomNodeIndexPrefix[roomId] && v < roomNodeIndexPrefix[roomId + 1]
 				&& sol[elem.second - idxOffset] + Dist(nodes[elem.second], nodes[v]) < sol[v - idxOffset])
 			{
-				auto it = pq.find(std::make_pair(fScore[v - idxOffset], v));
-				if (it != pq.end())
-				{
-					pq.erase(it);
-					prev[v - idxOffset] = elem.second;
-					sol[v - idxOffset] = sol[elem.second - idxOffset] + Dist(nodes[elem.second], nodes[v]);
-					fScore[v - idxOffset] = sol[v - idxOffset] + H(nodes[v], nodes[end]);
-					pq.insert(std::make_pair(fScore[v - idxOffset], v));
-				}
+				prev[v - idxOffset] = elem.second;
+				sol[v - idxOffset] = sol[elem.second - idxOffset] + Dist(nodes[elem.second], nodes[v]);
+				fScore[v - idxOffset] = sol[v - idxOffset] + H(nodes[v], nodes[end]);
+				pq.push(std::make_pair(fScore[v - idxOffset], v));
+
 			}
 		}
 	}
@@ -403,7 +409,7 @@ Pathfinder::Pathfinder(const std::vector<Room>& rooms, DirectX::XMFLOAT3 playerP
 		auto stairsIt = std::find_if(rooms[i].m_links.begin(), rooms[i].m_links.end(), [](const RoomLinkData& link) {
 			return link.orientation == OrientationData::XZX || link.orientation == OrientationData::XZZ;
 			});
-	
+
 
 
 		if (stairsIt != rooms[i].m_links.end())

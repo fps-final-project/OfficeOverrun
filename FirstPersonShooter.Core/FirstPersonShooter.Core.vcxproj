@@ -281,6 +281,7 @@
     <ClInclude Include="..\FirstPersonShooter\RoomLinkData.hpp" />
     <ClInclude Include="..\FirstPersonShooter\RoomModelGenerator.h" />
     <ClInclude Include="..\FirstPersonShooter\SimpleCollisionDetector.hpp" />
+    <ClInclude Include="..\FirstPersonShooter\SourceVoice.hpp" />
     <ClInclude Include="..\FirstPersonShooter\Stairs.h" />
     <ClInclude Include="..\FirstPersonShooter\World.h" />
     <ClInclude Include="FirstPersonShooter.Core.h" />
@@ -288,7 +289,6 @@
     <ClInclude Include="Pathfinder.h" />
     <ClInclude Include="PathNodeData.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="SourceVoice.hpp" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
