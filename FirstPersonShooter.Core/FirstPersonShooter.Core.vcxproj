@@ -285,6 +285,7 @@
     <ClInclude Include="..\FirstPersonShooter\Stairs.h" />
     <ClInclude Include="..\FirstPersonShooter\World.h" />
     <ClInclude Include="FirstPersonShooter.Core.h" />
+    <ClInclude Include="MuzzleFlash.h" />
     <ClInclude Include="Path.h" />
     <ClInclude Include="Pathfinder.h" />
     <ClInclude Include="PathNodeData.h" />
@@ -320,6 +321,7 @@
     <ClCompile Include="..\FirstPersonShooter\Stairs.cpp" />
     <ClCompile Include="..\FirstPersonShooter\World.cpp" />
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="MuzzleFlash.cpp" />
     <ClCompile Include="Pathfinder.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
