@@ -4,7 +4,10 @@
 
 class SpriteRenderer;
 
-class MuzzleFlash {
+class __declspec(dllexport) MuzzleFlash {
+	const int DEFAULT_WIDTH = 1024;
+	const int DEFAULT_HEIGHT = 768;
+
 	float timeElapsed;
 	float timePerFrame;
 	int currFrame;
@@ -16,6 +19,6 @@ public:
 	void SetPosition(int middleX, int middleY);
 	void PlayAnimation();
 	void Update(float dt);
-	void Render(std::shared_ptr<SpriteRenderer> spriteRenderer);
+	void Render(std::shared_ptr<SpriteRenderer> spriteRenderer, int screenWidth, int screenHeight);
 
 };

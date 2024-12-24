@@ -23,7 +23,7 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	// Register to be notified if the Device is lost or recreated
 	m_deviceResources->RegisterDeviceNotify(this);
 
-	bool load_only_ak = true;
+	bool load_only_ak = false;
 
 	ResourceManager::Instance().loadAnimatedModel("Assets\\Enemy\\Zombie\\zombie_war.gltf", m_deviceResources);
 	ResourceManager::Instance().loadAnimatedModel("Assets\\Other\\heli\\heli.gltf", m_deviceResources);
@@ -73,6 +73,7 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	ResourceManager::Instance().loadAudioFile("Assets\\Audio\\empty-clip.wav", 0, m_deviceResources, "empty-clip");
 	
 	ResourceHelper::LoadAllPropsModels("Assets\\props", m_deviceResources);
+	ResourceHelper::LoadAllMuzzleFlashFrames("Assets\\Other\\muzzle_flash", m_deviceResources);
 
 
 	m_spriteRenderer = std::make_shared<SpriteRenderer>(
@@ -172,13 +173,9 @@ bool FirstPersonShooterMain::Render()
 	Skybox::RenderSkybox(m_gameState->m_camera->getPosition(), 
 		m_renderMaster, ResourceManager::Instance().getModel("skybox"));
 
-	// override the depth buffer with a value close to 1, that corresponds to moving everything that got drawn far away from the screen
-	context->ClearDepthStencilView(m_deviceResources->GetDepthStencilView(), D3D11_CLEAR_DEPTH, 0.999f, 0);
-
-	m_gameState->m_player->Render(m_renderMaster);
-
 	m_spriteRenderer->BeginRendering(context, viewport);
 	Size outputSize = m_deviceResources->GetOutputSize();
+	m_gameState->m_player->getGunRig()->RenderMuzzleFlash(m_spriteRenderer, outputSize.Width, outputSize.Height);
 	UI::RenderCrosshair(outputSize, m_spriteRenderer, ResourceManager::Instance().getTexture("crosshair"));
 	if (m_gameState->m_world->lastDamage < 4.f)
 		UI::RenderDamageIndicator(outputSize, m_spriteRenderer, ResourceManager::Instance().getTexture("damage"));
@@ -187,6 +184,11 @@ bool FirstPersonShooterMain::Render()
 	auto ammoCapacity = m_gameState->m_player->getAmmoCapacity();
 	UI::RenderBulletCapacity(outputSize, m_spriteRenderer, m_fpsTextRenderer, ResourceManager::Instance().getTexture("ammo"), ammoCapacity.first, ammoCapacity.second);
 	m_spriteRenderer->EndRendering(context);
+
+	// override the depth buffer with a value close to 1, that corresponds to moving everything that got drawn far away from the screen
+	context->ClearDepthStencilView(m_deviceResources->GetDepthStencilView(), D3D11_CLEAR_DEPTH, 0.999f, 0);
+
+	m_gameState->m_player->Render(m_renderMaster);
 
 
 	// will not render unless paused

@@ -109,8 +109,6 @@ void GameState::RestartWithSeed(int seed)
 	instance.size = { 1.64, 1.51, 0.492 };
 
 
-
-
 	//instance.size = { 1.f, 1.f, 1.f };
 	m_world->m_rooms[0].m_props.push_back(instance);
 
