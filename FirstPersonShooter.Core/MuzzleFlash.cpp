@@ -46,5 +46,6 @@ void MuzzleFlash::Render(std::shared_ptr<SpriteRenderer> spriteRenderer, int scr
 			posX * screenWidth / DEFAULT_WIDTH, 
 			posY * screenHeight / DEFAULT_HEIGHT,
 			sizeX, sizeY);
+
 	}
 }

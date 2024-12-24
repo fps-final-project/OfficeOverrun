@@ -20,7 +20,7 @@ void SpriteRenderer::BeginRendering(ID3D11DeviceContext3* context, D3D11_VIEWPOR
 	context->OMGetBlendState(&state.pBlendState, state.blendFactor, &state.sampleMask);
 	context->RSGetState(&state.pRasterizerState);
 
-	m_spriteBatch->Begin();
+	m_spriteBatch->Begin(DirectX::SpriteSortMode_Deferred);
 }
 
 void SpriteRenderer::EndRendering(ID3D11DeviceContext3* context)
