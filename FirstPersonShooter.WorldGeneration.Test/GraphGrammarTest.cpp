@@ -54,11 +54,10 @@ namespace FirstPersonShooter_WorldGeneration_Test
             return GraphProduction(0, G_L, G_R);
         }
     public:
-        TEST_METHOD(Apply_AppliesGrammar_DeletesTrianglesOverStairs)
+        TEST_METHOD(Apply_AppliesGrammar_LeaveOnlyBossAdjacentToStairs)
         {
             // Main graph
             auto G = MakeMainGraph({ RoomLabel::Default, RoomLabel::Default, RoomLabel::Default, RoomLabel::Default, RoomLabel::Stairs });
-            std::vector<int> mapping = { 1, 2, 3 };
 
             // Productions
             std::vector<GraphProduction<void*>> prods = { MakeTriangleStairsProduction(), MakeDetachStairsProduction() };
@@ -66,6 +65,52 @@ namespace FirstPersonShooter_WorldGeneration_Test
             GraphGrammar<void*> grammar(prods);
 
             grammar.Apply(G);
+
+            auto ad_to_stairs = G.GetNeighbours(4);
+            Assert::AreEqual(1, (int)ad_to_stairs.size());
+            Assert::AreEqual((int)RoomLabel::Boss, G[ad_to_stairs[0]].label);
+        }
+
+        TEST_METHOD(Apply_AppliesGrammar_NoAvailableProductions)
+        {
+            // Main graph
+            auto G = MakeMainGraph({ RoomLabel::Default, RoomLabel::Default, RoomLabel::Default, RoomLabel::Default, RoomLabel::Stairs });
+
+            // Productions
+            std::vector<GraphProduction<void*>> prods = { MakeDetachStairsProduction() };
+
+            GraphGrammar<void*> grammar(prods);
+
+            grammar.Apply(G);
+
+            auto ad_to_stairs = G.GetNeighbours(4);
+            Assert::AreEqual(3, (int)ad_to_stairs.size());
+         
+            bool isDefaultOrStairs = true;
+            for (auto node : G.nodes)
+                isDefaultOrStairs &= (node.label == RoomLabel::Default || node.label == RoomLabel::Stairs);
+            Assert::IsTrue(isDefaultOrStairs);
+        }
+
+        TEST_METHOD(Apply_AppliesGrammar_AddsTreasureRooms)
+        {
+            // Main graph
+            auto G = MakeMainGraph({ RoomLabel::Default, RoomLabel::Default, RoomLabel::Default, RoomLabel::Default, RoomLabel::Stairs });
+
+            // Productions
+            std::vector<GraphProduction<void*>> prods = { MakeTriangleStairsProduction() };
+
+            GraphGrammar<void*> grammar(prods);
+
+            grammar.Apply(G);
+
+            auto ad_to_stairs = G.GetNeighbours(4);
+            Assert::AreEqual(2, (int)ad_to_stairs.size());
+
+            bool isTreasureRoom = false;
+            for (auto node : G.nodes)
+                isTreasureRoom |= node.label == RoomLabel::Treasure;
+            Assert::IsTrue(isTreasureRoom);
         }
     };
 }
