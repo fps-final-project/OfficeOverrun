@@ -1,6 +1,7 @@
 #pragma once
 #include "GraphProduction.h"
 #include <utility>
+#include <algorithm>
 #include "RNG.h"
 
 namespace WorldGenerator
@@ -13,48 +14,67 @@ namespace WorldGenerator
 		{
 		public:
 			GraphProduction<T>& production;
-			std::vector<int>& match;
+			std::vector<int> match;
 
 			void Execute(Graph<T>& G)
 			{
 				production.Apply(G, match);
 			}
+
+			ProductionExecution(GraphProduction<T>& production, std::vector<int>& match) : production(production), match(match)
+			{
+			}
 		};
 
 		std::vector<GraphProduction<T>> productions;
-		std::vector<ProductionExecution> MatchProductions(Graph<T>& G);
+		std::unique_ptr<ProductionExecution> MatchProduction(Graph<T>& G);
 
 	public:
 		void Apply(Graph<T>& G);
+
+		GraphGrammar(const std::vector<GraphProduction<T>>& productions);
 	};
 
-	template<typename T>
-	inline std::vector<GraphGrammar<T>::ProductionExecution> GraphGrammar<T>::MatchProductions(Graph<T>& G)
-	{
-		std::vector<ProductionExecution> possibles;
-		for (auto P : productions)
-		{
-			std::vector<std::vector<int>> matches = P.Match(G);
-			if (matches.empty())
-				continue;
-
-			match = RNG::SelectRandomElement(matches);
-			ProductionExecution pe = { P, match };
-			possibles.push_back(pe);
-		}
-		return possibles;
-	}
 
 	template<typename T>
 	inline void GraphGrammar<T>::Apply(Graph<T>& G)
 	{
-		std::vector<ProductionExecution> toPerform = MatchProductions(G);
-		while (toPerform.size() > 0)
+		std::unique_ptr<ProductionExecution> toPerform = MatchProduction(G);
+		while (toPerform != nullptr)
 		{
-			ProductionExecution pe = RNG::SelectRandomElement(toPerform);
-			pe.Execute(G);
+			toPerform->Execute(G);
 
-			toPerform = MatchProductions(G);
+			toPerform = MatchProduction(G);
 		}
+	}
+
+	template <typename T>
+	std::unique_ptr<typename GraphGrammar<T>::ProductionExecution> GraphGrammar<T>::MatchProduction(Graph<T>& G)
+	{
+		for (auto& P : productions)
+		{
+			std::vector<std::vector<int>> matches = P.Match(G);
+
+			// Returns highest priority match found for the lowe
+			if (!matches.empty())
+			{
+				auto match = RNG::SelectRandomElement(matches);
+				auto execution = std::make_unique<ProductionExecution>(P, match);
+				return execution;
+			}
+		}
+		return nullptr;
+	}
+
+	template<typename T>
+	inline GraphGrammar<T>::GraphGrammar(const std::vector<GraphProduction<T>>& productions)
+	{
+		this->productions = productions;
+
+		// Sort by priority ascending
+		std::sort(this->productions.begin(), this->productions.end(), [](const GraphProduction<T>& p1, const GraphProduction<T>& p2)
+			{
+				return p1.priority < p2.priority;
+			});
 	}
 }

@@ -7,12 +7,15 @@ namespace WorldGenerator
 	class GraphProduction
 	{
 	private:
+		const int MAX_PRIORITY = INT_MAX;
 		Graph<T> l_graph;
 		Graph<T> r_graph;
 
 	public:
+		int priority = MAX_PRIORITY;
+
 		// Returns where the production can be applied
-		std::vector<std::vector<int>> Match(const Graph<T> &G);
+		std::vector<std::vector<int>> Match(Graph<T> &G);
 
 		void Apply(Graph<T>& G, const std::vector<int> &match);
 
@@ -20,10 +23,25 @@ namespace WorldGenerator
 			: l_graph(l_graph), r_graph(r_graph)
 		{
 		}
+
+		GraphProduction(int priority, const Graph<T>& l_graph, const Graph<T>& r_graph)
+			: priority(priority), l_graph(l_graph), r_graph(r_graph)
+		{
+		}
+
+		GraphProduction(const GraphProduction<T>& other)
+			: priority(other.priority), l_graph(other.l_graph), r_graph(other.r_graph)
+		{
+		}
+
+		GraphProduction<T>& operator=(const GraphProduction<T>& other)
+		{
+			return GraphProduction(other);
+		}
 	};
 
 	template<typename T>
-	inline std::vector<std::vector<int>> GraphProduction<T>::Match(const Graph<T> &G)
+	inline std::vector<std::vector<int>> GraphProduction<T>::Match(Graph<T> &G)
 	{
 		return SubgraphMatcher::MatchSubgraph(l_graph, G);
 	}

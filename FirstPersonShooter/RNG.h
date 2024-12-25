@@ -7,7 +7,7 @@
 
 namespace WorldGenerator
 {
-	class RNG
+	class __declspec(dllexport) RNG
 	{
 	public:
 		static bool RandBool();
