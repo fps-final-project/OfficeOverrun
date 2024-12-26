@@ -66,8 +66,7 @@ namespace WorldGenerator
 	{
 		try
 		{
-			std::ifstream file(R"(.\TestFiles\GraphProductionReaderTest\TestCase1.txt)", std::ios::in);
-			//std::ifstream file(path, std::ios::in);
+			std::ifstream file(path, std::ios::in);
 
 			if (!file.is_open())
 				throw new std::exception("Failed to open file.");
