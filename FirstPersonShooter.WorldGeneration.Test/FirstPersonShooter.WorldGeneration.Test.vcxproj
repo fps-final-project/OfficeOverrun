@@ -250,6 +250,9 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="TestFiles\GraphProductionReaderTest\TestCase1.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\directxtk_uwp.2024.6.5.1\build\native\directxtk_uwp.targets" Condition="Exists('..\packages\directxtk_uwp.2024.6.5.1\build\native\directxtk_uwp.targets')" />

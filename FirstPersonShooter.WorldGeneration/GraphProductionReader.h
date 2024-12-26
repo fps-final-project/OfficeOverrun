@@ -66,7 +66,7 @@ namespace WorldGenerator
 	{
 		try
 		{
-			std::ifstream file("C:/Projects/Inzynierka/FirstPersonShooter.WorldGeneration.Test/TestFiles/GraphProductionReaderTest/TestCase1.txt");
+			std::ifstream file(R"(.\TestFiles\GraphProductionReaderTest\TestCase1.txt)", std::ios::in);
 			//std::ifstream file(path, std::ios::in);
 
 			if (!file.is_open())

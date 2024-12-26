@@ -90,9 +90,6 @@
     <ClCompile Include="RoomTypesGenerator.cpp">
       <Filter>WorldGenerator\RoomTypes</Filter>
     </ClCompile>
-    <ClCompile Include="GraphProductionReader.cpp">
-      <Filter>WorldGenerator\Common\Graph\GraphGrammars\Readers</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FirstPersonShooter.WorldGeneration.h" />
