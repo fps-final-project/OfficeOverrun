@@ -214,6 +214,7 @@
   <ItemGroup>
     <ClCompile Include="BinaryRoomTest.cpp" />
     <ClCompile Include="GraphGrammarTest.cpp" />
+    <ClCompile Include="GraphProductionReaderTest.cpp" />
     <ClCompile Include="GraphProductionTest.cpp" />
     <ClCompile Include="GraphTestUtils.cpp" />
     <ClCompile Include="RoomLayoutGeneratorTest.cpp" />

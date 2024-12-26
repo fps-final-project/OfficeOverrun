@@ -38,7 +38,7 @@ namespace FirstPersonShooter_WorldGeneration_Test
             G_R.AddUndirectedEdge(0, 2);
             G_R.AddUndirectedEdge(1, 2);
 
-            GraphProduction P(G_L, G_R);
+            GraphProduction P(0, G_L, G_R);
 
             // Main graph
             auto G = MakeMainGraph({ RoomLabel::Default, RoomLabel::Default, RoomLabel::Stairs, RoomLabel::Default, RoomLabel::Default });
@@ -68,7 +68,7 @@ namespace FirstPersonShooter_WorldGeneration_Test
             G_R.AddUndirectedEdge(0, 1);
             G_R.AddUndirectedEdge(0, 2);
 
-            GraphProduction P(G_L, G_R);
+            GraphProduction P(0, G_L, G_R);
 
             // Main graph
             auto G = MakeMainGraph({ RoomLabel::Default, RoomLabel::Default, RoomLabel::Stairs, RoomLabel::Default, RoomLabel::Default });

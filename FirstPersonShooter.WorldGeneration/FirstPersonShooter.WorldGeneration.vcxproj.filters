@@ -41,6 +41,9 @@
     <Filter Include="WorldGenerator\Common\Graph\GraphGrammars">
       <UniqueIdentifier>{7442b78e-eded-4d50-adff-fda33d778bf3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="WorldGenerator\Common\Graph\GraphGrammars\Readers">
+      <UniqueIdentifier>{6c787cd2-eabe-4899-8f62-ddeecaa3b16c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -86,6 +89,9 @@
     </ClCompile>
     <ClCompile Include="RoomTypesGenerator.cpp">
       <Filter>WorldGenerator\RoomTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphProductionReader.cpp">
+      <Filter>WorldGenerator\Common\Graph\GraphGrammars\Readers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -172,6 +178,9 @@
     </ClInclude>
     <ClInclude Include="GraphProduction.h">
       <Filter>WorldGenerator\Common\Graph\GraphGrammars</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphProductionReader.h">
+      <Filter>WorldGenerator\Common\Graph\GraphGrammars\Readers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

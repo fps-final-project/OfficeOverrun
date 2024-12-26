@@ -32,6 +32,9 @@
     <Filter Include="Common\Graphs\GraphGrammar">
       <UniqueIdentifier>{78058c32-4c69-4198-a158-063d2d7c5759}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Common\Graphs\GraphGrammar\Readers">
+      <UniqueIdentifier>{367385a4-2a65-4597-8022-e79b57f71ae1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="UnitTestApp.xaml" />
@@ -58,6 +61,10 @@
     </ClCompile>
     <ClCompile Include="GraphTestUtils.cpp">
       <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphGrammarTest.cpp" />
+    <ClCompile Include="GraphProductionReaderTest.cpp">
+      <Filter>Common\Graphs\GraphGrammar\Readers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
