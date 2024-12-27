@@ -9,7 +9,6 @@
 #include "Entity.hpp" 
 #include "Room.hpp" 
 #include "RenderQueue.hpp"
-#include "LightingData.hpp"
 #include "ActionTypes.hpp"
 #include <map>
 #include <set>
@@ -65,7 +64,6 @@ public:
 	void SpawnEnemyNearPlayer(int currentEnemiesNearPlayer, std::shared_ptr<Pathfinder> pathfinder, std::shared_ptr<DX::DeviceResources> deviceResources);
 	std::set<int> GetSetOfSecondNeighbours(int roomId);
 
-	LightingData GetLightingData();
 	RenderQueue CreateRenderQueue();
 
 	float lastDamage = 4.f;

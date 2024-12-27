@@ -120,3 +120,11 @@ void ResourceHelper::LoadAllPropsModels(const std::string& propFolderPath, const
 		ResourceManager::Instance().loadModel(prop.modelPath, deviceResources, prop.name);
 	}
 }
+
+void ResourceHelper::LoadAllMuzzleFlashFrames(const std::string& folderPath, const std::shared_ptr<DX::DeviceResources>& deviceResources)
+{
+	for (int i = 1; i <= 21; i++)
+	{
+		ResourceManager::Instance().loadTexture(folderPath + "\\muzzle_" + std::to_string(i) + ".png", deviceResources);
+	}
+}

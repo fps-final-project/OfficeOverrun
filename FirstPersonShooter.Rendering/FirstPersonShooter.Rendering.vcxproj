@@ -270,7 +270,6 @@
     <ClInclude Include="..\FirstPersonShooter\Content\SampleFpsTextRenderer.h" />
     <ClInclude Include="..\FirstPersonShooter\Content\ShaderStructures.h" />
     <ClInclude Include="..\FirstPersonShooter\Drawable.hpp" />
-    <ClInclude Include="..\FirstPersonShooter\LightingData.hpp" />
     <ClInclude Include="..\FirstPersonShooter\Mesh.h" />
     <ClInclude Include="..\FirstPersonShooter\MeshFactory.h" />
     <ClInclude Include="..\FirstPersonShooter\ModelRenderer.hpp" />

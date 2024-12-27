@@ -176,9 +176,6 @@
     <ClInclude Include="..\FirstPersonShooter\BoneInfo.h">
       <Filter>Model\Animation</Filter>
     </ClInclude>
-    <ClInclude Include="..\FirstPersonShooter\LightingData.hpp">
-      <Filter>Shaders</Filter>
-    </ClInclude>
     <ClInclude Include="..\FirstPersonShooter\Content\ShaderStructures.h">
       <Filter>Shaders</Filter>
     </ClInclude>

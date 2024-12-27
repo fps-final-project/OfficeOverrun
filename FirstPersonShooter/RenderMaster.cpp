@@ -27,15 +27,19 @@ void RenderMaster::setupShaders(DirectX::XMFLOAT4X4 projectionMatrix, DirectX::X
 	m_currentRenderer = RendererType::ANIMATED;
 }
 
-void RenderMaster::setLighting(const LightingData& data, const DirectX::XMVECTOR& flashlight_dir)
+void RenderMaster::setLighting(DirectX::XMFLOAT3 muzzleFlashPos, bool muzzleOn, const DirectX::XMVECTOR& flashlight_dir)
 {
 	const float cutoff = sqrt(3) / 2;
 
 	DirectX::XMFLOAT3 flashlight_dir_f3;
 	DirectX::XMStoreFloat3(&flashlight_dir_f3, flashlight_dir);
 
-	m_modelRenderer->setLighting(data);
-	m_animatedRenderer->setLighting(data);
+	DirectX::XMFLOAT4 muzzleFlashData = muzzleOn ?
+		DirectX::XMFLOAT4(muzzleFlashPos.x, muzzleFlashPos.y, muzzleFlashPos.z, 1.f) :
+		DirectX::XMFLOAT4(0, 0, 0, 0);
+
+	m_modelRenderer->setLighting(muzzleFlashData);
+	m_animatedRenderer->setLighting(muzzleFlashData);
 
 	m_modelRenderer->setFlashlight(flashlight_dir_f3, cutoff);
 	m_animatedRenderer->setFlashlight(flashlight_dir_f3, cutoff);

@@ -19,6 +19,9 @@ GunRigMetadata GunRigMetadata::loadFromFile(const std::string& path)
     file >> metadata.barrelOffset.y;
     file >> metadata.barrelOffset.z;
 
+    file >> metadata.screenBarrelOffsetX;
+    file >> metadata.screenBarrelOffsetY;
+
     file >> metadata.rigOffset.x;
     file >> metadata.rigOffset.y;
     file >> metadata.rigOffset.z;

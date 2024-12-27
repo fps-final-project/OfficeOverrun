@@ -16,4 +16,5 @@ public:
 	static void createSkyboxMesh(const std::string& texturePath, const std::shared_ptr<DX::DeviceResources>& deviceResources);
 
 	static void LoadAllPropsModels(const std::string& propFolderPath, const std::shared_ptr<DX::DeviceResources>& deviceResources);
+	static void LoadAllMuzzleFlashFrames(const std::string& folderPath, const std::shared_ptr<DX::DeviceResources>& deviceResources);
 };

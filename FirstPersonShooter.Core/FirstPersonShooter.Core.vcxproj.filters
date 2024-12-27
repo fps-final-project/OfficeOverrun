@@ -130,6 +130,9 @@
     <ClCompile Include="SourceVoice.cpp">
       <Filter>Audio</Filter>
     </ClCompile>
+    <ClCompile Include="MuzzleFlash.cpp">
+      <Filter>Entity\GunRig</Filter>
+    </ClCompile>
     <ClCompile Include="Gun.cpp">
       <Filter>GameElements</Filter>
     </ClCompile>
@@ -239,6 +242,9 @@
     </ClInclude>
     <ClInclude Include="..\FirstPersonShooter\SourceVoice.hpp">
       <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="MuzzleFlash.h">
+      <Filter>Entity\GunRig</Filter>
     </ClInclude>
     <ClInclude Include="Gun.hpp">
       <Filter>GameElements</Filter>
