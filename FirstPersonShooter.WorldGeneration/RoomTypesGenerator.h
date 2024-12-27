@@ -6,10 +6,11 @@ namespace WorldGenerator
 {
 	class RoomTypesGenerator
 	{
+	private:
+		const std::string PRODUCTIONS_DIR = R"(.\FirstPersonShooter_WorldGeneration\Grammar Configuration\Productions)";
+		void SetDefaultNodeLabels(Graph<GeneratedRoom> &adGraph);
 	public:
 		void GenerateRoomTypes(Graph<GeneratedRoom>& adGraph);
-	private:
-		void SetDefaultNodeLabels(Graph<GeneratedRoom> &adGraph);
 	};
 }
 

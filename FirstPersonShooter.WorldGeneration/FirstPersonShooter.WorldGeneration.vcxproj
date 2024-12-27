@@ -269,6 +269,7 @@
     <ClInclude Include="..\FirstPersonShooter\WeightedGraph.h" />
     <ClInclude Include="FirstPersonShooter.WorldGeneration.h" />
     <ClInclude Include="GraphGrammar.h" />
+    <ClInclude Include="GraphGrammarReader.h" />
     <ClInclude Include="GraphProduction.h" />
     <ClInclude Include="GraphProductionReader.h" />
     <ClInclude Include="pch.h" />
@@ -303,6 +304,9 @@
     </ClCompile>
     <ClCompile Include="RoomTypesGenerator.cpp" />
     <ClCompile Include="SubgraphMatcher.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Grammar Configuration\Productions\Boss_On_Stairs_Production.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -44,6 +44,12 @@
     <Filter Include="WorldGenerator\Common\Graph\GraphGrammars\Readers">
       <UniqueIdentifier>{6c787cd2-eabe-4899-8f62-ddeecaa3b16c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Grammar Configuration">
+      <UniqueIdentifier>{6319fb9f-0a27-495d-8c05-e23981bbf952}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Grammar Configuration\Productions">
+      <UniqueIdentifier>{c3afe506-6b0a-459d-a3c8-f12465844360}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -179,5 +185,13 @@
     <ClInclude Include="GraphProductionReader.h">
       <Filter>WorldGenerator\Common\Graph\GraphGrammars\Readers</Filter>
     </ClInclude>
+    <ClInclude Include="GraphGrammarReader.h">
+      <Filter>WorldGenerator\Common\Graph\GraphGrammars\Readers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Grammar Configuration\Productions\Boss_On_Stairs_Production.txt">
+      <Filter>Resource Files\Grammar Configuration\Productions</Filter>
+    </Text>
   </ItemGroup>
 </Project>
