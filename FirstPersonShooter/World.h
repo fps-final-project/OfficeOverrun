@@ -35,7 +35,6 @@ public:
 
 	void Update(float dt);
 	std::vector<std::shared_ptr<Hittable>> GetHittableEntities();
-	void DeleteEnemy(const GUID& entity);
 	void UpdateVisibleRooms();
 
 	std::map<GUID, std::shared_ptr<AnimatedEntity>, GUIDComparer> m_animatedEntities;
@@ -51,9 +50,12 @@ public:
 	void AddAnimatedObject(std::shared_ptr<AnimatedObject>& object);
 	void AddEnemy(std::shared_ptr<Enemy>& enemy);
 	void AddGun(std::shared_ptr<Gun>& gun);
+	void DeleteEnemy(const GUID& entity);
+	void DeleteGun(const GUID& entity);
 
 	void AddHelicopter();
 	bool IsPlayerNearHelicopter(DirectX::XMFLOAT3 playerPos);
+	bool IsPlayerNearGun(DirectX::XMFLOAT3 playerPos, std::string& name);
 
 	void UpdateCurrentRoom(DirectX::XMFLOAT3 playerPos);
 	void PlayEnemySounds(std::shared_ptr<DX::DeviceResources> deviceResources, Player* player) const;

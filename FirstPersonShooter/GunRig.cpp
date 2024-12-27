@@ -73,6 +73,14 @@ bool GunRig::Shoot()
 	return true;
 }
 
+void GunRig::CollectAmmo(const std::string& name, int amount)
+{
+	if (m_ammo.find(name) == m_ammo.end())
+		return;
+	
+	m_ammo[name].second += amount;
+}
+
 void GunRig::ChangeGun(const std::string& name, IXAudio2* xaudio)
 {
 	std::shared_ptr<GunRigMetadata> data = ResourceManager::Instance().getGunRigMetadata(name);
