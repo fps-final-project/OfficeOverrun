@@ -17,6 +17,7 @@ public:
 	void ChangeGun(const std::string& name, IXAudio2* xaudio);
 	void RotateAndOffset(DirectX::XMFLOAT3 yawPitchRoll, DirectX::XMFLOAT3 playerPos, float dt);
 	bool Shoot();
+	void CollectAmmo(const std::string& name, int amount);
 	DirectX::XMFLOAT3 GetBarrelOffset();
 	DirectX::XMVECTOR CalculateBulletDirection(DirectX::XMVECTOR cameraAt);
 
