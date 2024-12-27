@@ -67,6 +67,12 @@ void GameState::Update(float dt)
 	m_player->getGunRig()->RotateAndOffset(m_camera->getYawPitchRoll(), m_player->getPostition(), dt);
 	m_world->PlayEnemySounds(m_deviceResources, m_player.get());
 
+	std::string gunName;
+	if (m_world->IsPlayerNearGun(m_player->getPostition(), gunName))
+	{
+		m_player->getGunRig()->CollectAmmo(gunName, ResourceManager::Instance().getGunRigMetadata(gunName)->clipSize);
+	}
+
 
 	//TODO: Collision handling
 
