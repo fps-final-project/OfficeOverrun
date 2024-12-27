@@ -28,6 +28,13 @@ void World::UpdateVisibleRooms()
 
 World::World() : gen(std::random_device{}())
 {
+	auto gun = AnimatedObjectBuilder()
+		.WithNewObject(ResourceManager::Instance().getAnimatedModel("ak_gun"))
+		.WithPosition({ 1.0f, 1.0f, 1.0f })
+		.WithSize({ 1.0f, 1.0f, 1.0f })
+		.Build();
+
+	AddGun(std::make_shared<Gun>(Gun(*gun.get(), "ak")));
 }
 
 void World::Update(float dt)
@@ -92,6 +99,12 @@ void World::AddEnemy(std::shared_ptr<Enemy>& enemy)
 {
 	m_animatedEntities[enemy->id] = enemy;
 	m_enemies[enemy->id] = enemy;
+}
+
+void World::AddGun(std::shared_ptr<Gun>& gun)
+{
+	m_guns[gun->id] = gun;
+	m_animatedEntities[gun->id] = gun;
 }
 
 void World::AddHelicopter()

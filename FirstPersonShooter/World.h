@@ -4,6 +4,7 @@
 #include "Object.hpp"
 #include "AnimatedObject.hpp"
 #include "Enemy.hpp"
+#include "Gun.hpp"
 #include "AnimatedEntity.hpp" 
 #include "Entity.hpp" 
 #include "Room.hpp" 
@@ -40,6 +41,7 @@ public:
 	std::map<GUID, std::shared_ptr<AnimatedEntity>, GUIDComparer> m_animatedEntities;
 	std::map<GUID, std::shared_ptr<Entity>, GUIDComparer> m_entities;
 	std::map<GUID, std::shared_ptr<Enemy>, GUIDComparer> m_enemies;
+	std::map<GUID, std::shared_ptr<Gun>, GUIDComparer> m_guns;
 	
 	std::vector<Room> m_rooms;
 	int m_currentRoomIndex;
@@ -48,6 +50,7 @@ public:
 	void AddObject(std::shared_ptr<Object>& object);
 	void AddAnimatedObject(std::shared_ptr<AnimatedObject>& object);
 	void AddEnemy(std::shared_ptr<Enemy>& enemy);
+	void AddGun(std::shared_ptr<Gun>& gun);
 
 	void AddHelicopter();
 	bool IsPlayerNearHelicopter(DirectX::XMFLOAT3 playerPos);
