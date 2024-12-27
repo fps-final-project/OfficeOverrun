@@ -35,6 +35,12 @@
     <Filter Include="Common\Graphs\GraphGrammar\Readers">
       <UniqueIdentifier>{367385a4-2a65-4597-8022-e79b57f71ae1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="TestFiles">
+      <UniqueIdentifier>{cb920f9a-acf6-4543-bb3c-07b2cb0c640e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TestFiles\GraphProductionReaderTest">
+      <UniqueIdentifier>{28b32ca3-24b5-4ade-86e4-e2c6d7dcb097}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="UnitTestApp.xaml" />
@@ -62,9 +68,11 @@
     <ClCompile Include="GraphTestUtils.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="GraphGrammarTest.cpp" />
     <ClCompile Include="GraphProductionReaderTest.cpp">
       <Filter>Common\Graphs\GraphGrammar\Readers</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphGrammarTest.cpp">
+      <Filter>Common\Graphs\GraphGrammar</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -109,6 +117,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="TestFiles\GraphProductionReaderTest\TestCase1.txt" />
+    <Text Include="TestFiles\GraphProductionReaderTest\GraphProductionReaderTestCase.txt">
+      <Filter>TestFiles\GraphProductionReaderTest</Filter>
+    </Text>
   </ItemGroup>
 </Project>

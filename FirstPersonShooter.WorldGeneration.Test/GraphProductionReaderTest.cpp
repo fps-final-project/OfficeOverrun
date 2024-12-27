@@ -13,7 +13,7 @@ namespace FirstPersonShooter_WorldGeneration_Test
     public:
         TEST_METHOD(ReadGraphProduction_ReadsGraph)
         {
-            std::string filePath = R"(.\TestFiles\GraphProductionReaderTest\TestCase1.txt)";
+            std::string filePath = R"(.\TestFiles\GraphProductionReaderTest\GraphProductionReaderTestCase.txt)";
 
             auto production = GraphProductionReader::ReadGraphProduction<void*>(filePath);
 
