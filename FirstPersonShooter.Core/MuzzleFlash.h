@@ -18,6 +18,7 @@ public:
 	MuzzleFlash();
 	void SetPosition(int middleX, int middleY);
 	void PlayAnimation();
+	bool IsPlaying() const { return isPlaying; }
 	void Update(float dt);
 	void Render(std::shared_ptr<SpriteRenderer> spriteRenderer, int screenWidth, int screenHeight);
 

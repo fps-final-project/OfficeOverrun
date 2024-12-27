@@ -5,7 +5,7 @@
 
 MuzzleFlash::MuzzleFlash() 
 	: timeElapsed(0), timePerFrame(0.003), frameCount(21), 
-	currFrame(2), isPlaying(false), sizeX(128), sizeY(128),
+	currFrame(1), isPlaying(false), sizeX(128), sizeY(128),
 	posX(-1000), posY(-1000)
 {
 }
@@ -19,7 +19,7 @@ void MuzzleFlash::SetPosition(int middleX, int middleY)
 void MuzzleFlash::PlayAnimation()
 {
 	timeElapsed = 0;
-	currFrame = 2;
+	currFrame = (rand() % 3) + 1;
 	isPlaying = true;
 }
 

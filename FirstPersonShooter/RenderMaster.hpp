@@ -3,7 +3,6 @@
 #include "AnimatedModelRenderer.hpp"
 #include "ModelRenderer.hpp"
 #include "RendererType.hpp"
-#include "LightingData.hpp"
 
 
 class __declspec(dllexport) RenderMaster
@@ -12,7 +11,7 @@ public:
 	RenderMaster(const std::shared_ptr<DX::DeviceResources>& deviceResources);
 	~RenderMaster();
 	void setupShaders(DirectX::XMFLOAT4X4 projectionMatrix, DirectX::XMFLOAT4X4 viewMatrix, DirectX::XMFLOAT3 cameraPos);
-	void setLighting(const LightingData& data, const DirectX::XMVECTOR& flashlight_dir);
+	void setLighting(DirectX::XMFLOAT3 muzzleFlashPos, bool muzzleOn, const DirectX::XMVECTOR& flashlight_dir);
 
 	void renderSkybox(DirectX::XMFLOAT3 cameraPos);
 

@@ -75,11 +75,12 @@ void GunRig::ChangeGun(const std::string& name, IXAudio2* xaudio)
 		m_clipSize = data->clipSize;
 		m_gunOffset = data->gunOffset;
 		m_rigOffset = data->rigOffset;
+		m_initialBarrelOffset = data->barrelOffset;
 		m_name = data->name;
 		m_shootingAnimationSpeedup = data->shootingAnimationSpeedup;
 		m_damage = data->damage;
 
-		m_muzzleFlash.SetPosition(data->barrelOffsetX, data->barrelOffsetY);
+		m_muzzleFlash.SetPosition(data->screenBarrelOffsetX, data->screenBarrelOffsetY);
 
 		m_hands->setModel(ResourceManager::Instance().getAnimatedModel(data->name));
 		m_gun->setModel(ResourceManager::Instance().getAnimatedModel(data->name + "_gun"));
@@ -128,6 +129,11 @@ void GunRig::RotateAndOffset(DirectX::XMFLOAT3 yawPitchRoll, DirectX::XMFLOAT3 p
 
 	DirectX::XMFLOAT3 rig_offset_f3;
 	DirectX::XMStoreFloat3(&rig_offset_f3, rigPos);
+
+	// set up the barrel offset
+	DirectX::XMVECTOR newBarrelOffset = DirectX::XMLoadFloat3(&m_initialBarrelOffset);
+	newBarrelOffset = DirectX::XMVector3Transform(newBarrelOffset, rotationMatrix);
+	DirectX::XMStoreFloat3(&m_barrelOffset, DirectX::XMVectorAdd(newBarrelOffset, { playerPos.x, playerPos.y, playerPos.z, 0.f }));
 
 	this->m_hands->setPosition(rig_offset_f3);
 

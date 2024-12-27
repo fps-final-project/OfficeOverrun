@@ -253,13 +253,6 @@ void World::PlayEnemySounds(std::shared_ptr<DX::DeviceResources> deviceResources
 	}
 }
 
-LightingData World::GetLightingData()
-{
-	LightingData data;
-	//data.lightPositions.push_back({ 1.5f, 2.f, 2.f });
-	return data;
-}
-
 RenderQueue World::CreateRenderQueue()
 {
 	RenderQueue queue;

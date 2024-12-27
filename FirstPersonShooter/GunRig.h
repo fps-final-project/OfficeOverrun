@@ -22,10 +22,12 @@ public:
 
 	inline int GetDamage() { return m_damage; }
 	inline bool IsIdle() { return m_hands->isIdle(); }
+	inline bool IsMuzzleFlashOn() { return m_muzzleFlash.IsPlaying(); }
+	DirectX::XMFLOAT3 GetBarrelOffset() { return m_barrelOffset; };
 	inline int GetClipAmmo() { return m_ammo[m_name].first; }
 	inline int GetTotalAmmo() { return m_ammo[m_name].second; }
 private:
-	DirectX::XMFLOAT3 m_rigOffset, m_gunOffset;
+	DirectX::XMFLOAT3 m_rigOffset, m_gunOffset, m_initialBarrelOffset, m_barrelOffset;
 	std::shared_ptr<AnimatedEntity> m_hands, m_gun;
 	MuzzleFlash m_muzzleFlash;
 	std::unique_ptr<SourceVoice> m_gunSound, m_reloadSound, m_emptyClip;

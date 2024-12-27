@@ -7,7 +7,6 @@
 #include "Mesh.h"
 #include "Texture.h"
 #include "MeshFactory.h"
-#include "LightingData.hpp"
 
 template<typename VertexShaderBuffer, typename VertexDataType>
 class Base3DRenderer
@@ -273,15 +272,9 @@ public:
 		context->IASetInputLayout(m_inputLayout.Get());
 	}
 
-	void setLighting(const LightingData& data)
+	void setLighting(const DirectX::XMFLOAT4 pos)
 	{
-		int nlights = min(data.lightPositions.size(), LightingConstantBuffer::MAX_LIGHTS);
-		for (int i = 0; i < nlights; i++)
-		{
-			m_PSConstantBufferData.light_pos[i] = data.lightPositions[i];
-		}
-
-		m_PSConstantBufferData.nlights = nlights;
+		m_PSConstantBufferData.light_pos = pos;
 	}
 
 	void setFullyVisible()
