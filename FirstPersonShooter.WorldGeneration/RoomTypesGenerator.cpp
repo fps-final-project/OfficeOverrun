@@ -7,5 +7,9 @@ using namespace WorldGenerator;
 
 void RoomTypesGenerator::GenerateRoomTypes(Graph<GeneratedRoom>& adGraph)
 {
-	GraphGrammar<GeneratedRoom> grammar = GraphGrammarReader::ReadGraphGrammar<GeneratedRoom>(PRODUCTIONS_DIR);
+	// Read grammar based on production files
+	GraphGrammar<GeneratedRoom> grammar = GraphGrammarReader::ReadGraphGrammar<GeneratedRoom>(config.productionsDir());
+
+	// Apply the grammar to the graph
+	grammar.Apply(adGraph);
 }

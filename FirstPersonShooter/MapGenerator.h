@@ -1,12 +1,14 @@
 #pragma once
 #include "RoomLayoutGenerator.h"
 #include "RNGEngine.h"
+#include "WorldGeneratorConfig.h"
+#include "RoomTypesGenerator.h"
 
 namespace WorldGenerator
 {
 	class __declspec(dllexport) MapGenerator
 	{
 	public:
-		RoomLayout GenerateRooms(RoomLayoutConfig config, int seed);
+		RoomLayout GenerateRooms(WorldGeneratorConfig config, int seed);
 	};
 }

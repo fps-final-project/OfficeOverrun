@@ -274,9 +274,11 @@
     <ClInclude Include="GraphProductionReader.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="RoomLabel.h" />
+    <ClInclude Include="RoomTypesConfig.h" />
     <ClInclude Include="RoomTypesGenerator.h" />
     <ClInclude Include="SubgraphMatcher.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="WorldGeneratorConfig.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\FirstPersonShooter\BinaryRoom.cpp" />

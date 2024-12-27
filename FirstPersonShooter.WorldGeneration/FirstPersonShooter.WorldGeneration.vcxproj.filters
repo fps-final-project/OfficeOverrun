@@ -50,6 +50,9 @@
     <Filter Include="Resource Files\Grammar Configuration\Productions">
       <UniqueIdentifier>{c3afe506-6b0a-459d-a3c8-f12465844360}</UniqueIdentifier>
     </Filter>
+    <Filter Include="WorldGenerator\RoomTypes\Model">
+      <UniqueIdentifier>{b704f90e-16a8-4d08-95ea-c1518bd7b476}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -167,9 +170,6 @@
     <ClInclude Include="..\FirstPersonShooter\UniformRNG.h">
       <Filter>WorldGenerator\Common\RNG\Distributions</Filter>
     </ClInclude>
-    <ClInclude Include="RoomLabel.h">
-      <Filter>WorldGenerator\RoomTypes</Filter>
-    </ClInclude>
     <ClInclude Include="SubgraphMatcher.h">
       <Filter>WorldGenerator\Common\Graph\SubgraphMatcher</Filter>
     </ClInclude>
@@ -187,6 +187,15 @@
     </ClInclude>
     <ClInclude Include="GraphGrammarReader.h">
       <Filter>WorldGenerator\Common\Graph\GraphGrammars\Readers</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomLabel.h">
+      <Filter>WorldGenerator\RoomTypes\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomTypesConfig.h">
+      <Filter>WorldGenerator\RoomTypes\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldGeneratorConfig.h">
+      <Filter>WorldGenerator</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
