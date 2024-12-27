@@ -18,13 +18,19 @@ namespace WorldGenerator
 	template<typename T>
 	inline Graph<T> GraphProductionReader::ReadGraph(std::ifstream& file)
 	{
+		// Read graph nodes size
+		int n;
+		file >> n;
+
 		// Read node labels
 		std::vector<int> labels;
 		int label;
-		while (file >> label)
+		for (int i = 0; i < n; i++)
+		{
+			file >> label;
 			labels.push_back(label);
+		}
 
-		int n = labels.size();
 		Graph<T> graph(n);
 
 		// Add Nodes

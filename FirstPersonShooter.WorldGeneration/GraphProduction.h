@@ -9,9 +9,11 @@ namespace WorldGenerator
 	private:
 		Graph<T> l_graph;
 		Graph<T> r_graph;
-
-	public:
 		int priority;
+	public:
+		int Priority() { return priority; }
+		Graph<T> L_graph() { return l_graph; };
+		Graph<T> R_graph() { return r_graph; };
 
 		// Returns where the production can be applied
 		std::vector<std::vector<int>> Match(Graph<T> &G);

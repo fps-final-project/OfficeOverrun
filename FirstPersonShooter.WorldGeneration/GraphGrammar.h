@@ -72,9 +72,9 @@ namespace WorldGenerator
 		this->productions = productions;
 
 		// Sort by priority ascending
-		std::sort(this->productions.begin(), this->productions.end(), [](const GraphProduction<T>& p1, const GraphProduction<T>& p2)
+		std::sort(this->productions.begin(), this->productions.end(), [](GraphProduction<T>& p1, GraphProduction<T>& p2)
 			{
-				return p1.priority < p2.priority;
+				return p1.Priority() < p2.Priority();
 			});
 	}
 }
