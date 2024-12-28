@@ -69,39 +69,12 @@ MenuResponse Menu::RenderDefaultAndGetResponse(Windows::Foundation::Size screenS
 		const float elementHeight = 50.0f;
 
 		// Calculate initial Y position for centering the column
-		const float totalHeight = (elementHeight * 3) + (50.0f * 2); // 3 elements + 2 spacings of 50px
+		const float totalHeight = (elementHeight * 4) + 3 * 30.f + 16.f;
 		const float initialCursorY = (windowSize.y - totalHeight) * 0.5f;
 
 		// Input field for "game seed"
 		ImGui::SetCursorPosY(initialCursorY);
-		ImGui::SetCursorPosX((windowSize.x - elementWidth) * 0.5f); // Center horizontally
-
-		ImGui::SetNextItemWidth(elementWidth); // Set the width of the input field
-		ImGui::InputInt("##GameSeed", &currentSeed, 0);
-		ImGui::PushFont(labelFont); // Use the smaller font
-		ImGui::SetCursorPosX((windowSize.x - ImGui::CalcTextSize("Game seed").x) * 0.5f);
-		ImGui::Text("Game seed");
-		ImGui::PopFont();
-
-		// Vertical spacing (50px)
-		ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 50.0f);
-
-		// "Change Seed and Restart" button
-		ImGui::SetCursorPosX((windowSize.x - elementWidth) * 0.5f);
-		if (ImGui::Button("Change seed and restart", ImVec2(elementWidth, elementHeight)))
-		{
-			response.changeSeedAndRestart = true;
-		}
-
-		// Vertical spacing (50px)
-		ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 50.0f);
-
-		// "Exit" button
-		ImGui::SetCursorPosX((windowSize.x - elementWidth) * 0.5f);
-		if (ImGui::Button("Exit", ImVec2(elementWidth, elementHeight)))
-		{
-			response.exit = true;
-		}
+		RenderCommonComponents(response, elementWidth, elementHeight, windowSize);
 	}
 
 	ImGui::End();
@@ -119,7 +92,7 @@ MenuResponse Menu::RenderFinishAndGetResponse(Windows::Foundation::Size screenSi
 
 	if (ImGui::Begin("FinishMenu", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar))
 	{
-		const ImVec2 windowSize = ImVec2(500, 500);
+		const ImVec2 windowSize = ImVec2(500, 600);
 		const ImVec2 windowPos = ImVec2(
 			(screenSize.Width - windowSize.x) * 0.5f,
 			(screenSize.Height - windowSize.y) * 0.5f
@@ -133,7 +106,7 @@ MenuResponse Menu::RenderFinishAndGetResponse(Windows::Foundation::Size screenSi
 		const float elementHeight = 50.0f;
 
 		// Calculate initial Y position for centering the column
-		const float totalHeight = (elementHeight * 4) + (30.0f * 3) + 100.0f + 20.0f; // Additional space for congratulatory text
+		const float totalHeight = ((elementHeight * 4) + 3 * 30.f + 16.f) + 80.f + 50.0f; // Additional space for congratulatory text
 		const float initialCursorY = (windowSize.y - totalHeight) * 0.5f;
 
 		// Display congratulatory text
@@ -153,46 +126,8 @@ MenuResponse Menu::RenderFinishAndGetResponse(Windows::Foundation::Size screenSi
 
 		// Vertical spacing (100px)
 		ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 30.0f);
+		RenderCommonComponents(response, elementWidth, elementHeight, windowSize);
 
-		// Input field for "game seed"
-		ImGui::SetCursorPosX((windowSize.x - elementWidth) * 0.5f); // Center horizontally
-		ImGui::SetNextItemWidth(elementWidth); // Set the width of the input field
-		ImGui::InputInt("##GameSeed", &currentSeed, 0);
-		ImGui::PushFont(labelFont); // Use the smaller font
-		ImGui::SetCursorPosX((windowSize.x - ImGui::CalcTextSize("Game seed").x) * 0.5f);
-		ImGui::Text("Game seed");
-		ImGui::PopFont();
-
-		// Vertical spacing (50px)
-		ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 50.0f);
-
-		// "Change Seed and Restart" button
-		ImGui::SetCursorPosX((windowSize.x - elementWidth) * 0.5f);
-		if (ImGui::Button("Change seed and restart", ImVec2(elementWidth, elementHeight)))
-		{
-			response.changeSeedAndRestart = true;
-		}
-
-		// Vertical spacing (30px)
-		ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 30.0f);
-
-		// "Change Seed and Restart" button
-		ImGui::SetCursorPosX((windowSize.x - elementWidth) * 0.5f);
-		if (ImGui::Button("Restart with random seed", ImVec2(elementWidth, elementHeight)))
-		{
-			response.changeSeedAndRestart = true;
-			currentSeed = rand();
-		}
-
-		// Vertical spacing (30px)
-		ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 30.0f);
-
-		// "Exit" button
-		ImGui::SetCursorPosX((windowSize.x - elementWidth) * 0.5f);
-		if (ImGui::Button("Exit", ImVec2(elementWidth, elementHeight)))
-		{
-			response.exit = true;
-		}
 	}
 
 	ImGui::End();
@@ -202,4 +137,48 @@ MenuResponse Menu::RenderFinishAndGetResponse(Windows::Foundation::Size screenSi
 	response.seed = currentSeed;
 
 	return response;
+}
+
+void Menu::RenderCommonComponents(MenuResponse& response, int elementWidth, int elementHeight, ImVec2 windowSize)
+{
+	// Input field for "game seed"
+	ImGui::SetCursorPosX((windowSize.x - elementWidth) * 0.5f); // Center horizontally
+	ImGui::SetNextItemWidth(elementWidth); // Set the width of the input field
+	ImGui::InputInt("##GameSeed", &currentSeed, 0);
+	ImGui::PushFont(labelFont); // Use the smaller font
+	ImGui::SetCursorPosX((windowSize.x - ImGui::CalcTextSize("Game seed").x) * 0.5f);
+	ImGui::Text("Game seed");
+	ImGui::PopFont();
+
+	// Vertical spacing (50px)
+	ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 30.0f);
+
+	// "Change Seed and Restart" button
+	ImGui::SetCursorPosX((windowSize.x - elementWidth) * 0.5f);
+	if (ImGui::Button("Change seed and restart", ImVec2(elementWidth, elementHeight)))
+	{
+		response.changeSeedAndRestart = true;
+	}
+
+	// Vertical spacing (30px)
+	ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 30.0f);
+
+	// "Change Seed and Restart" button
+	ImGui::SetCursorPosX((windowSize.x - elementWidth) * 0.5f);
+	if (ImGui::Button("Restart with random seed", ImVec2(elementWidth, elementHeight)))
+	{
+		response.changeSeedAndRestart = true;
+		currentSeed = rand();
+	}
+
+	// Vertical spacing (30px)
+	ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 30.0f);
+
+	// "Exit" button
+	ImGui::SetCursorPosX((windowSize.x - elementWidth) * 0.5f);
+	if (ImGui::Button("Exit", ImVec2(elementWidth, elementHeight)))
+	{
+		response.exit = true;
+	}
+
 }

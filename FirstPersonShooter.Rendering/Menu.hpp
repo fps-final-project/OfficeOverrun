@@ -13,6 +13,7 @@ struct __declspec(dllexport) MenuResponse
 };
 
 struct ImFont;
+struct ImVec2;
 
 class __declspec(dllexport) Menu
 {
@@ -26,4 +27,5 @@ public:
 	void FinishFrame();
 	MenuResponse RenderDefaultAndGetResponse(Windows::Foundation::Size screenSize);
 	MenuResponse RenderFinishAndGetResponse(Windows::Foundation::Size screenSize);
+	void RenderCommonComponents(MenuResponse& response, int elementWidth, int elementHeight, ImVec2 windowSize);
 };
