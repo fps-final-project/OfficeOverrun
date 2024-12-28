@@ -12,7 +12,7 @@ GameState::GameState(
 	std::shared_ptr<DirectX::Keyboard> keyboard,
 	std::shared_ptr<DirectX::Mouse> mouse,
 	std::shared_ptr<DX::DeviceResources> deviceResources
-) : m_music(ResourceManager::Instance().getAudioFile("music"), deviceResources->GetXAudio()), m_isPaused(false)
+) : m_music(ResourceManager::Instance().getAudioFile("music"), deviceResources->GetXAudio()), m_gameStatus(GameStatus::RUNNING)
 {
 	m_keyboard = keyboard;
 	m_mouse = mouse;
@@ -33,25 +33,25 @@ GameState::GameState(
 
 void GameState::HandleInput()
 {
-	
+	if (m_gameStatus != GameStatus::RUNNING && m_gameStatus != GameStatus::PAUSED)
+		return;
+
 	auto mouseState = m_mouse->GetState();
 	auto keyboardState = m_keyboard->GetState();
-	
+
 	if (m_inputHandler->GetEscPressed({ mouseState, keyboardState }))
 		TogglePaused();
-	
+
 	m_camera->alignWithMouse(mouseState);
 	m_inputHandler->HandleInputState({ mouseState, keyboardState });
 
-	if (m_isPaused)
-		return;
-
-	m_actionHandler->HandleActions(m_player.get(), m_world.get(), m_camera.get(), m_deviceResources.get());
+	if (m_gameStatus == GameStatus::RUNNING)
+		m_actionHandler->HandleActions(m_player.get(), m_world.get(), m_camera.get(), m_deviceResources.get());
 }
 
 void GameState::Update(float dt)
 {
-	if (m_isPaused)
+	if (m_gameStatus != GameStatus::RUNNING)
 		return;
 
 	m_player->Update(dt);
@@ -73,6 +73,16 @@ void GameState::Update(float dt)
 		m_player->getGunRig()->CollectAmmo(gunName, ResourceManager::Instance().getGunRigMetadata(gunName)->clipSize);
 	}
 
+	if (this->GameFinished())
+	{
+		this->ToggleMusicAndMouse();
+		m_gameStatus = GameStatus::WON;
+	}
+	else if (this->GameLost())
+	{
+		this->ToggleMusicAndMouse();
+		m_gameStatus = GameStatus::LOST;
+	}
 
 	//TODO: Collision handling
 
@@ -110,8 +120,8 @@ void GameState::RestartWithSeed(int seed)
 
 	PropInstance instance;
 	instance.name = "whiteboard";
-	instance.position = {2.f, 0.f, 2.f};
-	instance.rotation = {0.f, 0.f, 0.f};
+	instance.position = { 2.f, 0.f, 2.f };
+	instance.rotation = { 0.f, 0.f, 0.f };
 	instance.size = { 1.64, 1.51, 0.492 };
 
 
@@ -129,11 +139,17 @@ void GameState::RestartWithSeed(int seed)
 	m_world->AddHelicopter();
 
 	m_seed = seed;
+	m_gameStatus = GameStatus::RUNNING;
 }
 
 bool GameState::GameFinished()
 {
 	return m_world->IsPlayerNearHelicopter(m_player->getPostition()) || m_player->isDead();
+}
+
+bool GameState::GameLost()
+{
+	return m_player->isDead();
 }
 
 void GameState::setupActionHandlers()
@@ -196,17 +212,24 @@ void GameState::setupActionHandlers()
 
 void GameState::TogglePaused()
 {
-	if (m_isPaused)
+	if (m_gameStatus != GameStatus::PAUSED && m_gameStatus != GameStatus::RUNNING)
+		return;
+
+	ToggleMusicAndMouse();
+	m_gameStatus = (m_gameStatus == GameStatus::RUNNING) ? GameStatus::PAUSED : GameStatus::RUNNING;
+}
+
+void GameState::ToggleMusicAndMouse()
+{
+	if (m_gameStatus == GameStatus::RUNNING)
 	{
-		m_mouse->SetMode(DirectX::Mouse::MODE_RELATIVE);
+		m_mouse->SetMode(DirectX::Mouse::MODE_ABSOLUTE);
 	}
 	else
 	{
-		m_mouse->SetMode(DirectX::Mouse::MODE_ABSOLUTE);
-
+		m_mouse->SetMode(DirectX::Mouse::MODE_RELATIVE);
 	}
 
 	m_music.TogglePlay();
 	m_actionHandler->ClearActions();
-	m_isPaused = !m_isPaused;
 }

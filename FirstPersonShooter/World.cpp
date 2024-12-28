@@ -137,7 +137,8 @@ void World::AddHelicopter()
 	float v_mid_x = mid_room_x - stairsPos.x;
 	float v_mid_z = mid_room_z - stairsPos.z;
 
-	m_helicopterPos = { stairsPos.x + 2 * v_mid_x, lastRoom.getPosition().y, stairsPos.z + 2 * v_mid_z };
+	//m_helicopterPos = { stairsPos.x + 2 * v_mid_x, lastRoom.getPosition().y, stairsPos.z + 2 * v_mid_z };
+	m_helicopterPos = { 5, 0, 5 };
 
 	auto heli = AnimatedObjectBuilder()
 		.WithNewObject(ResourceManager::Instance().getAnimatedModel("heli"))

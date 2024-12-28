@@ -17,11 +17,13 @@ struct ImFont;
 class __declspec(dllexport) Menu
 {
 	std::shared_ptr<DX::DeviceResources> m_deviceResources;
-	ImFont* buttonFont;
-	ImFont* labelFont;
+	ImFont* buttonFont, *labelFont, *titleFont;
 	int currentSeed;
 public:
 	Menu(std::shared_ptr<DX::DeviceResources> deviceResources, int currentSeed);
 	~Menu();
-	MenuResponse RenderAndGetResponse(Windows::Foundation::Size screenSize, bool paused);
+	void StartNewFrame();
+	void FinishFrame();
+	MenuResponse RenderDefaultAndGetResponse(Windows::Foundation::Size screenSize);
+	MenuResponse RenderFinishAndGetResponse(Windows::Foundation::Size screenSize);
 };
