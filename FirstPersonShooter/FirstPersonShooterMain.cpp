@@ -9,7 +9,6 @@
 #include "UI.hpp"
 
 using namespace FirstPersonShooter;
-using namespace Windows::Foundation;
 using namespace Windows::System::Threading;
 using namespace Concurrency;
 
@@ -23,7 +22,7 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	// Register to be notified if the Device is lost or recreated
 	m_deviceResources->RegisterDeviceNotify(this);
 
-	bool load_only_ak = false;
+	bool load_only_ak = true;
 
 	ResourceManager::Instance().loadAnimatedModel("Assets\\Enemy\\Zombie\\zombie_war.gltf", m_deviceResources);
 	ResourceManager::Instance().loadAnimatedModel("Assets\\Other\\heli\\heli.gltf", m_deviceResources);
@@ -71,13 +70,13 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	ResourceManager::Instance().loadAudioFile("Assets\\Audio\\zombie.wav", 0, m_deviceResources, "zombie");
 	ResourceManager::Instance().loadAudioFile("Assets\\Audio\\zombie_dying.wav", 0, m_deviceResources, "zombie_dying");
 	ResourceManager::Instance().loadAudioFile("Assets\\Audio\\empty-clip.wav", 0, m_deviceResources, "empty-clip");
-	
+
 	ResourceHelper::LoadAllPropsModels("Assets\\props", m_deviceResources);
 	ResourceHelper::LoadAllMuzzleFlashFrames("Assets\\Other\\muzzle_flash", m_deviceResources);
 
 
 	m_spriteRenderer = std::make_shared<SpriteRenderer>(
-		m_deviceResources->GetD3DDeviceContext(), 
+		m_deviceResources->GetD3DDeviceContext(),
 		ResourceManager::Instance().getTexture("empty"));
 
 	m_fpsTextRenderer = std::shared_ptr<SampleFpsTextRenderer>(new SampleFpsTextRenderer(m_deviceResources));
@@ -88,12 +87,11 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	m_gameState = std::make_unique<GameState>(keyboard, mouse, deviceResources);
 
 	m_menu = std::make_shared<Menu>(deviceResources, m_gameState->GetSeed());
-	
+
 	// HACK TO MAKE SURE CURSOR IS DISABLED BY DEFAULT
-	m_menu->RenderAndGetResponse(Windows::Foundation::Size(0, 0), false);
+	RenderMenu(Windows::Foundation::Size(0, 0));
 
 	m_mouse->SetMode(DirectX::Mouse::MODE_RELATIVE);
-
 }
 
 FirstPersonShooterMain::~FirstPersonShooterMain()
@@ -116,12 +114,6 @@ void FirstPersonShooterMain::Update()
 		{
 			float dt = m_timer.GetElapsedSeconds();
 
-			if (m_lastMenuResponse.changeSeedAndRestart)
-			{
-				m_gameState->RestartWithSeed(m_lastMenuResponse.seed);
-				m_lastMenuResponse.changeSeedAndRestart = false;
-				m_gameState->TogglePaused();
-			}
 
 			// do not change this order
 			m_gameState->HandleInput();
@@ -159,12 +151,12 @@ bool FirstPersonShooterMain::Render()
 
 	m_renderMaster->setLighting(
 		m_gameState->m_player->getGunRig()->GetBarrelOffset(),
-		m_gameState->m_player->getGunRig()->IsMuzzleFlashOn(), 
+		m_gameState->m_player->getGunRig()->IsMuzzleFlashOn(),
 		m_gameState->m_camera->getAt());
 
 	m_renderMaster->setupShaders(
-		m_gameState->m_camera->getProjectionMatrix(), 
-		m_gameState->m_camera->getViewMatrix(), 
+		m_gameState->m_camera->getProjectionMatrix(),
+		m_gameState->m_camera->getViewMatrix(),
 		m_gameState->m_camera->getPosition());
 
 	m_gameState->m_camera->getAt();
@@ -174,9 +166,9 @@ bool FirstPersonShooterMain::Render()
 	GUID entityToHit = queue.DrawAllAndClear(m_renderMaster);
 	m_gameState->m_actionHandler->SetLastHitEntity(entityToHit);
 
-	Skybox::RenderSkybox(m_gameState->m_camera->getPosition(), 
+	Skybox::RenderSkybox(m_gameState->m_camera->getPosition(),
 		m_renderMaster, ResourceManager::Instance().getModel("skybox"));
-	
+
 	Size outputSize = m_deviceResources->GetOutputSize();
 
 	// render muzzle flash in front of the gun
@@ -199,7 +191,7 @@ bool FirstPersonShooterMain::Render()
 	m_spriteRenderer->EndRendering(context);
 
 	// will not render unless paused
-	m_lastMenuResponse = m_menu->RenderAndGetResponse(outputSize, m_gameState->IsPaused());
+	RenderMenu(outputSize);
 
 	//m_fpsTextRenderer->Render(std::to_string(m_timer.GetFramesPerSecond()));
 	m_fpsTextRenderer->Render(std::to_string(m_gameState->m_player->getPostition().x) + ", " + std::to_string(m_gameState->m_player->getPostition().y) + ", " + std::to_string(m_gameState->m_player->getPostition().z), 400, 400, 300, 50);
@@ -207,9 +199,50 @@ bool FirstPersonShooterMain::Render()
 	return true;
 }
 
+void FirstPersonShooter::FirstPersonShooterMain::RenderMenu(Size outputSize)
+{
+	m_menu->StartNewFrame();
+
+	switch (m_gameState->GetStatus())
+	{
+	case GameStatus::PAUSED:
+	{
+		m_lastMenuResponse = m_menu->RenderDefaultAndGetResponse(outputSize);
+		break;
+	}
+	case GameStatus::WON:
+	{
+		m_lastMenuResponse = m_menu->RenderGameWonAndGetResponse(outputSize);
+		break;
+	}
+	case GameStatus::LOST:
+	{
+		m_lastMenuResponse = m_menu->RenderGameLostAndGetResponse(outputSize);
+		break;
+	}
+	default:
+		break;
+	}
+
+	m_menu->FinishFrame();
+
+	if (m_lastMenuResponse.changeSeedAndRestart)
+	{
+		m_gameState->ToggleMusicAndMouse();
+		m_gameState->RestartWithSeed(m_lastMenuResponse.seed);
+		m_lastMenuResponse.changeSeedAndRestart = false;
+	}
+	
+	if (m_lastMenuResponse.volumeChanged)
+	{
+		m_deviceResources->ChangeVolume(m_lastMenuResponse.volume);
+	}
+
+}
+
 bool FirstPersonShooter::FirstPersonShooterMain::ShouldClose()
 {
-	return m_gameState->GameFinished() || m_lastMenuResponse.exit;
+	return m_lastMenuResponse.exit;
 }
 
 // Notifies renderers that device resources need to be released.

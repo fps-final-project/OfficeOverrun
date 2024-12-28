@@ -19,6 +19,8 @@
 #include "GunRig.h"
 #include "Menu.hpp"
 
+using namespace Windows::Foundation;
+
 // Renders Direct2D and 3D content on the screen.
 namespace FirstPersonShooter
 {
@@ -34,6 +36,8 @@ namespace FirstPersonShooter
 		void CreateWindowSizeDependentResources();
 		void Update();
 		bool Render();
+		void RenderMenu(Size outputSize);
+
 		bool ShouldClose();
 
 		// IDeviceNotify
