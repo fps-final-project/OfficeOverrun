@@ -86,7 +86,7 @@ MenuResponse Menu::RenderDefaultAndGetResponse(Windows::Foundation::Size screenS
 	return response;
 }
 
-MenuResponse Menu::RenderFinishAndGetResponse(Windows::Foundation::Size screenSize)
+MenuResponse Menu::RenderGameWonAndGetResponse(Windows::Foundation::Size screenSize)
 {
 	MenuResponse response;
 
@@ -124,6 +124,51 @@ MenuResponse Menu::RenderFinishAndGetResponse(Windows::Foundation::Size screenSi
 		ImGui::Text("You have escaped");
 		ImGui::PopFont();
 
+		// Vertical spacing (100px)
+		ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 30.0f);
+		RenderCommonComponents(response, elementWidth, elementHeight, windowSize);
+
+	}
+
+	ImGui::End();
+	ImGui::Render();
+	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+
+	response.seed = currentSeed;
+
+	return response;
+}
+
+MenuResponse Menu::RenderGameLostAndGetResponse(Windows::Foundation::Size screenSize)
+{
+	MenuResponse response;
+
+	if (ImGui::Begin("FinishMenu", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar))
+	{
+		const ImVec2 windowSize = ImVec2(500, 600);
+		const ImVec2 windowPos = ImVec2(
+			(screenSize.Width - windowSize.x) * 0.5f,
+			(screenSize.Height - windowSize.y) * 0.5f
+		);
+
+		ImGui::SetWindowPos(windowPos, ImGuiCond_Always);
+		ImGui::SetWindowSize(windowSize, ImGuiCond_Always);
+
+		// Define common element size
+		const float elementWidth = windowSize.x * 0.7f;
+		const float elementHeight = 50.0f;
+
+		// Calculate initial Y position for centering the column
+		const float totalHeight = ((elementHeight * 4) + 3 * 30.f + 16.f) + 80.f + 20.0f;
+		const float initialCursorY = (windowSize.y - totalHeight) * 0.5f;
+
+		// Display congratulatory text
+		ImGui::SetCursorPosY(initialCursorY);
+		ImGui::PushFont(titleFont); // Use a larger font for the congratulatory text
+		ImGui::SetCursorPosX((windowSize.x - ImGui::CalcTextSize("You have died!").x) * 0.5f);
+		ImGui::Text("You have died!");
+		ImGui::PopFont();
+		
 		// Vertical spacing (100px)
 		ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 30.0f);
 		RenderCommonComponents(response, elementWidth, elementHeight, windowSize);

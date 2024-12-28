@@ -51,7 +51,7 @@ private:
 	SourceVoice m_music;
 
 	void setupActionHandlers();
-	bool GameFinished();
+	bool GameWon();
 	bool GameLost();
 
 	const float FOV = 95.0f;

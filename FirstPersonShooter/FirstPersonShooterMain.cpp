@@ -218,7 +218,12 @@ void FirstPersonShooter::FirstPersonShooterMain::RenderMenu(Size outputSize)
 	}
 	case GameStatus::WON:
 	{
-		m_lastMenuResponse = m_menu->RenderFinishAndGetResponse(outputSize);
+		m_lastMenuResponse = m_menu->RenderGameWonAndGetResponse(outputSize);
+		break;
+	}
+	case GameStatus::LOST:
+	{
+		m_lastMenuResponse = m_menu->RenderGameLostAndGetResponse(outputSize);
 		break;
 	}
 	default:
@@ -230,7 +235,7 @@ void FirstPersonShooter::FirstPersonShooterMain::RenderMenu(Size outputSize)
 
 bool FirstPersonShooter::FirstPersonShooterMain::ShouldClose()
 {
-	return m_gameState->GetStatus() == GameStatus::LOST || m_lastMenuResponse.exit;
+	return m_lastMenuResponse.exit;
 }
 
 // Notifies renderers that device resources need to be released.

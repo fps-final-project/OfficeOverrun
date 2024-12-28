@@ -73,7 +73,7 @@ void GameState::Update(float dt)
 		m_player->getGunRig()->CollectAmmo(gunName, ResourceManager::Instance().getGunRigMetadata(gunName)->clipSize);
 	}
 
-	if (this->GameFinished())
+	if (this->GameWon())
 	{
 		this->ToggleMusicAndMouse();
 		m_gameStatus = GameStatus::WON;
@@ -142,9 +142,9 @@ void GameState::RestartWithSeed(int seed)
 	m_gameStatus = GameStatus::RUNNING;
 }
 
-bool GameState::GameFinished()
+bool GameState::GameWon()
 {
-	return m_world->IsPlayerNearHelicopter(m_player->getPostition()) || m_player->isDead();
+	return m_world->IsPlayerNearHelicopter(m_player->getPostition());
 }
 
 bool GameState::GameLost()

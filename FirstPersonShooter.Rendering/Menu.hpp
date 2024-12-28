@@ -26,6 +26,7 @@ public:
 	void StartNewFrame();
 	void FinishFrame();
 	MenuResponse RenderDefaultAndGetResponse(Windows::Foundation::Size screenSize);
-	MenuResponse RenderFinishAndGetResponse(Windows::Foundation::Size screenSize);
+	MenuResponse RenderGameWonAndGetResponse(Windows::Foundation::Size screenSize);
+	MenuResponse RenderGameLostAndGetResponse(Windows::Foundation::Size screenSize);
 	void RenderCommonComponents(MenuResponse& response, int elementWidth, int elementHeight, ImVec2 windowSize);
 };
