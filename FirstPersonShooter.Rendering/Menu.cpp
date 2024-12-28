@@ -4,7 +4,8 @@
 #include "imgui_impl_uwp.h"
 #include "imgui_impl_dx11.h"
 
-Menu::Menu(std::shared_ptr<DX::DeviceResources> deviceResources, int currentSeed) : m_deviceResources(deviceResources), currentSeed(currentSeed)
+Menu::Menu(std::shared_ptr<DX::DeviceResources> deviceResources, int currentSeed) 
+	: m_deviceResources(deviceResources), currentSeed(currentSeed), currentVolume(1.f)
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
@@ -54,23 +55,23 @@ MenuResponse Menu::RenderDefaultAndGetResponse(Windows::Foundation::Size screenS
 
 	if (ImGui::Begin("Menu", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar))
 	{
-		const ImVec2 windowSize = ImVec2(500, 500); // Adjusted height to accommodate spacing
+		// Define common element size
+		const float elementWidth = 350.f;
+		const float elementHeight = 50.0f;
+
+		// Calculate initial Y position for centering the column
+		const float totalHeight = (elementHeight * 5) + 3 * 30.f + 50.f + 2 * 16.f;
+
+		const ImVec2 windowSize = ImVec2(500, totalHeight + 100.f); // Adjusted height to accommodate spacing
 		const ImVec2 windowPos = ImVec2(
 			(screenSize.Width - windowSize.x) * 0.5f,
 			(screenSize.Height - windowSize.y) * 0.5f
 		);
 
+		const float initialCursorY = (windowSize.y - totalHeight) * 0.5f;
 
 		ImGui::SetWindowPos(windowPos, ImGuiCond_Always);
 		ImGui::SetWindowSize(windowSize, ImGuiCond_Always);
-
-		// Define common element size
-		const float elementWidth = windowSize.x * 0.7f;
-		const float elementHeight = 50.0f;
-
-		// Calculate initial Y position for centering the column
-		const float totalHeight = (elementHeight * 4) + 3 * 30.f + 16.f;
-		const float initialCursorY = (windowSize.y - totalHeight) * 0.5f;
 
 		// Input field for "game seed"
 		ImGui::SetCursorPosY(initialCursorY);
@@ -127,14 +128,11 @@ MenuResponse Menu::RenderGameWonAndGetResponse(Windows::Foundation::Size screenS
 		// Vertical spacing (100px)
 		ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 30.0f);
 		RenderCommonComponents(response, elementWidth, elementHeight, windowSize);
-
 	}
 
 	ImGui::End();
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
-
-	response.seed = currentSeed;
 
 	return response;
 }
@@ -172,20 +170,29 @@ MenuResponse Menu::RenderGameLostAndGetResponse(Windows::Foundation::Size screen
 		// Vertical spacing (100px)
 		ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 30.0f);
 		RenderCommonComponents(response, elementWidth, elementHeight, windowSize);
-
 	}
 
 	ImGui::End();
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
-	response.seed = currentSeed;
-
 	return response;
 }
 
 void Menu::RenderCommonComponents(MenuResponse& response, int elementWidth, int elementHeight, ImVec2 windowSize)
 {
+	// Slider for "Volume"
+	ImGui::SetCursorPosX((windowSize.x - elementWidth) * 0.5f); // Center the slider horizontally
+	ImGui::SetNextItemWidth(elementWidth); // Set the width of the slider
+	ImGui::SliderFloat("##VolumeSlider", &currentVolume, 0.0f, 1.0f, "%.2f");
+
+	ImGui::PushFont(labelFont); // Use the smaller font for the label
+	ImGui::SetCursorPosX((windowSize.x - ImGui::CalcTextSize("Volume").x) * 0.5f); // Center the label
+	ImGui::Text("Volume");
+	ImGui::PopFont();
+
+	ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 30.0f);
+
 	// Input field for "game seed"
 	ImGui::SetCursorPosX((windowSize.x - elementWidth) * 0.5f); // Center horizontally
 	ImGui::SetNextItemWidth(elementWidth); // Set the width of the input field
@@ -196,7 +203,7 @@ void Menu::RenderCommonComponents(MenuResponse& response, int elementWidth, int 
 	ImGui::PopFont();
 
 	// Vertical spacing (50px)
-	ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 30.0f);
+	ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 50.0f);
 
 	// "Change Seed and Restart" button
 	ImGui::SetCursorPosX((windowSize.x - elementWidth) * 0.5f);
@@ -226,4 +233,6 @@ void Menu::RenderCommonComponents(MenuResponse& response, int elementWidth, int 
 		response.exit = true;
 	}
 
+	response.seed = currentSeed;
+	response.volume = currentVolume;
 }

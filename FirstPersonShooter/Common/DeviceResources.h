@@ -58,6 +58,7 @@ namespace DX
 		IXAudio2*					GetXAudio() const						{ return m_xaudio.Get(); }
 		IXAudio2MasteringVoice*		GetMasteringVoice() const				{ return m_masteringVoice; }
 		BYTE*						GetX3DInstance() const					{ return (BYTE*)m_X3DInstance; }
+		void						ChangeVolume(float volume);
 	private:
 		void CreateDeviceIndependentResources();
 		void CreateDeviceResources();

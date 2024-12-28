@@ -7,6 +7,8 @@ struct __declspec(dllexport) MenuResponse
 {
 	bool exit;
 	bool changeSeedAndRestart;
+	bool volumeChanged;
+	float volume;
 	int seed;
 
 	MenuResponse() : exit(false), changeSeedAndRestart(false), seed(-1) {}
@@ -20,6 +22,7 @@ class __declspec(dllexport) Menu
 	std::shared_ptr<DX::DeviceResources> m_deviceResources;
 	ImFont* buttonFont, *labelFont, *titleFont;
 	int currentSeed;
+	float currentVolume;
 public:
 	Menu(std::shared_ptr<DX::DeviceResources> deviceResources, int currentSeed);
 	~Menu();

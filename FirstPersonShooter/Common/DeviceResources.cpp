@@ -523,6 +523,15 @@ void DX::DeviceResources::UpdateRenderTargetSize()
 	m_outputSize.Height = max(m_outputSize.Height, 1);
 }
 
+void DX::DeviceResources::ChangeVolume(float volume)
+{
+	volume = std::clamp(volume, 0.f, 1.f);
+	volume = (volume == 0) ? 0 : std::pow(10.f, 2 * (volume - 1));
+
+	if (m_masteringVoice)
+		m_masteringVoice->SetVolume(volume);
+}
+
 // This method is called when the CoreWindow is created (or re-created).
 void DX::DeviceResources::SetWindow(CoreWindow^ window)
 {
