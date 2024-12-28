@@ -52,7 +52,6 @@ MenuResponse Menu::RenderDefaultAndGetResponse(Windows::Foundation::Size screenS
 {
 	MenuResponse response;
 
-
 	if (ImGui::Begin("Menu", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar))
 	{
 		// Define common element size
@@ -93,22 +92,22 @@ MenuResponse Menu::RenderGameWonAndGetResponse(Windows::Foundation::Size screenS
 
 	if (ImGui::Begin("FinishMenu", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar))
 	{
-		const ImVec2 windowSize = ImVec2(500, 600);
+		// Define common element size
+		const float elementWidth = 350.f;
+		const float elementHeight = 50.0f;
+
+		// Calculate initial Y position for centering the column
+		const float totalHeight = ((elementHeight * 5) + 3 * 30.f + 50.f + 2 * 16.f) + 80.f + 50.0f;
+
+		const ImVec2 windowSize = ImVec2(500, totalHeight + 100.f); // Adjusted height to accommodate spacing
 		const ImVec2 windowPos = ImVec2(
 			(screenSize.Width - windowSize.x) * 0.5f,
 			(screenSize.Height - windowSize.y) * 0.5f
 		);
 
+		const float initialCursorY = (windowSize.y - totalHeight) * 0.5f;
 		ImGui::SetWindowPos(windowPos, ImGuiCond_Always);
 		ImGui::SetWindowSize(windowSize, ImGuiCond_Always);
-
-		// Define common element size
-		const float elementWidth = windowSize.x * 0.7f;
-		const float elementHeight = 50.0f;
-
-		// Calculate initial Y position for centering the column
-		const float totalHeight = ((elementHeight * 4) + 3 * 30.f + 16.f) + 80.f + 50.0f; // Additional space for congratulatory text
-		const float initialCursorY = (windowSize.y - totalHeight) * 0.5f;
 
 		// Display congratulatory text
 		ImGui::SetCursorPosY(initialCursorY);
@@ -143,22 +142,22 @@ MenuResponse Menu::RenderGameLostAndGetResponse(Windows::Foundation::Size screen
 
 	if (ImGui::Begin("FinishMenu", nullptr, ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar))
 	{
-		const ImVec2 windowSize = ImVec2(500, 600);
+		// Define common element size
+		const float elementWidth = 350.f;
+		const float elementHeight = 50.0f;
+
+		// Calculate initial Y position for centering the column
+		const float totalHeight = ((elementHeight * 5) + 3 * 30.f + 50.f + 2 * 16.f) + 80.f + 20.0f;
+
+		const ImVec2 windowSize = ImVec2(500, totalHeight + 100.f); // Adjusted height to accommodate spacing
 		const ImVec2 windowPos = ImVec2(
 			(screenSize.Width - windowSize.x) * 0.5f,
 			(screenSize.Height - windowSize.y) * 0.5f
 		);
 
+		const float initialCursorY = (windowSize.y - totalHeight) * 0.5f;
 		ImGui::SetWindowPos(windowPos, ImGuiCond_Always);
 		ImGui::SetWindowSize(windowSize, ImGuiCond_Always);
-
-		// Define common element size
-		const float elementWidth = windowSize.x * 0.7f;
-		const float elementHeight = 50.0f;
-
-		// Calculate initial Y position for centering the column
-		const float totalHeight = ((elementHeight * 4) + 3 * 30.f + 16.f) + 80.f + 20.0f;
-		const float initialCursorY = (windowSize.y - totalHeight) * 0.5f;
 
 		// Display congratulatory text
 		ImGui::SetCursorPosY(initialCursorY);
