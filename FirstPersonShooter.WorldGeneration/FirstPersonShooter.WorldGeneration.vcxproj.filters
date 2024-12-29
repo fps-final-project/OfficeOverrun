@@ -61,6 +61,18 @@
     <Filter Include="WorldGenerator\Common\Graph\GraphGrammars\LabelHelpers">
       <UniqueIdentifier>{d13a4f4d-70d4-4679-9639-a990472d3c43}</UniqueIdentifier>
     </Filter>
+    <Filter Include="WorldGenerator\RoomContent">
+      <UniqueIdentifier>{db4af2e3-02ce-4646-a397-e884439521d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WorldGenerator\RoomContent\Model">
+      <UniqueIdentifier>{f216837e-b29b-45ff-98f6-50435a6b6ad5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WorldGenerator\Common\RNG\Distributions\DistributionImplementations">
+      <UniqueIdentifier>{aac02ede-5021-4536-9f41-050a2f394804}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WorldGenerator\RoomTypes\EnemyCountSelector">
+      <UniqueIdentifier>{314283d4-00bc-4978-99dc-ef564f590b44}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -92,9 +104,6 @@
     <ClCompile Include="..\FirstPersonShooter\DistributionFactory.cpp">
       <Filter>WorldGenerator\Common\RNG\Distributions</Filter>
     </ClCompile>
-    <ClCompile Include="..\FirstPersonShooter\UniformRNG.cpp">
-      <Filter>WorldGenerator\Common\RNG\Distributions</Filter>
-    </ClCompile>
     <ClCompile Include="PropLoader.cpp">
       <Filter>Prop</Filter>
     </ClCompile>
@@ -118,6 +127,21 @@
     </ClCompile>
     <ClCompile Include="LabelHelpers.cpp">
       <Filter>WorldGenerator\Common\Graph\GraphGrammars\LabelHelpers</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomContentGenerator.cpp">
+      <Filter>WorldGenerator\RoomContent</Filter>
+    </ClCompile>
+    <ClCompile Include="DistributionRng.cpp">
+      <Filter>WorldGenerator\Common\RNG\Distributions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\UniformRNG.cpp">
+      <Filter>WorldGenerator\Common\RNG\Distributions\DistributionImplementations</Filter>
+    </ClCompile>
+    <ClCompile Include="PoissonRNG.cpp">
+      <Filter>WorldGenerator\Common\RNG\Distributions\DistributionImplementations</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyCountSelector.cpp">
+      <Filter>WorldGenerator\RoomTypes\EnemyCountSelector</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -178,9 +202,6 @@
     <ClInclude Include="..\FirstPersonShooter\DistributionRNG.h">
       <Filter>WorldGenerator\Common\RNG\Distributions</Filter>
     </ClInclude>
-    <ClInclude Include="..\FirstPersonShooter\UniformRNG.h">
-      <Filter>WorldGenerator\Common\RNG\Distributions</Filter>
-    </ClInclude>
     <ClInclude Include="SubgraphMatcher.h">
       <Filter>WorldGenerator\Common\Graph\SubgraphMatcher</Filter>
     </ClInclude>
@@ -231,6 +252,24 @@
     </ClInclude>
     <ClInclude Include="LabelHelpers.h">
       <Filter>WorldGenerator\Common\Graph\GraphGrammars\LabelHelpers</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomContentGenerator.h">
+      <Filter>WorldGenerator\RoomContent</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomContentGeneratorConfig.h">
+      <Filter>WorldGenerator\RoomContent\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="DistributionParameters.h">
+      <Filter>WorldGenerator\Common\RNG\Distributions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\UniformRNG.h">
+      <Filter>WorldGenerator\Common\RNG\Distributions\DistributionImplementations</Filter>
+    </ClInclude>
+    <ClInclude Include="PoissonRNG.h">
+      <Filter>WorldGenerator\Common\RNG\Distributions\DistributionImplementations</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyCountSelector.h">
+      <Filter>WorldGenerator\RoomTypes\EnemyCountSelector</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

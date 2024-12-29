@@ -25,6 +25,9 @@ RoomLayout MapGenerator::GenerateRooms(WorldGeneratorConfig config, int seed)
 	// Generate room types
 	room_types_generator.GenerateRoomTypes(adGraph);
 
+	// Generate enemies in rooms
+	room_types_generator.GenerateEnemies(adGraph);
+
 	// Generate roomlink objects with respect to the graph structure
 	layout_generator.GenerateRoomLinks(adGraph);
 

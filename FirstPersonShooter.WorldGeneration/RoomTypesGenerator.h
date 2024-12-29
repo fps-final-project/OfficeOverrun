@@ -9,12 +9,13 @@ namespace WorldGenerator
 	{
 	private:
 		RoomTypesConfig config;
-		void SetDefaultNodeLabel(Graph<GeneratedRoom>& adGraph, int v);
+		void SetDefaultNodeLabel(Graph<GeneratedRoom> &adGraph, int v);
 	public:
 		void SetDefaultNodeLabels(Graph<GeneratedRoom> &adGraph);
-		void GenerateRoomTypes(Graph<GeneratedRoom>& adGraph);
-		RoomTypesGenerator(const RoomTypesConfig& config)
+		void GenerateRoomTypes(Graph<GeneratedRoom> &adGraph);
+		RoomTypesGenerator(const RoomTypesConfig &config)
 			: config(config) {};
+		void GenerateEnemies(Graph<GeneratedRoom>& adGraph);
 	};
 }
 

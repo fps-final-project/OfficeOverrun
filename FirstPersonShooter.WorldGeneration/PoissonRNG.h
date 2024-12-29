@@ -7,7 +7,7 @@
 
 namespace WorldGenerator
 {
-	class UniformRNG : public DistributionRNG
+	class PoissonRNG : public DistributionRNG
 	{
 	public:
 		int RandIntInRange(int min, int max) override;

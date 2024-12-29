@@ -2,9 +2,8 @@
 
 namespace WorldGenerator
 {
-	enum Distribution
+	class RoomContentGenerator
 	{
-		Uniform,
-		Poisson
 	};
 }
+

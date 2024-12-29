@@ -4,6 +4,7 @@
 #include "GraphGrammarReader.h";
 #include "RoomLabel.h"
 #include "RoomGraphExtensions.h"
+#include "EnemyCountSelector.h"
 
 using namespace WorldGenerator;
 
@@ -36,4 +37,10 @@ void RoomTypesGenerator::GenerateRoomTypes(Graph<GeneratedRoom>& adGraph)
 
 	// Apply the grammar to the graph
 	grammar.Apply(adGraph);
+}
+
+void RoomTypesGenerator::GenerateEnemies(Graph<GeneratedRoom>& adGraph)
+{
+	for (int i = 0; i < adGraph.Size(); i++)
+		adGraph[i].value->enemies = EnemyCountSelector::SelectEnemyCount((RoomLabel)adGraph[i].label);
 }
