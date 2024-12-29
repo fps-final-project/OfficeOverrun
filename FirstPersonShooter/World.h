@@ -29,6 +29,8 @@ class __declspec(dllexport) World
 	std::set<int> m_visibleRooms;
 	DirectX::XMFLOAT3 m_helicopterPos;
 	std::mt19937 gen;
+
+	void SpawnEnemyInRoom(int room_idx, std::shared_ptr<Pathfinder> pathfinder, std::shared_ptr<DX::DeviceResources> deviceResources);
 public:
 	World();
 
@@ -61,6 +63,7 @@ public:
 	void UpdateEnemies(std::shared_ptr<Pathfinder> pathfinder, DirectX::XMFLOAT3 playerPos,
 		std::shared_ptr<std::queue<Action>>& actionQueue, std::shared_ptr<DX::DeviceResources> deviceResources);
 
+	void SpawnBaseEnemies(std::shared_ptr<Pathfinder> pathfinder, std::shared_ptr<DX::DeviceResources> deviceResources);
 	void SpawnEnemyNearPlayer(int currentEnemiesNearPlayer, std::shared_ptr<Pathfinder> pathfinder, std::shared_ptr<DX::DeviceResources> deviceResources);
 	std::set<int> GetSetOfSecondNeighbours(int roomId);
 

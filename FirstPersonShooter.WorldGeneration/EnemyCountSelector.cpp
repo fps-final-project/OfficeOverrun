@@ -27,6 +27,8 @@ int EnemyCountSelector::SelectEnemyCount(RoomLabel roomType)
 	{
 	case Normal:
 		return DefaultRoom();
+	case Stairs:
+		return DefaultRoom();
 	case Boss:
 		return BossRoom();
 	default:
