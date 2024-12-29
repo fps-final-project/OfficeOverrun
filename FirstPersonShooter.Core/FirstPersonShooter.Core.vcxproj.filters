@@ -130,6 +130,12 @@
     <ClCompile Include="SourceVoice.cpp">
       <Filter>Audio</Filter>
     </ClCompile>
+    <ClCompile Include="MuzzleFlash.cpp">
+      <Filter>Entity\GunRig</Filter>
+    </ClCompile>
+    <ClCompile Include="Gun.cpp">
+      <Filter>GameElements</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -234,8 +240,14 @@
     <ClInclude Include="Path.h">
       <Filter>Pathfinder</Filter>
     </ClInclude>
-    <ClInclude Include="SourceVoice.hpp">
+    <ClInclude Include="..\FirstPersonShooter\SourceVoice.hpp">
       <Filter>Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="MuzzleFlash.h">
+      <Filter>Entity\GunRig</Filter>
+    </ClInclude>
+    <ClInclude Include="Gun.hpp">
+      <Filter>GameElements</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

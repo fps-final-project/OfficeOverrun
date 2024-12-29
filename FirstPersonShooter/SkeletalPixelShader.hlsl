@@ -1,18 +1,16 @@
-static const int MAX_LIGHTS = 20;
-
 cbuffer LightingConstantBuffer : register(b1)
 {
-
-	int nlights;                     // 4 bytes
 	int fully_visible;               // 4 bytes
 	float flashlight_cutoffAngle;    // 4 bytes
 	int pad1;
+	int pad11;
 	float3 flashlight_dir;           // 12 bytes
 	int pad2;
 	float3 camera_pos;               // 12 bytes
 	int pad3;
-	float3 light_pos[20];            // Each float3 is 12 bytes + 4 bytes padding per element
+	float4 light_pos;
 }
+
 struct PixelShaderInput
 {
 	float4 pos : SV_POSITION;
@@ -76,9 +74,9 @@ if (fully_visible)
 }
 else
 {
-	for (int i = 0; i < nlights; i++)
+	if (light_pos.w != 0)
 	{
-		final_light += float3(1.f, 1.f, 1.f) * phong_lighting(light_pos[i], input.model_pos, input.normal, 0.09, 0.032);
+		final_light += float3(1.f, 1.f, 1.f) * phong_lighting(light_pos.xyz, input.model_pos, input.normal, 0.35, 0.44);
 	}
 	final_light += float3(1.f, 1.f, 1.f) * flashlight(camera_pos, input.model_pos, input.normal);
 }

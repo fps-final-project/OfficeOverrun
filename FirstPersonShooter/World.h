@@ -4,11 +4,11 @@
 #include "Object.hpp"
 #include "AnimatedObject.hpp"
 #include "Enemy.hpp"
+#include "Gun.hpp"
 #include "AnimatedEntity.hpp" 
 #include "Entity.hpp" 
 #include "Room.hpp" 
 #include "RenderQueue.hpp"
-#include "LightingData.hpp"
 #include "ActionTypes.hpp"
 #include <map>
 #include <set>
@@ -34,12 +34,12 @@ public:
 
 	void Update(float dt);
 	std::vector<std::shared_ptr<Hittable>> GetHittableEntities();
-	void DeleteEnemy(const GUID& entity);
 	void UpdateVisibleRooms();
 
 	std::map<GUID, std::shared_ptr<AnimatedEntity>, GUIDComparer> m_animatedEntities;
 	std::map<GUID, std::shared_ptr<Entity>, GUIDComparer> m_entities;
 	std::map<GUID, std::shared_ptr<Enemy>, GUIDComparer> m_enemies;
+	std::map<GUID, std::shared_ptr<Gun>, GUIDComparer> m_guns;
 	
 	std::vector<Room> m_rooms;
 	int m_currentRoomIndex;
@@ -48,9 +48,13 @@ public:
 	void AddObject(std::shared_ptr<Object>& object);
 	void AddAnimatedObject(std::shared_ptr<AnimatedObject>& object);
 	void AddEnemy(std::shared_ptr<Enemy>& enemy);
+	void AddGun(std::shared_ptr<Gun>& gun);
+	void DeleteEnemy(const GUID& entity);
+	void DeleteGun(const GUID& entity);
 
 	void AddHelicopter();
 	bool IsPlayerNearHelicopter(DirectX::XMFLOAT3 playerPos);
+	bool IsPlayerNearGun(DirectX::XMFLOAT3 playerPos, std::string& name);
 
 	void UpdateCurrentRoom(DirectX::XMFLOAT3 playerPos);
 	void PlayEnemySounds(std::shared_ptr<DX::DeviceResources> deviceResources, Player* player) const;
@@ -60,7 +64,6 @@ public:
 	void SpawnEnemyNearPlayer(int currentEnemiesNearPlayer, std::shared_ptr<Pathfinder> pathfinder, std::shared_ptr<DX::DeviceResources> deviceResources);
 	std::set<int> GetSetOfSecondNeighbours(int roomId);
 
-	LightingData GetLightingData();
 	RenderQueue CreateRenderQueue();
 
 	float lastDamage = 4.f;

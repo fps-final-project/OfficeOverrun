@@ -194,7 +194,7 @@ void WorldGenerator::RoomSelector::AddSpareVertices()
 		AddHVertexToG(v);
 
 		std::vector<int> connected = H.GetIngoingNeighbours(v);
-		auto is_in_G = [&](int w) { return H_G_map[w] > 0; };
+		auto is_in_G = [&](int w) { return H_G_map[w] >= 0; };
 		int u = *std::find_if(connected.begin(), connected.end(), is_in_G);
 		G.AddUndirectedEdge(H_G_map[u], H_G_map[v]);
 

@@ -1,0 +1,4 @@
+whiteboard
+Assets\\props\\whiteboard\\whiteboard.obj
+1.64 1.51 0.492
+0

@@ -1,0 +1,4 @@
+office-chair-2
+Assets\\props\\office-chair-2\\office-chair-2.obj
+0.859 1.34 0.886
+0

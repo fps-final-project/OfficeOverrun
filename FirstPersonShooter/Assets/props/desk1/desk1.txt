@@ -1,0 +1,4 @@
+desk1
+Assets\\props\\desk1\\desk1.obj
+1.4 0.798 0.6
+0

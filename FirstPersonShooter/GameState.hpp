@@ -12,6 +12,8 @@
 #include "Pathfinder.h"
 #include "SourceVoice.hpp"
 
+enum class __declspec(dllexport) GameStatus { RUNNING, PAUSED, WON, LOST, END };
+
 class __declspec(dllexport) GameState
 {
 public:
@@ -34,7 +36,13 @@ public:
 	void Update(float dt);
 	void CreateWindowSizeDependentResources();
 
-	bool GameFinished();
+	void RestartWithSeed(int seed);
+
+	GameStatus GetStatus() const { return m_gameStatus; }
+	int GetSeed() const { return m_seed; }
+
+	void TogglePaused();
+	void ToggleMusicAndMouse();
 private:
 	std::shared_ptr<DirectX::Keyboard> m_keyboard;
 	std::shared_ptr<DirectX::Mouse> m_mouse;
@@ -43,8 +51,12 @@ private:
 	SourceVoice m_music;
 
 	void setupActionHandlers();
+	bool GameWon();
+	bool GameLost();
 
 	const float FOV = 95.0f;
 
+	GameStatus m_gameStatus;
+	int m_seed;
 };
 

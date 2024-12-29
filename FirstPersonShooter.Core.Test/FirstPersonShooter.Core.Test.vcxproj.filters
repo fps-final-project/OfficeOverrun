@@ -48,5 +48,6 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="FirstPersonShooter.Core.Test_TemporaryKey.pfx" />
+    <None Include="..\Vendor\assimp\lib\x64\assimp-vc143-mtd.dll" />
   </ItemGroup>
 </Project>

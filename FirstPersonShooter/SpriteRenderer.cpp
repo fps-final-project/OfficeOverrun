@@ -4,7 +4,8 @@
 
 using namespace Windows::Foundation;
 
-SpriteRenderer::SpriteRenderer(ID3D11DeviceContext3* context)
+SpriteRenderer::SpriteRenderer(ID3D11DeviceContext3* context, std::shared_ptr<Texture> emptyTexture)
+	: emptyTexture(emptyTexture)
 {
 	m_spriteBatch = std::make_unique<DirectX::SpriteBatch>(context);
 }
@@ -19,7 +20,7 @@ void SpriteRenderer::BeginRendering(ID3D11DeviceContext3* context, D3D11_VIEWPOR
 	context->OMGetBlendState(&state.pBlendState, state.blendFactor, &state.sampleMask);
 	context->RSGetState(&state.pRasterizerState);
 
-	m_spriteBatch->Begin();
+	m_spriteBatch->Begin(DirectX::SpriteSortMode_Deferred);
 }
 
 void SpriteRenderer::EndRendering(ID3D11DeviceContext3* context)
@@ -45,4 +46,16 @@ void SpriteRenderer::Render(const std::shared_ptr<Texture>& texture, int x, int 
 	rect.bottom = y + sizeY;
 
 	this->m_spriteBatch->Draw(texture->shaderResourceView.Get(), rect);
+}
+
+void SpriteRenderer::Render(DirectX::XMFLOAT4 color, int x, int y, int sizeX, int sizeY)
+{
+	RECT rect;
+	rect.left = x;
+	rect.top = y;
+	rect.right = x + sizeX;
+	rect.bottom = y + sizeY;
+
+	
+	this->m_spriteBatch->Draw(emptyTexture->shaderResourceView.Get(), rect, DirectX::XMLoadFloat4(&color));
 }

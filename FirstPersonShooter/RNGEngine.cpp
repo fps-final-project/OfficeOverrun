@@ -10,8 +10,7 @@ RNGEngine* RNGEngine::GetInstance()
 {
 	if (instance_ == nullptr)
 		instance_ = new RNGEngine();
-	else
-		return instance_;
+	return instance_;
 }
 
 void RNGEngine::SetSeed(unsigned int seed)

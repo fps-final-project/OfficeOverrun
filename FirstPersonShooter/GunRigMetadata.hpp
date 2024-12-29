@@ -8,7 +8,9 @@ struct GunRigMetadata
 	float shootingAnimationSpeedup;
 	DirectX::XMFLOAT3 gunOffset;
 	DirectX::XMFLOAT3 barrelOffset;
+	int screenBarrelOffsetX, screenBarrelOffsetY;
 	DirectX::XMFLOAT3 rigOffset;
 	int damage;
+	int clipSize;
 	static GunRigMetadata loadFromFile(const std::string& path);
 };

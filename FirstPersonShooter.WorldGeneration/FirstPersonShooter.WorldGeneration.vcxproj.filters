@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="WorldGenerator">
       <UniqueIdentifier>{9d651966-8583-4dd8-9402-ae2d5879f898}</UniqueIdentifier>
     </Filter>
@@ -53,6 +49,9 @@
     <Filter Include="WorldGenerator\RoomTypes\Model">
       <UniqueIdentifier>{b704f90e-16a8-4d08-95ea-c1518bd7b476}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Prop">
+      <UniqueIdentifier>{ab7f60a5-6ea7-4d16-8ab4-9fe7eae806fa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -92,6 +91,10 @@
     </ClCompile>
     <ClCompile Include="..\FirstPersonShooter\UniformRNG.cpp">
       <Filter>WorldGenerator\Common\RNG\Distributions</Filter>
+    </ClCompile>
+    <ClCompile Include="SubgraphMatcher.cpp" />
+    <ClCompile Include="PropLoader.cpp">
+      <Filter>Prop</Filter>
     </ClCompile>
     <ClCompile Include="SubgraphMatcher.cpp">
       <Filter>WorldGenerator\Common\Graph\SubgraphMatcher</Filter>
@@ -196,6 +199,15 @@
     </ClInclude>
     <ClInclude Include="WorldGeneratorConfig.h">
       <Filter>WorldGenerator</Filter>
+    </ClInclude>
+    <ClInclude Include="Prop.hpp">
+      <Filter>Prop</Filter>
+    </ClInclude>
+    <ClInclude Include="PropLoader.hpp">
+      <Filter>Prop</Filter>
+    </ClInclude>
+    <ClInclude Include="PropInstance.hpp">
+      <Filter>Prop</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -22,6 +22,7 @@ public:
 	DirectX::XMFLOAT3 getPostition();
 
 
+	inline std::pair<int, int> getAmmoCapacity() { return std::make_pair(m_gunRig->GetClipAmmo(), m_gunRig->GetTotalAmmo()); }
 	inline int getHealth() { return m_health; }
 	inline bool isDead() { return m_health <= 0; }
 	inline std::shared_ptr<X3DAUDIO_LISTENER> getAudioListener() { return m_listener; }

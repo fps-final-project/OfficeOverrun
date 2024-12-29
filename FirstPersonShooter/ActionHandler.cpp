@@ -29,9 +29,8 @@ void ActionHandler::HandleActions(Player* player, World* world, Camera* camera, 
 			}
 			case ActionType::SHOOT:
 			{
-				if (gunRig->IsIdle())
+				if (gunRig->IsIdle() && gunRig->Shoot())
 				{
-					gunRig->Shoot();
 					auto entity = world->m_enemies.find(m_lastHitEntity);
 					if (entity != world->m_enemies.end())
 					{
@@ -127,6 +126,7 @@ void ActionHandler::HandleActions(Player* player, World* world, Camera* camera, 
 				player->getGunRig()->ChangeGun("sniper", deviceResources->GetXAudio());
 				break;
 			}
+			
 		}
 	}
 
@@ -134,4 +134,10 @@ void ActionHandler::HandleActions(Player* player, World* world, Camera* camera, 
 	DirectX::XMFLOAT3 acc;
 	DirectX::XMStoreFloat3(&acc, normalized_acceleration);
 	player->setAcceleration({acc.x, -defaultGravity, acc.z});
+}
+
+void ActionHandler::ClearActions()
+{
+	while (!m_actionQueue->empty())
+		m_actionQueue->pop();
 }

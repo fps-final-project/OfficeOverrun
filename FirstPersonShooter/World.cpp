@@ -28,6 +28,13 @@ void World::UpdateVisibleRooms()
 
 World::World() : gen(std::random_device{}())
 {
+	auto gun = AnimatedObjectBuilder()
+		.WithNewObject(ResourceManager::Instance().getAnimatedModel("ak_gun"))
+		.WithPosition({ 2.0f, 0.5f, 3.0f })
+		.WithSize({ 0.5f, 0.5f, 0.5f })
+		.Build();
+
+	AddGun(std::make_shared<Gun>(Gun(*gun.get(), "ak")));
 }
 
 void World::Update(float dt)
@@ -42,6 +49,15 @@ void World::Update(float dt)
 	{
 		entity.second->Update(dt);
 	}
+
+	for (auto& gun : m_guns)
+	{
+		XMFLOAT3 oldRotation = gun.second->getRotation();
+		XMFLOAT3 newRotation = { oldRotation.x, oldRotation.y + dt * XM_PI, oldRotation.z};
+		gun.second->setRotation(newRotation);
+		
+	}
+
 	if (lastDamage < 100.f)
 		lastDamage += dt;
 	/*if (m_animatedEntities.size() && m_animatedEntities[0].isIdle())
@@ -78,6 +94,16 @@ void World::DeleteEnemy(const GUID& entityId)
 	}
 }
 
+void World::DeleteGun(const GUID& entityId)
+{
+	if (m_guns.find(entityId) != m_guns.end())
+	{
+		m_guns.erase(entityId);
+		m_entities.erase(entityId);
+		m_animatedEntities.erase(entityId);
+	}
+}
+
 void World::AddObject(std::shared_ptr<Object>& object)
 {
 	m_entities[object->id] = object;
@@ -92,6 +118,12 @@ void World::AddEnemy(std::shared_ptr<Enemy>& enemy)
 {
 	m_animatedEntities[enemy->id] = enemy;
 	m_enemies[enemy->id] = enemy;
+}
+
+void World::AddGun(std::shared_ptr<Gun>& gun)
+{
+	m_guns[gun->id] = gun;
+	m_animatedEntities[gun->id] = gun;
 }
 
 void World::AddHelicopter()
@@ -128,6 +160,23 @@ bool World::IsPlayerNearHelicopter(DirectX::XMFLOAT3 playerPos)
 		(playerPos.z - m_helicopterPos.z) * (playerPos.z - m_helicopterPos.z) < distanceThreshold * distanceThreshold;
 }
 
+bool World::IsPlayerNearGun(DirectX::XMFLOAT3 playerPos, std::string& name)
+{
+	float distanceThreshold = 1.f;
+	for (const auto& [_, gun] : m_guns)
+	{
+		if (playerPos.y > gun->getPosition().y &&
+			(playerPos.x - gun->getPosition().x) * (playerPos.x - gun->getPosition().x) +
+			(playerPos.z - gun->getPosition().z) * (playerPos.z - gun->getPosition().z) < distanceThreshold * distanceThreshold)
+		{
+			name = gun->GetGunName();
+			DeleteGun(gun->id);
+			return true;
+		}
+	}
+	return false;
+}
+
 void World::UpdateCurrentRoom(DirectX::XMFLOAT3 playerPos)
 {
 	for (auto neighbour : m_rooms[m_currentRoomIndex].getAdjacentRooms())
@@ -144,8 +193,8 @@ void World::UpdateCurrentRoom(DirectX::XMFLOAT3 playerPos)
 void World::UpdateEnemies(std::shared_ptr<Pathfinder> pathfinder, DirectX::XMFLOAT3 playerPos,
 	std::shared_ptr<std::queue<Action>>& actionQueue, std::shared_ptr<DX::DeviceResources> deviceResources)
 {
-	std::vector<GUID> enemiesToDelete;
 	auto secondNeighbors = GetSetOfSecondNeighbours(m_currentRoomIndex);
+	int closeEnemies = 0;
 
 	for (const auto& [_, enemy] : m_enemies)
 	{
@@ -155,24 +204,21 @@ void World::UpdateEnemies(std::shared_ptr<Pathfinder> pathfinder, DirectX::XMFLO
 			actionQueue->push(action);
 		}
 
-		if (!enemy->inCloseProximity() && std::none_of(secondNeighbors.begin(), secondNeighbors.end(), [&](int roomId) {
+		if (enemy->inCloseProximity() || std::any_of(secondNeighbors.begin(), secondNeighbors.end(), [&](int roomId){
 			return m_rooms[roomId].insideRoom(enemy->getPosition());
 			}))
 		{
-			enemiesToDelete.push_back(enemy->id);
+			closeEnemies++;
 		}
 	}
 
-	for (const auto& enemyId : enemiesToDelete)
-		DeleteEnemy(enemyId);
-
-	SpawnEnemyNearPlayer(m_enemies.size(), pathfinder, deviceResources);
+	SpawnEnemyNearPlayer(closeEnemies, pathfinder, deviceResources);
 }
 
 void World::SpawnEnemyNearPlayer(int currentEnemiesNearPlayer,
 	std::shared_ptr<Pathfinder> pathfinder, std::shared_ptr<DX::DeviceResources> deviceResources)
 {
-	const int maxEnemiesNearPlayer = 4;
+	const int maxEnemiesNearPlayer = 1;
 	const float wallOffset = 0.5f;
 	if (currentEnemiesNearPlayer < maxEnemiesNearPlayer)
 	{
@@ -251,13 +297,6 @@ void World::PlayEnemySounds(std::shared_ptr<DX::DeviceResources> deviceResources
 		enemy->getSound()->PlaySound(false);
 
 	}
-}
-
-LightingData World::GetLightingData()
-{
-	LightingData data;
-	data.lightPositions.push_back({ 1.5f, 2.f, 2.f });
-	return data;
 }
 
 RenderQueue World::CreateRenderQueue()

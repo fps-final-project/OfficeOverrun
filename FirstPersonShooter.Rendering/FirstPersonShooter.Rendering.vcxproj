@@ -225,7 +225,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)Vendor\assimp\include;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Vendor\imgui;$(SolutionDir)FirstPersonShooter;$(SolutionDir)Vendor\assimp\include;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -241,13 +241,20 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <CompileAsWinRT>false</CompileAsWinRT>
+      <CompileAsWinRT>true</CompileAsWinRT>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)Vendor\imgui;$(SolutionDir)FirstPersonShooter;$(SolutionDir)Vendor\assimp\include;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <AdditionalLibraryDirectories>$(SolutionDir)Vendor\assimp\lib\x64;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>assimp-vc143-mtd.lib;d2d1.lib;d3d11.lib;dxgi.lib;windowscodecs.lib;dwrite.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <FxCompile>
+      <ShaderModel>5.0</ShaderModel>
+    </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\FirstPersonShooter\AnimatedAssimpModel.h" />
@@ -263,7 +270,6 @@
     <ClInclude Include="..\FirstPersonShooter\Content\SampleFpsTextRenderer.h" />
     <ClInclude Include="..\FirstPersonShooter\Content\ShaderStructures.h" />
     <ClInclude Include="..\FirstPersonShooter\Drawable.hpp" />
-    <ClInclude Include="..\FirstPersonShooter\LightingData.hpp" />
     <ClInclude Include="..\FirstPersonShooter\Mesh.h" />
     <ClInclude Include="..\FirstPersonShooter\MeshFactory.h" />
     <ClInclude Include="..\FirstPersonShooter\ModelRenderer.hpp" />
@@ -274,9 +280,19 @@
     <ClInclude Include="..\FirstPersonShooter\SpriteRenderer.hpp" />
     <ClInclude Include="..\FirstPersonShooter\Texture.h" />
     <ClInclude Include="..\FirstPersonShooter\TextureFactory.h" />
+    <ClInclude Include="..\Vendor\imgui\imconfig.h" />
+    <ClInclude Include="..\Vendor\imgui\imgui.h" />
+    <ClInclude Include="..\Vendor\imgui\imgui_impl_dx11.h" />
+    <ClInclude Include="..\Vendor\imgui\imgui_impl_uwp.h" />
+    <ClInclude Include="..\Vendor\imgui\imgui_internal.h" />
+    <ClInclude Include="..\Vendor\imgui\imstb_rectpack.h" />
+    <ClInclude Include="..\Vendor\imgui\imstb_textedit.h" />
+    <ClInclude Include="..\Vendor\imgui\imstb_truetype.h" />
     <ClInclude Include="FirstPersonShooter.Rendering.h" />
+    <ClInclude Include="Menu.hpp" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="UI.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\FirstPersonShooter\AnimatedModelRenderer.cpp" />
@@ -291,7 +307,15 @@
     <ClCompile Include="..\FirstPersonShooter\Skybox.cpp" />
     <ClCompile Include="..\FirstPersonShooter\SpriteRenderer.cpp" />
     <ClCompile Include="..\FirstPersonShooter\TextureFactory.cpp" />
+    <ClCompile Include="..\Vendor\imgui\imgui.cpp" />
+    <ClCompile Include="..\Vendor\imgui\imgui_demo.cpp" />
+    <ClCompile Include="..\Vendor\imgui\imgui_draw.cpp" />
+    <ClCompile Include="..\Vendor\imgui\imgui_impl_dx11.cpp" />
+    <ClCompile Include="..\Vendor\imgui\imgui_impl_uwp.cpp" />
+    <ClCompile Include="..\Vendor\imgui\imgui_tables.cpp" />
+    <ClCompile Include="..\Vendor\imgui\imgui_widgets.cpp" />
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -302,6 +326,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="..\FirstPersonShooter\Content\SamplePixelShader.hlsl">

@@ -14,6 +14,7 @@ using namespace Windows::UI::Input;
 using namespace Windows::System;
 using namespace Windows::Foundation;
 using namespace Windows::Graphics::Display;
+using namespace Windows::UI::ViewManagement;
 
 // The main function is only used to initialize our IFrameworkView class.
 [Platform::MTAThread]
@@ -48,6 +49,7 @@ void App::Initialize(CoreApplicationView^ applicationView)
 
 	CoreApplication::Resuming +=
 		ref new EventHandler<Platform::Object^>(this, &App::OnResuming);
+
 
 	// At this point we have access to the device. 
 	// We can create the device-dependent resources.

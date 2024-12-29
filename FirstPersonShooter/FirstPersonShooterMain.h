@@ -17,6 +17,9 @@
 #include "Camera.hpp"
 #include "World.h"
 #include "GunRig.h"
+#include "Menu.hpp"
+
+using namespace Windows::Foundation;
 
 // Renders Direct2D and 3D content on the screen.
 namespace FirstPersonShooter
@@ -33,6 +36,8 @@ namespace FirstPersonShooter
 		void CreateWindowSizeDependentResources();
 		void Update();
 		bool Render();
+		void RenderMenu(Size outputSize);
+
 		bool ShouldClose();
 
 		// IDeviceNotify
@@ -43,10 +48,11 @@ namespace FirstPersonShooter
 		// Cached pointer to device resources.
 		std::shared_ptr<DX::DeviceResources> m_deviceResources;
 
-		std::unique_ptr<SpriteRenderer> m_spriteRenderer;
-		std::unique_ptr<SampleFpsTextRenderer> m_fpsTextRenderer;
+		std::shared_ptr<SpriteRenderer> m_spriteRenderer;
+		std::shared_ptr<SampleFpsTextRenderer> m_fpsTextRenderer;
 
 		std::shared_ptr<RenderMaster> m_renderMaster;
+		std::shared_ptr<Menu> m_menu;
 
 		std::unique_ptr<DirectX::CommonStates> m_states;
 		std::unique_ptr<GameState> m_gameState;
@@ -57,5 +63,6 @@ namespace FirstPersonShooter
 		std::shared_ptr<DirectX::Keyboard> m_keyboard;
 		std::shared_ptr<DirectX::Mouse> m_mouse;
 
+		MenuResponse m_lastMenuResponse;
 	};
 }

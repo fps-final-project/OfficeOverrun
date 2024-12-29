@@ -1,0 +1,4 @@
+lamp
+Assets\\props\\lamp\\lamp.obj
+0.954 1.27 0.227
+0

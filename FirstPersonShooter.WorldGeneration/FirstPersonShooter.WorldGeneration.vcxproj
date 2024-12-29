@@ -236,7 +236,9 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <CompileAsWinRT>false</CompileAsWinRT>
+      <CompileAsWinRT>true</CompileAsWinRT>
+      <AdditionalIncludeDirectories>$(SolutionDir)FirstPersonShooter;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -275,6 +277,9 @@
     <ClInclude Include="GraphProductionReader.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="RoomGraphExtensions.h" />
+    <ClInclude Include="Prop.hpp" />
+    <ClInclude Include="PropInstance.hpp" />
+    <ClInclude Include="PropLoader.hpp" />
     <ClInclude Include="RoomLabel.h" />
     <ClInclude Include="RoomTypesConfig.h" />
     <ClInclude Include="RoomTypesGenerator.h" />
@@ -307,6 +312,7 @@
     </ClCompile>
     <ClCompile Include="RoomGraphExtensions.cpp" />
     <ClCompile Include="RoomTypesGenerator.cpp" />
+    <ClCompile Include="PropLoader.cpp" />
     <ClCompile Include="SubgraphMatcher.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -4,7 +4,7 @@
 
 Player::Player(IXAudio2* xaudio)
 	: m_position({0.f, 0.f, 0.f}), m_velocity({0.f, 0.f, 0.f}),
-	m_gunRig(std::make_unique<GunRig>("ak", xaudio)), m_isOnGround(true), m_health(100)
+	m_gunRig(std::make_unique<GunRig>("ak", xaudio)), m_isOnGround(true), m_health(1000)
 {
 	m_listener = std::make_shared<X3DAUDIO_LISTENER>();
 	m_listener->OrientTop = { 0.f, 1.f, 0.f };

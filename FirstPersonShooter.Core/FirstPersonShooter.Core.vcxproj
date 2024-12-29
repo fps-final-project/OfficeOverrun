@@ -225,7 +225,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <CompileAsWinRT>true</CompileAsWinRT>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir)Vendor\assimp\include;$(SolutionDir)FirstPersonShooter;$(SolutionDir)FirstPersonShooter.Core;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Vendor\assimp\include;$(SolutionDir)FirstPersonShooter;$(SolutionDir)FirstPersonShooter.Core;$(SolutionDir)FirstPersonShooter.WorldGeneration;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -238,12 +238,16 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <CompileAsWinRT>false</CompileAsWinRT>
+      <CompileAsWinRT>true</CompileAsWinRT>
+      <AdditionalIncludeDirectories>$(SolutionDir)Vendor\assimp\include;$(SolutionDir)FirstPersonShooter;$(SolutionDir)FirstPersonShooter.Core;$(SolutionDir)FirstPersonShooter.WorldGeneration;$(ProjectDir);$(GeneratedFilesDir);$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <AdditionalLibraryDirectories>$(SolutionDir)Vendor\assimp\lib\x64;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>assimp-vc143-mtd.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -277,14 +281,16 @@
     <ClInclude Include="..\FirstPersonShooter\RoomLinkData.hpp" />
     <ClInclude Include="..\FirstPersonShooter\RoomModelGenerator.h" />
     <ClInclude Include="..\FirstPersonShooter\SimpleCollisionDetector.hpp" />
+    <ClInclude Include="..\FirstPersonShooter\SourceVoice.hpp" />
     <ClInclude Include="..\FirstPersonShooter\Stairs.h" />
     <ClInclude Include="..\FirstPersonShooter\World.h" />
     <ClInclude Include="FirstPersonShooter.Core.h" />
+    <ClInclude Include="MuzzleFlash.h" />
+    <ClInclude Include="Gun.hpp" />
     <ClInclude Include="Path.h" />
     <ClInclude Include="Pathfinder.h" />
     <ClInclude Include="PathNodeData.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="SourceVoice.hpp" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
@@ -316,6 +322,8 @@
     <ClCompile Include="..\FirstPersonShooter\Stairs.cpp" />
     <ClCompile Include="..\FirstPersonShooter\World.cpp" />
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="MuzzleFlash.cpp" />
+    <ClCompile Include="Gun.cpp" />
     <ClCompile Include="Pathfinder.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
