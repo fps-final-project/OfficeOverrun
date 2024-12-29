@@ -310,7 +310,8 @@
     <ClCompile Include="SubgraphMatcher.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Grammar Configuration\Productions\Boss_On_Stairs_Production.txt" />
+    <Text Include="Grammar Configuration\Productions\Boss_On_Stairs_OneEntrance.txt" />
+    <Text Include="Grammar Configuration\Productions\Boss_On_Stairs_Triangle.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
