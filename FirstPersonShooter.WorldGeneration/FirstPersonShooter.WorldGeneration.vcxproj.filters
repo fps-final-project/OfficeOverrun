@@ -271,6 +271,15 @@
     <ClInclude Include="EnemyCountSelector.h">
       <Filter>WorldGenerator\RoomTypes\EnemyCountSelector</Filter>
     </ClInclude>
+    <ClInclude Include="Prop.hpp">
+      <Filter>Prop</Filter>
+    </ClInclude>
+    <ClInclude Include="PropLoader.hpp">
+      <Filter>Prop</Filter>
+    </ClInclude>
+    <ClInclude Include="PropInstance.hpp">
+      <Filter>Prop</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Grammar Configuration\Productions\Default_To_Normal.txt">
