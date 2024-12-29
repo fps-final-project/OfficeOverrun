@@ -318,6 +318,7 @@
   <ItemGroup>
     <Text Include="Grammar Configuration\Productions\Boss_On_Stairs_OneEntrance.txt" />
     <Text Include="Grammar Configuration\Productions\Boss_On_Stairs_Triangle.txt" />
+    <Text Include="Grammar Configuration\Productions\Default_To_Normal.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

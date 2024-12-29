@@ -40,17 +40,23 @@
     <Filter Include="WorldGenerator\Common\Graph\GraphGrammars\Readers">
       <UniqueIdentifier>{6c787cd2-eabe-4899-8f62-ddeecaa3b16c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\Grammar Configuration">
-      <UniqueIdentifier>{6319fb9f-0a27-495d-8c05-e23981bbf952}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\Grammar Configuration\Productions">
-      <UniqueIdentifier>{c3afe506-6b0a-459d-a3c8-f12465844360}</UniqueIdentifier>
-    </Filter>
     <Filter Include="WorldGenerator\RoomTypes\Model">
       <UniqueIdentifier>{b704f90e-16a8-4d08-95ea-c1518bd7b476}</UniqueIdentifier>
     </Filter>
     <Filter Include="Prop">
       <UniqueIdentifier>{ab7f60a5-6ea7-4d16-8ab4-9fe7eae806fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WorldGenerator\Common\GeneratedRoom">
+      <UniqueIdentifier>{af84c32a-a5f8-40d3-8c93-a65d09fb8e24}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WorldGenerator\Common\GeneratedRoom\Model">
+      <UniqueIdentifier>{85879682-47fe-409c-a75a-1a4c8f99409c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets">
+      <UniqueIdentifier>{140ee019-91b9-408c-975d-07f26204d6a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Assets\Grammar Productions">
+      <UniqueIdentifier>{4248c3f5-1af3-4220-aa0a-1b466f7770f9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -74,12 +80,6 @@
     <ClCompile Include="..\FirstPersonShooter\BinaryRoom.cpp">
       <Filter>WorldGenerator\RoomLayout\BSP</Filter>
     </ClCompile>
-    <ClCompile Include="..\FirstPersonShooter\GeneratedRoom.cpp">
-      <Filter>WorldGenerator\RoomLayout\Model</Filter>
-    </ClCompile>
-    <ClCompile Include="..\FirstPersonShooter\RoomLink.cpp">
-      <Filter>WorldGenerator\RoomLayout\Model</Filter>
-    </ClCompile>
     <ClCompile Include="..\FirstPersonShooter\RoomSelector.cpp">
       <Filter>WorldGenerator\RoomLayout\RooomSelector</Filter>
     </ClCompile>
@@ -92,7 +92,6 @@
     <ClCompile Include="..\FirstPersonShooter\UniformRNG.cpp">
       <Filter>WorldGenerator\Common\RNG\Distributions</Filter>
     </ClCompile>
-    <ClCompile Include="SubgraphMatcher.cpp" />
     <ClCompile Include="PropLoader.cpp">
       <Filter>Prop</Filter>
     </ClCompile>
@@ -101,6 +100,18 @@
     </ClCompile>
     <ClCompile Include="RoomTypesGenerator.cpp">
       <Filter>WorldGenerator\RoomTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="SubgraphMatcher.cpp">
+      <Filter>WorldGenerator\Common\Graph\SubgraphMatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomGraphExtensions.cpp">
+      <Filter>WorldGenerator\Common\GeneratedRoom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\GeneratedRoom.cpp">
+      <Filter>WorldGenerator\Common\GeneratedRoom\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\FirstPersonShooter\RoomLink.cpp">
+      <Filter>WorldGenerator\Common\GeneratedRoom\Model</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -137,19 +148,10 @@
     <ClInclude Include="..\FirstPersonShooter\BinaryRoom.h">
       <Filter>WorldGenerator\RoomLayout\BSP</Filter>
     </ClInclude>
-    <ClInclude Include="..\FirstPersonShooter\GeneratedRoom.h">
-      <Filter>WorldGenerator\RoomLayout\Model</Filter>
-    </ClInclude>
     <ClInclude Include="..\FirstPersonShooter\RoomLayout.h">
       <Filter>WorldGenerator\RoomLayout\Model</Filter>
     </ClInclude>
     <ClInclude Include="..\FirstPersonShooter\RoomLayoutConfig.h">
-      <Filter>WorldGenerator\RoomLayout\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="..\FirstPersonShooter\RoomLink.h">
-      <Filter>WorldGenerator\RoomLayout\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="..\FirstPersonShooter\Vector3.h">
       <Filter>WorldGenerator\RoomLayout\Model</Filter>
     </ClInclude>
     <ClInclude Include="..\FirstPersonShooter\RoomSelector.h">
@@ -197,9 +199,6 @@
     <ClInclude Include="RoomTypesConfig.h">
       <Filter>WorldGenerator\RoomTypes\Model</Filter>
     </ClInclude>
-    <ClInclude Include="WorldGeneratorConfig.h">
-      <Filter>WorldGenerator</Filter>
-    </ClInclude>
     <ClInclude Include="Prop.hpp">
       <Filter>Prop</Filter>
     </ClInclude>
@@ -209,10 +208,31 @@
     <ClInclude Include="PropInstance.hpp">
       <Filter>Prop</Filter>
     </ClInclude>
+    <ClInclude Include="RoomGraphExtensions.h">
+      <Filter>WorldGenerator\Common\GeneratedRoom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\GeneratedRoom.h">
+      <Filter>WorldGenerator\Common\GeneratedRoom\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\RoomLink.h">
+      <Filter>WorldGenerator\Common\GeneratedRoom\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\Vector3.h">
+      <Filter>WorldGenerator\Common\GeneratedRoom\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FirstPersonShooter\WorldGeneratorConfig.h">
+      <Filter>WorldGenerator</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Grammar Configuration\Productions\Boss_On_Stairs_Production.txt">
-      <Filter>Resource Files\Grammar Configuration\Productions</Filter>
+    <Text Include="Grammar Configuration\Productions\Default_To_Normal.txt">
+      <Filter>Assets\Grammar Productions</Filter>
+    </Text>
+    <Text Include="Grammar Configuration\Productions\Boss_On_Stairs_OneEntrance.txt">
+      <Filter>Assets\Grammar Productions</Filter>
+    </Text>
+    <Text Include="Grammar Configuration\Productions\Boss_On_Stairs_Triangle.txt">
+      <Filter>Assets\Grammar Productions</Filter>
     </Text>
   </ItemGroup>
 </Project>
