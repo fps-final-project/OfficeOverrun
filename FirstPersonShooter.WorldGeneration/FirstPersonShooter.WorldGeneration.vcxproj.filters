@@ -58,6 +58,9 @@
     <Filter Include="Assets\Grammar Productions">
       <UniqueIdentifier>{4248c3f5-1af3-4220-aa0a-1b466f7770f9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="WorldGenerator\Common\Graph\GraphGrammars\LabelHelpers">
+      <UniqueIdentifier>{d13a4f4d-70d4-4679-9639-a990472d3c43}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -112,6 +115,9 @@
     </ClCompile>
     <ClCompile Include="..\FirstPersonShooter\RoomLink.cpp">
       <Filter>WorldGenerator\Common\GeneratedRoom\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="LabelHelpers.cpp">
+      <Filter>WorldGenerator\Common\Graph\GraphGrammars\LabelHelpers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -222,6 +228,9 @@
     </ClInclude>
     <ClInclude Include="..\FirstPersonShooter\WorldGeneratorConfig.h">
       <Filter>WorldGenerator</Filter>
+    </ClInclude>
+    <ClInclude Include="LabelHelpers.h">
+      <Filter>WorldGenerator\Common\Graph\GraphGrammars\LabelHelpers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

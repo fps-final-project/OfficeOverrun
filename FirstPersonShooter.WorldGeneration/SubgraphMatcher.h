@@ -1,5 +1,6 @@
 #pragma once
 #include "Graph.h"
+#include "LabelHelpers.h"
 
 #define BIT_SET(byte,nbit)   ((byte) |  (1<<(nbit)))
 #define BIT_CHECK(byte,nbit) ((byte) &   (1<<(nbit)))
@@ -66,7 +67,7 @@ namespace WorldGenerator
 			for (int j = 0; j < G2.Size(); j++)
 			{
 				// If vertex in G2 has no less degree and bot vertices are of the same label
-				if (G2.GetNeighbours(j).size() >= G1.GetNeighbours(i).size() && G2[j].label == G1[i].label)
+				if (G2.GetNeighbours(j).size() >= G1.GetNeighbours(i).size() && LabelHelpers::MatchLabels(G2[j].label, G1[i].label))
 					M0[i] = BIT_SET(M0[i], j);
 			}
 		}

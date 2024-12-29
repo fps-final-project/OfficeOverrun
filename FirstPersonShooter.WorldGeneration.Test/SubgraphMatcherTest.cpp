@@ -175,5 +175,38 @@ namespace FirstPersonShooter_WorldGeneration_Test
 
             Assert::IsTrue(findsAll);
         }
+
+        TEST_METHOD(MatchSubgraph_FindsAllIsomorphism_WildCard)
+        {
+            // Pattern graph
+            Graph<void*> G1 = Graph<void*>(2);
+            G1.AddNodes(GraphTestUtils::MakeNodes({ -1, RoomLabel::Stairs}));
+            G1.AddUndirectedEdge(0, 1);
+
+            // Main graph
+            auto G2 = MakeMainGraph({ RoomLabel::Default, RoomLabel::Default, RoomLabel::Stairs, RoomLabel::Default, RoomLabel::Default });
+
+            auto mappings = SubgraphMatcher::MatchSubgraph(G1, G2);
+
+            std::vector<std::vector<int>> expectedMappings({ {1,2}, {3,2} });
+
+            Assert::IsTrue(std::find(mappings.begin(), mappings.end(), expectedMappings[0]) != mappings.end());
+            Assert::IsTrue(std::find(mappings.begin(), mappings.end(), expectedMappings[1]) != mappings.end());
+        }
+
+        TEST_METHOD(MatchSubgraph_FindsNoIsomorphism_WildCard)
+        {
+            // Pattern graph
+            Graph<void*> G1 = Graph<void*>(2);
+            G1.AddNodes(GraphTestUtils::MakeNodes({ -1, 123 }));
+            G1.AddUndirectedEdge(0, 1);
+
+            // Main graph
+            auto G2 = MakeMainGraph({ RoomLabel::Default, RoomLabel::Default, RoomLabel::Stairs, RoomLabel::Default, RoomLabel::Default });
+
+            auto mappings = SubgraphMatcher::MatchSubgraph(G1, G2);
+
+            Assert::IsTrue(mappings.empty());
+        }
     };
 }

@@ -275,6 +275,7 @@
     <ClInclude Include="GraphGrammarReader.h" />
     <ClInclude Include="GraphProduction.h" />
     <ClInclude Include="GraphProductionReader.h" />
+    <ClInclude Include="LabelHelpers.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="RoomGraphExtensions.h" />
     <ClInclude Include="Prop.hpp" />
@@ -300,6 +301,7 @@
     <ClCompile Include="..\FirstPersonShooter\UniformRNG.cpp" />
     <ClCompile Include="..\FirstPersonShooter\Utils.cpp" />
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="LabelHelpers.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

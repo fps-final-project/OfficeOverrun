@@ -84,5 +84,53 @@ namespace FirstPersonShooter_WorldGeneration_Test
             Assert::IsTrue(G.HasEdge(1, 3));
             Assert::IsFalse(G.HasEdge(2, 3));
 		}
+
+        TEST_METHOD(Apply_AppliesProduction_DefaultWildCardRelabel)
+        {
+            Graph<void*> G_L = Graph<void*>(2);
+            G_L.AddNodes(GraphTestUtils::MakeNodes({ -1, RoomLabel::Default }));
+            G_L.AddUndirectedEdge(0, 1);
+
+            Graph<void*> G_R = Graph<void*>(2);
+            G_R.AddNodes(GraphTestUtils::MakeNodes({ -1, RoomLabel::Treasure}));
+            G_R.AddUndirectedEdge(0, 1);
+
+            GraphProduction P(0, G_L, G_R);
+
+            // Main graph
+            auto G = MakeMainGraph({ RoomLabel::Default, RoomLabel::Default, RoomLabel::Stairs, RoomLabel::Default, RoomLabel::Default });
+            std::vector<int> mapping = { 1, 0};
+
+            P.Apply(G, mapping);
+
+            Assert::AreEqual((int)RoomLabel::Treasure, G[0].label);
+            Assert::AreEqual((int)RoomLabel::Default, G[1].label);
+
+            Assert::IsTrue(G.HasEdge(0, 1));
+        }
+
+        TEST_METHOD(Apply_AppliesProduction_StairsWildCardRelabel)
+        {
+            Graph<void*> G_L = Graph<void*>(2);
+            G_L.AddNodes(GraphTestUtils::MakeNodes({ -1, RoomLabel::Default }));
+            G_L.AddUndirectedEdge(0, 1);
+
+            Graph<void*> G_R = Graph<void*>(2);
+            G_R.AddNodes(GraphTestUtils::MakeNodes({ -1, RoomLabel::Treasure }));
+            G_R.AddUndirectedEdge(0, 1);
+
+            GraphProduction P(0, G_L, G_R);
+
+            // Main graph
+            auto G = MakeMainGraph({ RoomLabel::Default, RoomLabel::Default, RoomLabel::Stairs, RoomLabel::Default, RoomLabel::Default });
+            std::vector<int> mapping = { 2, 3 };
+
+            P.Apply(G, mapping);
+
+            Assert::AreEqual((int)RoomLabel::Treasure, G[3].label);
+            Assert::AreEqual((int)RoomLabel::Stairs, G[2].label);
+
+            Assert::IsTrue(G.HasEdge(2, 3));
+        }
 	};
 }

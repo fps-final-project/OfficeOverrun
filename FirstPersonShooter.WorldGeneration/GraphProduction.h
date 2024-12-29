@@ -50,7 +50,7 @@ namespace WorldGenerator
 
 		// Relabel vertices
 		for (int i = 0; i < match.size(); i++)
-			G[match[i]].label = r_graph[i].label;
+			G[match[i]].label = LabelHelpers::TransformLabel(G[match[i]].label, r_graph[i].label);
 
 		// Modify edges
 		for (int i = 0; i < match.size(); i++)
