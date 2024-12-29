@@ -267,6 +267,7 @@
     <ClInclude Include="..\FirstPersonShooter\Utils.h" />
     <ClInclude Include="..\FirstPersonShooter\Vector3.h" />
     <ClInclude Include="..\FirstPersonShooter\WeightedGraph.h" />
+    <ClInclude Include="..\FirstPersonShooter\WorldGeneratorConfig.h" />
     <ClInclude Include="FirstPersonShooter.WorldGeneration.h" />
     <ClInclude Include="GraphGrammar.h" />
     <ClInclude Include="GraphGrammarReader.h" />
@@ -278,7 +279,6 @@
     <ClInclude Include="RoomTypesGenerator.h" />
     <ClInclude Include="SubgraphMatcher.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="WorldGeneratorConfig.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\FirstPersonShooter\BinaryRoom.cpp" />

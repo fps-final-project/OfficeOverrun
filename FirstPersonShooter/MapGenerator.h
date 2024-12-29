@@ -2,7 +2,7 @@
 #include "RoomLayoutGenerator.h"
 #include "RNGEngine.h"
 #include "WorldGeneratorConfig.h"
-#include "RoomTypesGenerator.h"
+#include "../FirstPersonShooter.WorldGeneration/RoomTypesGenerator.h"
 
 namespace WorldGenerator
 {

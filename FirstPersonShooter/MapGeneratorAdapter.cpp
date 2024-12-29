@@ -19,17 +19,9 @@ RoomTypesConfig MapGeneratorAdapter::MakeDefaultRoomTypesConfig()
 	return config;
 }
 
-WorldGeneratorConfig MapGeneratorAdapter::MakeDefaultWorldGeneratorConfig()
+MapGeneratorAdapter::MapGeneratorAdapter():
+	config(WorldGeneratorConfig(MakeDefaultRoomLayoutConfig(), MakeDefaultRoomTypesConfig()))
 {
-	WorldGeneratorConfig config;
-	config.room_layout_config = MakeDefaultRoomLayoutConfig();
-	config.room_types_config = MakeDefaultRoomTypesConfig();
-	return config;
-}
-
-MapGeneratorAdapter::MapGeneratorAdapter()
-{
-	config = MakeDefaultWorldGeneratorConfig();
 	seed = time(nullptr);
 }
 
@@ -41,7 +33,7 @@ MapGeneratorAdapter& MapGeneratorAdapter::WithSeed(int seed)
 
 std::vector<Room> MapGeneratorAdapter::GenerateRooms()
 {
-	RoomLayout layout = MapGenerator().GenerateRooms(roomLayoutConfig, seed);
+	RoomLayout layout = MapGenerator().GenerateRooms(config, seed);
 	std::vector<Room> rooms = std::vector<Room>();
 
 	// Mapping function
