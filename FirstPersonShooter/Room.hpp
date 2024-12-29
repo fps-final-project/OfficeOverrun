@@ -4,7 +4,7 @@
 #include "RoomCollision.hpp"
 #include "RoomLinkData.hpp"
 #include "Entity.hpp"
-#include "PropInstance.hpp"
+#include "../FirstPersonShooter.WorldGeneration/PropInstance.hpp"
 
 
 
