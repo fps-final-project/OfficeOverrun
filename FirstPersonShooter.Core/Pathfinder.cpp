@@ -10,15 +10,17 @@
 
 void Pathfinder::AddRoomNodes(const Room& room, std::function<bool(DirectX::XMFLOAT3)> pred)
 {
-	const float wallOffset = 0.5f;
-	const float targetDistance = 0.8f;
+	const float wallOffset = 0.8f;
+	const float targetDistance = 0.5f;
+	const float distThreshold = targetDistance / 5;
+	const float root2 = std::sqrtf(2.f);
 	float height = room.getPosition().y;
 
 	int nNodesX = (room.getSize().x - 2 * wallOffset) / targetDistance;
 	int nNodesZ = (room.getSize().z - 2 * wallOffset) / targetDistance;
 
-	float distanceX = room.getSize().x / nNodesX;
-	float distanceZ = room.getSize().z / nNodesZ;
+	float distanceX = (room.getSize().x - 2 * wallOffset) / nNodesX;
+	float distanceZ = (room.getSize().z - 2 * wallOffset) / nNodesZ;
 
 
 	for (int i = 0; i < nNodesX; i++)
@@ -26,26 +28,33 @@ void Pathfinder::AddRoomNodes(const Room& room, std::function<bool(DirectX::XMFL
 		for (int j = 0; j < nNodesZ; j++)
 		{
 			DirectX::XMFLOAT3 nodePos = { room.getPosition().x + wallOffset + i * distanceX, height, room.getPosition().z + wallOffset + j * distanceZ };
+			edges.push_back(std::set<int>());
 			if (!pred(nodePos))
+			{
+				// non existent node
+				nodes.push_back({ NAN, NAN, NAN });
 				continue;
 
-			nodes.push_back(nodePos);
-			edges.push_back(std::set<int>());
+			}
 
-			if (j)
+			nodes.push_back(nodePos);
+
+
+			if (j && nodes[edges.size() - 2].x != NAN)
 			{
 				AddEdge(edges.size() - 1, edges.size() - 2);
 			}
 
-			if (i)
+			if (i && nodes[edges.size() - 1 - nNodesZ].x != NAN)
 			{
 				AddEdge(edges.size() - 1, edges.size() - 1 - nNodesZ);
 			}
 
-			if (i && j)
+			if (i && j && nodes[edges.size() - 2 - nNodesZ].x != NAN)
 			{
 				AddEdge(edges.size() - 1, edges.size() - 2 - nNodesZ);
 			}
+
 		}
 	}
 }

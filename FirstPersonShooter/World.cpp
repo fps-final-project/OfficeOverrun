@@ -193,8 +193,8 @@ void World::UpdateCurrentRoom(DirectX::XMFLOAT3 playerPos)
 void World::UpdateEnemies(std::shared_ptr<Pathfinder> pathfinder, DirectX::XMFLOAT3 playerPos,
 	std::shared_ptr<std::queue<Action>>& actionQueue, std::shared_ptr<DX::DeviceResources> deviceResources)
 {
-	std::vector<GUID> enemiesToDelete;
 	auto secondNeighbors = GetSetOfSecondNeighbours(m_currentRoomIndex);
+	int closeEnemies = 0;
 
 	for (const auto& [_, enemy] : m_enemies)
 	{
@@ -204,24 +204,21 @@ void World::UpdateEnemies(std::shared_ptr<Pathfinder> pathfinder, DirectX::XMFLO
 			actionQueue->push(action);
 		}
 
-		if (!enemy->inCloseProximity() && std::none_of(secondNeighbors.begin(), secondNeighbors.end(), [&](int roomId) {
+		if (enemy->inCloseProximity() || std::any_of(secondNeighbors.begin(), secondNeighbors.end(), [&](int roomId){
 			return m_rooms[roomId].insideRoom(enemy->getPosition());
 			}))
 		{
-			enemiesToDelete.push_back(enemy->id);
+			closeEnemies++;
 		}
 	}
 
-	for (const auto& enemyId : enemiesToDelete)
-		DeleteEnemy(enemyId);
-
-	SpawnEnemyNearPlayer(m_enemies.size(), pathfinder, deviceResources);
+	SpawnEnemyNearPlayer(closeEnemies, pathfinder, deviceResources);
 }
 
 void World::SpawnEnemyNearPlayer(int currentEnemiesNearPlayer,
 	std::shared_ptr<Pathfinder> pathfinder, std::shared_ptr<DX::DeviceResources> deviceResources)
 {
-	const int maxEnemiesNearPlayer = 2;
+	const int maxEnemiesNearPlayer = 1;
 	const float wallOffset = 0.5f;
 	if (currentEnemiesNearPlayer < maxEnemiesNearPlayer)
 	{
