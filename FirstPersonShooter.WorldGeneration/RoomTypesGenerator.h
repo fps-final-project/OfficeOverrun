@@ -9,8 +9,9 @@ namespace WorldGenerator
 	{
 	private:
 		RoomTypesConfig config;
-		void SetDefaultNodeLabels(Graph<GeneratedRoom> &adGraph);
+		void SetDefaultNodeLabel(Graph<GeneratedRoom>& adGraph, int v);
 	public:
+		void SetDefaultNodeLabels(Graph<GeneratedRoom> &adGraph);
 		void GenerateRoomTypes(Graph<GeneratedRoom>& adGraph);
 		RoomTypesGenerator(const RoomTypesConfig& config)
 			: config(config) {};

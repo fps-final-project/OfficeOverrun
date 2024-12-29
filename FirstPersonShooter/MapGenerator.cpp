@@ -19,6 +19,9 @@ RoomLayout MapGenerator::GenerateRooms(WorldGeneratorConfig config, int seed)
 	// Reduce the graph
 	layout_generator.SelectRooms(adGraph);
 
+	// Set default room labels on adjacency graph nodes
+	room_types_generator.SetDefaultNodeLabels(adGraph);
+
 	// Generate room types
 	room_types_generator.GenerateRoomTypes(adGraph);
 

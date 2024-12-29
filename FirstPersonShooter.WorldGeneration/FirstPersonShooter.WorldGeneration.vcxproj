@@ -274,6 +274,7 @@
     <ClInclude Include="GraphProduction.h" />
     <ClInclude Include="GraphProductionReader.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="RoomGraphExtensions.h" />
     <ClInclude Include="RoomLabel.h" />
     <ClInclude Include="RoomTypesConfig.h" />
     <ClInclude Include="RoomTypesGenerator.h" />
@@ -304,6 +305,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="RoomGraphExtensions.cpp" />
     <ClCompile Include="RoomTypesGenerator.cpp" />
     <ClCompile Include="SubgraphMatcher.cpp" />
   </ItemGroup>

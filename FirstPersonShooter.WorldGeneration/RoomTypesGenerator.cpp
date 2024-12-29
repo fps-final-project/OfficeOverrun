@@ -2,8 +2,32 @@
 #include "RoomTypesGenerator.h"
 #include "GraphGrammar.h";
 #include "GraphGrammarReader.h";
+#include "RoomLabel.h"
+#include "RoomGraphExtensions.h"
 
 using namespace WorldGenerator;
+
+void WorldGenerator::RoomTypesGenerator::SetDefaultNodeLabel(Graph<GeneratedRoom>& adGraph, int v)
+{
+	if (RoomGraphExtensions::FindNeighbourAbove(adGraph, v) >= 0) // Stairs room
+		adGraph[v].label = RoomLabel::Stairs;
+	else if (RoomGraphExtensions::FindNeighbourBelow(adGraph, v) >= 0) // First room on the floor
+		adGraph[v].label = RoomLabel::Entrance;
+	else
+		adGraph[v].label = RoomLabel::Default;
+}
+
+void WorldGenerator::RoomTypesGenerator::SetDefaultNodeLabels(Graph<GeneratedRoom>& adGraph)
+{
+	// Respawn room
+	adGraph[0].label = RoomLabel::Entrance;
+	
+	for (int i = 1; i < adGraph.Size() - 1; i++)
+		SetDefaultNodeLabel(adGraph, i);
+	
+	// Roof room
+	adGraph[adGraph.Size() - 1].label = RoomLabel::Roof;
+}
 
 void RoomTypesGenerator::GenerateRoomTypes(Graph<GeneratedRoom>& adGraph)
 {

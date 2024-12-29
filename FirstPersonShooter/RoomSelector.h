@@ -30,7 +30,6 @@ namespace WorldGenerator
 		const int MAX_EDGE_WEIGHT = 1000; // maximum edge weight used in random path algorithm
 
 		void RemoveUpDownEdges();
-		static int FindNeighbourAbove(Graph<GeneratedRoom>& graph, int v);
 		static int SelectVertexWithNeighbourAbove(Graph<GeneratedRoom>& graph, std::vector<int> vertices, int s);
 		void UpdatePathWithFloor(std::vector<int>& P, int z);
 		std::vector<int> GenerateRandomPath();
