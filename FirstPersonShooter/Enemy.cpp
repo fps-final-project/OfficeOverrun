@@ -58,7 +58,8 @@ void Enemy::Update(float dt)
 	rotation.y = AdjustAngleToPositive(rotation.y + GetRotationIncrement() * dt);
 	setRotation({ 0.0f, rotation.y, 0.0f });
 	m_emitter->OrientFront = { rotation.x, rotation.y, rotation.z };
-	AnimatedEntity::Update(dt);
+	if (pathToPlayer.playerVisible)
+		AnimatedEntity::Update(dt);
 }
 
 float Enemy::GetRotationIncrement()
