@@ -3,7 +3,6 @@
 #include "MapGenerator.h"
 #include "MapGeneratorMapper.h"
 #include "WorldGeneratorConfig.h"
-#include "../FirstPersonShooter.WorldGeneration/RoomTypesConfig.h"
 
 using namespace WorldGenerator;
 
@@ -14,6 +13,7 @@ private:
 	int seed;
 	static RoomLayoutConfig MakeDefaultRoomLayoutConfig();
 	static RoomTypesConfig MakeDefaultRoomTypesConfig();
+	static RoomContentConfig MakeDefaultRoomContentConfig();
 public:
 	MapGeneratorAdapter();
 	MapGeneratorAdapter& WithSeed(int seed);

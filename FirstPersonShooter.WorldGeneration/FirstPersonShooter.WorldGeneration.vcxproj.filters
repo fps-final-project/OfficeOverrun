@@ -73,6 +73,9 @@
     <Filter Include="WorldGenerator\RoomTypes\EnemyCountSelector">
       <UniqueIdentifier>{314283d4-00bc-4978-99dc-ef564f590b44}</UniqueIdentifier>
     </Filter>
+    <Filter Include="WorldGenerator\RoomContent\SpaceTransformationHelper">
+      <UniqueIdentifier>{1f7c8008-955a-4dd0-b138-7e8741f041c7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -142,6 +145,9 @@
     </ClCompile>
     <ClCompile Include="EnemyCountSelector.cpp">
       <Filter>WorldGenerator\RoomTypes\EnemyCountSelector</Filter>
+    </ClCompile>
+    <ClCompile Include="SpaceTransformationHelper.cpp">
+      <Filter>WorldGenerator\RoomContent\SpaceTransformationHelper</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -256,9 +262,6 @@
     <ClInclude Include="RoomContentGenerator.h">
       <Filter>WorldGenerator\RoomContent</Filter>
     </ClInclude>
-    <ClInclude Include="RoomContentGeneratorConfig.h">
-      <Filter>WorldGenerator\RoomContent\Model</Filter>
-    </ClInclude>
     <ClInclude Include="DistributionParameters.h">
       <Filter>WorldGenerator\Common\RNG\Distributions</Filter>
     </ClInclude>
@@ -279,6 +282,12 @@
     </ClInclude>
     <ClInclude Include="PropInstance.hpp">
       <Filter>Prop</Filter>
+    </ClInclude>
+    <ClInclude Include="SpaceTransformationHelper.h">
+      <Filter>WorldGenerator\RoomContent\SpaceTransformationHelper</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomContentConfig.h">
+      <Filter>WorldGenerator\RoomContent\Model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

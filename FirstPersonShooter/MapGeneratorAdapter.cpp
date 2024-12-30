@@ -19,8 +19,14 @@ RoomTypesConfig MapGeneratorAdapter::MakeDefaultRoomTypesConfig()
 	return config;
 }
 
+RoomContentConfig MapGeneratorAdapter::MakeDefaultRoomContentConfig()
+{
+	RoomContentConfig config;
+	return config;
+}
+
 MapGeneratorAdapter::MapGeneratorAdapter():
-	config(WorldGeneratorConfig(MakeDefaultRoomLayoutConfig(), MakeDefaultRoomTypesConfig()))
+	config(WorldGeneratorConfig(MakeDefaultRoomLayoutConfig(), MakeDefaultRoomTypesConfig(), MakeDefaultRoomContentConfig()))
 {
 	seed = time(nullptr);
 }

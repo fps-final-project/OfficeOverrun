@@ -281,7 +281,7 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="PoissonRNG.h" />
     <ClInclude Include="RoomContentGenerator.h" />
-    <ClInclude Include="RoomContentGeneratorConfig.h" />
+    <ClInclude Include="RoomContentConfig.h" />
     <ClInclude Include="RoomGraphExtensions.h" />
     <ClInclude Include="Prop.hpp" />
     <ClInclude Include="PropInstance.hpp" />
@@ -289,6 +289,7 @@
     <ClInclude Include="RoomLabel.h" />
     <ClInclude Include="RoomTypesConfig.h" />
     <ClInclude Include="RoomTypesGenerator.h" />
+    <ClInclude Include="SpaceTransformationHelper.h" />
     <ClInclude Include="SubgraphMatcher.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -324,6 +325,7 @@
     <ClCompile Include="RoomGraphExtensions.cpp" />
     <ClCompile Include="RoomTypesGenerator.cpp" />
     <ClCompile Include="PropLoader.cpp" />
+    <ClCompile Include="SpaceTransformationHelper.cpp" />
     <ClCompile Include="SubgraphMatcher.cpp" />
   </ItemGroup>
   <ItemGroup>
