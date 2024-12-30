@@ -11,7 +11,6 @@ SourceVoice::SourceVoice(std::shared_ptr<AudioFile> file, IXAudio2* xaudio) : pl
 		);
 
 		m_buffer = &file->buffer;
-		m_sourceVoice->SubmitSourceBuffer(m_buffer);
 	}
 	empty = !m_sourceVoice;
 }
@@ -22,7 +21,7 @@ SourceVoice::~SourceVoice()
 	m_sourceVoice->DestroyVoice();
 }
 
-void SourceVoice::SetEmmiterSettings(X3DAUDIO_EMITTER* emitter, X3DAUDIO_LISTENER* listener, BYTE* x3dInstance, IXAudio2Voice* masteringVoice)
+X3DAUDIO_DSP_SETTINGS SourceVoice::CalculateDSPSettings(X3DAUDIO_EMITTER* emitter, X3DAUDIO_LISTENER* listener, BYTE* x3dInstance)
 {
 	X3DAUDIO_DSP_SETTINGS dspSettings;
 	dspSettings.DstChannelCount = 8;
@@ -34,6 +33,11 @@ void SourceVoice::SetEmmiterSettings(X3DAUDIO_EMITTER* emitter, X3DAUDIO_LISTENE
 		&dspSettings
 	);
 
+	return dspSettings;
+}
+
+void SourceVoice::SetEmmiterSettings(X3DAUDIO_DSP_SETTINGS dspSettings, IXAudio2Voice* masteringVoice)
+{
 	m_sourceVoice->SetOutputMatrix(
 		masteringVoice,
 		dspSettings.SrcChannelCount,
@@ -72,5 +76,5 @@ bool SourceVoice::IsPlaying()
 		return false;
 	XAUDIO2_VOICE_STATE state;
 	m_sourceVoice->GetState(&state);
-	return !(state.BuffersQueued == 1 && state.SamplesPlayed == 0 || state.BuffersQueued == 0);
+	return !(state.BuffersQueued == 0);
 }

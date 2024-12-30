@@ -18,6 +18,8 @@ EnemyBuilder& EnemyBuilder::WithSound(std::shared_ptr<AudioFile> file, IXAudio2*
 EnemyBuilder& EnemyBuilder::WithDamageSound(std::shared_ptr<AudioFile> file, IXAudio2* xaudio)
 {
 	m_enemy->m_damageSound = std::make_shared<SourceVoice>(file, xaudio);
+	m_enemy->m_damageSound->SetVolume(10.0f);
+
 	return *this;
 }
 

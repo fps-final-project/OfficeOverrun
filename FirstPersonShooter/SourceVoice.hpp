@@ -9,12 +9,14 @@ public:
 	SourceVoice(std::shared_ptr<AudioFile> file, IXAudio2* xaudio);
 	~SourceVoice();
 	
-	void SetEmmiterSettings(X3DAUDIO_EMITTER* emitter, X3DAUDIO_LISTENER* listener, BYTE* x3dInstance, IXAudio2Voice* masteringVoice);
+	X3DAUDIO_DSP_SETTINGS CalculateDSPSettings(X3DAUDIO_EMITTER* emitter, X3DAUDIO_LISTENER* listener, BYTE* x3dInstance);
+	void SetEmmiterSettings(X3DAUDIO_DSP_SETTINGS dspSettings, IXAudio2Voice* masteringVoice);
 	void PlaySound(bool overwrite);
 	void TogglePlay();
 	bool IsPlaying();
 
-	inline IXAudio2SourceVoice* getSourceVoice() { return m_sourceVoice; }
+	inline IXAudio2SourceVoice* GetSourceVoice() { return m_sourceVoice; }
+	inline void SetVolume(float volume) { m_sourceVoice->SetVolume(volume); }
 
 
 

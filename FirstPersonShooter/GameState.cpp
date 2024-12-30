@@ -26,7 +26,7 @@ GameState::GameState(
 
 	this->setupActionHandlers();
 
-	m_music.PlaySound(true);
+	m_music.SetVolume(0.5f);
 
 	RestartWithSeed(123);
 }

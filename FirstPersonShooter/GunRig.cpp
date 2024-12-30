@@ -93,6 +93,7 @@ void GunRig::ChangeGun(const std::string& name, IXAudio2* xaudio)
 		m_hands->setModel(ResourceManager::Instance().getAnimatedModel(data->name));
 		m_gun->setModel(ResourceManager::Instance().getAnimatedModel(data->name + "_gun"));
 		m_gunSound = std::make_unique<SourceVoice>( ResourceManager::Instance().getAudioFile(data->name), xaudio);
+		m_gunSound->SetVolume(0.5f);
 
 		m_hands->setFallbackAnimation("idle");
 		m_gun->setFallbackAnimation("idle");

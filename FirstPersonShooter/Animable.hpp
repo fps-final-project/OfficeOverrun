@@ -18,7 +18,7 @@ public:
 	void setAnimation(std::string name, float speed = 1.f, bool wrap = false);
 	void setFallbackAnimation(std::string name);
 	virtual void Render(std::shared_ptr<RenderMaster> renderMaster) = 0;
-	bool isIdle() { return m_animator.isIdle(); }
+	bool isIdle() const { return m_animator.isIdle(); }
 protected:
 	Animator m_animator;
 	std::shared_ptr<AnimatedModel> m_animatedModel;
