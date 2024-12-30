@@ -270,6 +270,7 @@
     <ClInclude Include="..\FirstPersonShooter\Vector3.h" />
     <ClInclude Include="..\FirstPersonShooter\WeightedGraph.h" />
     <ClInclude Include="..\FirstPersonShooter\WorldGeneratorConfig.h" />
+    <ClInclude Include="BinomialRNG.h" />
     <ClInclude Include="DistributionParameters.h" />
     <ClInclude Include="EnemyCountSelector.h" />
     <ClInclude Include="FirstPersonShooter.WorldGeneration.h" />
@@ -306,6 +307,7 @@
     <ClCompile Include="..\FirstPersonShooter\RoomSelector.cpp" />
     <ClCompile Include="..\FirstPersonShooter\UniformRNG.cpp" />
     <ClCompile Include="..\FirstPersonShooter\Utils.cpp" />
+    <ClCompile Include="BinomialRNG.cpp" />
     <ClCompile Include="DistributionRng.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="EnemyCountSelector.cpp" />

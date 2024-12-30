@@ -149,6 +149,9 @@
     <ClCompile Include="SpaceTransformationHelper.cpp">
       <Filter>WorldGenerator\RoomContent\SpaceTransformationHelper</Filter>
     </ClCompile>
+    <ClCompile Include="BinomialRNG.cpp">
+      <Filter>WorldGenerator\Common\RNG\Distributions\DistributionImplementations</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FirstPersonShooter.WorldGeneration.h" />
@@ -288,6 +291,9 @@
     </ClInclude>
     <ClInclude Include="RoomContentConfig.h">
       <Filter>WorldGenerator\RoomContent\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="BinomialRNG.h">
+      <Filter>WorldGenerator\Common\RNG\Distributions\DistributionImplementations</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
