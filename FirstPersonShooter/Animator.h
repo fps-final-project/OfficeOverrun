@@ -11,7 +11,7 @@ public:
 	void playAnimation(std::shared_ptr<Animation> animation, float speed = 1.f, bool wrap = false);
 	void setFallbackAnimation(std::shared_ptr<Animation> animation);
 	void calculateTransform(const Joint& data, const std::map<std::string, BoneInfo>& boneInfoMap, DirectX::XMMATRIX parentTransform);
-	bool isIdle() { return m_currentAnimation == m_fallbackAnimation; }
+	bool isIdle() const { return m_currentAnimation == m_fallbackAnimation; }
 
 	std::vector<DirectX::XMMATRIX> m_finalBoneMatrices;
 	DirectX::XMMATRIX getJointTransform(const Joint& data, float animationTime);

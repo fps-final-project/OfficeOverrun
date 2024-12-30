@@ -32,21 +32,12 @@ void ActionHandler::HandleActions(Player* player, World* world, Camera* camera, 
 				if (gunRig->IsIdle() && gunRig->Shoot())
 				{
 					auto entity = world->m_enemies.find(m_lastHitEntity);
-					if (entity != world->m_enemies.end())
+					if (entity != world->m_enemies.end() && !entity->second->isDead())
 					{
-						if (entity->second->getDamageSound() != nullptr) {
-							entity->second->getDamageSound()->SetEmmiterSettings(
-								entity->second->getEmitter().get(),
-								player->getAudioListener().get(),
-								deviceResources->GetX3DInstance(),
-								deviceResources->GetMasteringVoice()
-							);
+						if (entity->second->getDamageSound() != nullptr)
 							entity->second->getDamageSound()->PlaySound(true);
-						}
+						
 						entity->second->takeDamage(gunRig->GetDamage());
-						if (entity->second->isDead()) {
-							world->DeleteEnemy(m_lastHitEntity);
-						}
 					}
 				}
 				break;

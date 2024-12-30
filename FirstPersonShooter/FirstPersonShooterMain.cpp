@@ -92,7 +92,8 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	RenderMenu(Windows::Foundation::Size(0, 0));
 
 	m_mouse->SetMode(DirectX::Mouse::MODE_RELATIVE);
-	m_deviceResources->ChangeVolume(0.05);
+	m_deviceResources->ChangeVolume(0.5);
+	m_gameState->StartMusic();
 }
 
 FirstPersonShooterMain::~FirstPersonShooterMain()

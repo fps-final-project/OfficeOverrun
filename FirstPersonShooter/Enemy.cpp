@@ -2,6 +2,16 @@
 #include "Enemy.hpp"
 #include "Pathfinder.h"
 
+std::vector<X3DAUDIO_DISTANCE_CURVE_POINT> Enemy::s_soundCurvePoints = {
+		{ 1.0f,	0.9f },
+		{ 2.0f,	0.8f },
+		{ 3.0f, 0.6f },
+		{ 4.0f, 0.3f },
+		{ 5.0f, 0.1f },
+};
+
+X3DAUDIO_DISTANCE_CURVE Enemy::s_soundCurve = { s_soundCurvePoints.data(), s_soundCurvePoints.size() };
+
 Enemy::Enemy(std::shared_ptr<AnimatedModel> model) : AnimatedEntity{ model }, targetRotation(0.f)
 {
 	m_emitter = std::make_shared<X3DAUDIO_EMITTER>();
@@ -13,18 +23,18 @@ Enemy::Enemy(std::shared_ptr<AnimatedModel> model) : AnimatedEntity{ model }, ta
 	m_emitter->ChannelCount = 1;
 	m_emitter->CurveDistanceScaler = 1.0f;
 	m_emitter->DopplerScaler = 1.0f;
-	
+	m_emitter->pVolumeCurve = &s_soundCurve;
+
 }
 
 Action Enemy::Update(std::shared_ptr<Pathfinder> pathfinder, DirectX::XMFLOAT3 playerPos)
 {
 	pathfinder->UpdatePath(pathToPlayer, position);
 	Action currentAction;
-	XMVECTOR direction = GetDirection();
+	XMVECTOR direction = XMVector3Normalize(GetDirection());
 	XMVECTOR playerDir = { playerPos.x - position.x, 0.f, playerPos.z - position.z };
 
 	float l = XMVector3Length(playerDir).m128_f32[0];
-	direction = XMVector3Normalize(direction);
 
 	float dx = XMVectorGetX(direction);
 	float dz = XMVectorGetZ(direction);
@@ -59,6 +69,15 @@ void Enemy::Update(float dt)
 	setRotation({ 0.0f, rotation.y, 0.0f });
 	m_emitter->OrientFront = { rotation.x, rotation.y, rotation.z };
 	AnimatedEntity::Update(dt);
+}
+
+void Enemy::takeDamage(int damage)
+{
+	health -= damage; 
+	if (health <= 0) 
+	{
+		this->setAnimation(rand() % 2 == 0 ? "death" : "death2");
+	}
 }
 
 float Enemy::GetRotationIncrement()

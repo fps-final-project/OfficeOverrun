@@ -60,11 +60,6 @@ void World::Update(float dt)
 
 	if (lastDamage < 100.f)
 		lastDamage += dt;
-	/*if (m_animatedEntities.size() && m_animatedEntities[0].isIdle())
-	{
-		int idx = (time(NULL) % 2) + 1;
-		m_animatedEntities[0].setAnimation("attack" + std::to_string(idx), 1.5f);
-	}*/
 }
 
 std::vector<std::shared_ptr<Hittable>> World::GetHittableEntities() 
@@ -196,8 +191,16 @@ void World::UpdateEnemies(std::shared_ptr<Pathfinder> pathfinder, DirectX::XMFLO
 	auto secondNeighbors = GetSetOfSecondNeighbours(m_currentRoomIndex);
 	int closeEnemies = 0;
 
+	std::vector<GUID> deadEnemies;
+
 	for (const auto& [_, enemy] : m_enemies)
 	{
+		if (enemy->isDead())
+		{
+			if(enemy->isIdle())
+				deadEnemies.push_back(enemy->id);
+			continue;
+		}
 		Action action = enemy->Update(pathfinder, playerPos);
 		if (action.type != ActionType::NOACTION)
 		{
@@ -211,6 +214,9 @@ void World::UpdateEnemies(std::shared_ptr<Pathfinder> pathfinder, DirectX::XMFLO
 			closeEnemies++;
 		}
 	}
+
+	for (auto enemyId : deadEnemies)
+		DeleteEnemy(enemyId);
 
 	SpawnEnemyNearPlayer(closeEnemies, pathfinder, deviceResources);
 }
@@ -282,20 +288,21 @@ void World::PlayEnemySounds(std::shared_ptr<DX::DeviceResources> deviceResources
 {
 	for (const auto& [_, enemy] : m_enemies)
 	{
-		if (!enemy->getSound()->IsPlaying() && rand() % 80 != 0)
+		if (enemy->isDead())
 			continue;
 
-		enemy
-			->getSound()
-			->SetEmmiterSettings(
+		X3DAUDIO_DSP_SETTINGS dsp = enemy
+			->getDamageSound()
+			->CalculateDSPSettings(
 				enemy->getEmitter().get(),
 				player->getAudioListener().get(),
-				deviceResources->GetX3DInstance(), 
-				deviceResources->GetMasteringVoice()
+				deviceResources->GetX3DInstance()
 			);
 
+		enemy->getSound()->SetEmmiterSettings(dsp, deviceResources->GetMasteringVoice());
+		enemy->getDamageSound()->SetEmmiterSettings(dsp, deviceResources->GetMasteringVoice());
+		
 		enemy->getSound()->PlaySound(false);
-
 	}
 }
 

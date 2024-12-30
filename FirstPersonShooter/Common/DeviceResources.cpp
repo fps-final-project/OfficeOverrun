@@ -127,7 +127,7 @@ void DX::DeviceResources::CreateDeviceIndependentResources()
 	);
 
 	DX::ThrowIfFailed(
-		m_xaudio->CreateMasteringVoice(&m_masteringVoice)
+		m_xaudio->CreateMasteringVoice(&m_masteringVoice, 8)
 	);
 
 	DWORD dwChannelMask;

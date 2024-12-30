@@ -16,16 +16,16 @@ public:
 
 	Action Update(std::shared_ptr<Pathfinder> pathfinder, DirectX::XMFLOAT3 playerPos);
 	virtual void Update(float dt) override;
+	void takeDamage(int damage);
 	
 	inline std::shared_ptr<X3DAUDIO_EMITTER> getEmitter() const { return m_emitter; }
 	inline SourceVoice* getSound() { return m_sound.get(); }
 	inline SourceVoice* getDamageSound() { return m_damageSound.get(); }
-	inline void takeDamage(int damage) { health -= damage; }
 	inline bool isDead() const { return health <= 0; }
-
 	inline bool inCloseProximity() const { return pathToPlayer.playerVisible; }
 	
 	Path pathToPlayer;
+
 
 	friend class EnemyBuilder;
 private:
@@ -39,6 +39,9 @@ private:
 
 	const float rotationSpeed = 4.f;
 	float targetRotation;
+
+	static std::vector<X3DAUDIO_DISTANCE_CURVE_POINT> s_soundCurvePoints;
+	static X3DAUDIO_DISTANCE_CURVE s_soundCurve;
 
 	float GetRotationIncrement();
 	float AdjustAngleToPositive(float angle);

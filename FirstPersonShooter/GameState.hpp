@@ -40,9 +40,10 @@ public:
 
 	GameStatus GetStatus() const { return m_gameStatus; }
 	int GetSeed() const { return m_seed; }
-
 	void TogglePaused();
 	void ToggleMusicAndMouse();
+	
+	inline void StartMusic() { m_music.PlaySound(true); };
 private:
 	std::shared_ptr<DirectX::Keyboard> m_keyboard;
 	std::shared_ptr<DirectX::Mouse> m_mouse;
