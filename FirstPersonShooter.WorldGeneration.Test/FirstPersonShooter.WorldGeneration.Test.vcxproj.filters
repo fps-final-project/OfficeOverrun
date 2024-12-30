@@ -14,14 +14,32 @@
     <Filter Include="RoomLayout\BSP">
       <UniqueIdentifier>{93551786-665f-4474-869e-9a7df9df4859}</UniqueIdentifier>
     </Filter>
-    <Filter Include="RoomLayout\RoomSelector">
-      <UniqueIdentifier>{16d467c5-fad0-4674-8e25-107ff7c92003}</UniqueIdentifier>
-    </Filter>
     <Filter Include="RoomTypes">
       <UniqueIdentifier>{fc7383f4-f310-49d3-8f78-0ba403e4b073}</UniqueIdentifier>
     </Filter>
     <Filter Include="RoomLayout\RoomLink">
       <UniqueIdentifier>{840c2e3c-95c1-4d9c-9356-03be45e8894d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{e5d33347-13a1-4117-bdcc-036c5a63d72c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Graphs">
+      <UniqueIdentifier>{159863a4-5406-4fe8-a489-5ebb1eabfd8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Graphs\SubgraphMatcher">
+      <UniqueIdentifier>{ff5a34d9-9a96-4866-9414-a2176d45c131}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Graphs\GraphGrammar">
+      <UniqueIdentifier>{78058c32-4c69-4198-a158-063d2d7c5759}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Graphs\GraphGrammar\Readers">
+      <UniqueIdentifier>{367385a4-2a65-4597-8022-e79b57f71ae1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TestFiles">
+      <UniqueIdentifier>{cb920f9a-acf6-4543-bb3c-07b2cb0c640e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TestFiles\GraphProductionReaderTest">
+      <UniqueIdentifier>{28b32ca3-24b5-4ade-86e4-e2c6d7dcb097}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -35,20 +53,35 @@
     <ClCompile Include="BinaryRoomTest.cpp">
       <Filter>RoomLayout\BSP</Filter>
     </ClCompile>
-    <ClCompile Include="TestUtils.cpp">
-      <Filter>Common</Filter>
-    </ClCompile>
     <ClCompile Include="RoomLinkTest.cpp">
       <Filter>RoomLayout\RoomLink</Filter>
     </ClCompile>
     <ClCompile Include="SubgraphMatcherTest.cpp">
-      <Filter>RoomLayout\RoomSelector</Filter>
+      <Filter>Common\Graphs\SubgraphMatcher</Filter>
+    </ClCompile>
+    <ClCompile Include="TestUtils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphProductionTest.cpp">
+      <Filter>Common\Graphs\GraphGrammar</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphTestUtils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphProductionReaderTest.cpp">
+      <Filter>Common\Graphs\GraphGrammar\Readers</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphGrammarTest.cpp">
+      <Filter>Common\Graphs\GraphGrammar</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
     <ClInclude Include="TestUtils.h">
-      <Filter>Common</Filter>
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphTestUtils.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -82,5 +115,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="TestFiles\GraphProductionReaderTest\GraphProductionReaderTestCase.txt">
+      <Filter>TestFiles\GraphProductionReaderTest</Filter>
+    </Text>
   </ItemGroup>
 </Project>

@@ -2,6 +2,7 @@
 #include "CppUnitTest.h"
 #include "SubgraphMatcher.h"
 #include "RoomLabel.h"
+#include "GraphTestUtils.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 using namespace WorldGenerator;
@@ -10,27 +11,10 @@ namespace FirstPersonShooter_WorldGeneration_Test
 {
     TEST_CLASS(SubgraphMatcherTest)
     {
-        Node<void*> MakeNode(int label)
-        {
-            Node<void*> node(nullptr);
-            node.label = label;
-            return node;
-        }
-
-        std::vector<Node<void*>> MakeNodes(std::vector<int> labels)
-        {
-            std::vector<Node<void*>> nodes;
-            for (int l : labels)
-            {
-                nodes.push_back(MakeNode(l));
-            }
-            return nodes;
-        }
-        
         Graph<void*> MakeMainGraph(std::vector<int> labels)
         {
             Graph<void*> G2 = Graph<void*>(5);
-            G2.AddNodes(MakeNodes(labels));
+            G2.AddNodes(GraphTestUtils::MakeNodes(labels));
             G2.AddUndirectedEdge(0, 1);
             G2.AddUndirectedEdge(1, 2);
             G2.AddUndirectedEdge(1, 3);
@@ -46,7 +30,7 @@ namespace FirstPersonShooter_WorldGeneration_Test
         {
             // Pattern graph
             Graph<void*> G1 = Graph<void*>(3);
-            G1.AddNodes(MakeNodes({ RoomLabel::Default, RoomLabel::Default, RoomLabel::Default }));
+            G1.AddNodes(GraphTestUtils::MakeNodes({ RoomLabel::Default, RoomLabel::Default, RoomLabel::Default }));
             G1.AddUndirectedEdge(0, 1);
             G1.AddUndirectedEdge(0, 2);
             G1.AddUndirectedEdge(1, 2);
@@ -67,7 +51,7 @@ namespace FirstPersonShooter_WorldGeneration_Test
         {
             // Pattern graph
             Graph<void*> G1 = Graph<void*>(3);
-            G1.AddNodes(MakeNodes({ RoomLabel::Default, RoomLabel::Stairs, RoomLabel::Default }));
+            G1.AddNodes(GraphTestUtils::MakeNodes({ RoomLabel::Default, RoomLabel::Stairs, RoomLabel::Default }));
             G1.AddUndirectedEdge(0, 1);
             G1.AddUndirectedEdge(0, 2);
             G1.AddUndirectedEdge(1, 2);
@@ -87,7 +71,7 @@ namespace FirstPersonShooter_WorldGeneration_Test
         {
             // Pattern graph
             Graph<void*> G1 = Graph<void*>(3);
-            G1.AddNodes(MakeNodes({ 1, RoomLabel::Stairs, RoomLabel::Default }));
+            G1.AddNodes(GraphTestUtils::MakeNodes({ 1, RoomLabel::Stairs, RoomLabel::Default }));
             G1.AddUndirectedEdge(0, 1);
             G1.AddUndirectedEdge(0, 2);
             G1.AddUndirectedEdge(1, 2);
@@ -106,7 +90,7 @@ namespace FirstPersonShooter_WorldGeneration_Test
         {
             // Pattern graph
             Graph<void*> G1 = Graph<void*>(3);
-            G1.AddNodes(MakeNodes({ 4, RoomLabel::Stairs, RoomLabel::Default }));
+            G1.AddNodes(GraphTestUtils::MakeNodes({ 4, RoomLabel::Stairs, RoomLabel::Default }));
             G1.AddUndirectedEdge(0, 1);
             G1.AddUndirectedEdge(0, 2);
             G1.AddUndirectedEdge(1, 2);
@@ -123,7 +107,7 @@ namespace FirstPersonShooter_WorldGeneration_Test
         {
             // Pattern graph
             Graph<void*> G1 = Graph<void*>(3);
-            G1.AddNodes(MakeNodes({ RoomLabel::Stairs }));
+            G1.AddNodes(GraphTestUtils::MakeNodes({ RoomLabel::Stairs }));
 
             // Main graph
             auto G2 = MakeMainGraph({ RoomLabel::Default, RoomLabel::Default, RoomLabel::Stairs, RoomLabel::Default, RoomLabel::Default });
@@ -140,7 +124,7 @@ namespace FirstPersonShooter_WorldGeneration_Test
         {
             // Pattern graph
             Graph<void*> G1 = Graph<void*>(3);
-            G1.AddNodes(MakeNodes({ RoomLabel::Default }));
+            G1.AddNodes(GraphTestUtils::MakeNodes({ RoomLabel::Default }));
 
             // Main graph
             auto G2 = MakeMainGraph({ RoomLabel::Default, RoomLabel::Default, RoomLabel::Stairs, RoomLabel::Default, RoomLabel::Default });
@@ -160,7 +144,7 @@ namespace FirstPersonShooter_WorldGeneration_Test
         {
             // Pattern graph
             Graph<void*> G1 = Graph<void*>(3);
-            G1.AddNodes(MakeNodes({ 2321 }));
+            G1.AddNodes(GraphTestUtils::MakeNodes({ 2321 }));
 
             // Main graph
             auto G2 = MakeMainGraph({ RoomLabel::Default, RoomLabel::Default, RoomLabel::Stairs, RoomLabel::Default, RoomLabel::Default });
@@ -176,7 +160,7 @@ namespace FirstPersonShooter_WorldGeneration_Test
         {
             // Pattern graph
             Graph<void*> G1 = Graph<void*>(3);
-            G1.AddNodes(MakeNodes({ RoomLabel::Default, RoomLabel::Default, RoomLabel::Default }));
+            G1.AddNodes(GraphTestUtils::MakeNodes({ RoomLabel::Default, RoomLabel::Default, RoomLabel::Default }));
             G1.AddUndirectedEdge(0, 1);
             G1.AddUndirectedEdge(0, 2);
             G1.AddUndirectedEdge(1, 2);
@@ -190,6 +174,39 @@ namespace FirstPersonShooter_WorldGeneration_Test
                 findsAll &= (std::find(mappings.begin(), mappings.end(), mapping) != mappings.end());
 
             Assert::IsTrue(findsAll);
+        }
+
+        TEST_METHOD(MatchSubgraph_FindsAllIsomorphism_WildCard)
+        {
+            // Pattern graph
+            Graph<void*> G1 = Graph<void*>(2);
+            G1.AddNodes(GraphTestUtils::MakeNodes({ -1, RoomLabel::Stairs}));
+            G1.AddUndirectedEdge(0, 1);
+
+            // Main graph
+            auto G2 = MakeMainGraph({ RoomLabel::Default, RoomLabel::Default, RoomLabel::Stairs, RoomLabel::Default, RoomLabel::Default });
+
+            auto mappings = SubgraphMatcher::MatchSubgraph(G1, G2);
+
+            std::vector<std::vector<int>> expectedMappings({ {1,2}, {3,2} });
+
+            Assert::IsTrue(std::find(mappings.begin(), mappings.end(), expectedMappings[0]) != mappings.end());
+            Assert::IsTrue(std::find(mappings.begin(), mappings.end(), expectedMappings[1]) != mappings.end());
+        }
+
+        TEST_METHOD(MatchSubgraph_FindsNoIsomorphism_WildCard)
+        {
+            // Pattern graph
+            Graph<void*> G1 = Graph<void*>(2);
+            G1.AddNodes(GraphTestUtils::MakeNodes({ -1, 123 }));
+            G1.AddUndirectedEdge(0, 1);
+
+            // Main graph
+            auto G2 = MakeMainGraph({ RoomLabel::Default, RoomLabel::Default, RoomLabel::Stairs, RoomLabel::Default, RoomLabel::Default });
+
+            auto mappings = SubgraphMatcher::MatchSubgraph(G1, G2);
+
+            Assert::IsTrue(mappings.empty());
         }
     };
 }

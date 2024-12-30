@@ -269,12 +269,26 @@
     <ClInclude Include="..\FirstPersonShooter\Utils.h" />
     <ClInclude Include="..\FirstPersonShooter\Vector3.h" />
     <ClInclude Include="..\FirstPersonShooter\WeightedGraph.h" />
+    <ClInclude Include="..\FirstPersonShooter\WorldGeneratorConfig.h" />
+    <ClInclude Include="DistributionParameters.h" />
+    <ClInclude Include="EnemyCountSelector.h" />
     <ClInclude Include="FirstPersonShooter.WorldGeneration.h" />
+    <ClInclude Include="GraphGrammar.h" />
+    <ClInclude Include="GraphGrammarReader.h" />
+    <ClInclude Include="GraphProduction.h" />
+    <ClInclude Include="GraphProductionReader.h" />
+    <ClInclude Include="LabelHelpers.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="PoissonRNG.h" />
+    <ClInclude Include="RoomContentGenerator.h" />
+    <ClInclude Include="RoomContentGeneratorConfig.h" />
+    <ClInclude Include="RoomGraphExtensions.h" />
     <ClInclude Include="Prop.hpp" />
     <ClInclude Include="PropInstance.hpp" />
     <ClInclude Include="PropLoader.hpp" />
     <ClInclude Include="RoomLabel.h" />
+    <ClInclude Include="RoomTypesConfig.h" />
+    <ClInclude Include="RoomTypesGenerator.h" />
     <ClInclude Include="SubgraphMatcher.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -291,7 +305,10 @@
     <ClCompile Include="..\FirstPersonShooter\RoomSelector.cpp" />
     <ClCompile Include="..\FirstPersonShooter\UniformRNG.cpp" />
     <ClCompile Include="..\FirstPersonShooter\Utils.cpp" />
+    <ClCompile Include="DistributionRng.cpp" />
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="EnemyCountSelector.cpp" />
+    <ClCompile Include="LabelHelpers.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -302,8 +319,17 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="PoissonRNG.cpp" />
+    <ClCompile Include="RoomContentGenerator.cpp" />
+    <ClCompile Include="RoomGraphExtensions.cpp" />
+    <ClCompile Include="RoomTypesGenerator.cpp" />
     <ClCompile Include="PropLoader.cpp" />
     <ClCompile Include="SubgraphMatcher.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Grammar Configuration\Productions\Boss_On_Stairs_OneEntrance.txt" />
+    <Text Include="Grammar Configuration\Productions\Boss_On_Stairs_Triangle.txt" />
+    <Text Include="Grammar Configuration\Productions\Default_To_Normal.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

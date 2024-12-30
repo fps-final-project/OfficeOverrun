@@ -3,7 +3,7 @@
 #include <algorithm>
 #include <iterator>
 
-RoomLayoutConfig MapGeneratorAdapter::MakeDefaultLayoutConfig()
+RoomLayoutConfig MapGeneratorAdapter::MakeDefaultRoomLayoutConfig()
 {
 	RoomLayoutConfig config;
 	config.mapSize = Vector3(30, 30, 3);
@@ -13,9 +13,15 @@ RoomLayoutConfig MapGeneratorAdapter::MakeDefaultLayoutConfig()
 	return config;
 }
 
-MapGeneratorAdapter::MapGeneratorAdapter()
+RoomTypesConfig MapGeneratorAdapter::MakeDefaultRoomTypesConfig()
 {
-	roomLayoutConfig = MakeDefaultLayoutConfig();
+	RoomTypesConfig config;
+	return config;
+}
+
+MapGeneratorAdapter::MapGeneratorAdapter():
+	config(WorldGeneratorConfig(MakeDefaultRoomLayoutConfig(), MakeDefaultRoomTypesConfig()))
+{
 	seed = time(nullptr);
 }
 
@@ -27,7 +33,7 @@ MapGeneratorAdapter& MapGeneratorAdapter::WithSeed(int seed)
 
 std::vector<Room> MapGeneratorAdapter::GenerateRooms()
 {
-	RoomLayout layout = MapGenerator().GenerateRoomLayout(roomLayoutConfig, seed);
+	RoomLayout layout = MapGenerator().GenerateRooms(config, seed);
 	std::vector<Room> rooms = std::vector<Room>();
 
 	// Mapping function

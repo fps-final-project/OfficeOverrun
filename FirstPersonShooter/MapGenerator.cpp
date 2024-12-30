@@ -4,25 +4,35 @@
 
 using namespace WorldGenerator;
 
-RoomLayout MapGenerator::GenerateRoomLayout(RoomLayoutConfig config, int seed)
+RoomLayout MapGenerator::GenerateRooms(WorldGeneratorConfig config, int seed)
 {
 	RNGEngine::GetInstance()->SetSeed(seed);
-	RoomLayoutGenerator generator(config);
+	RoomLayoutGenerator layout_generator(config.room_layout_config);
+	RoomTypesGenerator room_types_generator(config.room_types_config);
 
-	// Step 1
-	RoomLayout layout = generator.GenerateRooms();
+	// Generate physical layout
+	RoomLayout layout = layout_generator.GenerateRooms();
 
-	// Step 2
-	Graph<GeneratedRoom> adGraph = generator.GenerateAdGraph(layout);
+	// Generate adjacency graph based on the layout
+	Graph<GeneratedRoom> adGraph = layout_generator.GenerateAdGraph(layout);
 
-	// Step 3
-	generator.SelectRooms(adGraph);
+	// Reduce the graph
+	layout_generator.SelectRooms(adGraph);
 
-	// Step 4
-	generator.GenerateRoomLinks(adGraph);
+	// Set default room labels on adjacency graph nodes
+	room_types_generator.SetDefaultNodeLabels(adGraph);
 
-	// Step 5
-	layout = generator.GenerateLayoutFromAdGraph(adGraph);
+	// Generate room types
+	room_types_generator.GenerateRoomTypes(adGraph);
+
+	// Generate enemies in rooms
+	room_types_generator.GenerateEnemies(adGraph);
+
+	// Generate roomlink objects with respect to the graph structure
+	layout_generator.GenerateRoomLinks(adGraph);
+
+	// Generate physical layout base on the modified adjacency graph
+	layout = layout_generator.GenerateLayoutFromAdGraph(adGraph);
 
 	return layout;
 }

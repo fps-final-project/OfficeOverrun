@@ -221,46 +221,57 @@ void World::UpdateEnemies(std::shared_ptr<Pathfinder> pathfinder, DirectX::XMFLO
 	SpawnEnemyNearPlayer(closeEnemies, pathfinder, deviceResources);
 }
 
+void World::SpawnEnemyInRoom(int room_idx, std::shared_ptr<Pathfinder> pathfinder, std::shared_ptr<DX::DeviceResources> deviceResources)
+{
+	const float wallOffset = 0.5f;
+	auto random_float = std::uniform_real_distribution<float>();
+
+	auto roomPosition = m_rooms[room_idx].getPosition();
+	auto roomSize = m_rooms[room_idx].getSize();
+
+	DirectX::XMFLOAT3 enemyPos = {
+		roomPosition.x + wallOffset + random_float(gen) * (roomSize.x - 2 * wallOffset),
+		roomPosition.y,
+		roomPosition.z + wallOffset + random_float(gen) * (roomSize.z - 2 * wallOffset)
+	};
+
+	EnemyBuilder enemyBuilder{};
+	auto zombie = enemyBuilder
+		.WithNewEnemy(ResourceManager::Instance().getAnimatedModel("zombie_war"))
+		.WithSound(ResourceManager::Instance().getAudioFile("zombie"), deviceResources->GetXAudio())
+		.WithDamageSound(ResourceManager::Instance().getAudioFile("zombie_dying"), deviceResources->GetXAudio())
+		.WithHealth(100)
+		.WithDamage(10)
+		.WithSpeed(0.05f)
+		.WithPosition(enemyPos)
+		.WithRotation({ 0.f, 0.f, 0.f })
+		.WithVelocity({ 0.f, 0.f, 0.f })
+		.WithSize({ 0.8f, 0.8f, 0.8f })
+		.WithAttackRadius(0.7f)
+		.WithFallbackAnimation("run")
+		.WithPath(pathfinder)
+		.Build();
+
+	AddEnemy(zombie);
+}
+
+void World::SpawnBaseEnemies(std::shared_ptr<Pathfinder> pathfinder, std::shared_ptr<DX::DeviceResources> deviceResources)
+{
+	for (int room_idx = 0; room_idx < m_rooms.size(); room_idx++)
+		for (int enemy_idx = 0; enemy_idx < m_rooms[room_idx].base_enemy_count; enemy_idx++)
+			SpawnEnemyInRoom(room_idx, pathfinder, deviceResources);
+}
+
 void World::SpawnEnemyNearPlayer(int currentEnemiesNearPlayer,
 	std::shared_ptr<Pathfinder> pathfinder, std::shared_ptr<DX::DeviceResources> deviceResources)
 {
 	const int maxEnemiesNearPlayer = 1;
-	const float wallOffset = 0.5f;
 	if (currentEnemiesNearPlayer < maxEnemiesNearPlayer)
 	{
 		auto neighbors = GetSetOfSecondNeighbours(m_currentRoomIndex);
 		int random_neighbor = *std::next(neighbors.begin(), std::uniform_int_distribution<int>(0, neighbors.size() - 1)(gen));
 
-		auto random_float = std::uniform_real_distribution<float>();
-		
-		auto roomPosition = m_rooms[random_neighbor].getPosition();
-		auto roomSize = m_rooms[random_neighbor].getSize();
-
-		DirectX::XMFLOAT3 enemyPos = {
-			roomPosition.x + wallOffset + random_float(gen) * (roomSize.x - 2 * wallOffset),
-			roomPosition.y,
-			roomPosition.z + wallOffset + random_float(gen) * (roomSize.z - 2 * wallOffset)
-		};
-
-
-		EnemyBuilder enemyBuilder{};
-		auto zombie = enemyBuilder
-			.WithNewEnemy(ResourceManager::Instance().getAnimatedModel("zombie_war"))
-			.WithSound(ResourceManager::Instance().getAudioFile("zombie"), deviceResources->GetXAudio())
-			.WithDamageSound(ResourceManager::Instance().getAudioFile("zombie_dying"), deviceResources->GetXAudio())
-			.WithHealth(100)
-			.WithDamage(10)
-			.WithSpeed(0.05f)
-			.WithPosition(enemyPos)
-			.WithRotation({ 0.f, 0.f, 0.f })
-			.WithVelocity({ 0.f, 0.f, 0.f })
-			.WithSize({ 0.8f, 0.8f, 0.8f })
-			.WithAttackRadius(0.7f)
-			.WithFallbackAnimation("run")
-			.WithPath(pathfinder)
-			.Build();
-
-		AddEnemy(zombie);
+		SpawnEnemyInRoom(random_neighbor, pathfinder, deviceResources);
 	}
 
 }

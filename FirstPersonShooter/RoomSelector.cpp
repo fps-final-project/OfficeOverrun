@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "RoomSelector.h"
+#include "RoomGraphExtensions.h"
 
 using namespace WorldGenerator;
 
@@ -71,25 +72,13 @@ void WorldGenerator::RoomSelector::RemoveDownUpEdges()
 	}
 }
 
-// Returns index of the first neighbour above the vertex v or -1 if no such exists
-int WorldGenerator::RoomSelector::FindNeighbourAbove(Graph<GeneratedRoom>& graph, int v)
-{
-	std::vector<int> neighbours = graph.GetNeighbours(v);
-	auto it = std::find_if(neighbours.begin(), neighbours.end(), [&](int u)
-		{
-			return graph[u].value->IsAbove(*graph[v].value);
-		}
-	);
-	return it != neighbours.end() ? *it : -1;
-}
-
 // Selects random vertex with a neighbour above except s
 // ISSUE: it will tend to find diagonal vertex always
 int WorldGenerator::RoomSelector::SelectVertexWithNeighbourAbove(Graph<GeneratedRoom>& graph, std::vector<int> vertices, int s)
 {
 	std::vector<int> valid_vertices;
 	std::copy_if(vertices.begin(), vertices.end(), std::back_inserter(valid_vertices), [&](int v)
-		{return v != s && FindNeighbourAbove(graph, v) >= 0; }
+		{return v != s && RoomGraphExtensions::FindNeighbourAbove(graph, v) >= 0; }
 	);
 
 	// If no way up just take the furthest vertex
@@ -148,7 +137,7 @@ void WorldGenerator::RoomSelector::UpdatePathWithFloor(std::vector<int>& P, int 
 	);
 
 	// Add room above t to P
-	s_floor = FindNeighbourAbove(H, t_floor);
+	s_floor = RoomGraphExtensions::FindNeighbourAbove(H, t_floor);
 	if(s_floor != H.Size() - 1) // if its not the roof
 		P.push_back(s_floor);
 }

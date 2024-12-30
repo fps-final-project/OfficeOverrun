@@ -21,3 +21,10 @@ int RNG::RandIntInRange(int min, int max, Distribution distribution)
 	auto rng = DistributionFactory::CreateRNG(distribution);
 	return rng->RandIntInRange(min, max);
 }
+
+int WorldGenerator::RNG::RandIntInRange(int min, int max, Distribution distribution, const DistributionParameters& parameters)
+{
+	auto rng = DistributionFactory::CreateRNG(distribution);
+	rng->SetParameters(parameters);
+	return rng->RandIntInRange(min, max);
+}

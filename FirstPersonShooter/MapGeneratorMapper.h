@@ -41,7 +41,7 @@ Room MapGeneratorMapper::Map(GeneratedRoom obj)
 		links.push_back(Map<RoomLink, RoomLinkData>(link));
 	}
 
-	return Room(pos, size, links);
+	return Room(pos, size, obj.enemies, links);
 }
 
 template<>

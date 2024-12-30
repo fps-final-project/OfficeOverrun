@@ -1,6 +1,5 @@
 #include <vector>
 #include <random>
-
 #include "DistributionRNG.h"
 #include "RNGEngine.h"
 

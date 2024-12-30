@@ -10,7 +10,7 @@
 
 void Pathfinder::AddRoomNodes(const Room& room, std::function<bool(DirectX::XMFLOAT3)> pred)
 {
-	const float wallOffset = 0.8f;
+	const float wallOffset = 0.5f;
 	const float targetDistance = 0.5f;
 	const float distThreshold = targetDistance / 5;
 	const float root2 = std::sqrtf(2.f);

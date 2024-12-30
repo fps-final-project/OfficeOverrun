@@ -135,6 +135,7 @@ void GameState::RestartWithSeed(int seed)
 			m_deviceResources));
 
 	m_pathfinder = std::make_shared<Pathfinder>(m_world->m_rooms, m_player->getPostition());
+	m_world->SpawnBaseEnemies(m_pathfinder, m_deviceResources);
 	m_world->UpdateVisibleRooms();
 	m_world->AddHelicopter();
 

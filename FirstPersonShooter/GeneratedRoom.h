@@ -18,6 +18,7 @@ namespace WorldGenerator
 		Vector3 pos; // minimal [x,y,z] coordinates of the room
 		Vector3 size;
 		std::vector<RoomLink> links; // links to other rooms
+		int enemies;
 
 		bool ValidRoomLink(GeneratedRoom room);
 		bool IsAbove(GeneratedRoom room);

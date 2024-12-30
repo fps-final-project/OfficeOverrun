@@ -186,6 +186,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="GraphTestUtils.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="TestUtils.h" />
     <ClInclude Include="UnitTestApp.xaml.h">
@@ -213,6 +214,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BinaryRoomTest.cpp" />
+    <ClCompile Include="GraphGrammarTest.cpp" />
+    <ClCompile Include="GraphProductionReaderTest.cpp" />
+    <ClCompile Include="GraphProductionTest.cpp" />
+    <ClCompile Include="GraphTestUtils.cpp" />
     <ClCompile Include="RoomLayoutGeneratorTest.cpp" />
     <ClCompile Include="RoomLinkTest.cpp" />
     <ClCompile Include="SubgraphMatcherTest.cpp" />
@@ -245,6 +250,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="TestFiles\GraphProductionReaderTest\GraphProductionReaderTestCase.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
