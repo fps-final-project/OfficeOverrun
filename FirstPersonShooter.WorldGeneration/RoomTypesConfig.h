@@ -10,11 +10,11 @@ namespace WorldGenerator
 
 	public:
 		static const int ENEMY_IN_NORMAL_ROOM_MIN = 0;
-		static const int ENEMY_IN_NORMAL_ROOM_MAX = 5;
+		static const int ENEMY_IN_NORMAL_ROOM_MAX = 2;
 		static const int ENEMY_IN_NORMAL_ROOM_POISSON_LAMBDA = 1;
-		static const int ENEMY_IN_BOSS_ROOM_MIN = 6;
-		static const int ENEMY_IN_BOSS_ROOM_MAX = 10;
-		static const int ENEMY_IN_BOSS_ROOM_POISSON_LAMBDA = 8;
+		static const int ENEMY_IN_BOSS_ROOM_MIN = 4;
+		static const int ENEMY_IN_BOSS_ROOM_MAX = 8;
+		static const int ENEMY_IN_BOSS_ROOM_POISSON_LAMBDA = 6;
 
 		std::string productionsDir() { return PRODUCTIONS_DIR; }
 
