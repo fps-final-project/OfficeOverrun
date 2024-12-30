@@ -41,7 +41,13 @@ Room MapGeneratorMapper::Map(GeneratedRoom obj)
 		links.push_back(Map<RoomLink, RoomLinkData>(link));
 	}
 
-	return Room(pos, size, obj.enemies, links);
+	std::vector<PropInstance> props;
+	for (const auto& prop : obj.props)
+	{
+		props.push_back(MappingHelpers::MapPropInstance(prop));
+	}
+
+	return Room(pos, size, obj.enemies, links, props);
 }
 
 template<>

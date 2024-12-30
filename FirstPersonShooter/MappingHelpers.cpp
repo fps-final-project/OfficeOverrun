@@ -10,6 +10,11 @@ Vector3 MappingHelpers::PositionToGameOrientation(Vector3 v)
 	return Vector3(v.x, v.z, v.y);
 }
 
+DirectX::XMFLOAT3 MappingHelpers::PositionToGameOrientation(DirectX::XMFLOAT3 v)
+{
+	return DirectX::XMFLOAT3(v.x, v.z, v.y);
+}
+
 DirectX::XMFLOAT3 MappingHelpers::OrientationToSize(OrientationData orientation)
 {
 	switch (orientation)
@@ -38,4 +43,12 @@ Vector3 MappingHelpers::MapVector(Vector3 v)
 	v = PositionToGameOrientation(v);
 
 	return v;
+}
+
+PropInstance MappingHelpers::MapPropInstance(PropInstance prop)
+{
+	prop.position = PositionToGameOrientation(prop.position);
+	prop.position.y = FloorToHeight(prop.position.y);
+	prop.size = PositionToGameOrientation(prop.size);
+	return prop;
 }
