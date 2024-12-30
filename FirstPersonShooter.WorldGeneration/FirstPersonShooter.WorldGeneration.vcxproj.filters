@@ -76,6 +76,9 @@
     <Filter Include="WorldGenerator\RoomContent\SpaceTransformationHelper">
       <UniqueIdentifier>{1f7c8008-955a-4dd0-b138-7e8741f041c7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="WorldGenerator\RoomContent\PropMeshGenerator">
+      <UniqueIdentifier>{96438b5e-9193-466a-bfc1-09be0c0d8e14}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -83,7 +86,7 @@
     <ClCompile Include="..\FirstPersonShooter\MapGenerator.cpp">
       <Filter>WorldGenerator</Filter>
     </ClCompile>
-    <ClCompile Include="..\FirstPersonShooter\Utils.cpp">
+    <ClCompile Include="..\FirstPersonShooter\GeometryUtils.cpp">
       <Filter>WorldGenerator\Common</Filter>
     </ClCompile>
     <ClCompile Include="..\FirstPersonShooter\GraphUtils.cpp">
@@ -152,6 +155,9 @@
     <ClCompile Include="BinomialRNG.cpp">
       <Filter>WorldGenerator\Common\RNG\Distributions\DistributionImplementations</Filter>
     </ClCompile>
+    <ClCompile Include="PropMeshGenerator.cpp">
+      <Filter>WorldGenerator\RoomContent\PropMeshGenerator</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FirstPersonShooter.WorldGeneration.h" />
@@ -160,7 +166,7 @@
     <ClInclude Include="..\FirstPersonShooter\MapGenerator.h">
       <Filter>WorldGenerator</Filter>
     </ClInclude>
-    <ClInclude Include="..\FirstPersonShooter\Utils.h">
+    <ClInclude Include="..\FirstPersonShooter\GeometryUtils.h">
       <Filter>WorldGenerator\Common</Filter>
     </ClInclude>
     <ClInclude Include="..\FirstPersonShooter\Graph.h">
@@ -294,6 +300,12 @@
     </ClInclude>
     <ClInclude Include="BinomialRNG.h">
       <Filter>WorldGenerator\Common\RNG\Distributions\DistributionImplementations</Filter>
+    </ClInclude>
+    <ClInclude Include="PropMeshGenerator.h">
+      <Filter>WorldGenerator\RoomContent\PropMeshGenerator</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshBox.h">
+      <Filter>WorldGenerator\RoomContent\PropMeshGenerator</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

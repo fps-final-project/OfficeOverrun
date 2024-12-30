@@ -4,7 +4,7 @@
 #include "RoomLayout.h"
 #include "RoomLayoutConfig.h"
 #include "Graph.h"
-#include "Utils.h"
+#include "GeometryUtils.h"
 #include "BinaryRoom.h"
 #include "RoomLink.h"
 #include "RoomSelector.h"

@@ -16,6 +16,17 @@ bool RNG::RandBoolWithProbabilty(double probability)
 	return distribution(generator);
 }
 
+float WorldGenerator::RNG::RandFloatInRange(float min, float max)
+{
+	if (min == max)
+		return min;
+
+	std::mt19937& generator = RNGEngine::GetInstance()->generator;
+	std::uniform_real_distribution distribution(min, max);
+
+	return distribution(generator);
+}
+
 int RNG::RandIntInRange(int min, int max, Distribution distribution)
 {
 	auto rng = DistributionFactory::CreateRNG(distribution);
