@@ -23,7 +23,7 @@ RoomCollision Room::checkCollision(DirectX::XMFLOAT3 entityPos) const
 	// 0 - x, 1 - y, 2 - z
 
 	RoomCollision result;
-	
+
 	const float playerHeight = 1.f;
 	if (entityPos.y < this->pos.y + playerHeight)
 	{
@@ -36,7 +36,7 @@ RoomCollision Room::checkCollision(DirectX::XMFLOAT3 entityPos) const
 	//	result.collision[1] = true;
 	//	result.correction[1] = this->pos.y + this->size.y - playerHeight;
 	//}
-	
+
 	if (entityPos.x < this->pos.x + wallOffset)
 	{
 		result.collision[0] = true;
@@ -47,7 +47,7 @@ RoomCollision Room::checkCollision(DirectX::XMFLOAT3 entityPos) const
 		result.collision[0] = true;
 		result.correction[0] = this->pos.x + this->size.x - wallOffset;
 	}
-	
+
 	if (entityPos.z < this->pos.z + wallOffset)
 	{
 		result.collision[2] = true;
@@ -117,30 +117,31 @@ RoomCollision Room::checkCollision(DirectX::XMFLOAT3 entityPos) const
 
 		float distZ1 = std::abs(entityPos.z - prop.position.z);
 		float distZ2 = std::abs(entityPos.z - prop.position.z - prop.size.z);
-		
-		if (min(distX1, distX2) < min(distZ1, distZ2))
+
+		if ((entityPos.y - playerHeight) <= prop.position.y + prop.size.y)
 		{
-			result.collision[0] = true;
-			result.correction[0] = distX1 < distX2
-				? prop.position.x : prop.position.x + prop.size.x;
+			if (std::abs(entityPos.y - playerHeight - prop.position.y - prop.size.y) < 0.1f)
+			{
+				result.collision[1] = true;
+				result.correction[1] = prop.position.y + prop.size.y + playerHeight;
+				result.isOnGround = true;
+				continue;
+			}
+			if (min(distX1, distX2) < min(distZ1, distZ2))
+			{
+				result.collision[0] = true;
+				result.correction[0] = distX1 < distX2
+					? prop.position.x : prop.position.x + prop.size.x;
 
+			}
+			else
+			{
+				result.collision[2] = true;
+				result.correction[2] = distZ1 < distZ2
+					? prop.position.z : prop.position.z + prop.size.z;
+
+			}
 		}
-		else
-		{
-			result.collision[2] = true;
-			result.correction[2] = distZ1 < distZ2
-				? prop.position.z : prop.position.z + prop.size.z;
-
-		}
-
-		if ((entityPos.y - playerHeight) <= prop.position.y + prop.size.y 
-			&& std::abs(entityPos.y - playerHeight - prop.position.y - prop.size.y) < 0.1f)
-		{
-			result.collision[1] = true;
-			result.correction[1] = prop.position.y;
-			result.isOnGround = true;
-		}
-
 	}
 
 	return result;
