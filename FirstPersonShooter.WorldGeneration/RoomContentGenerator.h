@@ -21,7 +21,7 @@ namespace WorldGenerator
 	private:
 		void LoadPropsData();
 		void GeneratePropsInRoom(Node<GeneratedRoom>& node);
-		void GeneratePropInRoom(GeneratedRoom& room, Prop prop);
+		bool GeneratePropInRoom(GeneratedRoom& room, Prop prop);
 	};
 }
 

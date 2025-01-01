@@ -37,17 +37,24 @@ void WorldGenerator::RoomContentGenerator::GeneratePropsInRoom(Node<GeneratedRoo
 	for (int i = 0; i < props_count; i++)
 	{
 		Prop prop = RNG::SelectRandomElement<Prop>(all_props);
-		GeneratePropInRoom(room, prop);
+		
+		bool placedProp = GeneratePropInRoom(room, prop);
+		if (!placedProp)
+			return;
 	}
 }
 
-void WorldGenerator::RoomContentGenerator::GeneratePropInRoom(GeneratedRoom& room, Prop prop)
+// Returns false if prop can not be generated
+bool WorldGenerator::RoomContentGenerator::GeneratePropInRoom(GeneratedRoom& room, Prop prop)
 {
 	// Create mesh for room and prop
 	std::vector<MeshBox> mesh = PropMeshGenerator::GenerateMeshForProp(room, prop);
 
 	// Delete meshboxes overlapping with existing props or door area
 	PropMeshGenerator::DeleteUnavailableBoxes(mesh, room);
+
+	if (mesh.empty())
+		return false;
 
 	// Select random available box
 	MeshBox box = RNG::SelectRandomElement<MeshBox>(mesh);
@@ -60,4 +67,6 @@ void WorldGenerator::RoomContentGenerator::GeneratePropInRoom(GeneratedRoom& roo
 
 	PropInstance prop_instance(prop, prop_pos3f, prop_orient);
 	room.props.push_back(prop_instance);
+
+	return true;
 }
