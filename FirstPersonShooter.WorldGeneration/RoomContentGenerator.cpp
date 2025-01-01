@@ -29,7 +29,7 @@ void WorldGenerator::RoomContentGenerator::GeneratePropsInRoom(Node<GeneratedRoo
 	GeneratedRoom& room = *node.value;
 
 	DistributionParameters params;
-	params.binomial_t = RoomContentConfig::PROPS_IN_ROOM_BINOMIAL_T;
+	params.binomial_t = room.size.x * room.size.y / RoomContentConfig::PROPS_IN_ROOM_SIZE_TO_COUNT_COEFF;
 	params.binomial_p = RoomContentConfig::PROPS_IN_ROOM_BINOMIAL_P;
 
 	int props_count = RNG::RandIntInRange(RoomContentConfig::PROPS_IN_ROOM_MIN, RoomContentConfig::PROPS_IN_ROOM_MAX, Binomial, params);

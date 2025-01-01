@@ -10,8 +10,8 @@ namespace WorldGenerator
 		std::string propsDir() { return PROPS_DIR; }
 
 		static const int PROPS_IN_ROOM_MIN = 0;
-		static const int PROPS_IN_ROOM_MAX = 4;
-		static const int PROPS_IN_ROOM_BINOMIAL_T = 4;
+		static const int PROPS_IN_ROOM_MAX = 10;
+		static const int PROPS_IN_ROOM_SIZE_TO_COUNT_COEFF = 8;
 		static constexpr double PROPS_IN_ROOM_BINOMIAL_P = 0.5;
 		static constexpr float MIN_PROP_OFFSET = 0.1;
 
