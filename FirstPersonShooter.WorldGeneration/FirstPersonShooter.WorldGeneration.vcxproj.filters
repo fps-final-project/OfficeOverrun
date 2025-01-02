@@ -79,6 +79,9 @@
     <Filter Include="WorldGenerator\RoomContent\PropMeshGenerator">
       <UniqueIdentifier>{96438b5e-9193-466a-bfc1-09be0c0d8e14}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Prop\GunProps">
+      <UniqueIdentifier>{198cd30f-008b-4786-a7c7-80b52636ea86}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -157,6 +160,9 @@
     </ClCompile>
     <ClCompile Include="PropMeshGenerator.cpp">
       <Filter>WorldGenerator\RoomContent\PropMeshGenerator</Filter>
+    </ClCompile>
+    <ClCompile Include="GunPropInstanceFactory.cpp">
+      <Filter>Prop\GunProps</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -306,6 +312,15 @@
     </ClInclude>
     <ClInclude Include="MeshBox.h">
       <Filter>WorldGenerator\RoomContent\PropMeshGenerator</Filter>
+    </ClInclude>
+    <ClInclude Include="GunPropInstance.h">
+      <Filter>Prop\GunProps</Filter>
+    </ClInclude>
+    <ClInclude Include="GunType.h">
+      <Filter>Prop\GunProps</Filter>
+    </ClInclude>
+    <ClInclude Include="GunPropInstanceFactory.h">
+      <Filter>Prop\GunProps</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

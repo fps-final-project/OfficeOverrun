@@ -18,4 +18,9 @@ struct __declspec(dllexport) PropInstance
 
 	// debug 
 	PropInstance() {}
+
+	PropInstance(const std::string& name, const DirectX::XMFLOAT3& position, const DirectX::XMFLOAT3& size, const DirectX::XMFLOAT3& rotation, bool isSolid)
+		: name(name), position(position), size(size), rotation(rotation), isSolid(isSolid)
+	{
+	}
 };
