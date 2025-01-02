@@ -4,6 +4,7 @@
 #include "SpaceTransformationHelper.h"
 #include "RNG.h"
 #include "PropMeshGenerator.h"
+#include "GunPropSelector.h"
 
 using namespace WorldGenerator;
 
@@ -12,7 +13,10 @@ void RoomContentGenerator::GenerateRoomContent(Graph<GeneratedRoom>& adGraph)
 	LoadPropsData();
 
 	for (auto& node : adGraph.nodes)
+	{
+		GenerateGunsInRoom(node);
 		GeneratePropsInRoom(node);
+	}
 }
 
 void RoomContentGenerator::LoadPropsData()
@@ -22,6 +26,18 @@ void RoomContentGenerator::LoadPropsData()
 	// Transform to internal space notation
 	for (auto& prop : all_props)
 		prop.size = SpaceTransformationHelper::TransformToInternalSpace(prop.size);
+}
+
+void WorldGenerator::RoomContentGenerator::GenerateGunsInRoom(Node<GeneratedRoom>& node)
+{
+	GeneratedRoom& room = *node.value;
+
+	std::vector<GunProp> gun_props = GunPropSelector::SelectGunsForRoom(node);
+
+	for (auto gun_prop : gun_props)
+	{
+		GeneratePropInRoom(room, gun_prop);
+	}
 }
 
 void WorldGenerator::RoomContentGenerator::GeneratePropsInRoom(Node<GeneratedRoom>& node)
@@ -38,14 +54,12 @@ void WorldGenerator::RoomContentGenerator::GeneratePropsInRoom(Node<GeneratedRoo
 	{
 		Prop prop = RNG::SelectRandomElement<Prop>(all_props);
 		
-		bool placedProp = GeneratePropInRoom(room, prop);
-		if (!placedProp)
-			return;
+		GeneratePropInRoom(room, prop);
 	}
 }
 
 // Returns false if prop can not be generated
-bool WorldGenerator::RoomContentGenerator::GeneratePropInRoom(GeneratedRoom& room, Prop prop)
+void WorldGenerator::RoomContentGenerator::GeneratePropInRoom(GeneratedRoom& room, Prop prop)
 {
 	// Create mesh for room and prop
 	std::vector<MeshBox> mesh = PropMeshGenerator::GenerateMeshForProp(room, prop);
@@ -54,7 +68,7 @@ bool WorldGenerator::RoomContentGenerator::GeneratePropInRoom(GeneratedRoom& roo
 	PropMeshGenerator::DeleteUnavailableBoxes(mesh, room);
 
 	if (mesh.empty())
-		return false;
+		return;
 
 	// Select random available box
 	MeshBox box = RNG::SelectRandomElement<MeshBox>(mesh);
@@ -67,6 +81,4 @@ bool WorldGenerator::RoomContentGenerator::GeneratePropInRoom(GeneratedRoom& roo
 
 	PropInstance prop_instance(prop, prop_pos3f, prop_orient);
 	room.props.push_back(prop_instance);
-
-	return true;
 }

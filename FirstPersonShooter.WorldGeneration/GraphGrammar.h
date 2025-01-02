@@ -32,7 +32,7 @@ namespace WorldGenerator
 	public:
 		void Apply(Graph<T>& G);
 
-		GraphGrammar(const std::vector<GraphProduction<T>>& productions);
+		GraphGrammar(std::vector<GraphProduction<T>> productions);
 	};
 
 
@@ -67,14 +67,14 @@ namespace WorldGenerator
 	}
 
 	template<typename T>
-	inline GraphGrammar<T>::GraphGrammar(const std::vector<GraphProduction<T>>& productions)
+	inline GraphGrammar<T>::GraphGrammar(std::vector<GraphProduction<T>> productions)
 	{
-		this->productions = productions;
-
 		// Sort by priority ascending
-		std::sort(this->productions.begin(), this->productions.end(), [](GraphProduction<T>& p1, GraphProduction<T>& p2)
+		std::sort(std::begin(productions), std::end(productions), [](GraphProduction<T>& p1, GraphProduction<T>& p2)
 			{
 				return p1.Priority() < p2.Priority();
 			});
+
+		this->productions = productions;
 	}
 }

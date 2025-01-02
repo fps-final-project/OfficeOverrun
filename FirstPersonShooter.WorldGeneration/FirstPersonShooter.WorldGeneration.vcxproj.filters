@@ -82,6 +82,9 @@
     <Filter Include="Prop\GunProps">
       <UniqueIdentifier>{198cd30f-008b-4786-a7c7-80b52636ea86}</UniqueIdentifier>
     </Filter>
+    <Filter Include="WorldGenerator\RoomContent\GunPropSelector">
+      <UniqueIdentifier>{85981831-9ed5-4289-8e33-14a43d4a6e2d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
@@ -163,6 +166,9 @@
     </ClCompile>
     <ClCompile Include="GunPropFactory.cpp">
       <Filter>Prop\GunProps</Filter>
+    </ClCompile>
+    <ClCompile Include="GunPropSelector.cpp">
+      <Filter>WorldGenerator\RoomContent\GunPropSelector</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -325,6 +331,9 @@
     <ClInclude Include="GunProp.h">
       <Filter>Prop\GunProps</Filter>
     </ClInclude>
+    <ClInclude Include="GunPropSelector.h">
+      <Filter>WorldGenerator\RoomContent\GunPropSelector</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Grammar Configuration\Productions\Default_To_Normal.txt">
@@ -334,6 +343,9 @@
       <Filter>Assets\Grammar Productions</Filter>
     </Text>
     <Text Include="Grammar Configuration\Productions\Boss_On_Stairs_Triangle.txt">
+      <Filter>Assets\Grammar Productions</Filter>
+    </Text>
+    <Text Include="Grammar Configuration\Productions\Treasure_With_Boss_Stairs.txt">
       <Filter>Assets\Grammar Productions</Filter>
     </Text>
   </ItemGroup>

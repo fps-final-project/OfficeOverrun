@@ -24,16 +24,6 @@ namespace WorldGenerator
 			: priority(priority), l_graph(l_graph), r_graph(r_graph)
 		{
 		}
-
-		GraphProduction(const GraphProduction<T>& other)
-			: priority(other.priority), l_graph(other.l_graph), r_graph(other.r_graph)
-		{
-		}
-
-		GraphProduction<T>& operator=(const GraphProduction<T>& other)
-		{
-			return GraphProduction(other);
-		}
 	};
 
 	template<typename T>
