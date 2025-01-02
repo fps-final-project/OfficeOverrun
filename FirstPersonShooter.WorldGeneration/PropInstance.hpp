@@ -15,7 +15,7 @@ struct __declspec(dllexport) PropInstance
 	{
 
 	}
-
+	
 	// debug 
 	PropInstance() {}
 

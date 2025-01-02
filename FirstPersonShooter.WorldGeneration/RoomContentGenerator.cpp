@@ -36,7 +36,9 @@ void WorldGenerator::RoomContentGenerator::GenerateGunsInRoom(Node<GeneratedRoom
 
 	for (auto gun_prop : gun_props)
 	{
-		GeneratePropInRoom(room, gun_prop);
+		PropInstance* prop_instance = GeneratePropForRoom(room, gun_prop);
+		if (prop_instance != nullptr)
+			room.gun_props.push_back(GunPropInstance(gun_prop, *prop_instance));
 	}
 }
 
@@ -54,12 +56,14 @@ void WorldGenerator::RoomContentGenerator::GeneratePropsInRoom(Node<GeneratedRoo
 	{
 		Prop prop = RNG::SelectRandomElement<Prop>(all_props);
 		
-		GeneratePropInRoom(room, prop);
+		PropInstance* prop_instance = GeneratePropForRoom(room, prop);
+		if (prop_instance != nullptr)
+			room.props.push_back(*prop_instance);
 	}
 }
 
 // Returns false if prop can not be generated
-void WorldGenerator::RoomContentGenerator::GeneratePropInRoom(GeneratedRoom& room, Prop prop)
+PropInstance* WorldGenerator::RoomContentGenerator::GeneratePropForRoom(GeneratedRoom& room, Prop prop)
 {
 	// Create mesh for room and prop
 	std::vector<MeshBox> mesh = PropMeshGenerator::GenerateMeshForProp(room, prop);
@@ -68,7 +72,7 @@ void WorldGenerator::RoomContentGenerator::GeneratePropInRoom(GeneratedRoom& roo
 	PropMeshGenerator::DeleteUnavailableBoxes(mesh, room);
 
 	if (mesh.empty())
-		return;
+		return nullptr;
 
 	// Select random available box
 	MeshBox box = RNG::SelectRandomElement<MeshBox>(mesh);
@@ -79,6 +83,5 @@ void WorldGenerator::RoomContentGenerator::GeneratePropInRoom(GeneratedRoom& roo
 	
 	DirectX::XMFLOAT3 prop_orient(0, 0, 0);
 
-	PropInstance prop_instance(prop, prop_pos3f, prop_orient);
-	room.props.push_back(prop_instance);
+	return new PropInstance(prop, prop_pos3f, prop_orient);
 }

@@ -9,8 +9,8 @@ namespace WorldGenerator
 	{
 		std::string model_name;
 
-		GunPropInstance(GunProp prop, DirectX::XMFLOAT3 position, DirectX::XMFLOAT3 rotation)
-			: model_name(prop.model_name), PropInstance(prop, position, rotation)
+		GunPropInstance(GunProp prop, PropInstance prop_instance)
+			: model_name(prop.model_name), PropInstance(prop_instance)
 		{
 
 		}

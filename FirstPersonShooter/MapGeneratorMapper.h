@@ -3,7 +3,8 @@
 #include "GeneratedRoom.h"
 #include "Room.hpp"
 #include "MappingHelpers.h"
-
+#include "AnimatedObjectBuilder.hpp"
+#include "ResourceManager.h"
 
 using namespace WorldGenerator;
 
@@ -21,6 +22,8 @@ public:
 	static DirectX::XMFLOAT3 Map(Vector3 obj);
 	template<>
 	static OrientationData Map(Orientation obj);
+	template<>
+	static Gun Map(GunPropInstance obj);
 };
 
 template<class T1, class T2>
@@ -47,7 +50,13 @@ Room MapGeneratorMapper::Map(GeneratedRoom obj)
 		props.push_back(MappingHelpers::MapPropInstance(prop));
 	}
 
-	return Room(pos, size, obj.enemies, links, props);
+	std::vector<Gun> guns;
+	for (const auto& gun_prop : obj.gun_props)
+	{
+		guns.push_back(Map<GunPropInstance, Gun>(gun_prop));
+	}
+
+	return Room(pos, size, obj.enemies, links, props, guns);
 }
 
 template<>
@@ -81,5 +90,19 @@ OrientationData MapGeneratorMapper::Map(Orientation obj)
 	default:
 		return OrientationData::XZZ;
 	}
+}
+
+template<>
+inline Gun MapGeneratorMapper::Map(GunPropInstance obj)
+{
+	GunPropInstance transformed = MappingHelpers::MapGunPropInstance(obj);
+
+	auto gun = AnimatedObjectBuilder()
+		.WithNewObject(ResourceManager::Instance().getAnimatedModel(transformed.model_name))
+		.WithPosition(transformed.position)
+		.WithSize(transformed.size)
+		.Build();
+
+	return Gun(*gun.get(), transformed.name);
 }
 
