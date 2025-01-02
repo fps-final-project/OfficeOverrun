@@ -13,6 +13,7 @@ namespace WorldGenerator
 	public:
 		static bool RandBool();
 		static bool RandBoolWithProbabilty(double probability);
+		static float RandFloatInRange(float min, float max);
 		static int RandIntInRange(int min, int max, Distribution distribution = Uniform);
 		static int RandIntInRange(int min, int max, Distribution distribution, const DistributionParameters& parameters);
 		template<typename T>

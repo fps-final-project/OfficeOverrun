@@ -3,6 +3,7 @@
 #include "RNGEngine.h"
 #include "WorldGeneratorConfig.h"
 #include "../FirstPersonShooter.WorldGeneration/RoomTypesGenerator.h"
+#include "../FirstPersonShooter.WorldGeneration/RoomContentGenerator.h"
 
 namespace WorldGenerator
 {
