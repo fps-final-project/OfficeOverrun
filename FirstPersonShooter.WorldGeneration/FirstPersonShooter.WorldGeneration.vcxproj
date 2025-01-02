@@ -278,8 +278,9 @@
     <ClInclude Include="GraphGrammarReader.h" />
     <ClInclude Include="GraphProduction.h" />
     <ClInclude Include="GraphProductionReader.h" />
+    <ClInclude Include="GunProp.h" />
     <ClInclude Include="GunPropInstance.h" />
-    <ClInclude Include="GunPropInstanceFactory.h" />
+    <ClInclude Include="GunPropFactory.h" />
     <ClInclude Include="GunType.h" />
     <ClInclude Include="LabelHelpers.h" />
     <ClInclude Include="MeshBox.h" />
@@ -316,7 +317,7 @@
     <ClCompile Include="DistributionRng.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="EnemyCountSelector.cpp" />
-    <ClCompile Include="GunPropInstanceFactory.cpp" />
+    <ClCompile Include="GunPropFactory.cpp" />
     <ClCompile Include="LabelHelpers.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

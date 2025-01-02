@@ -161,7 +161,7 @@
     <ClCompile Include="PropMeshGenerator.cpp">
       <Filter>WorldGenerator\RoomContent\PropMeshGenerator</Filter>
     </ClCompile>
-    <ClCompile Include="GunPropInstanceFactory.cpp">
+    <ClCompile Include="GunPropFactory.cpp">
       <Filter>Prop\GunProps</Filter>
     </ClCompile>
   </ItemGroup>
@@ -319,7 +319,10 @@
     <ClInclude Include="GunType.h">
       <Filter>Prop\GunProps</Filter>
     </ClInclude>
-    <ClInclude Include="GunPropInstanceFactory.h">
+    <ClInclude Include="GunPropFactory.h">
+      <Filter>Prop\GunProps</Filter>
+    </ClInclude>
+    <ClInclude Include="GunProp.h">
       <Filter>Prop\GunProps</Filter>
     </ClInclude>
   </ItemGroup>
