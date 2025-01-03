@@ -30,15 +30,25 @@ void Animator::updateAnimation(const Joint& rootJoint, const std::map<std::strin
 
 	if (m_currentAnimation)
 	{
+        if (!m_fallbackAnimation && m_currentTime == m_currentAnimation->m_Duration)
+            return;
+
 		m_currentTime += m_currentAnimation->m_TicksPerSecond * dt * m_animationSpeedMultiplier;
-        if (!m_wrapAnimation && m_currentTime > m_currentAnimation->m_Duration)
+        if (!m_wrapAnimation && m_currentTime >= m_currentAnimation->m_Duration)
         {
-            m_currentAnimation = m_fallbackAnimation;
-            m_wrapAnimation = true;
-            m_currentTime = 0;
-            m_animationSpeedMultiplier = 1.f;
+            if (m_fallbackAnimation)
+            {
+
+                m_currentAnimation = m_fallbackAnimation;
+                m_wrapAnimation = true;
+                m_currentTime = 0;
+                m_animationSpeedMultiplier = 1.f;
+            }
+            else m_currentTime = m_currentAnimation->m_Duration;
         }
-		m_currentTime = fmod(m_currentTime, m_currentAnimation->m_Duration);
+
+        if(m_wrapAnimation)
+		    m_currentTime = fmod(m_currentTime, m_currentAnimation->m_Duration);
 		auto ident = DirectX::XMMatrixIdentity();
 
 		calculateTransform(rootJoint, boneInfoMap, ident);
@@ -56,6 +66,11 @@ void Animator::playAnimation(std::shared_ptr<Animation> animation, float speed, 
 void Animator::setFallbackAnimation(std::shared_ptr<Animation> animation)
 {
     m_fallbackAnimation = animation;
+}
+
+void Animator::clearFallbackAnimation()
+{
+    m_fallbackAnimation = nullptr;
 }
 
 void Animator::calculateTransform(const Joint& data, const std::map<std::string, BoneInfo>& boneInfoMap, DirectX::XMMATRIX parentTransform)
@@ -98,7 +113,7 @@ int Animator::getIndex(float animationTime)
 {
     for (int index = 0; index < m_currentAnimation->frames.size() - 1; ++index)
     {
-        if (animationTime < m_currentAnimation->frames[index + 1].timestamp)
+        if (animationTime <= m_currentAnimation->frames[index + 1].timestamp)
             return index;
     }
     assert(0);

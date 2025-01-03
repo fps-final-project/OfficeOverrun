@@ -11,7 +11,7 @@
 void Pathfinder::AddRoomNodes(const Room& room, std::function<bool(DirectX::XMFLOAT3)> pred)
 {
 	const float wallOffset = 0.5f;
-	const float targetDistance = 0.5f;
+	const float targetDistance = 0.2f;
 	const float distThreshold = targetDistance / 5;
 	const float root2 = std::sqrtf(2.f);
 	float height = room.getPosition().y;
@@ -231,7 +231,8 @@ float Pathfinder::DistSquared(DirectX::XMFLOAT3 p1, DirectX::XMFLOAT3 p2) const
 
 float Pathfinder::H(DirectX::XMFLOAT3 p1, DirectX::XMFLOAT3 p2) const
 {
-	return std::abs(p1.x - p2.x) + std::abs(p1.z - p2.z);
+	//return std::abs(p1.x - p2.x) + std::abs(p1.z - p2.z);
+	return Dist(p1, p2);
 }
 
 void Pathfinder::AddEdge(int u, int v)

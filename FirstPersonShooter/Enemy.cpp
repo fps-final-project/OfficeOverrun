@@ -78,6 +78,7 @@ void Enemy::takeDamage(int damage)
 	if (health <= 0) 
 	{
 		this->setAnimation(rand() % 2 == 0 ? "death" : "death2");
+		this->m_animator.clearFallbackAnimation();
 	}
 }
 
