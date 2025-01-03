@@ -52,3 +52,15 @@ PropInstance MappingHelpers::MapPropInstance(PropInstance prop)
 	prop.size = PositionToGameOrientation(prop.size);
 	return prop;
 }
+
+GunPropInstance MappingHelpers::MapGunPropInstance(GunPropInstance prop)
+{
+	prop.position = PositionToGameOrientation(prop.position);
+	prop.position.y = FloorToHeight(prop.position.y);
+	prop.size = PositionToGameOrientation(prop.size);
+
+	// Gun needs to be floating
+	prop.position.y += 0.5f;
+
+	return prop;
+}

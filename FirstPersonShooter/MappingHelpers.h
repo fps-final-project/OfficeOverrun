@@ -1,7 +1,7 @@
 #pragma once
 #include "Vector3.h"
 #include "RoomLinkData.hpp"
-#include "../FirstPersonShooter.WorldGeneration/PropInstance.hpp"
+#include "../FirstPersonShooter.WorldGeneration/GunPropInstance.h"
 
 using namespace WorldGenerator;
 
@@ -15,5 +15,6 @@ public:
 	static DirectX::XMFLOAT3 OrientationToSize(OrientationData orientation);
 	static Vector3 MapVector(Vector3 v);
 	static PropInstance MapPropInstance(PropInstance prop);
+	static GunPropInstance MappingHelpers::MapGunPropInstance(GunPropInstance prop);
 };
 

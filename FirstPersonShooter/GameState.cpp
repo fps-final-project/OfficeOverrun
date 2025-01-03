@@ -118,16 +118,6 @@ void GameState::RestartWithSeed(int seed)
 				m_deviceResources));
 	}
 
-	PropInstance instance;
-	instance.name = "whiteboard";
-	instance.position = { 2.f, 0.f, 2.f };
-	instance.rotation = { 0.f, 0.f, 0.f };
-	instance.size = { 1.64, 1.51, 0.492 };
-
-
-	//instance.size = { 1.f, 1.f, 1.f };
-	m_world->m_rooms[0].m_props.push_back(instance);
-
 	auto& lastRoom = m_world->m_rooms[m_world->m_rooms.size() - 1];
 	lastRoom.setModel(
 		RoomModelGenerator::generateRoof(
@@ -136,6 +126,7 @@ void GameState::RestartWithSeed(int seed)
 
 	m_pathfinder = std::make_shared<Pathfinder>(m_world->m_rooms, m_player->getPostition());
 	m_world->SpawnBaseEnemies(m_pathfinder, m_deviceResources);
+	m_world->SpawnBaseGuns();
 	m_world->UpdateVisibleRooms();
 	m_world->AddHelicopter();
 

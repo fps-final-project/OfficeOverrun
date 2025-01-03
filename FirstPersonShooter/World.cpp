@@ -295,6 +295,13 @@ std::set<int> World::GetSetOfSecondNeighbours(int roomId)
 	return result;
 }
 
+void World::SpawnBaseGuns()
+{
+	for (const auto& room : m_rooms)
+		for (int gun_idx = 0; gun_idx < room.m_guns.size(); gun_idx++)
+			AddGun(std::make_shared<Gun>(room.m_guns[gun_idx]));
+}
+
 void World::PlayEnemySounds(std::shared_ptr<DX::DeviceResources> deviceResources, Player* player) const
 {
 	for (const auto& [_, enemy] : m_enemies)

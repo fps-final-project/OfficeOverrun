@@ -278,6 +278,11 @@
     <ClInclude Include="GraphGrammarReader.h" />
     <ClInclude Include="GraphProduction.h" />
     <ClInclude Include="GraphProductionReader.h" />
+    <ClInclude Include="GunProp.h" />
+    <ClInclude Include="GunPropInstance.h" />
+    <ClInclude Include="GunPropFactory.h" />
+    <ClInclude Include="GunPropSelector.h" />
+    <ClInclude Include="GunType.h" />
     <ClInclude Include="LabelHelpers.h" />
     <ClInclude Include="MeshBox.h" />
     <ClInclude Include="pch.h" />
@@ -313,6 +318,8 @@
     <ClCompile Include="DistributionRng.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="EnemyCountSelector.cpp" />
+    <ClCompile Include="GunPropFactory.cpp" />
+    <ClCompile Include="GunPropSelector.cpp" />
     <ClCompile Include="LabelHelpers.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -337,6 +344,7 @@
     <Text Include="Grammar Configuration\Productions\Boss_On_Stairs_OneEntrance.txt" />
     <Text Include="Grammar Configuration\Productions\Boss_On_Stairs_Triangle.txt" />
     <Text Include="Grammar Configuration\Productions\Default_To_Normal.txt" />
+    <Text Include="Grammar Configuration\Productions\Treasure_With_Boss_Stairs.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

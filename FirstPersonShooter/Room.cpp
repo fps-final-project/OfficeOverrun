@@ -7,8 +7,9 @@
 
 const float Room::wallOffset = 0.5f;
 
-Room::Room(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 size, int base_enemy_count, const std::vector<RoomLinkData>& links, const std::vector<PropInstance>& props)
-	: pos(pos), size(size), m_links(links), base_enemy_count(base_enemy_count), m_props(props)
+Room::Room(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 size, int base_enemy_count, const std::vector<RoomLinkData>& links, const std::vector<PropInstance>& props, 
+	const std::vector<Gun>& guns)
+	: pos(pos), size(size), m_links(links), base_enemy_count(base_enemy_count), m_props(props), m_guns(guns)
 {
 }
 
