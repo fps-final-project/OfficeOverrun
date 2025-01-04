@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <DirectXMath.h>
 
 namespace WorldGenerator
 {
@@ -35,6 +36,9 @@ namespace WorldGenerator
 		// Prop placement
 		static constexpr double PROPS_IN_ROOM_BINOMIAL_P = 0.5f;
 		static constexpr float MIN_PROP_OFFSET = 0.1f;
+
+		static constexpr DirectX::XMFLOAT3 RESP_POINT = DirectX::XMFLOAT3(0.f, 0.f, 0.f);
+		static constexpr DirectX::XMFLOAT2 RESP_POINT_BOX = DirectX::XMFLOAT2(2.f, 2.f);
 
 		RoomContentConfig()
 		{

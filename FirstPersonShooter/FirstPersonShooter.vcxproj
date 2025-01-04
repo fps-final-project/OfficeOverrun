@@ -310,7 +310,7 @@
     <Image Include="Assets\props\dead-body\DeadBodyCovered_BaseColor.png" />
     <Image Include="Assets\props\desk1\1.jpg" />
     <Image Include="Assets\props\desk2\Office_desk_BaseColor.png" />
-    <Image Include="Assets\props\lamp\Atlas_00001.png" />
+    <Image Include="Assets\props\lamp\Atlas_lamp.png" />
     <Image Include="Assets\props\monitor2\PSX_Monitor_0.png" />
     <Image Include="Assets\props\office-chair-1\up_1001_albedo.jpg" />
     <Image Include="Assets\props\office-chair-2\Chair_low_phong1_BaseColor.png" />

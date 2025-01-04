@@ -214,7 +214,7 @@
     <Image Include="Assets\props\desk2\Office_desk_BaseColor.png">
       <Filter>Assets\props\desk2</Filter>
     </Image>
-    <Image Include="Assets\props\lamp\Atlas_00001.png">
+    <Image Include="Assets\props\lamp\Atlas_lamp.png">
       <Filter>Assets\props\lamp</Filter>
     </Image>
     <Image Include="Assets\props\potted-plant\flowerLP_flowerLP_BaseColor.png">
