@@ -5,6 +5,7 @@
 #include "RNG.h"
 #include "PropMeshGenerator.h"
 #include "GunPropSelector.h"
+#include "RoomLabel.h"
 
 using namespace WorldGenerator;
 
@@ -14,6 +15,9 @@ void RoomContentGenerator::GenerateRoomContent(Graph<GeneratedRoom>& adGraph)
 
 	for (auto& node : adGraph.nodes)
 	{
+		if (node.label == RoomLabel::Roof)
+			continue;
+
 		GenerateGunsInRoom(node);
 		GeneratePropsInRoom(node);
 	}
