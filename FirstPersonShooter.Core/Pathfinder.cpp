@@ -391,6 +391,7 @@ std::vector<int> Pathfinder::AStarRoom(int start, int end, int roomId) const
 		}
 	}
 
+
 	return prev;
 }
 
@@ -408,7 +409,7 @@ std::list<PathNodeData> Pathfinder::ConstructPath(const std::vector<int>& prev, 
 	return result;
 }
 
-Pathfinder::Pathfinder(const std::vector<Room>& rooms, DirectX::XMFLOAT3 playerPos)
+Pathfinder::Pathfinder(const std::vector<Room>& rooms, DirectX::XMFLOAT3 playerPos) : playerNodeChanged(false)
 {
 	roomNodeIndexPrefix.push_back(0);
 
@@ -450,61 +451,81 @@ Pathfinder::Pathfinder(const std::vector<Room>& rooms, DirectX::XMFLOAT3 playerP
 
 	// correction for the last bounding
 	roomNodeIndexPrefix[roomNodeIndexPrefix.size() - 1]--;
+
+	nodeMask = std::vector(nodes.size(), false);
 	playerNode = FindClosestNode(playerPos);
+	UpdateNodesCloseToPlayer(playerNode);
 }
 
-Path Pathfinder::FindPath(DirectX::XMFLOAT3 enemyPos) const
+Path Pathfinder::FindPath(DirectX::XMFLOAT3 enemyPos) 
 {
 	int enemyNode = FindClosestNode(enemyPos);
 	return FindPathFromNode(enemyNode);
 }
 
-Path Pathfinder::FindPathFromNode(int nodeIdx) const
+Path Pathfinder::FindPathFromNode(int nodeIdx) 
 {
-	auto nodeParents = AStar(nodeIdx, playerNode);
 	Path path;
-	path.path = ConstructPath(nodeParents, playerNode);
 	path.currentNode = nodeIdx;
 	path.playerVisible = NodesInNeighboringRooms(nodeIdx, playerNode);
-	return path;
-}
-
-Path Pathfinder::FindPathFromNodeFast(int nodeIdx) const
-{
-	int r1 = FindRoomIdx(nodeIdx);
-	int r2 = FindRoomIdx(playerNode);
-
-	int idxStart = nodeIdx;
-	auto linkNode = FindLinkNode(r1, r2);
-
-	if (r1 != r2)
+	if (path.playerVisible)
 	{
-		for (int neighbour : edges[linkNode])
-		{
-			if (FindRoomIdx(neighbour) == r2)
-			{
-				idxStart = neighbour;
-				break;
-			}
-		}
+		auto targetNode = targetNodes.top();
+
+		auto nodeParents = AStar(nodeIdx, targetNode.second);
+		path.path = ConstructPath(nodeParents, targetNode.second);
+
+		targetNodes.push(std::make_pair(targetNode.first + 1, targetNode.second));
 	}
 
-	auto nodeParents = AStarRoom(idxStart, playerNode, r2);
-	Path path;
-	path.path = ConstructPath(nodeParents, playerNode, roomNodeIndexPrefix[r2]);
-	if (linkNode != -1)
-		path.path.push_front(PathNodeData(linkNode, nodes[linkNode]));
-
-	path.currentNode = nodeIdx;
-
-	if (path.path.size() > 1 && path.path.front().index == path.currentNode)
-		path.path.pop_front();
-
-	path.playerVisible = NodesInNeighboringRooms(nodeIdx, playerNode);
 	return path;
 }
 
-void Pathfinder::UpdatePath(Path& path, DirectX::XMFLOAT3 currPos) const
+Path Pathfinder::FindPathFromNodeFast(int nodeIdx)
+{
+
+	Path path;
+	path.playerVisible = NodesInNeighboringRooms(nodeIdx, playerNode);
+	if (path.playerVisible)
+	{
+		auto targetNode = targetNodes.top();
+
+		int r1 = FindRoomIdx(nodeIdx);
+		int r2 = FindRoomIdx(playerNode);
+
+		int idxStart = nodeIdx;
+		auto linkNode = FindLinkNode(r1, r2);
+
+		if (r1 != r2)
+		{
+			for (int neighbour : edges[linkNode])
+			{
+				if (FindRoomIdx(neighbour) == r2)
+				{
+					idxStart = neighbour;
+					break;
+				}
+			}
+		}
+
+		auto nodeParents = AStarRoom(idxStart, targetNode.second, r2);
+		path.path = ConstructPath(nodeParents, targetNode.second, roomNodeIndexPrefix[r2]);
+		if (linkNode != -1)
+			path.path.push_front(PathNodeData(linkNode, nodes[linkNode]));
+
+		path.currentNode = nodeIdx;
+
+		if (path.path.size() > 1 && path.path.front().index == path.currentNode)
+			path.path.pop_front();
+
+		targetNodes.push(std::make_pair(targetNode.first + 1, targetNode.second));
+	}
+
+
+	return path;
+}
+
+void Pathfinder::UpdatePath(Path& path, DirectX::XMFLOAT3 currPos) 
 {
 	// check if enemy moved
 	float cutoffThreshold = 0.1f;
@@ -518,7 +539,7 @@ void Pathfinder::UpdatePath(Path& path, DirectX::XMFLOAT3 currPos) const
 	}
 
 	// check if player moved
-	if (playerNode != path.path.back().index)
+	if (playerNodeChanged)
 	{
 		path.playerVisible = NodesInNeighboringRooms(path.currentNode, playerNode);
 		if (path.playerVisible)
@@ -530,10 +551,39 @@ void Pathfinder::UpdatePath(Path& path, DirectX::XMFLOAT3 currPos) const
 
 void Pathfinder::UpdatePlayerNode(DirectX::XMFLOAT3 playerPos, int currentNodeIndex)
 {
+	int oldPlayerNode = playerNode;
 	playerNode = UpdateNode(playerPos, playerNode);
 	if (DistSquared(nodes[playerNode], playerPos) > 4.f)
 	{
 		playerNode = FindClosestNodeInARoom(playerPos, currentNodeIndex);
+	}
+
+	playerNodeChanged = oldPlayerNode != playerNode;
+
+	UpdateNodesCloseToPlayer(playerNode);
+}
+
+void Pathfinder::UpdateNodesCloseToPlayer(int playerNode, float attackRange)
+{
+	while (!targetNodes.empty())
+		targetNodes.pop();
+
+	std::fill(nodeMask.begin(), nodeMask.end(), 0);
+	std::queue<int> nodesQueue;
+	nodesQueue.push(playerNode);
+	while (!nodesQueue.empty())
+	{
+		int node = nodesQueue.front();
+		nodesQueue.pop();
+
+		if (nodeMask[node] || DistSquared(nodes[node], nodes[playerNode]) > attackRange * attackRange)
+			continue;
+
+		nodeMask[node] = true;
+		targetNodes.push(std::make_pair(0, node));
+
+		for (int neigh : edges[node])
+			nodesQueue.push(neigh);
 	}
 }
 

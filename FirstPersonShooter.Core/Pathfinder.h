@@ -5,6 +5,8 @@
 #include <set>
 #include <map>
 #include <functional>
+#include <unordered_set>
+#include <queue>
 
 class Room;
 struct PathNodeData;
@@ -14,8 +16,11 @@ struct Path;
 class __declspec(dllexport) Pathfinder
 {
 	int playerNode;
+	bool playerNodeChanged;
 
 	std::vector<DirectX::XMFLOAT3> nodes;
+	std::vector<bool> nodeMask;
+	std::priority_queue<std::pair<int, int>> targetNodes;
 	std::vector<std::set<int>> edges;
 
 	// a connection (r1, r2), r1 < r2 has a corresponding node
@@ -55,9 +60,10 @@ class __declspec(dllexport) Pathfinder
 	std::list<PathNodeData> ConstructPath(const std::vector<int>& prev, int start, int idxOffset = 0) const;
 public:
 	Pathfinder(const std::vector<Room>& rooms, DirectX::XMFLOAT3 playerPos);
-	Path FindPath(DirectX::XMFLOAT3 enemyPos) const;
-	Path FindPathFromNode(int nodeIdx) const;
-	Path FindPathFromNodeFast(int nodeIdx) const;
-	void UpdatePath(Path& path, DirectX::XMFLOAT3 currPos) const;
+	Path FindPath(DirectX::XMFLOAT3 enemyPos);
+	Path FindPathFromNode(int nodeIdx);
+	Path FindPathFromNodeFast(int nodeIdx);
+	void UpdatePath(Path& path, DirectX::XMFLOAT3 currPos);
 	void UpdatePlayerNode(DirectX::XMFLOAT3 playerPos, int currentNodeIndex);
+	void UpdateNodesCloseToPlayer(int playerNode, float attackRange = 0.7f);
 };
