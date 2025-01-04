@@ -108,5 +108,14 @@ bool PropMeshGenerator::BoxUnavailable(MeshBox box, const GeneratedRoom& room)
 				return true;
 		}
 	}
+
+	// Check if box intersects with starting point
+	if (room.pos.z == RoomContentConfig::RESP_POINT.z)
+	{
+		DirectX::XMFLOAT2 resp_box_pos(RoomContentConfig::RESP_POINT.x, RoomContentConfig::RESP_POINT.y);
+		if (GeometryUtils::BoxesIntersect(box.pos, box.size, resp_box_pos, RoomContentConfig::RESP_POINT_BOX))
+			return true;
+	}
+
 	return false;
 }
