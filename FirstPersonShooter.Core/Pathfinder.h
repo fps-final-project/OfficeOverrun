@@ -20,7 +20,7 @@ class __declspec(dllexport) Pathfinder
 
 	std::vector<DirectX::XMFLOAT3> nodes;
 	std::vector<bool> nodeMask;
-	std::priority_queue<std::pair<int, int>> targetNodes;
+	std::priority_queue<std::pair<int, int>, std::vector<std::pair<int, int>>, std::greater<>> targetNodes;
 	std::vector<std::set<int>> edges;
 
 	// a connection (r1, r2), r1 < r2 has a corresponding node

@@ -560,11 +560,15 @@ void Pathfinder::UpdatePlayerNode(DirectX::XMFLOAT3 playerPos, int currentNodeIn
 
 	playerNodeChanged = oldPlayerNode != playerNode;
 
-	UpdateNodesCloseToPlayer(playerNode);
+	if(playerNodeChanged)
+		UpdateNodesCloseToPlayer(playerNode);
 }
 
 void Pathfinder::UpdateNodesCloseToPlayer(int playerNode, float attackRange)
 {
+	int roomIdx = FindRoomIdx(playerNode);
+	int leftRange = roomNodeIndexPrefix[roomIdx], rightRange = roomNodeIndexPrefix[roomIdx + 1];
+
 	while (!targetNodes.empty())
 		targetNodes.pop();
 
@@ -576,11 +580,12 @@ void Pathfinder::UpdateNodesCloseToPlayer(int playerNode, float attackRange)
 		int node = nodesQueue.front();
 		nodesQueue.pop();
 
-		if (nodeMask[node] || DistSquared(nodes[node], nodes[playerNode]) > attackRange * attackRange)
+		if (node < leftRange || node >= rightRange || nodeMask[node] || DistSquared(nodes[node], nodes[playerNode]) > attackRange * attackRange)
 			continue;
 
 		nodeMask[node] = true;
-		targetNodes.push(std::make_pair(0, node));
+		if(node != playerNode)
+			targetNodes.push(std::make_pair(0, node));
 
 		for (int neigh : edges[node])
 			nodesQueue.push(neigh);
