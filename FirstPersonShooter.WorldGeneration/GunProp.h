@@ -14,6 +14,7 @@ namespace WorldGenerator
 			this->name = name;
 			this->size = size;
 			this->isSolid = isSolid;
+			this->faceVector = DirectX::XMFLOAT3(0, 0, 1);
 		}
 	};
 }
