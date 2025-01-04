@@ -63,50 +63,22 @@ bool PropMeshGenerator::BoxUnavailable(MeshBox box, const GeneratedRoom& room)
 	// Delete boxes overlapping with another props
 	for (const auto& prop : room.props)
 	{
-		DirectX::XMFLOAT2 prop_pos_2f(prop.position.x, prop.position.y);
-		DirectX::XMFLOAT2 prop_size_2f(prop.size.x, prop.size.y);
+		if (BoxIntestectsWithProp(box, prop))
+			return true;
+	}
 
-		if (GeometryUtils::BoxesIntersect(box.pos, box.size, prop_pos_2f, prop_size_2f))
+	// Delete boxes overlapping with gun props
+	for (const auto& prop : room.gun_props)
+	{
+		if (BoxIntestectsWithProp(box, prop))
 			return true;
 	}
 
 	// Delete boxes blocking doors or stairs
 	for (const auto& link : room.links)
 	{
-		// Clear box area in front of the doors
-		if (link.orientation == XZ)
-		{
-			DirectX::XMFLOAT2 door_box_pos(link.pos.x, link.pos.y == room.pos.y ? link.pos.y : link.pos.y - RoomContentConfig::MIN_PROP_OFFSET);
-			DirectX::XMFLOAT2 door_box_size(1, RoomContentConfig::MIN_PROP_OFFSET);
-
-			if (GeometryUtils::BoxesIntersect(box.pos, box.size, door_box_pos, door_box_size))
-				return true;
-		}
-		if (link.orientation == YZ)
-		{
-			DirectX::XMFLOAT2 door_box_pos(link.pos.x == room.pos.x ? link.pos.x : link.pos.x - RoomContentConfig::MIN_PROP_OFFSET, link.pos.y);
-			DirectX::XMFLOAT2 door_box_size(RoomContentConfig::MIN_PROP_OFFSET, 1);
-
-			if (GeometryUtils::BoxesIntersect(box.pos, box.size, door_box_pos, door_box_size))
-				return true;
-		}
-		// Clear boxes colliding with stairs
-		if (link.orientation == XYX)
-		{
-			DirectX::XMFLOAT2 stair_box_pos(link.pos.x - RoomContentConfig::MIN_PROP_OFFSET, link.pos.y);
-			DirectX::XMFLOAT2 stair_box_size(RoomLayoutConfig::verticalRoomLinkLength + RoomContentConfig::MIN_PROP_OFFSET, RoomLayoutConfig::verticalRoomLinkWidth);
-
-			if (GeometryUtils::BoxesIntersect(box.pos, box.size, stair_box_pos, stair_box_size))
-				return true;
-		}
-		if (link.orientation == XYY)
-		{
-			DirectX::XMFLOAT2 stair_box_pos(link.pos.x, link.pos.y - RoomContentConfig::MIN_PROP_OFFSET);
-			DirectX::XMFLOAT2 stair_box_size(RoomLayoutConfig::verticalRoomLinkWidth, RoomLayoutConfig::verticalRoomLinkLength + RoomContentConfig::MIN_PROP_OFFSET);
-
-			if (GeometryUtils::BoxesIntersect(box.pos, box.size, stair_box_pos, stair_box_size))
-				return true;
-		}
+		if (BoxIntestectsWithRoomLink(room, box, link))
+			return true;
 	}
 
 	// Check if box intersects with starting point
@@ -117,5 +89,56 @@ bool PropMeshGenerator::BoxUnavailable(MeshBox box, const GeneratedRoom& room)
 			return true;
 	}
 
+	return false;
+}
+
+bool WorldGenerator::PropMeshGenerator::BoxIntestectsWithProp(MeshBox box, const PropInstance& prop)
+{
+	DirectX::XMFLOAT2 prop_pos_2f(prop.position.x, prop.position.y);
+	DirectX::XMFLOAT2 prop_size_2f(prop.size.x, prop.size.y);
+
+	if (GeometryUtils::BoxesIntersect(box.pos, box.size, prop_pos_2f, prop_size_2f))
+		return true;
+	else
+		return false;
+}
+
+bool WorldGenerator::PropMeshGenerator::BoxIntestectsWithRoomLink(const GeneratedRoom& room, MeshBox box, const RoomLink& link)
+{
+	// Clear box area in front of the doors
+	if (link.orientation == XZ)
+	{
+		DirectX::XMFLOAT2 door_box_pos(link.pos.x, link.pos.y == room.pos.y ? link.pos.y : link.pos.y - RoomContentConfig::MIN_PROP_OFFSET);
+		DirectX::XMFLOAT2 door_box_size(1, RoomContentConfig::MIN_PROP_OFFSET);
+
+		if (GeometryUtils::BoxesIntersect(box.pos, box.size, door_box_pos, door_box_size))
+			return true;
+	}
+	if (link.orientation == YZ)
+	{
+		DirectX::XMFLOAT2 door_box_pos(link.pos.x == room.pos.x ? link.pos.x : link.pos.x - RoomContentConfig::MIN_PROP_OFFSET, link.pos.y);
+		DirectX::XMFLOAT2 door_box_size(RoomContentConfig::MIN_PROP_OFFSET, 1);
+
+		if (GeometryUtils::BoxesIntersect(box.pos, box.size, door_box_pos, door_box_size))
+			return true;
+	}
+
+	// Clear boxes colliding with stairs
+	if (link.orientation == XYX)
+	{
+		DirectX::XMFLOAT2 stair_box_pos(link.pos.x - RoomContentConfig::MIN_PROP_OFFSET, link.pos.y);
+		DirectX::XMFLOAT2 stair_box_size(RoomLayoutConfig::verticalRoomLinkLength + RoomContentConfig::MIN_PROP_OFFSET, RoomLayoutConfig::verticalRoomLinkWidth);
+
+		if (GeometryUtils::BoxesIntersect(box.pos, box.size, stair_box_pos, stair_box_size))
+			return true;
+	}
+	if (link.orientation == XYY)
+	{
+		DirectX::XMFLOAT2 stair_box_pos(link.pos.x, link.pos.y - RoomContentConfig::MIN_PROP_OFFSET);
+		DirectX::XMFLOAT2 stair_box_size(RoomLayoutConfig::verticalRoomLinkWidth, RoomLayoutConfig::verticalRoomLinkLength + RoomContentConfig::MIN_PROP_OFFSET);
+
+		if (GeometryUtils::BoxesIntersect(box.pos, box.size, stair_box_pos, stair_box_size))
+			return true;
+	}
 	return false;
 }
