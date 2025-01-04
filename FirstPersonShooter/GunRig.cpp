@@ -12,7 +12,7 @@ GunRig::GunRig(std::string gunName, IXAudio2* xaudio) :
 {
 	m_hands = std::make_shared<AnimatedEntity>(ResourceManager::Instance().getAnimatedModel(gunName));
 	m_gun = std::make_shared<AnimatedEntity>(ResourceManager::Instance().getAnimatedModel(gunName + "_gun"));
-	 
+	m_ammo[gunName] = { 30, 30 * 4 };
 	this->ChangeGun(gunName, xaudio);
 }
 
@@ -25,7 +25,7 @@ void GunRig::Update(float dt)
 
 void GunRig::Reload()
 {
-	if (m_ammo[m_name].second - m_ammo[m_name].first == 0)
+	if (m_ammo[m_name].second - m_ammo[m_name].first == 0 || m_ammo[m_name].first == m_clipSize)
 	{
 		return;
 	}
@@ -42,7 +42,7 @@ void GunRig::Reload()
 	}
 	else
 	{
-		m_ammo[m_name].first += ammoInTotal;
+		m_ammo[m_name].first = ammoInTotal;
 		m_ammo[m_name].second = 0;
 	}
 }
@@ -63,23 +63,18 @@ bool GunRig::Shoot()
 }
 
 void GunRig::CollectAmmo(const std::string& name, int amount)
-{
-	if (m_ammo.find(name) == m_ammo.end())
-		return;
-	
+{	
 	m_ammo[name].second += amount;
 }
 
 void GunRig::ChangeGun(const std::string& name, IXAudio2* xaudio)
 {
 	std::shared_ptr<GunRigMetadata> data = ResourceManager::Instance().getGunRigMetadata(name);
+	if (m_ammo.find(name) == m_ammo.end())
+		return;
 
 	if (data != nullptr && name != m_name)
 	{
-		if (m_ammo.find(name) == m_ammo.end())
-		{
-			m_ammo[name] = { data->clipSize, data->clipSize * 4 };
-		}
 		m_clipSize = data->clipSize;
 		m_gunOffset = data->gunOffset;
 		m_rigOffset = data->rigOffset;

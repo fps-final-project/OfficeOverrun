@@ -306,7 +306,7 @@ void World::PlayEnemySounds(std::shared_ptr<DX::DeviceResources> deviceResources
 {
 	for (const auto& [_, enemy] : m_enemies)
 	{
-		if (enemy->isDead())
+		if (enemy->isDead() || !enemy->inCloseProximity())
 			continue;
 
 		X3DAUDIO_DSP_SETTINGS dsp = enemy

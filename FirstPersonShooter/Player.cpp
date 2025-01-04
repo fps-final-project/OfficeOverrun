@@ -83,6 +83,11 @@ void Player::Render(std::shared_ptr<RenderMaster> renderMaster)
 	m_gunRig->Render(renderMaster);
 }
 
+void Player::setListenerDirection(DirectX::XMFLOAT3 forward)
+{
+	m_listener->OrientFront = forward;
+}
+
 std::unique_ptr<GunRig>& Player::getGunRig()
 {
 	return m_gunRig;
