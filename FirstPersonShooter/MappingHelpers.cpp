@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "MappingHelpers.h"
 #include "RoomLayoutConfig.h"
+#include "GeometryUtils.h"
 
 using namespace WorldGenerator;
 
@@ -47,6 +48,7 @@ Vector3 MappingHelpers::MapVector(Vector3 v)
 
 PropInstance MappingHelpers::MapPropInstance(PropInstance prop)
 {
+	prop.position = GeometryUtils::AdjustPropPositionToOrientation(prop.rotation, prop.size, prop.position);
 	prop.position = PositionToGameOrientation(prop.position);
 	prop.position.y = FloorToHeight(prop.position.y);
 	prop.size = PositionToGameOrientation(prop.size);

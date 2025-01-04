@@ -82,12 +82,11 @@ PropInstance* WorldGenerator::RoomContentGenerator::GeneratePropForRoom(Generate
 
 	DirectX::XMFLOAT3 prop_orient = FindPropOrientation(room, prop, box.pos);
 	DirectX::XMFLOAT3 prop_size(prop.size);
-	AdjustPropSizeToOrientation(prop_orient, prop_size);
+	prop_size = GeometryUtils::AdjustPropSizeToOrientation(prop_orient, prop_size);
 
 	// Select prop position in box
 	DirectX::XMFLOAT2 prop_pos = PropMeshGenerator::PlacePropInBox(box, prop_size);
 	DirectX::XMFLOAT3 prop_pos3f(prop_pos.x, prop_pos.y, room.pos.z);
-	AdjustPropPositionToOrientation(prop_orient, prop_size, prop_pos3f);
 
 	return new PropInstance(prop, prop_pos3f, prop_orient);
 }
@@ -112,29 +111,4 @@ DirectX::XMFLOAT3 WorldGenerator::RoomContentGenerator::FindPropOrientation(cons
 	float rotation = GeometryUtils::ComputeNormalVectorAngleIn4Axis(prop.faceVector, unit_to_center);
 
 	return DirectX::XMFLOAT3(0, 0, rotation);
-}
-
-void WorldGenerator::RoomContentGenerator::AdjustPropSizeToOrientation(DirectX::XMFLOAT3 orientation, DirectX::XMFLOAT3& size)
-{
-	if (orientation.z == DirectX::XM_PIDIV2)
-		std::swap(size.x, size.y);
-	else if (orientation.z == -DirectX::XM_PIDIV2)
-		std::swap(size.x, size.y);
-}
-
-void WorldGenerator::RoomContentGenerator::AdjustPropPositionToOrientation(DirectX::XMFLOAT3 orientation, DirectX::XMFLOAT3 size, DirectX::XMFLOAT3& pos)
-{
-	if (orientation.z == DirectX::XM_PI)
-	{
-		pos.x = pos.x + size.x;
-		pos.y = pos.y + size.y;
-	}
-	else if (orientation.z == DirectX::XM_PIDIV2)
-	{
-		pos.y = pos.y + size.x;
-	}
-	else if (orientation.z == -DirectX::XM_PIDIV2)
-	{
-		pos.x = pos.x + size.y;
-	}
 }

@@ -47,3 +47,30 @@ float WorldGenerator::GeometryUtils::ComputeNormalVectorAngleIn4Axis(DirectX::XM
         return DirectX::XM_PIDIV2;
     return -DirectX::XM_PIDIV2;
 }
+
+DirectX::XMFLOAT3 WorldGenerator::GeometryUtils::AdjustPropSizeToOrientation(DirectX::XMFLOAT3 orientation, DirectX::XMFLOAT3 size)
+{
+    if (orientation.z == DirectX::XM_PIDIV2)
+        std::swap(size.x, size.y);
+    else if (orientation.z == -DirectX::XM_PIDIV2)
+        std::swap(size.x, size.y);
+    return size;
+}
+
+DirectX::XMFLOAT3 WorldGenerator::GeometryUtils::AdjustPropPositionToOrientation(DirectX::XMFLOAT3 orientation, DirectX::XMFLOAT3 size, DirectX::XMFLOAT3 pos)
+{
+    if (orientation.z == DirectX::XM_PI)
+    {
+        pos.x = pos.x + size.x;
+        pos.y = pos.y + size.y;
+    }
+    else if (orientation.z == DirectX::XM_PIDIV2)
+    {
+        pos.y = pos.y + size.x;
+    }
+    else if (orientation.z == -DirectX::XM_PIDIV2)
+    {
+        pos.x = pos.x + size.y;
+    }
+    return pos;
+}
