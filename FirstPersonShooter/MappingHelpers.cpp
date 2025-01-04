@@ -61,11 +61,12 @@ GunPropInstance MappingHelpers::MapGunPropInstance(GunPropInstance prop)
 {
 	prop.position = PositionToGameOrientation(prop.position);
 	prop.position.y = FloorToHeight(prop.position.y);
-	prop.size = PositionToGameOrientation(prop.size);
 	prop.rotation = PositionToGameOrientation(prop.rotation);
 
-	// Gun needs to be floating
-	prop.position.y += 0.5f;
+	// Prop box in world generator is two times bigger so gun would not rotate into walls and prop
+	DirectX::XMFLOAT3 gunPropSize(0.5f, 0.5f, 0.5f);
+	prop.position = DirectX::XMFLOAT3(prop.position.x + gunPropSize.x, prop.position.y + gunPropSize.y, prop.position.z + gunPropSize.z);
+	prop.size = gunPropSize;
 
 	return prop;
 }

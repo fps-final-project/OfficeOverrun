@@ -7,7 +7,7 @@ namespace WorldGenerator
 	class GunPropFactory
 	{
 	private:
-		static constexpr DirectX::XMFLOAT3 GUN_PROP_SIZE = DirectX::XMFLOAT3(0.5f, 0.5f, 0.5f);
+		static constexpr DirectX::XMFLOAT3 GUN_PROP_SIZE = DirectX::XMFLOAT3(1.f, 1.f, 1.f);
 	public:
 		static GunProp* CreateGunProp(GunType gun_type);
 	};
