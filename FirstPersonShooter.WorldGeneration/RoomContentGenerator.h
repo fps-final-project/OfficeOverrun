@@ -22,6 +22,9 @@ namespace WorldGenerator
 		void LoadPropsData();
 		void GeneratePropsInRoom(Node<GeneratedRoom>& node);
 		void GenerateGunsInRoom(Node<GeneratedRoom>& node);
+		DirectX::XMFLOAT3 FindPropOrientation(const GeneratedRoom& room, Prop prop, DirectX::XMFLOAT2 prop_pos);
+		void AdjustPropSizeToOrientation(DirectX::XMFLOAT3 orientation, DirectX::XMFLOAT3& size);
+		void AdjustPropPositionToOrientation(DirectX::XMFLOAT3 orientation, DirectX::XMFLOAT3 size, DirectX::XMFLOAT3& pos);
 		PropInstance* GeneratePropForRoom(GeneratedRoom& room, Prop prop);
 	};
 }

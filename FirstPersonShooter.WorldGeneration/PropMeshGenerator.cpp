@@ -45,12 +45,12 @@ void PropMeshGenerator::DeleteUnavailableBoxes(std::vector<MeshBox>& mesh, Gener
 		}), mesh.end());
 }
 
-DirectX::XMFLOAT2 PropMeshGenerator::PlacePropInBox(MeshBox box, const Prop& prop)
+DirectX::XMFLOAT2 PropMeshGenerator::PlacePropInBox(MeshBox box, DirectX::XMFLOAT3 prop_size)
 {
 	float min_x = box.pos.x;
-	float max_x = box.pos.x + box.size.x - prop.size.x;
+	float max_x = box.pos.x + box.size.x - prop_size.x;
 	float min_y = box.pos.y;
-	float max_y = box.pos.y + box.size.y - prop.size.y;
+	float max_y = box.pos.y + box.size.y - prop_size.y;
 
 	float x = RNG::RandFloatInRange(min_x, max_x);
 	float y = RNG::RandFloatInRange(min_y, max_y);

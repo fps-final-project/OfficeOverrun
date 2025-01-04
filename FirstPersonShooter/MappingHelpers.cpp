@@ -50,6 +50,8 @@ PropInstance MappingHelpers::MapPropInstance(PropInstance prop)
 	prop.position = PositionToGameOrientation(prop.position);
 	prop.position.y = FloorToHeight(prop.position.y);
 	prop.size = PositionToGameOrientation(prop.size);
+	prop.rotation = PositionToGameOrientation(prop.rotation);
+	//prop.rotation = DirectX::XMFLOAT3(0, DirectX::XM_PI, 0);
 	return prop;
 }
 
@@ -58,6 +60,7 @@ GunPropInstance MappingHelpers::MapGunPropInstance(GunPropInstance prop)
 	prop.position = PositionToGameOrientation(prop.position);
 	prop.position.y = FloorToHeight(prop.position.y);
 	prop.size = PositionToGameOrientation(prop.size);
+	prop.rotation = PositionToGameOrientation(prop.rotation);
 
 	// Gun needs to be floating
 	prop.position.y += 0.5f;

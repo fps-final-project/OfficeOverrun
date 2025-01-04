@@ -25,7 +25,10 @@ void RoomContentGenerator::LoadPropsData()
 
 	// Transform to internal space notation
 	for (auto& prop : all_props)
+	{
 		prop.size = SpaceTransformationHelper::TransformToInternalSpace(prop.size);
+		prop.faceVector = SpaceTransformationHelper::TransformToInternalSpace(prop.faceVector);
+	}
 }
 
 void WorldGenerator::RoomContentGenerator::GenerateGunsInRoom(Node<GeneratedRoom>& node)
@@ -77,11 +80,61 @@ PropInstance* WorldGenerator::RoomContentGenerator::GeneratePropForRoom(Generate
 	// Select random available box
 	MeshBox box = RNG::SelectRandomElement<MeshBox>(mesh);
 
+	DirectX::XMFLOAT3 prop_orient = FindPropOrientation(room, prop, box.pos);
+	DirectX::XMFLOAT3 prop_size(prop.size);
+	AdjustPropSizeToOrientation(prop_orient, prop_size);
+
 	// Select prop position in box
-	DirectX::XMFLOAT2 prop_pos = PropMeshGenerator::PlacePropInBox(box, prop);
+	DirectX::XMFLOAT2 prop_pos = PropMeshGenerator::PlacePropInBox(box, prop_size);
 	DirectX::XMFLOAT3 prop_pos3f(prop_pos.x, prop_pos.y, room.pos.z);
-	
-	DirectX::XMFLOAT3 prop_orient(0, 0, 0);
+	AdjustPropPositionToOrientation(prop_orient, prop_size, prop_pos3f);
 
 	return new PropInstance(prop, prop_pos3f, prop_orient);
+}
+
+DirectX::XMFLOAT3 WorldGenerator::RoomContentGenerator::FindPropOrientation(const GeneratedRoom& room, Prop prop, DirectX::XMFLOAT2 prop_pos)
+{
+	DirectX::XMFLOAT3 room_center(room.pos.x + room.size.x / 2.0f, room.pos.y + room.size.y / 2.0f, 0);
+	DirectX::XMFLOAT3 prop_center(prop_pos.x + prop.size.x / 2.0f, prop_pos.y + prop.size.y / 2.0f, 0);
+	
+	DirectX::XMFLOAT3 to_center (room_center.x - prop_center.x, room_center.y - prop_center.y, 0);
+
+	DirectX::XMFLOAT3 unit_to_center;
+	if (std::abs(to_center.x) >= std::abs(to_center.y) && to_center.x >= 0)
+		unit_to_center = DirectX::XMFLOAT3(1, 0, 0);
+	else if (std::abs(to_center.x) >= std::abs(to_center.y) && to_center.x < 0)
+		unit_to_center = DirectX::XMFLOAT3(-1, 0, 0);
+	else if (std::abs(to_center.x) < std::abs(to_center.y) && to_center.y >= 0)
+		unit_to_center = DirectX::XMFLOAT3(0, 1, 0);
+	else
+		unit_to_center = DirectX::XMFLOAT3(0, -1, 0);
+
+	float rotation = GeometryUtils::ComputeNormalVectorAngleIn4Axis(prop.faceVector, unit_to_center);
+
+	return DirectX::XMFLOAT3(0, 0, rotation);
+}
+
+void WorldGenerator::RoomContentGenerator::AdjustPropSizeToOrientation(DirectX::XMFLOAT3 orientation, DirectX::XMFLOAT3& size)
+{
+	if (orientation.z == DirectX::XM_PIDIV2)
+		std::swap(size.x, size.y);
+	else if (orientation.z == -DirectX::XM_PIDIV2)
+		std::swap(size.x, size.y);
+}
+
+void WorldGenerator::RoomContentGenerator::AdjustPropPositionToOrientation(DirectX::XMFLOAT3 orientation, DirectX::XMFLOAT3 size, DirectX::XMFLOAT3& pos)
+{
+	if (orientation.z == DirectX::XM_PI)
+	{
+		pos.x = pos.x + size.x;
+		pos.y = pos.y + size.y;
+	}
+	else if (orientation.z == DirectX::XM_PIDIV2)
+	{
+		pos.y = pos.y + size.x;
+	}
+	else if (orientation.z == -DirectX::XM_PIDIV2)
+	{
+		pos.x = pos.x + size.y;
+	}
 }

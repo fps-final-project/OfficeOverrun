@@ -12,7 +12,7 @@ namespace WorldGenerator
 	public:
 		static std::vector<MeshBox> GenerateMeshForProp(GeneratedRoom room, Prop prop);
 		static void DeleteUnavailableBoxes(std::vector<MeshBox>& mesh, GeneratedRoom room);
-		static DirectX::XMFLOAT2 PlacePropInBox(MeshBox box, const Prop& prop);
+		static DirectX::XMFLOAT2 PlacePropInBox(MeshBox box, DirectX::XMFLOAT3 prop_size);
 	};
 }
 
