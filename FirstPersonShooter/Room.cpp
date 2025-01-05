@@ -32,11 +32,11 @@ RoomCollision Room::checkCollision(DirectX::XMFLOAT3 entityPos) const
 		result.correction[1] = this->pos.y + playerHeight;
 		result.isOnGround = true;
 	}
-	//else if (entityPos.y > this->pos.y + this->size.y - playerHeight)
-	//{
-	//	result.collision[1] = true;
-	//	result.correction[1] = this->pos.y + this->size.y - playerHeight;
-	//}
+	else if (entityPos.y > this->pos.y + this->size.y - playerHeight)
+	{
+		result.collision[1] = true;
+		result.correction[1] = this->pos.y + this->size.y - playerHeight;
+	}
 
 	if (entityPos.x < this->pos.x + wallOffset)
 	{
@@ -121,7 +121,7 @@ RoomCollision Room::checkCollision(DirectX::XMFLOAT3 entityPos) const
 
 		if ((entityPos.y - playerHeight) <= prop.AABB_position.y + prop.AABB_size.y)
 		{
-			if (std::abs(entityPos.y - playerHeight - prop.AABB_position.y - prop.AABB_size.y) < 0.1f)
+			if (std::abs(entityPos.y - playerHeight - prop.AABB_position.y - prop.AABB_size.y) < 0.2f)
 			{
 				result.collision[1] = true;
 				result.correction[1] = prop.AABB_position.y + prop.AABB_size.y + playerHeight;

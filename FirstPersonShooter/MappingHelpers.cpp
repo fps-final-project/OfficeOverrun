@@ -55,6 +55,7 @@ PropInstance MappingHelpers::MapPropInstance(PropInstance prop)
 	prop.rotation = PositionToGameOrientation(prop.rotation);
 
 	prop.AABB_position = PositionToGameOrientation(prop.AABB_position);
+	prop.AABB_position.y = prop.position.y;
 	prop.AABB_size = PositionToGameOrientation(prop.AABB_size);
 	//prop.rotation = DirectX::XMFLOAT3(0, DirectX::XM_PI, 0);
 	return prop;

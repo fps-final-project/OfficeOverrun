@@ -25,6 +25,11 @@ void Stairs::AddStairsCollision(RoomCollision& collisionData, DirectX::XMFLOAT3 
 	c1.z -= sideOffset;
 	c2.z += sideOffset;
 
+	bool inBounds = pos.x >= c1.x && pos.x <= c2.x && pos.z >= c1.z && pos.z <= c2.z;
+
+	if (inBounds && pos.y > c1.y)
+		collisionData.collision[1] = false;
+
 	if (pos.y < thresholdHeight - error)
 	{
 		if (pos.x > c1.x && pos.x < c2.x)
@@ -59,7 +64,7 @@ void Stairs::AddStairsCollision(RoomCollision& collisionData, DirectX::XMFLOAT3 
 	}
 	else
 	{
-		if (pos.x >= c1.x && pos.x <= c2.x && pos.z >= c1.z && pos.z <= c2.z && pos.y < thresholdHeight)
+		if (inBounds && pos.y < thresholdHeight)
 		{
 			stairsCollision.collision[1] = true;
 			stairsCollision.correction[1] = thresholdHeight;
