@@ -20,6 +20,7 @@ class __declspec(dllexport) Pathfinder
 
 	std::vector<DirectX::XMFLOAT3> nodes;
 	std::vector<bool> nodeMask;
+	std::vector<int> crowdCoeff;
 	std::priority_queue<std::pair<int, int>, std::vector<std::pair<int, int>>, std::greater<>> targetNodes;
 	std::vector<std::set<int>> edges;
 
@@ -38,8 +39,6 @@ class __declspec(dllexport) Pathfinder
 
 	void DeleteStairsNodes(const RoomLinkData& link, int roomIdx);
 
-
-
 	int FindClosestNodeInARoom(DirectX::XMFLOAT3 position, int roomIdx) const;
 	int FindClosestNode(DirectX::XMFLOAT3 position) const;
 	int FindRoomIdx(int nodeIdx) const;
@@ -57,6 +56,7 @@ class __declspec(dllexport) Pathfinder
 
 	std::vector<int> AStar(int start, int end) const;
 	std::vector<int> AStarRoom(int start, int end, int roomId) const;
+	std::vector<int> DijkstraRoom(int start, int end, int roomId) const;
 	std::list<PathNodeData> ConstructPath(const std::vector<int>& prev, int start, int idxOffset = 0) const;
 public:
 	Pathfinder(const std::vector<Room>& rooms, DirectX::XMFLOAT3 playerPos);

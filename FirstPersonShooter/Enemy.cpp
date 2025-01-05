@@ -44,7 +44,7 @@ Action Enemy::Update(std::shared_ptr<Pathfinder> pathfinder, DirectX::XMFLOAT3 p
 	targetRotation = AdjustAngleToPositive(yaw);
 	
 
-	if (pathToPlayer.path.size() <= 2 && l <= radius)
+	if (l <= radius)
 	{
 		int id = (rand() % 2) + 1;
 		setAnimation("attack" + std::to_string(id), 1.5);
