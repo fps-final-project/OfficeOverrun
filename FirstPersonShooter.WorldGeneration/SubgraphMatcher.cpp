@@ -3,14 +3,14 @@
 
 using namespace WorldGenerator;
 
-void WorldGenerator::SubgraphMatcher::ExploreBranch(std::vector<unsigned long>& M, const std::vector<unsigned long>& A, const std::vector<unsigned long>& B, 
+void WorldGenerator::SubgraphMatcher::ExploreBranch(std::vector<unsigned long long int>& M, const std::vector<unsigned long long int>& A, const std::vector<unsigned long long int>& B, 
 	const std::vector<std::vector<int>>& ad_list, std::vector<bool> F, std::vector<int> H, int d, std::vector<std::vector<int>> &matches)
 {
-	std::vector<unsigned long> M_d = M; // Copy
+	std::vector<unsigned long long int> M_d = M; // Copy
 
 	for (int k = 0; k < B.size(); k++)
 	{
-		if(BIT_CHECK(M_d[d], k) && !F[k])
+		if((bool)BIT_CHECK(M_d[d], k) && !F[k])
 		{
 			M_d[d] = BIT_SET(0, k);
 			if (Refine(M_d, A, B, ad_list))
@@ -32,7 +32,7 @@ void WorldGenerator::SubgraphMatcher::ExploreBranch(std::vector<unsigned long>& 
 	}
 }
 
-bool WorldGenerator::SubgraphMatcher::Refine(std::vector<unsigned long>& M, const std::vector<unsigned long>& A, const std::vector<unsigned long>& B, const std::vector<std::vector<int>> & ad_list)
+bool WorldGenerator::SubgraphMatcher::Refine(std::vector<unsigned long long int>& M, const std::vector<unsigned long long int>& A, const std::vector<unsigned long long int>& B, const std::vector<std::vector<int>> & ad_list)
 {
 	int elim = 0; // number of removed 1 from M
 	
@@ -47,7 +47,6 @@ bool WorldGenerator::SubgraphMatcher::Refine(std::vector<unsigned long>& M, cons
 				{
 					for (int x : ad_list[i])
 					{
-						int test = M[x] & B[j];
 						if ((M[x] & B[j]) == 0)
 						{
 							M[i] = BIT_CLEAR(M[i], j);

@@ -2,9 +2,9 @@
 #include "Graph.h"
 #include "LabelHelpers.h"
 
-#define BIT_SET(byte,nbit)   ((byte) |  (1<<(nbit)))
-#define BIT_CHECK(byte,nbit) ((byte) &   (1<<(nbit)))
-#define BIT_CLEAR(byte,nbit) ((byte) & ~(1<<(nbit)))
+#define BIT_SET(byte,nbit)   ((byte) |  (1LLU<<(nbit)))
+#define BIT_CHECK(byte,nbit) ((byte) &   (1LLU<<(nbit)))
+#define BIT_CLEAR(byte,nbit) ((byte) & ~(1LLU<<(nbit)))
 
 
 namespace WorldGenerator
@@ -13,36 +13,40 @@ namespace WorldGenerator
 	// All bitmask representations of vectors are in little to big endian order
 	class __declspec(dllexport) SubgraphMatcher
 	{
+		const static int MAX_GRAPH_SIZE = 64;
 	public:
 		template <typename T>
 		static std::vector<std::vector<int>> MatchSubgraph(Graph<T> &G1, Graph<T> &G2);
 
 	private:
 		template <typename T>
-		static std::vector<unsigned long> GenerateM0(Graph<T>& G1, Graph<T>& G2);
+		static std::vector<unsigned long long int> GenerateM0(Graph<T>& G1, Graph<T>& G2);
 		
 		template <typename T>
-		static std::vector<unsigned long> GenerateA(Graph<T> &G);
+		static std::vector<unsigned long long int> GenerateA(Graph<T> &G);
 		
 		template <typename T>
-		static std::vector<unsigned long> GenerateB(Graph<T>& G);
+		static std::vector<unsigned long long int> GenerateB(Graph<T>& G);
 
 		template <typename T>
 		static std::vector<std::vector<int>> GenerateAdList(Graph<T>& G);
 
-		static void ExploreBranch(std::vector<unsigned long>& M, const std::vector<unsigned long>& A, const std::vector<unsigned long>& B,
+		static void ExploreBranch(std::vector<unsigned long long int>& M, const std::vector<unsigned long long int>& A, const std::vector<unsigned long long int>& B,
 			const std::vector<std::vector<int>>& ad_list, std::vector<bool> F, std::vector<int> H, int d, std::vector<std::vector<int>> &matches);
 
-		static bool Refine(std::vector<unsigned long>& M, const std::vector<unsigned long>& A, const std::vector<unsigned long>& B, const std::vector<std::vector<int>>& ad_list);
+		static bool Refine(std::vector<unsigned long long int>& M, const std::vector<unsigned long long int>& A, const std::vector<unsigned long long int>& B, const std::vector<std::vector<int>>& ad_list);
 	};
 
 	// Subgraph matcher finds the mapping of pattern G1 to subgraph of G2 with respect to isomorphism and vertex labelling stored in nodes
 	template<typename T>
 	inline std::vector<std::vector<int>> SubgraphMatcher::MatchSubgraph(Graph<T>& G1, Graph<T>& G2)
 	{
-		std::vector<unsigned long> M0 = GenerateM0(G1, G2); // Matrix where rows are bitmasks
-		std::vector<unsigned long> A = GenerateA(G1);
-		std::vector<unsigned long> B = GenerateB(G2);
+		if (G1.Size() > MAX_GRAPH_SIZE || G2.Size() > MAX_GRAPH_SIZE)
+			throw std::exception("Error: Exceed graph max size for graph matching");
+
+		std::vector<unsigned long long int> M0 = GenerateM0(G1, G2); // Matrix where rows are bitmasks
+		std::vector<unsigned long long int> A = GenerateA(G1);
+		std::vector<unsigned long long int> B = GenerateB(G2);
 		std::vector<std::vector<int>> ad_list = GenerateAdList(G1);
 		std::vector< std::vector<int>> matches;
 
@@ -59,9 +63,9 @@ namespace WorldGenerator
 
 	//  M0 is a vector of int-bitmask
 	template<typename T>
-	inline std::vector<unsigned long> SubgraphMatcher::GenerateM0(Graph<T>& G1, Graph<T>& G2)
+	inline std::vector<unsigned long long int> SubgraphMatcher::GenerateM0(Graph<T>& G1, Graph<T>& G2)
 	{
-		std::vector<unsigned long> M0(G1.Size());
+		std::vector<unsigned long long int> M0(G1.Size());
 		for (int i = 0; i < G1.Size(); i++)
 		{
 			for (int j = 0; j < G2.Size(); j++)
@@ -78,9 +82,9 @@ namespace WorldGenerator
 
 	// Generates vector of bitmasks representing each row of adjacency matrix Mat
 	template<typename T>
-	inline std::vector<unsigned long> SubgraphMatcher::GenerateA(Graph<T>& G)
+	inline std::vector<unsigned long long int> SubgraphMatcher::GenerateA(Graph<T>& G)
 	{
-		std::vector<unsigned long> A(G.Size());
+		std::vector<unsigned long long int> A(G.Size());
 		for (int i = 0; i < G.Size(); i++)
 		{
 			for (int j = 0; j < G.Size(); j++)
@@ -94,9 +98,9 @@ namespace WorldGenerator
 
 	// Generates vector of bitmasks representing each column of adjacency matrix Mat
 	template<typename T>
-	inline std::vector<unsigned long> SubgraphMatcher::GenerateB(Graph<T>& G)
+	inline std::vector<unsigned long long int> SubgraphMatcher::GenerateB(Graph<T>& G)
 	{
-		std::vector<unsigned long> B(G.Size());
+		std::vector<unsigned long long int> B(G.Size());
 		for (int i = 0; i < G.Size(); i++)
 		{
 			for (int j = 0; j < G.Size(); j++)
