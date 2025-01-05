@@ -25,15 +25,15 @@ DirectX::XMFLOAT3 MappingHelpers::OrientationToSize(OrientationData orientation)
 	case ZY:
 		return DirectX::XMFLOAT3(0, 2, 1);
 	case XZX:
-		return DirectX::XMFLOAT3(RoomLayoutConfig::verticalRoomLinkLength, RoomLayoutConfig::roomHeight, RoomLayoutConfig::verticalRoomLinkWidth);
+		return DirectX::XMFLOAT3(RoomLayoutConfig::VERTICAL_ROOM_LINK_LENGTH, RoomLayoutConfig::ROOM_HEIGHT, RoomLayoutConfig::VERTICAL_ROOM_LINK_WIDTH);
 	default:
-		return DirectX::XMFLOAT3(RoomLayoutConfig::verticalRoomLinkWidth, RoomLayoutConfig::roomHeight, RoomLayoutConfig::verticalRoomLinkLength);
+		return DirectX::XMFLOAT3(RoomLayoutConfig::VERTICAL_ROOM_LINK_WIDTH, RoomLayoutConfig::ROOM_HEIGHT, RoomLayoutConfig::VERTICAL_ROOM_LINK_LENGTH);
 	}
 }
 
 int MappingHelpers::FloorToHeight(int floor)
 {
-	return floor * RoomLayoutConfig::roomHeight;
+	return floor * RoomLayoutConfig::ROOM_HEIGHT;
 }
 
 Vector3 MappingHelpers::MapVector(Vector3 v)

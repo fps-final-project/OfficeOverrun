@@ -27,11 +27,11 @@ namespace FirstPersonShooter_WorldGeneration_Test
             for (auto room : layout.rooms)
             {
                 // valid x
-                validSize &= room.size.x >= RoomLayoutConfig::minRoom2DSize
-                    && room.size.x <= RoomLayoutConfig::maxRoom2DSize;
+                validSize &= room.size.x >= RoomLayoutConfig::MIN_ROOM_2D_SIZE
+                    && room.size.x <= RoomLayoutConfig::MAX_ROOM_2D_SIZE;
                 // valid y
-                validSize &= room.size.y >= RoomLayoutConfig::minRoom2DSize
-                    && room.size.y <= RoomLayoutConfig::maxRoom2DSize;
+                validSize &= room.size.y >= RoomLayoutConfig::MIN_ROOM_2D_SIZE
+                    && room.size.y <= RoomLayoutConfig::MAX_ROOM_2D_SIZE;
                 // valid z
                 validSize &= room.size.z == 1;
             }
@@ -64,10 +64,10 @@ namespace FirstPersonShooter_WorldGeneration_Test
             {
                 // valid x
                 validPos &= room.pos.x >= 0
-                    && room.size.x <= _mapSize.x - RoomLayoutConfig::minRoom2DSize;
+                    && room.size.x <= _mapSize.x - RoomLayoutConfig::MIN_ROOM_2D_SIZE;
                 // valid y
                 validPos &= room.pos.y >= 0
-                    && room.size.y <= _mapSize.y - RoomLayoutConfig::minRoom2DSize;
+                    && room.size.y <= _mapSize.y - RoomLayoutConfig::MIN_ROOM_2D_SIZE;
             }
             Assert::IsTrue(validPos);
         }

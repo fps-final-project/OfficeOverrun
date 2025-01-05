@@ -127,7 +127,7 @@ bool WorldGenerator::PropMeshGenerator::BoxIntestectsWithRoomLink(const Generate
 	if (link.orientation == XYX)
 	{
 		DirectX::XMFLOAT2 stair_box_pos(link.pos.x - RoomContentConfig::MIN_PROP_OFFSET, link.pos.y);
-		DirectX::XMFLOAT2 stair_box_size(RoomLayoutConfig::verticalRoomLinkLength + RoomContentConfig::MIN_PROP_OFFSET, RoomLayoutConfig::verticalRoomLinkWidth);
+		DirectX::XMFLOAT2 stair_box_size(RoomLayoutConfig::VERTICAL_ROOM_LINK_LENGTH + RoomContentConfig::MIN_PROP_OFFSET, RoomLayoutConfig::VERTICAL_ROOM_LINK_WIDTH);
 
 		if (GeometryUtils::BoxesIntersect(box.pos, box.size, stair_box_pos, stair_box_size))
 			return true;
@@ -135,7 +135,7 @@ bool WorldGenerator::PropMeshGenerator::BoxIntestectsWithRoomLink(const Generate
 	if (link.orientation == XYY)
 	{
 		DirectX::XMFLOAT2 stair_box_pos(link.pos.x, link.pos.y - RoomContentConfig::MIN_PROP_OFFSET);
-		DirectX::XMFLOAT2 stair_box_size(RoomLayoutConfig::verticalRoomLinkWidth, RoomLayoutConfig::verticalRoomLinkLength + RoomContentConfig::MIN_PROP_OFFSET);
+		DirectX::XMFLOAT2 stair_box_size(RoomLayoutConfig::VERTICAL_ROOM_LINK_WIDTH, RoomLayoutConfig::VERTICAL_ROOM_LINK_LENGTH + RoomContentConfig::MIN_PROP_OFFSET);
 
 		if (GeometryUtils::BoxesIntersect(box.pos, box.size, stair_box_pos, stair_box_size))
 			return true;
