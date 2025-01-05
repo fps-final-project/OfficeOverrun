@@ -67,6 +67,8 @@ public:
 	void SpawnEnemyNearPlayer(int currentEnemiesNearPlayer, std::shared_ptr<Pathfinder> pathfinder, std::shared_ptr<DX::DeviceResources> deviceResources);
 	std::set<int> GetSetOfSecondNeighbours(int roomId);
 
+	void SpawnBaseGuns();
+
 	RenderQueue CreateRenderQueue();
 
 	float lastDamage = 4.f;

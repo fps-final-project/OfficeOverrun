@@ -4,6 +4,7 @@
 #include "RoomCollision.hpp"
 #include "RoomLinkData.hpp"
 #include "Entity.hpp"
+#include "Gun.hpp"
 #include "../FirstPersonShooter.WorldGeneration/PropInstance.hpp"
 
 
@@ -19,7 +20,9 @@ public:
 	int base_enemy_count;
 	std::vector<PropInstance> m_props;
 	std::vector<RoomLinkData> m_links;
-	Room(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 size, int base_enemy_count, const std::vector<RoomLinkData>& links = {});
+	std::vector<Gun> m_guns;
+	Room(DirectX::XMFLOAT3 pos, DirectX::XMFLOAT3 size, int base_enemy_count, const std::vector<RoomLinkData>& links = {}, const std::vector<PropInstance>& props = {},
+		const std::vector<Gun>& guns = {});
 	void setModel(Model model);
 	RoomCollision checkCollision(DirectX::XMFLOAT3 entityPos) const;
 	bool insideRoom(DirectX::XMFLOAT3 pos) const;

@@ -5,6 +5,7 @@ namespace WorldGenerator
 	enum Distribution
 	{
 		Uniform,
-		Poisson
+		Poisson,
+		Binomial
 	};
 }

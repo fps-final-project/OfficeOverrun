@@ -3,11 +3,10 @@
 #include "Pathfinder.h"
 
 std::vector<X3DAUDIO_DISTANCE_CURVE_POINT> Enemy::s_soundCurvePoints = {
-		{ 1.0f,	0.9f },
-		{ 2.0f,	0.8f },
-		{ 3.0f, 0.6f },
-		{ 4.0f, 0.3f },
-		{ 5.0f, 0.1f },
+		{ 2.0f,	0.9f },
+		{ 3.0f, 0.7f },
+		{ 4.0f, 0.5f },
+		{ 5.0f, 0.3f },
 };
 
 X3DAUDIO_DISTANCE_CURVE Enemy::s_soundCurve = { s_soundCurvePoints.data(), s_soundCurvePoints.size() };
@@ -31,6 +30,8 @@ Action Enemy::Update(std::shared_ptr<Pathfinder> pathfinder, DirectX::XMFLOAT3 p
 {
 	pathfinder->UpdatePath(pathToPlayer, position);
 	Action currentAction;
+	if (!isIdle() || !pathToPlayer.playerVisible) return currentAction;
+
 	XMVECTOR direction = XMVector3Normalize(GetDirection());
 	XMVECTOR playerDir = { playerPos.x - position.x, 0.f, playerPos.z - position.z };
 
@@ -42,7 +43,6 @@ Action Enemy::Update(std::shared_ptr<Pathfinder> pathfinder, DirectX::XMFLOAT3 p
 	float yaw = atan2(dx, dz);
 	targetRotation = AdjustAngleToPositive(yaw);
 	
-	if (!isIdle() || !pathToPlayer.playerVisible) return currentAction;
 
 	if (l <= radius)
 	{
@@ -78,6 +78,7 @@ void Enemy::takeDamage(int damage)
 	if (health <= 0) 
 	{
 		this->setAnimation(rand() % 2 == 0 ? "death" : "death2");
+		this->m_animator.clearFallbackAnimation();
 	}
 }
 

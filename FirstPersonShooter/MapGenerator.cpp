@@ -9,6 +9,7 @@ RoomLayout MapGenerator::GenerateRooms(WorldGeneratorConfig config, int seed)
 	RNGEngine::GetInstance()->SetSeed(seed);
 	RoomLayoutGenerator layout_generator(config.room_layout_config);
 	RoomTypesGenerator room_types_generator(config.room_types_config);
+	RoomContentGenerator room_content_generator(config.room_content_config);
 
 	// Generate physical layout
 	RoomLayout layout = layout_generator.GenerateRooms();
@@ -30,6 +31,9 @@ RoomLayout MapGenerator::GenerateRooms(WorldGeneratorConfig config, int seed)
 
 	// Generate roomlink objects with respect to the graph structure
 	layout_generator.GenerateRoomLinks(adGraph);
+
+	// Generate props in the rooms
+	room_content_generator.GenerateRoomContent(adGraph);
 
 	// Generate physical layout base on the modified adjacency graph
 	layout = layout_generator.GenerateLayoutFromAdGraph(adGraph);

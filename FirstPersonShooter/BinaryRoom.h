@@ -1,7 +1,7 @@
 #pragma once
 
 #include "RoomLayout.h"
-#include "Utils.h"
+#include "GeometryUtils.h"
 #include "RNG.h"
 #include "RoomLayoutConfig.h"
 

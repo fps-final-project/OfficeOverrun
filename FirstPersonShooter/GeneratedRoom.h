@@ -4,7 +4,8 @@
 #include <vector>
 #include "Vector3.h"
 #include "RoomLink.h"
-#include "Utils.h"
+#include "GeometryUtils.h"
+#include "../FirstPersonShooter.WorldGeneration/GunPropInstance.h"
 
 namespace WorldGenerator
 {
@@ -19,6 +20,8 @@ namespace WorldGenerator
 		Vector3 size;
 		std::vector<RoomLink> links; // links to other rooms
 		int enemies;
+		std::vector<PropInstance> props;
+		std::vector<GunPropInstance> gun_props;
 
 		bool ValidRoomLink(GeneratedRoom room);
 		bool IsAbove(GeneratedRoom room);
