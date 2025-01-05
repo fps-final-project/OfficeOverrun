@@ -8,10 +8,12 @@ struct __declspec(dllexport) PropInstance
 	DirectX::XMFLOAT3 position;
 	DirectX::XMFLOAT3 size;
 	DirectX::XMFLOAT3 rotation;
+	DirectX::XMFLOAT3 AABB_position;
+	DirectX::XMFLOAT3 AABB_size;
 	bool isSolid;
 
-	PropInstance(Prop prop, DirectX::XMFLOAT3 position, DirectX::XMFLOAT3 rotation)
-		: name(prop.name), position(position), size(prop.size), rotation(rotation), isSolid(prop.isSolid)
+	PropInstance(Prop prop, DirectX::XMFLOAT3 position, DirectX::XMFLOAT3 rotation, DirectX::XMFLOAT3 aabb_position, DirectX::XMFLOAT3 aabb_size)
+		: name(prop.name), position(position), size(prop.size), rotation(rotation), isSolid(prop.isSolid), AABB_position(aabb_position), AABB_size(aabb_size)
 	{
 
 	}

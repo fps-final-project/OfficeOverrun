@@ -29,7 +29,7 @@ void Pathfinder::AddRoomNodes(const Room& room, std::function<bool(DirectX::XMFL
 		{
 			DirectX::XMFLOAT3 nodePos = { room.getPosition().x + wallOffset + i * distanceX, height, room.getPosition().z + wallOffset + j * distanceZ };
 			edges.push_back(std::set<int>());
-			if (!pred(nodePos))
+			if (pred(nodePos))
 			{
 				// non existent node
 				nodes.push_back({ NAN, NAN, NAN });
@@ -152,10 +152,13 @@ float Pathfinder::GetAdjustedHeight(const RoomLinkData& link, DirectX::XMFLOAT3 
 int Pathfinder::FindClosestNodeInARoom(DirectX::XMFLOAT3 position, int roomIdx) const
 {
 	int closest_idx = roomNodeIndexPrefix[roomIdx];
-	float min_dist = DistSquared(position, nodes[closest_idx]);
+	float min_dist = 1000000.f;
 	int upper_bound = roomIdx == roomNodeIndexPrefix.size() - 1 ? nodes.size() : roomNodeIndexPrefix[roomIdx + 1];
-	for (int i = roomNodeIndexPrefix[roomIdx] + 1; i < upper_bound; i++)
+	for (int i = roomNodeIndexPrefix[roomIdx]; i < upper_bound; i++)
 	{
+		if (nodes[i].x == NAN)
+			continue;
+
 		float dist = DistSquared(position, nodes[i]);
 		if (dist < min_dist)
 		{
@@ -170,10 +173,13 @@ int Pathfinder::FindClosestNodeInARoom(DirectX::XMFLOAT3 position, int roomIdx) 
 int Pathfinder::FindClosestNode(DirectX::XMFLOAT3 position) const
 {
 	// can be optimized
-	float minDist = DistSquared(position, nodes[0]);
 	int closest = 0;
+	float minDist = 1000000.f;
 	for (int i = 1; i < nodes.size(); i++)
 	{
+		if (nodes[i].x == NAN)
+			continue;
+
 		if (minDist > DistSquared(position, nodes[i]))
 		{
 			minDist = DistSquared(position, nodes[i]);
@@ -481,14 +487,33 @@ Pathfinder::Pathfinder(const std::vector<Room>& rooms, DirectX::XMFLOAT3 playerP
 		{
 
 			AddRoomNodes(rooms[i], [&](DirectX::XMFLOAT3 pos) {
-				return !(
+				for (int k = 0; k < rooms[i].m_props.size(); k++)
+				{
+					const auto& prop = rooms[i].m_props[k];
+					if (pos.x >= prop.AABB_position.x && pos.x <= prop.AABB_position.x + prop.AABB_size.x &&
+						pos.z >= prop.AABB_position.z && pos.z <= prop.AABB_position.z + prop.AABB_size.z)
+						return true;
+				}
+
+
+				return (
 					pos.x >= stairsIt->pos.x && pos.x <= stairsIt->pos.x + stairsIt->size.x &&
 					pos.z >= stairsIt->pos.z && pos.z <= stairsIt->pos.z + stairsIt->size.z);
 				});
 		}
 		else
 		{
-			AddRoomNodes(rooms[i]);
+			AddRoomNodes(rooms[i], [&](DirectX::XMFLOAT3 pos) {
+				for (int k = 0; k < rooms[i].m_props.size(); k++)
+				{
+					const auto& prop = rooms[i].m_props[k];
+					if (pos.x >= prop.AABB_position.x && pos.x <= prop.AABB_position.x + prop.AABB_size.x &&
+						pos.z >= prop.AABB_position.z && pos.z <= prop.AABB_position.z + prop.AABB_size.z)
+						return true;
+				}
+
+				return false;
+				});
 		}
 
 		for (const auto& link : rooms[i].m_links)

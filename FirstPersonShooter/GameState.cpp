@@ -134,6 +134,14 @@ void GameState::RestartWithSeed(int seed)
 	m_world->UpdateVisibleRooms();
 	m_world->AddHelicopter();
 
+	//PropInstance instance;
+	//instance.name = "whiteboard";
+	//instance.position = { 2.f, 0.f, 2.f };
+	//instance.rotation = { 0.f, 0.f, 0.f };
+	//instance.size = { 1.64, 1.51, 0.492 };
+
+	//m_world->m_rooms[0].m_props.push_back(instance);
+
 	m_seed = seed;
 	m_gameStatus = GameStatus::RUNNING;
 }
