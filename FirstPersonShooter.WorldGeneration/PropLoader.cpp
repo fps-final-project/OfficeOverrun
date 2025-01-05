@@ -41,6 +41,7 @@ Prop PropLoader::LoadPropData(std::string path)
 	ifs >> prop.modelPath;
 	ifs >> prop.size.x >> prop.size.y >> prop.size.z;
 	ifs >> prop.isSolid;
+	ifs >> prop.faceVector.x >> prop.faceVector.y >> prop.faceVector.z;
 
 	ifs.close();
 	return prop;

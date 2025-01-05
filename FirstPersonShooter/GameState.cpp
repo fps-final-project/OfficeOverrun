@@ -66,6 +66,10 @@ void GameState::Update(float dt)
 	m_camera->setPosition(m_player->getPostition());
 	m_player->getGunRig()->RotateAndOffset(m_camera->getYawPitchRoll(), m_player->getPostition(), dt);
 	m_world->PlayEnemySounds(m_deviceResources, m_player.get());
+	XMFLOAT3 at;
+	XMStoreFloat3(&at, m_camera->getAt() * -1);
+
+	m_player->setListenerDirection(at);
 
 	std::string gunName;
 	if (m_world->IsPlayerNearGun(m_player->getPostition(), gunName))

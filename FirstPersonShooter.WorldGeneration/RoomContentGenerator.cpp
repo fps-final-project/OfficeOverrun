@@ -5,6 +5,7 @@
 #include "RNG.h"
 #include "PropMeshGenerator.h"
 #include "GunPropSelector.h"
+#include "RoomLabel.h"
 
 using namespace WorldGenerator;
 
@@ -14,6 +15,9 @@ void RoomContentGenerator::GenerateRoomContent(Graph<GeneratedRoom>& adGraph)
 
 	for (auto& node : adGraph.nodes)
 	{
+		if (node.label == RoomLabel::Roof)
+			continue;
+
 		GenerateGunsInRoom(node);
 		GeneratePropsInRoom(node);
 	}
@@ -25,7 +29,10 @@ void RoomContentGenerator::LoadPropsData()
 
 	// Transform to internal space notation
 	for (auto& prop : all_props)
+	{
 		prop.size = SpaceTransformationHelper::TransformToInternalSpace(prop.size);
+		prop.faceVector = SpaceTransformationHelper::TransformToInternalSpace(prop.faceVector);
+	}
 }
 
 void WorldGenerator::RoomContentGenerator::GenerateGunsInRoom(Node<GeneratedRoom>& node)
@@ -77,11 +84,35 @@ PropInstance* WorldGenerator::RoomContentGenerator::GeneratePropForRoom(Generate
 	// Select random available box
 	MeshBox box = RNG::SelectRandomElement<MeshBox>(mesh);
 
+	DirectX::XMFLOAT3 prop_orient = FindPropOrientation(room, prop, box.pos);
+	DirectX::XMFLOAT3 prop_size(prop.size);
+	prop_size = GeometryUtils::AdjustPropSizeToOrientation(prop_orient, prop_size);
+
 	// Select prop position in box
-	DirectX::XMFLOAT2 prop_pos = PropMeshGenerator::PlacePropInBox(box, prop);
+	DirectX::XMFLOAT2 prop_pos = PropMeshGenerator::PlacePropInBox(box, prop_size);
 	DirectX::XMFLOAT3 prop_pos3f(prop_pos.x, prop_pos.y, room.pos.z);
-	
-	DirectX::XMFLOAT3 prop_orient(0, 0, 0);
 
 	return new PropInstance(prop, prop_pos3f, prop_orient);
+}
+
+DirectX::XMFLOAT3 WorldGenerator::RoomContentGenerator::FindPropOrientation(const GeneratedRoom& room, Prop prop, DirectX::XMFLOAT2 prop_pos)
+{
+	DirectX::XMFLOAT3 room_center(room.pos.x + room.size.x / 2.0f, room.pos.y + room.size.y / 2.0f, 0);
+	DirectX::XMFLOAT3 prop_center(prop_pos.x + prop.size.x / 2.0f, prop_pos.y + prop.size.y / 2.0f, 0);
+	
+	DirectX::XMFLOAT3 to_center (room_center.x - prop_center.x, room_center.y - prop_center.y, 0);
+
+	DirectX::XMFLOAT3 unit_to_center;
+	if (std::abs(to_center.x) >= std::abs(to_center.y) && to_center.x >= 0)
+		unit_to_center = DirectX::XMFLOAT3(1, 0, 0);
+	else if (std::abs(to_center.x) >= std::abs(to_center.y) && to_center.x < 0)
+		unit_to_center = DirectX::XMFLOAT3(-1, 0, 0);
+	else if (std::abs(to_center.x) < std::abs(to_center.y) && to_center.y >= 0)
+		unit_to_center = DirectX::XMFLOAT3(0, 1, 0);
+	else
+		unit_to_center = DirectX::XMFLOAT3(0, -1, 0);
+
+	float rotation = GeometryUtils::ComputeNormalVectorAngleIn4Axis(prop.faceVector, unit_to_center);
+
+	return DirectX::XMFLOAT3(0, 0, rotation);
 }

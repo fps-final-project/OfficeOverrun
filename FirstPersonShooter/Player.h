@@ -18,6 +18,7 @@ public:
 	void setAcceleration(DirectX::XMFLOAT3 acc);
 	void handleRoomCollision(const RoomCollision& collisionData);
 	void Render(std::shared_ptr<RenderMaster> renderMaster) override;
+	void setListenerDirection(DirectX::XMFLOAT3 forward);
 	std::unique_ptr<GunRig>& getGunRig();
 	DirectX::XMFLOAT3 getPostition();
 

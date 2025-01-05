@@ -3,11 +3,10 @@
 #include "Pathfinder.h"
 
 std::vector<X3DAUDIO_DISTANCE_CURVE_POINT> Enemy::s_soundCurvePoints = {
-		{ 1.0f,	0.9f },
-		{ 2.0f,	0.8f },
-		{ 3.0f, 0.6f },
-		{ 4.0f, 0.3f },
-		{ 5.0f, 0.1f },
+		{ 2.0f,	0.9f },
+		{ 3.0f, 0.7f },
+		{ 4.0f, 0.5f },
+		{ 5.0f, 0.3f },
 };
 
 X3DAUDIO_DISTANCE_CURVE Enemy::s_soundCurve = { s_soundCurvePoints.data(), s_soundCurvePoints.size() };

@@ -2,3 +2,4 @@ spider-plant
 Assets\\props\\spider-plant\\spider-plant.obj
 0.702 0.432 0.663
 0
+0 0 1

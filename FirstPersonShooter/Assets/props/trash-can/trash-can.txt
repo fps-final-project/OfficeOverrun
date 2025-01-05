@@ -2,3 +2,4 @@ trash-can
 Assets\\props\\trash-can\\trash-can.obj
 0.268 0.268 0.268
 0
+0 0 1
