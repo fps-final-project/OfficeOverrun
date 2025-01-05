@@ -11,7 +11,7 @@
 void Pathfinder::AddRoomNodes(const Room& room, std::function<bool(DirectX::XMFLOAT3)> pred)
 {
 	const float wallOffset = 0.5f;
-	const float targetDistance = 0.2f;
+	const float targetDistance = 0.5f;
 	const float distThreshold = targetDistance / 5;
 	const float root2 = std::sqrtf(2.f);
 	float height = room.getPosition().y;
@@ -372,6 +372,13 @@ std::vector<int> Pathfinder::AStarRoom(int start, int end, int roomId) const
 
 		visited[elem.second - idxOffset] = true;
 
+		if (elem.second == playerNode)
+		{
+			if (playerNode == end)
+				break;
+			else continue;
+		}
+
 		if (elem.first == unreachable || elem.second == end)
 		{
 			break;
@@ -405,6 +412,9 @@ std::list<PathNodeData> Pathfinder::ConstructPath(const std::vector<int>& prev, 
 		result.push_front(PathNodeData(currVertex, nodes[currVertex]));
 		currVertex = prev[currVertex - idxOffset];
 	}
+
+	if (result.size() && result.back().index != playerNode)
+		result.push_back(PathNodeData(playerNode, nodes[playerNode]));
 
 	return result;
 }
@@ -584,8 +594,7 @@ void Pathfinder::UpdateNodesCloseToPlayer(int playerNode, float attackRange)
 			continue;
 
 		nodeMask[node] = true;
-		if(node != playerNode)
-			targetNodes.push(std::make_pair(0, node));
+		targetNodes.push(std::make_pair(0, node));
 
 		for (int neigh : edges[node])
 			nodesQueue.push(neigh);
