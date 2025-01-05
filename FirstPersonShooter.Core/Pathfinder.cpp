@@ -490,8 +490,8 @@ Pathfinder::Pathfinder(const std::vector<Room>& rooms, DirectX::XMFLOAT3 playerP
 				for (int k = 0; k < rooms[i].m_props.size(); k++)
 				{
 					const auto& prop = rooms[i].m_props[k];
-					if (pos.x >= prop.position.x && pos.x <= prop.position.x + prop.size.x &&
-						pos.z >= prop.position.z && pos.z <= prop.position.z + prop.size.z)
+					if (pos.x >= prop.AABB_position.x && pos.x <= prop.AABB_position.x + prop.AABB_size.x &&
+						pos.z >= prop.AABB_position.z && pos.z <= prop.AABB_position.z + prop.AABB_size.z)
 						return true;
 				}
 
@@ -507,8 +507,8 @@ Pathfinder::Pathfinder(const std::vector<Room>& rooms, DirectX::XMFLOAT3 playerP
 				for (int k = 0; k < rooms[i].m_props.size(); k++)
 				{
 					const auto& prop = rooms[i].m_props[k];
-					if (pos.x >= prop.position.x && pos.x <= prop.position.x + prop.size.x &&
-						pos.z >= prop.position.z && pos.z <= prop.position.z + prop.size.z)
+					if (pos.x >= prop.AABB_position.x && pos.x <= prop.AABB_position.x + prop.AABB_size.x &&
+						pos.z >= prop.AABB_position.z && pos.z <= prop.AABB_position.z + prop.AABB_size.z)
 						return true;
 				}
 

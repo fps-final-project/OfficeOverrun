@@ -107,24 +107,24 @@ RoomCollision Room::checkCollision(DirectX::XMFLOAT3 entityPos) const
 
 	for (const auto& prop : m_props)
 	{
-		bool crossingX = entityPos.x >= prop.position.x && entityPos.x <= prop.position.x + prop.size.x;
-		bool crossingZ = entityPos.z >= prop.position.z && entityPos.z <= prop.position.z + prop.size.z;
+		bool crossingX = entityPos.x >= prop.AABB_position.x && entityPos.x <= prop.AABB_position.x + prop.AABB_size.x;
+		bool crossingZ = entityPos.z >= prop.AABB_position.z && entityPos.z <= prop.AABB_position.z + prop.AABB_size.z;
 
 		if (!crossingX || !crossingZ)
 			continue;
 
-		float distX1 = std::abs(entityPos.x - prop.position.x);
-		float distX2 = std::abs(entityPos.x - prop.position.x - prop.size.x);
+		float distX1 = std::abs(entityPos.x - prop.AABB_position.x);
+		float distX2 = std::abs(entityPos.x - prop.AABB_position.x - prop.AABB_size.x);
 
-		float distZ1 = std::abs(entityPos.z - prop.position.z);
-		float distZ2 = std::abs(entityPos.z - prop.position.z - prop.size.z);
+		float distZ1 = std::abs(entityPos.z - prop.AABB_position.z);
+		float distZ2 = std::abs(entityPos.z - prop.AABB_position.z - prop.AABB_size.z);
 
-		if ((entityPos.y - playerHeight) <= prop.position.y + prop.size.y)
+		if ((entityPos.y - playerHeight) <= prop.AABB_position.y + prop.AABB_size.y)
 		{
-			if (std::abs(entityPos.y - playerHeight - prop.position.y - prop.size.y) < 0.1f)
+			if (std::abs(entityPos.y - playerHeight - prop.AABB_position.y - prop.AABB_size.y) < 0.1f)
 			{
 				result.collision[1] = true;
-				result.correction[1] = prop.position.y + prop.size.y + playerHeight;
+				result.correction[1] = prop.AABB_position.y + prop.AABB_size.y + playerHeight;
 				result.isOnGround = true;
 				continue;
 			}
@@ -132,14 +132,14 @@ RoomCollision Room::checkCollision(DirectX::XMFLOAT3 entityPos) const
 			{
 				result.collision[0] = true;
 				result.correction[0] = distX1 < distX2
-					? prop.position.x : prop.position.x + prop.size.x;
+					? prop.AABB_position.x : prop.AABB_position.x + prop.AABB_size.x;
 
 			}
 			else
 			{
 				result.collision[2] = true;
 				result.correction[2] = distZ1 < distZ2
-					? prop.position.z : prop.position.z + prop.size.z;
+					? prop.AABB_position.z : prop.AABB_position.z + prop.AABB_size.z;
 
 			}
 		}

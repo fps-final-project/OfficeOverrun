@@ -92,7 +92,7 @@ PropInstance* WorldGenerator::RoomContentGenerator::GeneratePropForRoom(Generate
 	DirectX::XMFLOAT2 prop_pos = PropMeshGenerator::PlacePropInBox(box, prop_size);
 	DirectX::XMFLOAT3 prop_pos3f(prop_pos.x, prop_pos.y, room.pos.z);
 
-	return new PropInstance(prop, prop_pos3f, prop_orient);
+	return new PropInstance(prop, prop_pos3f, prop_orient, prop_pos3f, prop_size);
 }
 
 DirectX::XMFLOAT3 WorldGenerator::RoomContentGenerator::FindPropOrientation(const GeneratedRoom& room, Prop prop, DirectX::XMFLOAT2 prop_pos)
