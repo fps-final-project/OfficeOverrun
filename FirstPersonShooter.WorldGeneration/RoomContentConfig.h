@@ -10,6 +10,14 @@ namespace WorldGenerator
 	public:
 		std::string propsDir() { return PROPS_DIR; }
 
+		// Enemy count selection
+		static const int ENEMY_IN_NORMAL_ROOM_MIN = 0;
+		static const int ENEMY_IN_NORMAL_ROOM_MAX = 2;
+		static const int ENEMY_IN_NORMAL_ROOM_POISSON_LAMBDA = 1;
+		static const int ENEMY_IN_BOSS_ROOM_MIN = 4;
+		static const int ENEMY_IN_BOSS_ROOM_MAX = 8;
+		static const int ENEMY_IN_BOSS_ROOM_POISSON_LAMBDA = 6;
+
 		// Guns count selection
 		// Number of ak or sniper in treasure room
 		static const int MIN_AK_SNIPER_IN_TREASURE_ROOM = 1;

@@ -70,9 +70,6 @@
     <Filter Include="WorldGenerator\Common\RNG\Distributions\DistributionImplementations">
       <UniqueIdentifier>{aac02ede-5021-4536-9f41-050a2f394804}</UniqueIdentifier>
     </Filter>
-    <Filter Include="WorldGenerator\RoomTypes\EnemyCountSelector">
-      <UniqueIdentifier>{314283d4-00bc-4978-99dc-ef564f590b44}</UniqueIdentifier>
-    </Filter>
     <Filter Include="WorldGenerator\RoomContent\SpaceTransformationHelper">
       <UniqueIdentifier>{1f7c8008-955a-4dd0-b138-7e8741f041c7}</UniqueIdentifier>
     </Filter>
@@ -84,6 +81,9 @@
     </Filter>
     <Filter Include="WorldGenerator\RoomContent\GunPropSelector">
       <UniqueIdentifier>{85981831-9ed5-4289-8e33-14a43d4a6e2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WorldGenerator\RoomContent\EnemyCountSelector">
+      <UniqueIdentifier>{314283d4-00bc-4978-99dc-ef564f590b44}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -153,7 +153,7 @@
       <Filter>WorldGenerator\Common\RNG\Distributions\DistributionImplementations</Filter>
     </ClCompile>
     <ClCompile Include="EnemyCountSelector.cpp">
-      <Filter>WorldGenerator\RoomTypes\EnemyCountSelector</Filter>
+      <Filter>WorldGenerator\RoomContent\EnemyCountSelector</Filter>
     </ClCompile>
     <ClCompile Include="SpaceTransformationHelper.cpp">
       <Filter>WorldGenerator\RoomContent\SpaceTransformationHelper</Filter>
@@ -293,7 +293,7 @@
       <Filter>WorldGenerator\Common\RNG\Distributions\DistributionImplementations</Filter>
     </ClInclude>
     <ClInclude Include="EnemyCountSelector.h">
-      <Filter>WorldGenerator\RoomTypes\EnemyCountSelector</Filter>
+      <Filter>WorldGenerator\RoomContent\EnemyCountSelector</Filter>
     </ClInclude>
     <ClInclude Include="Prop.hpp">
       <Filter>Prop</Filter>

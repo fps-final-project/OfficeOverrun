@@ -6,10 +6,17 @@
 #include "PropMeshGenerator.h"
 #include "GunPropSelector.h"
 #include "RoomLabel.h"
+#include "EnemyCountSelector.h"
 
 using namespace WorldGenerator;
 
-void RoomContentGenerator::GenerateRoomContent(Graph<GeneratedRoom>& adGraph)
+void RoomContentGenerator::GenerateEnemies(Graph<GeneratedRoom>& adGraph)
+{
+	for (int i = 0; i < adGraph.Size(); i++)
+		adGraph[i].value->enemies = EnemyCountSelector::SelectEnemyCount((RoomLabel)adGraph[i].label);
+}
+
+void RoomContentGenerator::GenerateProps(Graph<GeneratedRoom>& adGraph)
 {
 	LoadPropsData();
 

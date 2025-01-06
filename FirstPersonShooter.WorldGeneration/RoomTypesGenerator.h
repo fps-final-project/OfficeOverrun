@@ -16,7 +16,6 @@ namespace WorldGenerator
 		void GenerateRoomTypes(Graph<GeneratedRoom> &adGraph);
 		RoomTypesGenerator(const RoomTypesConfig &config)
 			: config(config) {};
-		void GenerateEnemies(Graph<GeneratedRoom>& adGraph);
 	};
 }
 

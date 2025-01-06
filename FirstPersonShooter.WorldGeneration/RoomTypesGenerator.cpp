@@ -65,9 +65,3 @@ void RoomTypesGenerator::GenerateRoomTypes(Graph<GeneratedRoom>& adGraph)
 			adGraph[map[i]].label = G_z[i].label;
 	}
 }
-
-void RoomTypesGenerator::GenerateEnemies(Graph<GeneratedRoom>& adGraph)
-{
-	for (int i = 0; i < adGraph.Size(); i++)
-		adGraph[i].value->enemies = EnemyCountSelector::SelectEnemyCount((RoomLabel)adGraph[i].label);
-}

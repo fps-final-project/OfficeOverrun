@@ -16,7 +16,8 @@ namespace WorldGenerator
 		{
 		}
 		
-		void GenerateRoomContent(Graph<GeneratedRoom> &adGraph);
+		void GenerateEnemies(Graph<GeneratedRoom>& adGraph);
+		void GenerateProps(Graph<GeneratedRoom> &adGraph);
 
 	private:
 		void LoadPropsData();
