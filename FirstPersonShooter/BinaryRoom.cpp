@@ -38,7 +38,15 @@ void BinaryRoom::Split2D(RoomLayout& layout, int cutType)
 		inDepth = true;
 	}
 
-	int cutOffset = RNG::RandIntInRange(RoomLayoutConfig::MIN_ROOM_2D_SIZE, (inDepth ? width : depth) - RoomLayoutConfig::MIN_ROOM_2D_SIZE);
+	// Binomial distribution with fixed mean value and p factor
+	int max_cut = (inDepth ? width : depth) - RoomLayoutConfig::MIN_ROOM_2D_SIZE;
+	int min_cut = RoomLayoutConfig::MIN_ROOM_2D_SIZE;
+
+	DistributionParameters params;
+	params.binomial_t = RoomLayoutConfig::ROOM_2D_SIZE_BINOMIAL_MEAN_VALUE / (RoomLayoutConfig::ROOM_2D_SIZE_BINOMIAL_P);
+	params.binomial_p = RoomLayoutConfig::ROOM_2D_SIZE_BINOMIAL_P;
+
+	int cutOffset = RNG::RandIntInRange(RoomLayoutConfig::MIN_ROOM_2D_SIZE, max_cut, Binomial, params);
 
 	leftRoom = new BinaryRoom(x, y, z, inDepth ? cutOffset : width, inDepth ? depth : cutOffset, height);
 	rightRoom = new BinaryRoom(inDepth ? x + cutOffset : x, inDepth ? y : y + cutOffset, z, inDepth ? width - cutOffset : width, inDepth ? depth : depth - cutOffset, height);
