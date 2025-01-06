@@ -55,6 +55,11 @@ void Pathfinder::AddRoomNodes(const Room& room, std::function<bool(DirectX::XMFL
 				AddEdge(edges.size() - 1, edges.size() - 2 - nNodesZ);
 			}
 
+			if (i && j + 1 < nNodesZ && nodes[edges.size() - nNodesZ].x != NAN)
+			{
+				AddEdge(edges.size() - 1, edges.size() - nNodesZ);
+			}
+
 		}
 	}
 }
