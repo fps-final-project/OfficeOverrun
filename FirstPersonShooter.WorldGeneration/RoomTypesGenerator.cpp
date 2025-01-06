@@ -5,6 +5,7 @@
 #include "RoomLabel.h"
 #include "RoomGraphExtensions.h"
 #include "EnemyCountSelector.h"
+#include "GraphUtils.h"
 
 using namespace WorldGenerator;
 
@@ -30,13 +31,39 @@ void WorldGenerator::RoomTypesGenerator::SetDefaultNodeLabels(Graph<GeneratedRoo
 	adGraph[adGraph.Size() - 1].label = RoomLabel::Roof;
 }
 
-void RoomTypesGenerator::GenerateRoomTypes(Graph<GeneratedRoom>& adGraph)
+void WorldGenerator::RoomTypesGenerator::GenerateFloorRoomTypes(Graph<GeneratedRoom>& adGraph)
 {
 	// Read grammar based on production files
 	GraphGrammar<GeneratedRoom> grammar = GraphGrammarReader::ReadGraphGrammar<GeneratedRoom>(config.productionsDir());
 
 	// Apply the grammar to the graph
 	grammar.Apply(adGraph);
+}
+
+void RoomTypesGenerator::GenerateRoomTypes(Graph<GeneratedRoom>& adGraph)
+{
+	// Max z
+	auto it = std::max_element(adGraph.nodes.begin(), adGraph.nodes.end(),
+		[](const Node<GeneratedRoom>& n1, const Node<GeneratedRoom>& n2) {
+			return n1.value->pos.z < n2.value->pos.z;
+		});
+	int max_floor = (*it).value->pos.z;
+
+	// Perform for all floors excluding roof
+	for (int z = 0; z < max_floor; z++)
+	{
+		std::vector<int> z_vertices = adGraph.GetVerticesIf([&](GeneratedRoom room)
+			{return room.pos.z == z; }
+		);
+
+		// Get induced graph for the floor
+		auto [G_z, map] = GraphUtils::GenerateInducedGraph(adGraph, z_vertices);
+
+		GenerateFloorRoomTypes(G_z);
+
+		for (int i = 0; i < G_z.Size(); i++)
+			adGraph[map[i]].label = G_z[i].label;
+	}
 }
 
 void RoomTypesGenerator::GenerateEnemies(Graph<GeneratedRoom>& adGraph)
