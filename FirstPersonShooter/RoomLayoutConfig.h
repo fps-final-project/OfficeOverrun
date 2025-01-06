@@ -10,7 +10,6 @@ namespace WorldGenerator
 		static const int MAX_ROOM_2D_SIZE = 12;
 		static const int ROOM_HEIGHT = 3;
 		static constexpr float ROOM_2D_SIZE_BINOMIAL_P = 0.5f;
-		static const int ROOM_2D_SIZE_BINOMIAL_MEAN_VALUE = 6;
 
 		const static int VERTICAL_ROOM_LINK_LENGTH = 5;
 		const static int VERTICAL_ROOM_LINK_WIDTH = 2;
