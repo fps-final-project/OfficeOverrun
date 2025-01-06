@@ -9,9 +9,9 @@ Orientation WorldGenerator::RoomLink::MakeOrientation(Vector3 size)
         return Orientation::YZ;
     if (size.y == 0)
         return Orientation::XZ;
-    if (size.x < RoomLayoutConfig::verticalRoomLinkLength + 2)
+    if (size.x < RoomLayoutConfig::VERTICAL_ROOM_LINK_LENGTH + 2)
         return Orientation::XYY;
-    if (size.y < RoomLayoutConfig::verticalRoomLinkLength + 2)
+    if (size.y < RoomLayoutConfig::VERTICAL_ROOM_LINK_LENGTH + 2)
         return Orientation::XYX;
     return RNG::RandBool() ? Orientation::XYX : Orientation::XYY;
 }
@@ -35,8 +35,8 @@ RoomLink RoomLink::MakeRoomLink(Vector3 pos, Vector3 size)
         );
     else
     {
-        int xSize = orientation == Orientation::XYX ? RoomLayoutConfig::verticalRoomLinkLength : RoomLayoutConfig::verticalRoomLinkWidth;
-        int ySize = orientation == Orientation::XYY ? RoomLayoutConfig::verticalRoomLinkLength : RoomLayoutConfig::verticalRoomLinkWidth;
+        int xSize = orientation == Orientation::XYX ? RoomLayoutConfig::VERTICAL_ROOM_LINK_LENGTH : RoomLayoutConfig::VERTICAL_ROOM_LINK_WIDTH;
+        int ySize = orientation == Orientation::XYY ? RoomLayoutConfig::VERTICAL_ROOM_LINK_LENGTH : RoomLayoutConfig::VERTICAL_ROOM_LINK_WIDTH;
         linkPos = Vector3(
             pos.x + RNG::RandIntInRange(1, size.x - (xSize + 1)),
             pos.y + RNG::RandIntInRange(1, size.y - (ySize + 1)),
@@ -53,5 +53,5 @@ bool WorldGenerator::RoomLink::ValidSizeForRoomLink(Vector3 size)
     else if (size.y == 0)
         return size.x >= 3;
     else // vertical roomlinks
-        return min(size.x, size.y) >= RoomLayoutConfig::verticalRoomLinkWidth + 2 && max(size.x, size.y) >= RoomLayoutConfig::verticalRoomLinkLength + 2;
+        return min(size.x, size.y) >= RoomLayoutConfig::VERTICAL_ROOM_LINK_WIDTH + 2 && max(size.x, size.y) >= RoomLayoutConfig::VERTICAL_ROOM_LINK_LENGTH + 2;
 }

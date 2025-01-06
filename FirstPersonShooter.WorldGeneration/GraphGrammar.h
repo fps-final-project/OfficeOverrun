@@ -55,7 +55,6 @@ namespace WorldGenerator
 		{
 			std::vector<std::vector<int>> matches = P.Match(G);
 
-			// Returns highest priority match found for the lowe
 			if (!matches.empty())
 			{
 				auto match = RNG::SelectRandomElement(matches);

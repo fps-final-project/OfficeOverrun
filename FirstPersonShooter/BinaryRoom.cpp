@@ -15,7 +15,7 @@ void WorldGenerator::BinaryRoom::MakeRoomsOnLayoutFloor(RoomLayout& layout, int 
 
 void BinaryRoom::Split(RoomLayout& layout)
 {
-	if (width <= RoomLayoutConfig::maxRoom2DSize && depth <= RoomLayoutConfig::maxRoom2DSize) // Room is of valid size
+	if (width <= RoomLayoutConfig::MAX_ROOM_2D_SIZE && depth <= RoomLayoutConfig::MAX_ROOM_2D_SIZE) // Room is of valid size
 	{
 		layout.rooms.push_back(MakeRoom());
 		return;
@@ -29,16 +29,16 @@ void BinaryRoom::Split2D(RoomLayout& layout, int cutType)
 	bool inDepth = (cutType == 1);
 
 	// If valid in one direction force the other one
-	if (width <= RoomLayoutConfig::maxRoom2DSize)
+	if (width <= RoomLayoutConfig::MAX_ROOM_2D_SIZE)
 	{
 		inDepth = false;
 	}
-	if (depth <= RoomLayoutConfig::maxRoom2DSize)
+	if (depth <= RoomLayoutConfig::MAX_ROOM_2D_SIZE)
 	{
 		inDepth = true;
 	}
 
-	int cutOffset = RNG::RandIntInRange(RoomLayoutConfig::minRoom2DSize, (inDepth ? width : depth) - RoomLayoutConfig::minRoom2DSize);
+	int cutOffset = RNG::RandIntInRange(RoomLayoutConfig::MIN_ROOM_2D_SIZE, (inDepth ? width : depth) - RoomLayoutConfig::MIN_ROOM_2D_SIZE);
 
 	leftRoom = new BinaryRoom(x, y, z, inDepth ? cutOffset : width, inDepth ? depth : cutOffset, height);
 	rightRoom = new BinaryRoom(inDepth ? x + cutOffset : x, inDepth ? y : y + cutOffset, z, inDepth ? width - cutOffset : width, inDepth ? depth : depth - cutOffset, height);

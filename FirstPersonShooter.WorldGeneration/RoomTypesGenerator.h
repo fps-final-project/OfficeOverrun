@@ -10,6 +10,7 @@ namespace WorldGenerator
 	private:
 		RoomTypesConfig config;
 		void SetDefaultNodeLabel(Graph<GeneratedRoom> &adGraph, int v);
+		void GenerateFloorRoomTypes(Graph<GeneratedRoom>& adGraph);
 	public:
 		void SetDefaultNodeLabels(Graph<GeneratedRoom> &adGraph);
 		void GenerateRoomTypes(Graph<GeneratedRoom> &adGraph);
