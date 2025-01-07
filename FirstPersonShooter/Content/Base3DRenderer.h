@@ -70,7 +70,7 @@ public:
 
 		// We only handle diffuse textures for now (actual color textures)
 		if (m.textures.size() > 0)
-			context->PSSetShaderResources(0, 1, m.textures[0].shaderResourceView.GetAddressOf());
+			context->PSSetShaderResources(0, 1, m.textures[0]->shaderResourceView.GetAddressOf());
 
 		// it has to be called per Entity cause we dynamically set animation offsets in the buffer, 
 		// maybe we can optimize this if it is an issue

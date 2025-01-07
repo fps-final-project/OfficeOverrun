@@ -35,9 +35,8 @@ float phong_lighting(float3 light_position, float3 model_pos, float3 normal, flo
 	if (diffuse > 0)
 	{
 		float3 viewDir = normalize(camera_pos - model_pos);
-		float3 reflectDir = reflect(-lightDir, norm);
 		float3 halfwayVec = normalize(viewDir + lightDir);
-		specular = specularStrength * pow(max(dot(normal, halfwayVec), 0.0), 32);
+		specular = specularStrength * pow(max(dot(norm, halfwayVec), 0.0), 32);
 	}
 
 	// attenuation (light is dimmer the farther the object is from the light)
@@ -67,6 +66,7 @@ float4 main(PixelShaderInput input) : SV_TARGET
 float ambientStrength = 0.1;
 float3 lightColor = float3(1.f, 1.f, 1.f);
 float3 ambient = ambientStrength * lightColor;
+lightColor += ambient;
 
 if (fully_visible)
 {
