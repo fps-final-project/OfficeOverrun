@@ -7,7 +7,6 @@
 
 namespace WorldGenerator
 {
-	// credits: https://medium.com/@guribemontero/dungeon-generation-using-binary-space-trees-47d4a668e2d0
 	class __declspec(dllexport) BinaryRoom
 	{
 	public:
@@ -15,8 +14,6 @@ namespace WorldGenerator
 		int width, depth, height;
 		BinaryRoom* leftRoom;
 		BinaryRoom* rightRoom;
-
-		static void Test();
 		static void MakeRoomsOnLayoutFloor(RoomLayout& layout, int floor);
 	private:
 		void Split(RoomLayout& layout);

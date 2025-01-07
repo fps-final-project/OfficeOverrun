@@ -3,10 +3,6 @@
 
 using namespace WorldGenerator;
 
-void WorldGenerator::BinaryRoom::Test()
-{
-}
-
 void WorldGenerator::BinaryRoom::MakeRoomsOnLayoutFloor(RoomLayout& layout, int floor)
 {
 	BinaryRoom rootRoom = BinaryRoom(0, 0, floor, layout.mapSize.x, layout.mapSize.y, 1);
