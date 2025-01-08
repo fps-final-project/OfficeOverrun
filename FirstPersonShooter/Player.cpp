@@ -31,13 +31,13 @@ void Player::Update(float dt)
 
 
 	const float velocityCap = 5.f;
-	const float max_slowoff = 0.7f;
+	const float max_slowoff = 0.7f * 60;
 	const float min_velocity = 0.1f;
 
 	this->updateVelocity(dt);
 
-	m_velocity.x -= (m_velocity.x / velocityCap) * max_slowoff;
-	m_velocity.z -= (m_velocity.z / velocityCap) * max_slowoff;
+	m_velocity.x -= (m_velocity.x / velocityCap) * max_slowoff * dt;
+	m_velocity.z -= (m_velocity.z / velocityCap) * max_slowoff * dt;
 
 	if (std::abs(m_velocity.x) < min_velocity)
 		m_velocity.x = 0;
