@@ -59,7 +59,7 @@ void GameState::Update(float dt)
 
 	m_pathfinder->UpdatePlayerNode(m_player->getPostition(), m_world->m_currentRoomIndex);
 
-	m_world->UpdateEnemies(dt, m_pathfinder, m_player->getPostition(), m_actionQueue, m_deviceResources);
+	m_world->UpdateEnemies(m_pathfinder, m_player->getPostition(), m_actionQueue, m_deviceResources);
 	m_world->Update(dt);
 	m_player->handleRoomCollision(m_world->GetCurrentRoom().checkCollision(m_player->getPostition()));
 

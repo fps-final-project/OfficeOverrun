@@ -60,7 +60,7 @@ public:
 
 	void UpdateCurrentRoom(DirectX::XMFLOAT3 playerPos);
 	void PlayEnemySounds(std::shared_ptr<DX::DeviceResources> deviceResources, Player* player) const;
-	void UpdateEnemies(float dt, std::shared_ptr<Pathfinder> pathfinder, DirectX::XMFLOAT3 playerPos,
+	void UpdateEnemies(std::shared_ptr<Pathfinder> pathfinder, DirectX::XMFLOAT3 playerPos,
 		std::shared_ptr<std::queue<Action>>& actionQueue, std::shared_ptr<DX::DeviceResources> deviceResources);
 
 	void SpawnBaseEnemies(std::shared_ptr<Pathfinder> pathfinder, std::shared_ptr<DX::DeviceResources> deviceResources);

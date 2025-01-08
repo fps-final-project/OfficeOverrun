@@ -14,7 +14,7 @@ class  __declspec(dllexport) Enemy : public AnimatedEntity
 public:
 	Enemy(std::shared_ptr<AnimatedModel> model);
 
-	Action Update(std::shared_ptr<Pathfinder> pathfinder, DirectX::XMFLOAT3 playerPos, float dt);
+	Action Update(std::shared_ptr<Pathfinder> pathfinder, DirectX::XMFLOAT3 playerPos);
 	virtual void Update(float dt) override;
 	void takeDamage(int damage);
 	

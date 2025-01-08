@@ -299,7 +299,7 @@ void DX::DeviceResources::CreateWindowSizeDependentResources()
 		swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 		swapChainDesc.BufferCount = 2;									// Use double-buffering to minimize latency.
 		swapChainDesc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL;	// All Microsoft Store apps must use this SwapEffect.
-		swapChainDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_TEARING;
+		swapChainDesc.Flags = 0;
 		swapChainDesc.Scaling = scaling;
 		swapChainDesc.AlphaMode = DXGI_ALPHA_MODE_IGNORE;
 
@@ -677,7 +677,7 @@ void DX::DeviceResources::Present()
 	// to sleep until the next VSync. This ensures we don't waste any cycles rendering
 	// frames that will never be displayed to the screen.
 	DXGI_PRESENT_PARAMETERS parameters = { 0 };
-	HRESULT hr = m_swapChain->Present1(0, DXGI_PRESENT_ALLOW_TEARING, &parameters);
+	HRESULT hr = m_swapChain->Present1(1, 0, &parameters);
 
 	// Discard the contents of the render target.
 	// This is a valid operation only when the existing contents will be entirely
