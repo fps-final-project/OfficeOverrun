@@ -64,10 +64,10 @@ float4 main(PixelShaderInput input) : SV_TARGET
 	float3 final_light = float3(0.f, 0.f, 0.f);
 
 // ambient 
-float ambientStrength = 0.1;
+float ambientStrength = 0.05;
 float3 lightColor = float3(1.f, 1.f, 1.f);
 float3 ambient = ambientStrength * lightColor;
-lightColor += ambient;
+final_light += ambient;
 
 if (fully_visible)
 {
