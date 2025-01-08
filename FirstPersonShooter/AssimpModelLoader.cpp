@@ -370,7 +370,7 @@ void AssimpModelLoader::appendTextureToMesh(const std::string& path, Mesh& m, st
 	auto texture = TextureFactory::CreateTextureFromFile(std::wstring(path.begin(), path.end()).c_str(), deviceResources);
 	texture.path = path;
 	texture.type = "diffuse";
-	m.textures.push_back(texture);
+	m.textures.push_back(std::make_shared<Texture>(texture));
 }
 
 
