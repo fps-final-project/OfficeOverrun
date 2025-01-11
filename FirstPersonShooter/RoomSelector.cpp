@@ -16,21 +16,18 @@ WorldGenerator::RoomSelector::RoomSelector(RoomSelectorArgs args)
 Graph<GeneratedRoom> WorldGenerator::RoomSelector::SelectRooms()
 {
 	// Step 1
-	RemoveUpDownEdges();
-
-	// Step 2
 	std::vector<int> path = GenerateRandomPath();
 
-	// Step 3
+	// Step 2
 	ConstructGFromPath(path);
 
-	// Step 4
-	RemoveDownUpEdges();
+	// Step 3
+	RemoveStairsEdges();
 
-	// Steps 5-6
+	// Steps 4
 	AddSpareVertices();
 
-	// Step 7
+	// Step 5
 	AddEdgesAtRandom();
 
 	// Add rooftop room
@@ -39,8 +36,7 @@ Graph<GeneratedRoom> WorldGenerator::RoomSelector::SelectRooms()
 	return G;
 }
 
-
-void WorldGenerator::RoomSelector::RemoveUpDownEdges()
+void WorldGenerator::RoomSelector::RemoveStairsEdges()
 {
 	for (int i = 0; i < H.Size(); i++)
 	{
@@ -48,25 +44,10 @@ void WorldGenerator::RoomSelector::RemoveUpDownEdges()
 		for (int j = 0; j < H.Size(); j++)
 		{
 			Node<GeneratedRoom>& u = H[j];
-			if (H.HasEdge(i,j) && v.value->IsAbove(*u.value))
+			if (H.HasEdge(i, j) && (v.value->IsBelow(*u.value) || v.value->IsAbove(*u.value)))
 			{
 				H.DeleteEdge(i, j);
-			}
-		}
-	}
-}
-
-void WorldGenerator::RoomSelector::RemoveDownUpEdges()
-{
-	for (int i = 0; i < H.Size(); i++)
-	{
-		Node<GeneratedRoom>& v = H[i];
-		for (int j = 0; j < H.Size(); j++)
-		{
-			Node<GeneratedRoom>& u = H[j];
-			if (H.HasEdge(i, j) && v.value->IsBelow(*u.value))
-			{
-				H.DeleteEdge(i, j);
+				H.DeleteEdge(j, i);
 			}
 		}
 	}
