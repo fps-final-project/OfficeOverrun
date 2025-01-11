@@ -49,7 +49,7 @@ void AnimatedModelRenderer::CreateDeviceDependentResources()
 	}
 
 	this->CreateDeviceDependentResources_internal(L"FirstPersonShooter_Rendering\\SkeletalVertexShader.cso",
-		L"FirstPersonShooter_Rendering\\SkeletalPixelShader.cso", vertexDesc);
+		L"FirstPersonShooter_Rendering\\PhongPixelShader.cso", vertexDesc);
 }
 
 void AnimatedModelRenderer::Render(const AnimatedModel& animatedModel, DirectX::XMFLOAT3 position, DirectX::XMFLOAT3 scale, DirectX::XMFLOAT3 rotation, const std::vector<DirectX::XMMATRIX>& finalBonesMatricies)

@@ -223,14 +223,11 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="..\FirstPersonShooter\Content\SamplePixelShader.hlsl">
+    <FxCompile Include="..\FirstPersonShooter\Content\PhongPixelShader.hlsl">
       <Filter>Shaders\Sample</Filter>
     </FxCompile>
     <FxCompile Include="..\FirstPersonShooter\Content\SampleVertexShader.hlsl">
       <Filter>Shaders\Sample</Filter>
-    </FxCompile>
-    <FxCompile Include="..\FirstPersonShooter\SkeletalPixelShader.hlsl">
-      <Filter>Shaders\Skeletal</Filter>
     </FxCompile>
     <FxCompile Include="..\FirstPersonShooter\SkeletalVertexShader.hlsl">
       <Filter>Shaders\Skeletal</Filter>

@@ -21,7 +21,7 @@ void ModelRenderer::CreateDeviceDependentResources()
 		{ "NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 5 * sizeof(float), D3D11_INPUT_PER_VERTEX_DATA, 0 }
 	};
 
-	this->CreateDeviceDependentResources_internal(L"FirstPersonShooter_Rendering\\SampleVertexShader.cso", L"FirstPersonShooter_Rendering\\SamplePixelShader.cso", vertexDesc);
+	this->CreateDeviceDependentResources_internal(L"FirstPersonShooter_Rendering\\SampleVertexShader.cso", L"FirstPersonShooter_Rendering\\PhongPixelShader.cso", vertexDesc);
 }
 
 void ModelRenderer::Render(const Model& model, DirectX::XMFLOAT3 position, DirectX::XMFLOAT3 scale, DirectX::XMFLOAT3 rotation)

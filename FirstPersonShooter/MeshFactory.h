@@ -25,7 +25,7 @@ inline Mesh MeshFactory<T>::createMesh(const std::vector<T>& verticies, const st
 	Mesh m_mesh;
 	for (const auto& t : textures)
 	{
-		m_mesh.textures.push_back(Texture(*t));
+		m_mesh.textures.push_back(t);
 	}
 
 	D3D11_SUBRESOURCE_DATA vertexBufferData = { 0 };
