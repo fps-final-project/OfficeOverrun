@@ -26,7 +26,7 @@ Enemy::Enemy(std::shared_ptr<AnimatedModel> model) : AnimatedEntity{ model }, ta
 
 }
 
-Action Enemy::Update(std::shared_ptr<Pathfinder> pathfinder, DirectX::XMFLOAT3 playerPos)
+Action Enemy::Update(float dt, std::shared_ptr<Pathfinder> pathfinder, DirectX::XMFLOAT3 playerPos)
 {
 	pathfinder->UpdatePath(pathToPlayer, position);
 	Action currentAction;
@@ -53,9 +53,9 @@ Action Enemy::Update(std::shared_ptr<Pathfinder> pathfinder, DirectX::XMFLOAT3 p
 
 
 	XMFLOAT3 changedPos = XMFLOAT3{
-		position.x + direction.m128_f32[0] * speed,
+		position.x + direction.m128_f32[0] * speed * dt,
 		position.y,
-		position.z + direction.m128_f32[2] * speed,
+		position.z + direction.m128_f32[2] * speed * dt,
 	};
 
 	setPosition(changedPos);

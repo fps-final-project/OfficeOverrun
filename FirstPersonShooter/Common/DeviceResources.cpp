@@ -303,6 +303,11 @@ void DX::DeviceResources::CreateWindowSizeDependentResources()
 		swapChainDesc.Scaling = scaling;
 		swapChainDesc.AlphaMode = DXGI_ALPHA_MODE_IGNORE;
 
+	#if defined (DISABLE_VSYNC)
+		swapChainDesc.Flags |= DXGI_SWAP_CHAIN_FLAG_ALLOW_TEARING;
+	#endif
+
+
 		// This sequence obtains the DXGI factory that was used to create the Direct3D device above.
 		ComPtr<IDXGIDevice3> dxgiDevice;
 		DX::ThrowIfFailed(
@@ -677,7 +682,11 @@ void DX::DeviceResources::Present()
 	// to sleep until the next VSync. This ensures we don't waste any cycles rendering
 	// frames that will never be displayed to the screen.
 	DXGI_PRESENT_PARAMETERS parameters = { 0 };
-	HRESULT hr = m_swapChain->Present1(1, 0, &parameters);
+	#if defined (DISABLE_VSYNC)
+		HRESULT hr = m_swapChain->Present1(0, DXGI_PRESENT_ALLOW_TEARING, &parameters);
+	#else
+		HRESULT hr = m_swapChain->Present1(1, 0, &parameters);
+	#endif
 
 	// Discard the contents of the render target.
 	// This is a valid operation only when the existing contents will be entirely

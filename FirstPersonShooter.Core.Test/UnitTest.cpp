@@ -27,6 +27,7 @@ namespace FirstPersonShooter_Core_Test
         World world;
 		MapGeneratorAdapter mapGeneratorAdapter;
         std::shared_ptr<Pathfinder> pathfinder;
+        float timeStep = 1.f / 60.f;
     public:
         EnemyTest()
         {
@@ -47,7 +48,7 @@ namespace FirstPersonShooter_Core_Test
                 .Build();
 
             
-            e->Update(pathfinder, playerPos);
+            e->Update(timeStep, pathfinder, playerPos);
 
 			e->getPosition() == start;
             Assert::IsTrue(!(e->getPosition() == start));
@@ -68,7 +69,7 @@ namespace FirstPersonShooter_Core_Test
                 .WithPath(pathfinder)
                 .Build();
 
-            e->Update(pathfinder, playerPos);
+            e->Update(timeStep, pathfinder, playerPos);
 
             Assert::IsTrue(!(e->getPosition() == start));
         }
@@ -93,7 +94,7 @@ namespace FirstPersonShooter_Core_Test
                         .WithPath(pathfinder)
                         .Build();
 
-                    e->Update(pathfinder, playerPos);
+                    e->Update(timeStep, pathfinder, playerPos);
 
 					Assert::IsTrue(e->getPosition() == start);
 
@@ -115,7 +116,7 @@ namespace FirstPersonShooter_Core_Test
                 .Build();
 
 
-            Action a = e->Update(pathfinder, playerPos);
+            Action a = e->Update(timeStep, pathfinder, playerPos);
             Assert::IsTrue(a.type == ActionType::ATTACK);
         }
     };

@@ -185,7 +185,7 @@ void World::UpdateCurrentRoom(DirectX::XMFLOAT3 playerPos)
 	}
 }
 
-void World::UpdateEnemies(std::shared_ptr<Pathfinder> pathfinder, DirectX::XMFLOAT3 playerPos,
+void World::UpdateEnemies(float dt, std::shared_ptr<Pathfinder> pathfinder, DirectX::XMFLOAT3 playerPos,
 	std::shared_ptr<std::queue<Action>>& actionQueue, std::shared_ptr<DX::DeviceResources> deviceResources)
 {
 	auto secondNeighbors = GetSetOfSecondNeighbours(m_currentRoomIndex);
@@ -201,7 +201,7 @@ void World::UpdateEnemies(std::shared_ptr<Pathfinder> pathfinder, DirectX::XMFLO
 				deadEnemies.push_back(enemy->id);
 			continue;
 		}
-		Action action = enemy->Update(pathfinder, playerPos);
+		Action action = enemy->Update(dt, pathfinder, playerPos);
 		if (action.type != ActionType::NOACTION)
 		{
 			actionQueue->push(action);
@@ -242,7 +242,7 @@ void World::SpawnEnemyInRoom(int room_idx, std::shared_ptr<Pathfinder> pathfinde
 		.WithDamageSound(ResourceManager::Instance().getAudioFile("zombie_dying"), deviceResources->GetXAudio())
 		.WithHealth(100)
 		.WithDamage(10)
-		.WithSpeed(0.05f)
+		.WithSpeed(0.05f * 60)
 		.WithPosition(enemyPos)
 		.WithRotation({ 0.f, 0.f, 0.f })
 		.WithVelocity({ 0.f, 0.f, 0.f })
