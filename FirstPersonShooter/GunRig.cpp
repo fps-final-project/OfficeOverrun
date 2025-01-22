@@ -12,7 +12,7 @@ GunRig::GunRig(std::string gunName, IXAudio2* xaudio) :
 {
 	m_hands = std::make_shared<AnimatedEntity>(ResourceManager::Instance().getAnimatedModel(gunName));
 	m_gun = std::make_shared<AnimatedEntity>(ResourceManager::Instance().getAnimatedModel(gunName + "_gun"));
-	m_ammo[gunName] = { 30, 30 * 4 };
+	m_ammo[gunName] = { 20, 200 };
 	this->ChangeGun(gunName, xaudio);
 }
 

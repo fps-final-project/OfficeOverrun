@@ -8,7 +8,7 @@
 
   <Identity
     Name="Test.Game"
-    Publisher="CN=milos"
+    Publisher="CN=adam"
     Version="1.1.0.0" />
 
   <mp:PhoneIdentity PhoneProductId="190de01f-3134-4f59-8fbb-3a29e73fe051" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
