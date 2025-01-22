@@ -99,17 +99,17 @@ void ActionHandler::HandleActions(Player* player, World* world, Camera* camera, 
 			}
 			case ActionType::WEAPON1:
 			{
-				player->getGunRig()->ChangeGun("ak", deviceResources->GetXAudio());
+				player->getGunRig()->ChangeGun("FN", deviceResources->GetXAudio());
 				break;
 			}
 			case ActionType::WEAPON2:
 			{
-				player->getGunRig()->ChangeGun("FN", deviceResources->GetXAudio());
+				player->getGunRig()->ChangeGun("smg", deviceResources->GetXAudio());
 				break;
 			}
 			case ActionType::WEAPON3:
 			{
-				player->getGunRig()->ChangeGun("smg", deviceResources->GetXAudio());
+				player->getGunRig()->ChangeGun("ak", deviceResources->GetXAudio());
 				break;
 			}
 			case ActionType::WEAPON4:

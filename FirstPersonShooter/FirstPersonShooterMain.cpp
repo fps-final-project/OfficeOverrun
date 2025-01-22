@@ -62,6 +62,7 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	ResourceManager::Instance().loadTexture("Assets\\cube\\ammo.png", m_deviceResources);
 
 	ResourceManager::Instance().loadAudioFile("Assets\\Audio\\dark-horror-background-252905.wav", XAUDIO2_LOOP_INFINITE, m_deviceResources, "music");
+	ResourceManager::Instance().loadAudioFile("Assets\\Audio\\victory.wav", 0, m_deviceResources, "victory");
 	ResourceManager::Instance().loadAudioFile("Assets\\Audio\\ak.wav", 0, m_deviceResources, "ak");
 	ResourceManager::Instance().loadAudioFile("Assets\\Audio\\FN.wav", 0, m_deviceResources, "FN");
 	ResourceManager::Instance().loadAudioFile("Assets\\Audio\\smg.wav", 0, m_deviceResources, "smg");
