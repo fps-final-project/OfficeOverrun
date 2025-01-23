@@ -12,7 +12,9 @@ GameState::GameState(
 	std::shared_ptr<DirectX::Keyboard> keyboard,
 	std::shared_ptr<DirectX::Mouse> mouse,
 	std::shared_ptr<DX::DeviceResources> deviceResources
-) : m_music(ResourceManager::Instance().getAudioFile("music"), deviceResources->GetXAudio()), m_gameStatus(GameStatus::RUNNING)
+) : m_music(ResourceManager::Instance().getAudioFile("music"), deviceResources->GetXAudio()),
+	m_victorySound(ResourceManager::Instance().getAudioFile("victory"), deviceResources->GetXAudio()),
+	m_gameStatus(GameStatus::RUNNING)
 {
 	m_keyboard = keyboard;
 	m_mouse = mouse;
@@ -27,6 +29,7 @@ GameState::GameState(
 	this->setupActionHandlers();
 
 	m_music.SetVolume(0.5f);
+	m_victorySound.SetVolume(0.5f);
 
 	RestartWithSeed(123);
 }
@@ -80,6 +83,7 @@ void GameState::Update(float dt)
 	if (this->GameWon())
 	{
 		this->ToggleMusicAndMouse();
+		m_victorySound.PlaySound(true);
 		m_gameStatus = GameStatus::WON;
 	}
 	else if (this->GameLost())

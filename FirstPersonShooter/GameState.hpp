@@ -50,6 +50,7 @@ private:
 	std::shared_ptr<DX::DeviceResources> m_deviceResources;
 	std::shared_ptr<std::queue<Action>> m_actionQueue;
 	SourceVoice m_music;
+	SourceVoice m_victorySound;
 
 	void setupActionHandlers();
 	bool GameWon();
