@@ -24,7 +24,7 @@ class __declspec(dllexport) Menu
 	int currentSeed;
 	float currentVolume;
 public:
-	Menu(std::shared_ptr<DX::DeviceResources> deviceResources, int currentSeed);
+	Menu(std::shared_ptr<DX::DeviceResources> deviceResources, int currentSeed, float currentVolume);
 	~Menu();
 	void StartNewFrame();
 	void FinishFrame();

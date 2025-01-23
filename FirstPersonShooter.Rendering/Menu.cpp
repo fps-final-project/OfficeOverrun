@@ -4,8 +4,8 @@
 #include "imgui_impl_uwp.h"
 #include "imgui_impl_dx11.h"
 
-Menu::Menu(std::shared_ptr<DX::DeviceResources> deviceResources, int currentSeed) 
-	: m_deviceResources(deviceResources), currentSeed(currentSeed), currentVolume(1.f)
+Menu::Menu(std::shared_ptr<DX::DeviceResources> deviceResources, int currentSeed, float currentVolume) 
+	: m_deviceResources(deviceResources), currentSeed(currentSeed), currentVolume(currentVolume)
 {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
