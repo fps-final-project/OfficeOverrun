@@ -449,10 +449,10 @@
     <None Include="Assets\props\whiteboard\whiteboard.obj">
       <Filter>Assets\props\whiteboard</Filter>
     </None>
-    <None Include="FirstPersonShooter_TemporaryKey.pfx" />
     <None Include="Assets\Audio\victory.wav">
       <Filter>Assets\Sounds</Filter>
     </None>
+    <None Include="FirstPersonShooter_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="FirstPersonShooter.rc" />

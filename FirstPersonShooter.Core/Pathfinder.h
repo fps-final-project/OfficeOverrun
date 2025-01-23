@@ -13,6 +13,8 @@ struct PathNodeData;
 struct RoomLinkData;
 struct Path;
 
+#define LINK_STAIRS -2
+
 class __declspec(dllexport) Pathfinder
 {
 	int playerNode;
@@ -60,7 +62,7 @@ public:
 	Pathfinder(const std::vector<Room>& rooms, DirectX::XMFLOAT3 playerPos);
 	Path FindPath(DirectX::XMFLOAT3 enemyPos);
 	Path FindPathFromNode(int nodeIdx);
-	Path FindPathFromNodeFast(int nodeIdx);
+	Path FindPathFromNodeFast(int nodeIdx, Path& old);
 	void UpdatePath(Path& path, DirectX::XMFLOAT3 currPos);
 	void UpdatePlayerNode(DirectX::XMFLOAT3 playerPos, int currentNodeIndex);
 };

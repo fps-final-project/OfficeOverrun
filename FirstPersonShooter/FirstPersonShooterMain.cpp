@@ -87,13 +87,15 @@ FirstPersonShooterMain::FirstPersonShooterMain(
 	m_states = std::make_unique<DirectX::CommonStates>(m_deviceResources->GetD3DDevice());
 	m_gameState = std::make_unique<GameState>(keyboard, mouse, deviceResources);
 
-	m_menu = std::make_shared<Menu>(deviceResources, m_gameState->GetSeed());
+	float initialVolume = 0.5;
+	m_deviceResources->ChangeVolume(initialVolume);
+	m_menu = std::make_shared<Menu>(deviceResources, m_gameState->GetSeed(), initialVolume);
 
 	// HACK TO MAKE SURE CURSOR IS DISABLED BY DEFAULT
 	RenderMenu(Windows::Foundation::Size(0, 0));
 
 	m_mouse->SetMode(DirectX::Mouse::MODE_RELATIVE);
-	m_deviceResources->ChangeVolume(0.5);
+	
 	m_gameState->StartMusic();
 }
 
@@ -196,7 +198,7 @@ bool FirstPersonShooterMain::Render()
 	// will not render unless paused
 	RenderMenu(outputSize);
 
-	m_fpsTextRenderer->Render(std::to_string(m_timer.GetFramesPerSecond()), 400, 400, 300, 50);
+	//m_fpsTextRenderer->Render(std::to_string(m_timer.GetFramesPerSecond()), 400, 400, 300, 50);
 	//m_fpsTextRenderer->Render(std::to_string(m_gameState->m_player->getPostition().x) + ", " + std::to_string(m_gameState->m_player->getPostition().y) + ", " + std::to_string(m_gameState->m_player->getPostition().z), 400, 400, 300, 50);
 
 	return true;
