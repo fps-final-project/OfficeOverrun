@@ -524,9 +524,14 @@ Pathfinder::Pathfinder(const std::vector<Room>& rooms, DirectX::XMFLOAT3 playerP
 		for (const auto& link : rooms[i].m_links)
 		{
 			// process only doors
-			if ((link.orientation == OrientationData::XY || link.orientation == OrientationData::ZY) && link.roomId < i)
+			if (link.roomId < i)
 			{
-				AddDoorNodes(link, i);
+				if(link.orientation == OrientationData::XY || link.orientation == OrientationData::ZY)
+					AddDoorNodes(link, i);
+				else
+				{
+					nodeToRoomLink[std::make_pair(link.roomId, i)] = LINK_STAIRS;
+				}
 			}
 		}
 
@@ -562,7 +567,7 @@ Path Pathfinder::FindPathFromNode(int nodeIdx)
 	return path;
 }
 
-Path Pathfinder::FindPathFromNodeFast(int nodeIdx)
+Path Pathfinder::FindPathFromNodeFast(int nodeIdx, Path& old)
 {
 	Path path;
 	path.playerVisible = NodesInNeighboringRooms(nodeIdx, playerNode);
@@ -575,6 +580,11 @@ Path Pathfinder::FindPathFromNodeFast(int nodeIdx)
 
 		int idxStart = nodeIdx;
 		auto linkNode = FindLinkNode(r1, r2);
+
+		if (linkNode == LINK_STAIRS)
+		{
+			return old;
+		}
 
 		if (r1 != r2)
 		{
@@ -625,7 +635,7 @@ void Pathfinder::UpdatePath(Path& path, DirectX::XMFLOAT3 currPos)
 		path.playerVisible = NodesInNeighboringRooms(path.currentNode, playerNode);
 		if (path.playerVisible)
 		{
-			path = FindPathFromNodeFast(path.currentNode);
+			path = FindPathFromNodeFast(path.currentNode, path);
 		}
 	}
 }
