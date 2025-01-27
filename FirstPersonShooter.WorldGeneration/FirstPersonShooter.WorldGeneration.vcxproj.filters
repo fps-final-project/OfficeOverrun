@@ -348,5 +348,11 @@
     <Text Include="Grammar Configuration\Productions\Treasure_With_Boss_Stairs.txt">
       <Filter>Assets\Grammar Productions</Filter>
     </Text>
+    <Text Include="Grammar Configuration\Productions\Entrance_Treasure_2Rooms.txt">
+      <Filter>Assets\Grammar Productions</Filter>
+    </Text>
+    <Text Include="Grammar Configuration\Productions\Entrance_Treasure_3Rooms.txt">
+      <Filter>Assets\Grammar Productions</Filter>
+    </Text>
   </ItemGroup>
 </Project>

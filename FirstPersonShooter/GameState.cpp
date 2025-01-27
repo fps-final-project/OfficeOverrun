@@ -31,7 +31,7 @@ GameState::GameState(
 	m_music.SetVolume(0.5f);
 	m_victorySound.SetVolume(0.5f);
 
-	RestartWithSeed(123);
+	RestartWithSeed(rand());
 }
 
 void GameState::HandleInput()
