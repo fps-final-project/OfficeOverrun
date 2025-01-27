@@ -344,6 +344,8 @@
     <Text Include="Grammar Configuration\Productions\Boss_On_Stairs_OneEntrance.txt" />
     <Text Include="Grammar Configuration\Productions\Boss_On_Stairs_Triangle.txt" />
     <Text Include="Grammar Configuration\Productions\Default_To_Normal.txt" />
+    <Text Include="Grammar Configuration\Productions\Entrance_Treasure_2Rooms.txt" />
+    <Text Include="Grammar Configuration\Productions\Entrance_Treasure_3Rooms.txt" />
     <Text Include="Grammar Configuration\Productions\Treasure_With_Boss_Stairs.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
