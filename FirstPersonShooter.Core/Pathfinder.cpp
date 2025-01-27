@@ -468,7 +468,7 @@ std::list<PathNodeData> Pathfinder::ConstructPath(const std::vector<int>& prev, 
 		currVertex = prev[currVertex - idxOffset];
 	}
 
-	if (result.size() && result.back().index != playerNode)
+	if (!result.empty() && result.back().index != playerNode)
 		result.push_back(PathNodeData(playerNode, nodes[playerNode]));
 
 	return result;
@@ -564,6 +564,8 @@ Path Pathfinder::FindPathFromNode(int nodeIdx)
 		path.path = ConstructPath(nodeParents, targetNode);
 	}
 
+	if (path.path.empty())
+		path.path.push_back(PathNodeData(nodeIdx, nodes[nodeIdx]));
 	return path;
 }
 
@@ -612,7 +614,8 @@ Path Pathfinder::FindPathFromNodeFast(int nodeIdx, Path& old)
 			crowdCoeff[v.index] += 2;
 	}
 
-
+	if (path.path.empty())
+		path.path.push_back(PathNodeData(nodeIdx, nodes[nodeIdx]));
 	return path;
 }
 
