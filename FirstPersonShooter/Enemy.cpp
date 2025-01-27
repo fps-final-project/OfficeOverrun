@@ -104,6 +104,10 @@ float Enemy::AdjustAngleToPositive(float angle)
 
 XMVECTOR Enemy::GetDirection()
 {
+	// fallback
+	if (pathToPlayer.path.empty())
+		return {1.f, 0.f, 0.f};
+
 	return {
 		pathToPlayer.path.front().position.x - position.x,
 		pathToPlayer.path.front().position.y - position.y,
