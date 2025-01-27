@@ -1,6 +1,9 @@
 background music
 https://pixabay.com/music/mystery-dark-horror-background-252905/
 
+victory music
+https://files.gamebanana.com/preview/sounds/0x0-crs04_kumite.mp3
+
 skybox
 https://gamebanana.com/mods/download/7273#FileInfo_38717
 
@@ -12,20 +15,32 @@ https://polyhaven.com/a/beige_wall_001
 heli	
 https://sketchfab.com/3d-models/animated-civilian-helicopter-f25c041a8d004eb092e4aa41d1dc33f4
 
+reload
+https://gamebanana.com/sounds/16699
+
+empty clip
+https://gamebanana.com/sounds/62682
+
 smg	
 https://sketchfab.com/3d-models/smg-fps-animations-ca37ea9148dc4fcc9cc632175d311b23
+https://gamebanana.com/sounds/66530
 
 ak	
 https://sketchfab.com/3d-models/fps-ak-74m-animations-94be8385c402474cacd39bc096c6ca14
+https://gamebanana.com/sounds/59845
+
 
 sniper	
 https://sketchfab.com/3d-models/fps-animations-sniper-rifle-c15ae8393d824f5b929e3f69691cdd31
+https://gamebanana.com/sounds/42299
 
 pistol
 https://sketchfab.com/3d-models/fps-animations-fn-502-tactical-dad2ee1250054a63adaa81918887c0fe
+https://gamebanana.com/sounds/26578
 
 zombie
 https://www.mixamo.com/#/
+https://gamebanana.com/sounds/68837
 
 stairs
 https://sketchfab.com/3d-models/stairs-6f449130719e47108c7a1bf6ae9f1db3
