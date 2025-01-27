@@ -28,13 +28,6 @@ void World::UpdateVisibleRooms()
 
 World::World() : gen(std::random_device{}())
 {
-	auto gun = AnimatedObjectBuilder()
-		.WithNewObject(ResourceManager::Instance().getAnimatedModel("ak_gun"))
-		.WithPosition({ 2.0f, 0.5f, 3.0f })
-		.WithSize({ 0.5f, 0.5f, 0.5f })
-		.Build();
-
-	AddGun(std::make_shared<Gun>(Gun(*gun.get(), "ak")));
 }
 
 void World::Update(float dt)

@@ -12,30 +12,31 @@ namespace WorldGenerator
 
 		// Enemy count selection
 		static const int ENEMY_IN_NORMAL_ROOM_MIN = 0;
-		static const int ENEMY_IN_NORMAL_ROOM_MAX = 2;
+		static const int ENEMY_IN_NORMAL_ROOM_MAX = 3;
 		static const int ENEMY_IN_NORMAL_ROOM_POISSON_LAMBDA = 1;
 		static const int ENEMY_IN_BOSS_ROOM_MIN = 4;
-		static const int ENEMY_IN_BOSS_ROOM_MAX = 8;
-		static const int ENEMY_IN_BOSS_ROOM_POISSON_LAMBDA = 6;
+		static const int ENEMY_IN_BOSS_ROOM_MAX = 7;
+		static const int ENEMY_IN_BOSS_ROOM_POISSON_LAMBDA = 5;
 
 		// Guns count selection
 		// Number of ak or sniper in treasure room
 		static const int MIN_AK_SNIPER_IN_TREASURE_ROOM = 1;
-		static const int MAX_AK_SNIPER_IN_TREASURE_ROOM = 3;
+		static const int MAX_AK_SNIPER_IN_TREASURE_ROOM = 2;
+
+		// Probability that the ak or sniper gun is sniper
+		static constexpr float SNIPER_PROBABILITY = 0.35f;
 
 		// Smgs in treasure room
 		static const int MIN_SMGS_IN_TREASURE_ROOM = 2;
-		static const int MAX_SMGS_IN_TREASURE_ROOM = 8;
-		static constexpr float SMGS_IN_TREASURE_ROOM_BINOMIAL_P = 0.5f;
+		static const int MAX_SMGS_IN_TREASURE_ROOM = 4;
+		static constexpr float SMGS_IN_TREASURE_ROOM_BINOMIAL_P = 0.3f;
 		static constexpr float SMGS_IN_TREASURE_ROOM_SIZE_TO_COUNT_COEFF = 0.15f;
 
 		// Smgs in default room
 		static const int MIN_SMGS_IN_DEFAULT_ROOM = 0;
-		static const int MAX_SMGS_IN_DEFAULT_ROOM = 5;
+		static const int MAX_SMGS_IN_DEFAULT_ROOM = 2;
 		static constexpr float SMGS_IN_DEFAULT_ROOM_BINOMIAL_P = 0.1f;
-		static constexpr float SMGS_IN_DEFAULT_ROOM_SIZE_TO_COUNT_COEFF = 0.15f;
-		// Probability that the ak or sniper gun is sniper
-		static constexpr float SNIPER_PROBABILITY = 0.3f;
+		static constexpr float SMGS_IN_DEFAULT_ROOM_SIZE_TO_COUNT_COEFF = 0.10f;
 
 		// Props count
 		static const int PROPS_IN_ROOM_MIN = 0;
